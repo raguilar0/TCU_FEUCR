@@ -1,197 +1,412 @@
-<?php
-/**
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @since         0.10.0
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
- */
-use Cake\Cache\Cache;
-use Cake\Core\Configure;
-use Cake\Datasource\ConnectionManager;
-use Cake\Error\Debugger;
-use Cake\Network\Exception\NotFoundException;
 
-$this->layout = false;
-
-if (!Configure::read('debug')):
-    throw new NotFoundException('Please replace Pages/home.ctp with your own version.');
-endif;
-
-$cakeDescription = 'CakePHP: the rapid development PHP framework';
-?>
-<!DOCTYPE html>
-<html>
-<head>
-    <?= $this->Html->charset() ?>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <?= $cakeDescription ?>
-    </title>
-    <?= $this->Html->meta('icon') ?>
-    <?= $this->Html->css('base.css') ?>
-    <?= $this->Html->css('cake.css') ?>
-</head>
-<body class="home">
-    <header>
-        <div class="header-image">
-            <?= $this->Html->image('http://cakephp.org/img/cake-logo.png') ?>
-            <h1>Get the Ovens Ready</h1>
-        </div>
-    </header>
-    <div id="content">
-        <div class="row">
-            <div class="row">
-                <div class="columns large-12 ctp-warning checks">
-                    <p>Please be aware that this page will not be shown if you turn off debug mode unless you disable the NotFoundException in src/Template/Pages/home.ctp.</p>
+    <header id="header" role="banner">
+        <div class="container">
+            <div id="navbar" class="navbar navbar-default">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index.html"></a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#main-slider"><i class="icon-home"></i></a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#portfolio">Portfolio</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#about-us">About Us</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
                 </div>
             </div>
-            <?php Debugger::checkSecurityKeys(); ?>
-            <div id="url-rewriting-warning" class="columns large-12 url-rewriting checks">
-                <p class="problem">URL rewriting is not properly configured on your server.</p>
-                <p>
-                    1) <a target="_blank" href="http://book.cakephp.org/3.0/en/installation.html#url-rewriting">Help me configure it</a>
-                </p>
-                <p>
-                    2) <a target="_blank" href="http://book.cakephp.org/3.0/en/development/configuration.html#general-configuration">I don't / can't use URL rewriting</a>
-                </p>
-            </div>
-            <div class="columns large-5 platform checks">
-                <?php if (version_compare(PHP_VERSION, '5.5.9', '>=')): ?>
-                    <p class="success">Your version of PHP is 5.5.9 or higher.</p>
-                <?php else: ?>
-                    <p class="problem">Your version of PHP is too low. You need PHP 5.5.9 or higher to use CakePHP.</p>
-                <?php endif; ?>
+        </div>
+    </header><!--/#header-->
 
-                <?php if (extension_loaded('mbstring')): ?>
-                    <p class="success">Your version of PHP has the mbstring extension loaded.</p>
-                <?php else: ?>
-                    <p class="problem">Your version of PHP does NOT have the mbstring extension loaded.</p>;
-                <?php endif; ?>
+    <section id="main-slider" class="carousel">
+        <div class="carousel-inner">
+            <div class="item active">
+                <div class="container">
+                    <div class="carousel-content">
+                        <h1>Free Onepage Theme</h1>
+                        <p class="lead">Xeon is the best free onepage responsive theme available arround the globe<br>Download it right now for free</p>
+                    </div>
+                </div>
+            </div><!--/.item-->
+            <div class="item">
+                <div class="container">
+                    <div class="carousel-content">
+                        <h1>ShapeBootstrap.net</h1>
+                        <p class="lead">Download free but 100% premium quaility twitter Bootstrap based WordPress and HTML themes <br>from shapebootstrap.net</p>
+                    </div>
+                </div>
+            </div><!--/.item-->
+        </div><!--/.carousel-inner-->
+        <a class="prev" href="#main-slider" data-slide="prev"><i class="icon-angle-left"></i></a>
+        <a class="next" href="#main-slider" data-slide="next"><i class="icon-angle-right"></i></a>
+    </section><!--/#main-slider-->
 
-                <?php if (extension_loaded('openssl')): ?>
-                    <p class="success">Your version of PHP has the openssl extension loaded.</p>
-                <?php elseif (extension_loaded('mcrypt')): ?>
-                    <p class="success">Your version of PHP has the mcrypt extension loaded.</p>
-                <?php else: ?>
-                    <p class="problem">Your version of PHP does NOT have the openssl or mcrypt extension loaded.</p>
-                <?php endif; ?>
+    <section id="services">
+        <div class="container">
+            <div class="box first">
+                <div class="row">
+                    <div class="col-md-4 col-sm-6">
+                        <div class="center">
+                            <i class="icon-apple icon-md icon-color1"></i>
+                            <h4>iOS development</h4>
+                            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae.</p>
+                        </div>
+                    </div><!--/.col-md-4-->
+                    <div class="col-md-4 col-sm-6">
+                        <div class="center">
+                            <i class="icon-android icon-md icon-color2"></i>
+                            <h4>Android development</h4>
+                            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae.</p>
+                        </div>
+                    </div><!--/.col-md-4-->
+                    <div class="col-md-4 col-sm-6">
+                        <div class="center">
+                            <i class="icon-windows icon-md icon-color3"></i>
+                            <h4>Windows Phone development</h4>
+                            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae.</p>
+                        </div>
+                    </div><!--/.col-md-4-->
+                    <div class="col-md-4 col-sm-6">
+                        <div class="center">
+                            <i class="icon-html5 icon-md icon-color4"></i>
+                            <h4>Ruby on Rails development</h4>
+                            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae.</p>
+                        </div>
+                    </div><!--/.col-md-4-->
+                    <div class="col-md-4 col-sm-6">
+                        <div class="center">
+                            <i class="icon-css3 icon-md icon-color5"></i>
+                            <h4>Javascript development</h4>
+                            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae.</p>
+                        </div>
+                    </div><!--/.col-md-4-->
+                    <div class="col-md-4 col-sm-6">
+                        <div class="center">
+                            <i class="icon-thumbs-up icon-md icon-color6"></i>
+                            <h4>Responsive web design</h4>
+                            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae.</p>
+                        </div>
+                    </div><!--/.col-md-4-->
+                </div><!--/.row-->
+            </div><!--/.box-->
+        </div><!--/.container-->
+    </section><!--/#services-->
 
-                <?php if (extension_loaded('intl')): ?>
-                    <p class="success">Your version of PHP has the intl extension loaded.</p>
-                <?php else: ?>
-                    <p class="problem">Your version of PHP does NOT have the intl extension loaded.</p>
-                <?php endif; ?>
-            </div>
-            <div class="columns large-6 filesystem checks">
-                <?php if (is_writable(TMP)): ?>
-                    <p class="success">Your tmp directory is writable.</p>
-                <?php else: ?>
-                    <p class="problem">Your tmp directory is NOT writable.</p>
-                <?php endif; ?>
+    <section id="portfolio">
+        <div class="container">
+            <div class="box">
+                <div class="center gap">
+                    <h2>Portfolio</h2>
+                    <p class="lead">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac<br>turpis egestas. Vestibulum tortor quam, feugiat vitae.</p>
+                </div><!--/.center-->
+                <ul class="portfolio-filter">
+                    <li><a class="btn btn-primary active" href="#" data-filter="*">All</a></li>
+                    <li><a class="btn btn-primary" href="#" data-filter=".bootstrap">Bootstrap</a></li>
+                    <li><a class="btn btn-primary" href="#" data-filter=".html">HTML</a></li>
+                    <li><a class="btn btn-primary" href="#" data-filter=".wordpress">Wordpress</a></li>
+                </ul><!--/#portfolio-filter-->
+                <ul class="portfolio-items col-4">
+                    <li class="portfolio-item apps">
+                        <div class="item-inner">
+                            <div class="portfolio-image">
+                                <img src="images/portfolio/thumb/item1.jpg" alt="">
+                                <div class="overlay">
+                                    <a class="preview btn btn-danger" title="Lorem ipsum dolor sit amet" href="images/portfolio/full/item1.jpg"><i class="icon-eye-open"></i></a>             
+                                </div>
+                            </div>
+                            <h5>Lorem ipsum dolor sit amet</h5>
+                        </div>
+                    </li><!--/.portfolio-item-->
+                    <li class="portfolio-item joomla bootstrap">
+                        <div class="item-inner">
+                            <div class="portfolio-image">
+                                <img src="images/portfolio/thumb/item2.jpg" alt="">
+                                <div class="overlay">
+                                    <a class="preview btn btn-danger" title="Lorem ipsum dolor sit amet" href="images/portfolio/full/item2.jpg"><i class="icon-eye-open"></i></a>  
+                                </div>
+                            </div> 
+                            <h5>Lorem ipsum dolor sit amet</h5>         
+                        </div>
+                    </li><!--/.portfolio-item-->
+                    <li class="portfolio-item bootstrap wordpress">
+                        <div class="item-inner">
+                            <div class="portfolio-image">
+                                <img src="images/portfolio/thumb/item3.jpg" alt="">
+                                <div class="overlay">
+                                    <a class="preview btn btn-danger" title="Lorem ipsum dolor sit amet" href="images/portfolio/full/item3.jpg"><i class="icon-eye-open"></i></a>        
+                                </div> 
+                            </div>
+                            <h5>Lorem ipsum dolor sit amet</h5>          
+                        </div>           
+                    </li><!--/.portfolio-item-->
+                    <li class="portfolio-item joomla wordpress apps">
+                        <div class="item-inner">
+                            <div class="portfolio-image">
+                                <img src="images/portfolio/thumb/item4.jpg" alt="">
+                                <div class="overlay">
+                                    <a class="preview btn btn-danger" title="Lorem ipsum dolor sit amet" href="images/portfolio/full/item4.jpg"><i class="icon-eye-open"></i></a>          
+                                </div>   
+                            </div>
+                            <h5>Lorem ipsum dolor sit amet</h5>        
+                        </div>           
+                    </li><!--/.portfolio-item-->
+                    <li class="portfolio-item joomla html">
+                        <div class="item-inner">
+                            <div class="portfolio-image">
+                                <img src="images/portfolio/thumb/item5.jpg" alt="">
+                                <div class="overlay">
+                                    <a class="preview btn btn-danger" title="Lorem ipsum dolor sit amet" href="images/portfolio/full/item5.jpg"><i class="icon-eye-open"></i></a>          
+                                </div>  
+                            </div>
+                            <h5>Lorem ipsum dolor sit amet</h5>  
+                        </div>       
+                    </li><!--/.portfolio-item-->
+                    <li class="portfolio-item wordpress html">
+                        <div class="item-inner">
+                            <div class="portfolio-image">
+                                <img src="images/portfolio/thumb/item6.jpg" alt="">
+                                <div class="overlay">
+                                    <a class="preview btn btn-danger" title="Lorem ipsum dolor sit amet" href="images/portfolio/full/item6.jpg"><i class="icon-eye-open"></i></a>           
+                                </div>  
+                            </div>
+                            <h5>Lorem ipsum dolor sit amet</h5>         
+                        </div>           
+                    </li><!--/.portfolio-item-->
+                    <li class="portfolio-item joomla html">
+                        <div class="item-inner">
+                            <div class="portfolio-image">
+                                <img src="images/portfolio/thumb/item5.jpg" alt="">
+                                <div class="overlay">
+                                    <a class="preview btn btn-danger" title="Lorem ipsum dolor sit amet" href="images/portfolio/full/item5.jpg"><i class="icon-eye-open"></i></a>          
+                                </div>  
+                            </div>
+                            <h5>Lorem ipsum dolor sit amet</h5>  
+                        </div>       
+                    </li><!--/.portfolio-item-->
+                    <li class="portfolio-item wordpress html">
+                        <div class="item-inner">
+                            <div class="portfolio-image">
+                                <img src="images/portfolio/thumb/item6.jpg" alt="">
+                                <div class="overlay">
+                                    <a class="preview btn btn-danger" title="Lorem ipsum dolor sit amet" href="images/portfolio/full/item6.jpg"><i class="icon-eye-open"></i></a>           
+                                </div>   
+                            </div>
+                            <h5>Lorem ipsum dolor sit amet</h5>        
+                        </div>         
+                    </li><!--/.portfolio-item-->
+                </ul>   
+            </div><!--/.box-->
+        </div><!--/.container-->
+    </section><!--/#portfolio-->
 
-                <?php if (is_writable(LOGS)): ?>
-                    <p class="success">Your logs directory is writable.</p>
-                <?php else: ?>
-                    <p class="problem">Your logs directory is NOT writable.</p>
-                <?php endif; ?>
+    <section id="pricing">
+        <div class="container">
+            <div class="box">
+                <div class="center">
+                    <h2>See our Pricings</h2>
+                    <p class="lead">Pellentesque habitant morbi tristique senectus et netus et <br>malesuada fames ac turpis egestas.</p>
+                </div><!--/.center-->   
+                <div class="big-gap"></div>
+                <div id="pricing-table" class="row">
+                    <div class="col-sm-4">
+                        <ul class="plan">
+                            <li class="plan-name">Basic</li>
+                            <li class="plan-price">$29</li>
+                            <li>5GB Storage</li>
+                            <li>1GB RAM</li>
+                            <li>400GB Bandwidth</li>
+                            <li>10 Email Address</li>
+                            <li>Forum Support</li>
+                            <li class="plan-action"><a href="#" class="btn btn-primary btn-lg">Signup</a></li>
+                        </ul>
+                    </div><!--/.col-sm-4-->
+                    <div class="col-sm-4">
+                        <ul class="plan featured">
+                            <li class="plan-name">Standard</li>
+                            <li class="plan-price">$49</li>
+                            <li>10GB Storage</li>
+                            <li>2GB RAM</li>
+                            <li>1TB Bandwidth</li>
+                            <li>100 Email Address</li>
+                            <li>Forum Support</li>
+                            <li class="plan-action"><a href="#" class="btn btn-primary btn-lg">Signup</a></li>
+                        </ul>
+                    </div><!--/.col-sm-4-->
+                    <div class="col-sm-4">
+                        <ul class="plan">
+                            <li class="plan-name">Advanced</li>
+                            <li class="plan-price">$199</li>
+                            <li>30GB Storage</li>
+                            <li>5GB RAM</li>
+                            <li>5TB Bandwidth</li>
+                            <li>1000 Email Address</li>
+                            <li>Forum Support</li>
+                            <li class="plan-action"><a href="#" class="btn btn-primary btn-lg">Signup</a></li>
+                        </ul>
+                    </div><!--/.col-sm-4-->
+                </div> 
+            </div> 
+        </div>
+    </section><!--/#pricing-->
 
-                <?php $settings = Cache::config('_cake_core_'); ?>
-                <?php if (!empty($settings)): ?>
-                    <p class="success">The <em><?= $settings['className'] ?>Engine</em> is being used for core caching. To change the config edit config/app.php</p>
-                <?php else: ?>
-                    <p class="problem">Your cache is NOT working. Please check the settings in config/app.php</p>
-                <?php endif; ?>
+    <section id="about-us">
+        <div class="container">
+            <div class="box">
+                <div class="center">
+                    <h2>Meet the Team</h2>
+                    <p class="lead">Pellentesque habitant morbi tristique senectus et netus et<br>malesuada fames ac turpis egestas.</p>
+                </div>
+                <div class="gap"></div>
+                <div id="team-scroller" class="carousel scale">
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="member">
+                                        <p><img class="img-responsive img-thumbnail img-circle" src="images/team1.jpg" alt="" ></p>
+                                        <h3>Agnes Smith<small class="designation">CEO &amp; Founder</small></h3>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="member">
+                                        <p><img class="img-responsive img-thumbnail img-circle" src="images/team2.jpg" alt="" ></p>
+                                        <h3>Donald Ford<small class="designation">Senior Vice President</small></h3>
+                                    </div>
+                                </div>        
+                                <div class="col-sm-4">
+                                    <div class="member">
+                                        <p><img class="img-responsive img-thumbnail img-circle" src="images/team3.jpg" alt="" ></p>
+                                        <h3>Karen Richardson<small class="designation">Assitant Vice President</small></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="member">
+                                        <p><img class="img-responsive img-thumbnail img-circle" src="images/team3.jpg" alt="" ></p>
+                                        <h3>David Robbins<small class="designation">Co-Founder</small></h3>
+                                    </div>
+                                </div>   
+                                <div class="col-sm-4">
+                                    <div class="member">
+                                        <p><img class="img-responsive img-thumbnail img-circle" src="images/team1.jpg" alt="" ></p>
+                                        <h3>Philip Mejia<small class="designation">Marketing Manager</small></h3>
+                                    </div>
+                                </div>     
+                                <div class="col-sm-4">
+                                    <div class="member">
+                                        <p><img class="img-responsive img-thumbnail img-circle" src="images/team2.jpg" alt="" ></p>
+                                        <h3>Charles Erickson<small class="designation">Support Manager</small></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="left-arrow" href="#team-scroller" data-slide="prev">
+                        <i class="icon-angle-left icon-4x"></i>
+                    </a>
+                    <a class="right-arrow" href="#team-scroller" data-slide="next">
+                        <i class="icon-angle-right icon-4x"></i>
+                    </a>
+                </div><!--/.carousel-->
+            </div><!--/.box-->
+        </div><!--/.container-->
+    </section><!--/#about-us-->
+
+    <section id="contact">
+        <div class="container">
+            <div class="box last">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h1>Contact Form</h1>
+                        <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+                        <div class="status alert alert-success" style="display: none"></div>
+                        <form id="main-contact-form" class="contact-form" name="contact-form" method="post" action="sendemail.php" role="form">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" required="required" placeholder="Name">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" required="required" placeholder="Email address">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <textarea name="message" id="message" required="required" class="form-control" rows="8" placeholder="Message"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-danger btn-lg">Send Message</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div><!--/.col-sm-6-->
+                    <div class="col-sm-6">
+                        <h1>Our Address</h1>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <address>
+                                    <strong>Twitter, Inc.</strong><br>
+                                    795 Folsom Ave, Suite 600<br>
+                                    San Francisco, CA 94107<br>
+                                    <abbr title="Phone">P:</abbr> (123) 456-7890
+                                </address>
+                            </div>
+                            <div class="col-md-6">
+                                <address>
+                                    <strong>Twitter, Inc.</strong><br>
+                                    795 Folsom Ave, Suite 600<br>
+                                    San Francisco, CA 94107<br>
+                                    <abbr title="Phone">P:</abbr> (123) 456-7890
+                                </address>
+                            </div>
+                        </div>
+                        <h1>Connect with us</h1>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul class="social">
+                                    <li><a href="#"><i class="icon-facebook icon-social"></i> Facebook</a></li>
+                                    <li><a href="#"><i class="icon-google-plus icon-social"></i> Google Plus</a></li>
+                                    <li><a href="#"><i class="icon-pinterest icon-social"></i> Pinterest</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="social">
+                                    <li><a href="#"><i class="icon-linkedin icon-social"></i> Linkedin</a></li>
+                                    <li><a href="#"><i class="icon-twitter icon-social"></i> Twitter</a></li>
+                                    <li><a href="#"><i class="icon-youtube icon-social"></i> Youtube</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div><!--/.col-sm-6-->
+                </div><!--/.row-->
+            </div><!--/.box-->
+        </div><!--/.container-->
+    </section><!--/#contact-->
+
+    <footer id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    &copy; 2013 <a target="_blank" href="http://shapebootstrap.net/" title="Free Twitter Bootstrap WordPress Themes and HTML templates">ShapeBootstrap</a>. All Rights Reserved.
+                </div>
+                <div class="col-sm-6">
+                    <img class="pull-right" src="images/shapebootstrap.png" alt="ShapeBootstrap" title="ShapeBootstrap">
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="columns large-12 database checks">
-                <?php
-                    try {
-                        $connection = ConnectionManager::get('default');
-                        $connected = $connection->connect();
-                    } catch (Exception $connectionError) {
-                        $connected = false;
-                        $errorMsg = $connectionError->getMessage();
-                        if (method_exists($connectionError, 'getAttributes')):
-                            $attributes = $connectionError->getAttributes();
-                            if (isset($errorMsg['message'])):
-                                $errorMsg .= '<br />' . $attributes['message'];
-                            endif;
-                        endif;
-                    }
-                ?>
-                <?php if ($connected): ?>
-                    <p class="success">CakePHP is able to connect to the database.</p>
-                <?php else: ?>
-                    <p class="problem">CakePHP is NOT able to connect to the database.<br /><br /><?= $errorMsg ?></p>
-                <?php endif; ?>
-            </div>
-        </div>
-        <div class="row">
-            <div class="columns large-6">
-                <h3>Editing this Page</h3>
-                <ul>
-                    <li>To change the content of this page, edit: src/Template/Pages/home.ctp.</li>
-                    <li>You can also add some CSS styles for your pages at: webroot/css/.</li>
-                </ul>
-            </div>
-            <div class="columns large-6">
-                <h3>Getting Started</h3>
-                <ul>
-                    <li><a target="_blank" href="http://book.cakephp.org/3.0/en/">CakePHP 3.0 Docs</a></li>
-                    <li><a target="_blank" href="http://book.cakephp.org/3.0/en/tutorials-and-examples/bookmarks/intro.html">The 15 min Bookmarker Tutorial</a></li>
-                    <li><a target="_blank" href="http://book.cakephp.org/3.0/en/tutorials-and-examples/blog/blog.html">The 15 min Blog Tutorial</a></li>
-                </ul>
-                <p>
-            </div>
-        </div>
-        <hr/>
-        <div class="row">
-            <div class="columns large-12">
-                <h3 class="">More about Cake</h3>
-                <p>
-                    CakePHP is a rapid development framework for PHP which uses commonly known design patterns like Front Controller and MVC.
-                </p>
-                <p>
-                    Our primary goal is to provide a structured framework that enables PHP users at all levels to rapidly develop robust web applications, without any loss to flexibility.
-                </p>
-                <ul>
-                    <li><a href="http://cakefoundation.org/">Cake Software Foundation</a>
-                    <ul><li>Promoting development related to CakePHP</li></ul></li>
-                    <li><a href="http://www.cakephp.org">CakePHP</a>
-                    <ul><li>The Rapid Development Framework</li></ul></li>
-                    <li><a href="http://book.cakephp.org/3.0/en/">CakePHP Documentation</a>
-                    <ul><li>Your Rapid Development Cookbook</li></ul></li>
-                    <li><a href="http://api.cakephp.org/3.0/">CakePHP API</a>
-                    <ul><li>Quick Reference</li></ul></li>
-                    <li><a href="http://bakery.cakephp.org">The Bakery</a>
-                    <ul><li>Everything CakePHP</li></ul></li>
-                    <li><a href="http://plugins.cakephp.org">CakePHP plugins repo</a>
-                    <ul><li>A comprehensive list of all CakePHP plugins created by the community</li></ul></li>
-                    <li><a href="https://groups.google.com/group/cake-php">CakePHP Google Group</a>
-                    <ul><li>Community mailing list</li></ul></li>
-                    <li><a href="irc://irc.freenode.net/cakephp">irc.freenode.net #cakephp</a>
-                    <ul><li>Live chat about CakePHP</li></ul></li>
-                    <li><a href="https://github.com/cakephp/">CakePHP Code</a>
-                    <ul><li>For the Development of CakePHP Git repository, Downloads</li></ul></li>
-                    <li><a href="https://github.com/cakephp/cakephp/issues">CakePHP Issues</a>
-                    <ul><li>CakePHP issues and pull requests</li></ul></li>
-                    <li><a href="http://training.cakephp.org/">CakePHP Training</a>
-                    <ul><li>Learn to use the CakePHP framework</li></ul></li>
-                    <li><a href="http://certification.cakephp.org/">CakePHP Certification</a>
-                    <ul><li>Become a certified CakePHP developer</li></ul></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <footer>
-    </footer>
-</body>
-</html>
+    </footer><!--/#footer-->
