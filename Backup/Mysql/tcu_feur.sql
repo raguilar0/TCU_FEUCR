@@ -26,7 +26,7 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `association`
 --
 
-CREATE TABLE `association` (
+CREATE TABLE `associations` (
   `id` int(11) NOT NULL,
   `acronym` varchar(16) COLLATE utf8_spanish_ci DEFAULT NULL,
   `name` varchar(70) COLLATE utf8_spanish_ci DEFAULT NULL,
