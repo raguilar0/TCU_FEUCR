@@ -11,9 +11,8 @@
     echo $this->Form->label('Associations.authorized_card','Tarjeta Autorizada ');
     echo "  ";
     echo $this->Form->checkbox('authorized_card', ['hiddenField' => false, 'class'=>'checkbox-inline']);
-
-    echo $this->Form->submit('Guardar Asociación', ['class' => 'form-control']);
-
+    echo $this->Form->submit('Guardar Asociación', ['class' => 'form-control', 'id' => 'asso_id']);
     echo "</div>";
+
     echo $this->Form->end();
 ?>
