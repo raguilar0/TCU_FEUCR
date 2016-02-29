@@ -1,0 +1,22 @@
+body
+{
+	background-color:#e5e5e5;
+}
+
+.body
+{
+	background-color: white;
+	padding-bottom: 1%;
+	border-radius: 15px;
+}
+
+#asso_id
+{
+	margin:auto;
+	width: 150px;
+}
+
+#header
+{
+	margin-bottom: 500px;
+}
