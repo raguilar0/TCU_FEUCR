@@ -1,6 +1,6 @@
 CREATE TABLE associations
 (
-  id int NOT NULL UNSIGNED AUTO_INCREMENT,
+  id INT UNSIGNED AUTO_INCREMENT,
   acronym varchar(16) NOT NULL,
   name varchar(70) NOT NULL,
   location varchar(100) DEFAULT NULL,
