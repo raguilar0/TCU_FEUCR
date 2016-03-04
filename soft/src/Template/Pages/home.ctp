@@ -15,8 +15,8 @@
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="#main-slider"><i class="glyphicon glyphicon-home"></i></a></li>
                         <li><a href="#asociaciones">Asociaciones</a></li>
-                        <li><a href="#future-1">Future</a></li>
-                        <li><a href="#future-2">Future</a></li>
+                        <li><a href="#future-1">Futuro</a></li>
+                        <li><a href="#future-2">Futuro</a></li>
                         <li><a href="#acerca-de">Acerca de</a></li>
                         <li><a href="#contacto">Contáctanos</a></li>
                     </ul>
