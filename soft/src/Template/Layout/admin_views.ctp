@@ -6,7 +6,7 @@
 
     <title>Contraloría FEUCR</title>
     <?= $this->Html->css('bootstrap.min.css') ?>
-    <?= $this->Html->css('main.css') ?>
+  
     <?= $this->Html->css('views.css') ?>
 
 

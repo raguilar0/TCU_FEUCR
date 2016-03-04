@@ -5,6 +5,11 @@ use App\Controller\AppController;
 
 class AssociationsController extends AppController
 {
+	public function index()
+	{
+		
+	}
+	
 	public function add()
 	{
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
@@ -25,4 +30,5 @@ class AssociationsController extends AppController
 
 		$this->set('association',$association); // set() Pasa la variable association a la vista.
 	}
+	
 }
