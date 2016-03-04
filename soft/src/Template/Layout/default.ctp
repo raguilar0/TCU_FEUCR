@@ -10,6 +10,8 @@
     <?= $this->Html->css('prettyPhoto.css') ?>
     <?= $this->Html->css('main.css') ?>
 
+    <?php echo $this->Html->meta('favicon.ico','webroot/favicon.ico',array('type' => 'icon'));?>
+
 
 
     <!--[if lt IE 9]>

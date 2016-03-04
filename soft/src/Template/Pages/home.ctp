@@ -14,11 +14,11 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="#main-slider"><i class="glyphicon glyphicon-home"></i></a></li>
-                        <li><a href="#services">Services</a></li>
-                        <li><a href="#portfolio">Portfolio</a></li>
-                        <li><a href="#pricing">Pricing</a></li>
-                        <li><a href="#about-us">About Us</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#asociaciones">Asociaciones</a></li>
+                        <li><a href="#future-1">Future</a></li>
+                        <li><a href="#future-2">Future</a></li>
+                        <li><a href="#acerca-de">Acerca de</a></li>
+                        <li><a href="#contacto">Contáctanos</a></li>
                     </ul>
                 </div>
             </div>
@@ -30,16 +30,16 @@
             <div class="item active">
                 <div class="container">
                     <div class="carousel-content">
-                        <h1>Free Onepage Theme</h1>
-                        <p class="lead">Xeon is the best free onepage responsive theme available arround the globe<br>Download it right now for free</p>
+                        <h1>Somos UCR</h1>
+                        <p class="lead">La UCR es la mejor universidad Centroamericana</p>
                     </div>
                 </div>
             </div><!--/.item-->
             <div class="item">
                 <div class="container">
                     <div class="carousel-content">
-                        <h1>ShapeBootstrap.net</h1>
-                        <p class="lead">Download free but 100% premium quaility twitter Bootstrap based WordPress and HTML themes <br>from shapebootstrap.net</p>
+                        <h1>Somos la Contraloría</h1>
+                        <p class="lead">Poner texto aquí</p>
                     </div>
                 </div>
             </div><!--/.item-->
@@ -48,50 +48,84 @@
         <a class="next" href="#main-slider" data-slide="next"><i class="icon-angle-right"></i></a>
     </section><!--/#main-slider-->
 
-    <section id="services">
+    <section id="asociaciones">
         <div class="container">
+
             <div class="box first">
+                <div class="row text-center texto">
+                    <div class="col-md-12 col-sm-12">
+                        <h1>Ubica la asociación que quieres encontrar en la Sede Correspondiente</h1>
+                    </div>
+
+                </div>
+
                 <div class="row">
+
                     <div class="col-md-4 col-sm-6">
                         <div class="center">
-                            <i class="icon-apple icon-md icon-color1"></i>
-                            <h4>iOS development</h4>
-                            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae.</p>
+                           <?php echo $this->Html->image('sedes/sede_central.jpg', ['alt' => 'Sede Central']);?>
+
+                            <h4>Sede Central</h4>
+                        </div>
+                    </div><!--/.col-md-4-->
+
+
+                    <div class="col-md-4 col-sm-6">
+                        <div class="center">
+                           <?php echo $this->Html->image('sedes/sede_occidente.png', ['alt' => 'sede_occidente']);?>
+
+                            <h4>Sede de Occidente</h4>
+
                         </div>
                     </div><!--/.col-md-4-->
                     <div class="col-md-4 col-sm-6">
                         <div class="center">
-                            <i class="icon-android icon-md icon-color2"></i>
-                            <h4>Android development</h4>
-                            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae.</p>
+                           <?php echo $this->Html->image('sedes/sede_atlantico.jpg', ['alt' => 'Sede Atlántico']);?>
+
+                            <h4>Sede del Atlántico</h4>
+
+                        </div>
+                    </div><!--/.col-md-4-->
+
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-4 col-sm-6">
+                        <div class="center">
+                           <?php echo $this->Html->image('sedes/sede_guanacaste.jpg', ['alt' => 'Sede de Guanacaste']);?>
+
+                            <h4>Sede de Guanacaste</h4>
+
                         </div>
                     </div><!--/.col-md-4-->
                     <div class="col-md-4 col-sm-6">
                         <div class="center">
-                            <i class="icon-windows icon-md icon-color3"></i>
-                            <h4>Windows Phone development</h4>
-                            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae.</p>
+                           <?php echo $this->Html->image('sedes/sede_pacífico.jpg', ['alt' => 'Sede del pacífico']);?>
+
+                            <h4>Sede del Pacífico</h4>
+
                         </div>
                     </div><!--/.col-md-4-->
                     <div class="col-md-4 col-sm-6">
                         <div class="center">
-                            <i class="icon-html5 icon-md icon-color4"></i>
-                            <h4>Ruby on Rails development</h4>
-                            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae.</p>
+                           <?php echo $this->Html->image('sedes/sede_interuniversitaria.jpg', ['alt' => 'Sede interuniversitaria']);?>                        
+
+                            <h4>Sede Interuniversitaria de Alajuela</h4>
+
                         </div>
                     </div><!--/.col-md-4-->
+                </div>
+
+                <div class="row">
+
                     <div class="col-md-4 col-sm-6">
                         <div class="center">
-                            <i class="icon-css3 icon-md icon-color5"></i>
-                            <h4>Javascript development</h4>
-                            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae.</p>
-                        </div>
-                    </div><!--/.col-md-4-->
-                    <div class="col-md-4 col-sm-6">
-                        <div class="center">
-                            <i class="icon-thumbs-up icon-md icon-color6"></i>
-                            <h4>Responsive web design</h4>
-                            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae.</p>
+                           <?php echo $this->Html->image('sedes/recinto_golfito.jpg', ['alt' => 'Recinto de Golfito']);?> 
+
+                            <h4>Recinto de Golfito</h4>
+
                         </div>
                     </div><!--/.col-md-4-->
                 </div><!--/.row-->
@@ -99,169 +133,24 @@
         </div><!--/.container-->
     </section><!--/#services-->
 
-    <section id="portfolio">
+    <section id="future-1">
         <div class="container">
-            <div class="box">
-                <div class="center gap">
-                    <h2>Portfolio</h2>
-                    <p class="lead">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac<br>turpis egestas. Vestibulum tortor quam, feugiat vitae.</p>
-                </div><!--/.center-->
-                <ul class="portfolio-filter">
-                    <li><a class="btn btn-primary active" href="#" data-filter="*">All</a></li>
-                    <li><a class="btn btn-primary" href="#" data-filter=".bootstrap">Bootstrap</a></li>
-                    <li><a class="btn btn-primary" href="#" data-filter=".html">HTML</a></li>
-                    <li><a class="btn btn-primary" href="#" data-filter=".wordpress">Wordpress</a></li>
-                </ul><!--/#portfolio-filter-->
-                <ul class="portfolio-items col-4">
-                    <li class="portfolio-item apps">
-                        <div class="item-inner">
-                            <div class="portfolio-image">
-                                <img src="images/portfolio/thumb/item1.jpg" alt="">
-                                <div class="overlay">
-                                    <a class="preview btn btn-danger" title="Lorem ipsum dolor sit amet" href="images/portfolio/full/item1.jpg"><i class="icon-eye-open"></i></a>             
-                                </div>
-                            </div>
-                            <h5>Lorem ipsum dolor sit amet</h5>
-                        </div>
-                    </li><!--/.portfolio-item-->
-                    <li class="portfolio-item joomla bootstrap">
-                        <div class="item-inner">
-                            <div class="portfolio-image">
-                                <img src="images/portfolio/thumb/item2.jpg" alt="">
-                                <div class="overlay">
-                                    <a class="preview btn btn-danger" title="Lorem ipsum dolor sit amet" href="images/portfolio/full/item2.jpg"><i class="icon-eye-open"></i></a>  
-                                </div>
-                            </div> 
-                            <h5>Lorem ipsum dolor sit amet</h5>         
-                        </div>
-                    </li><!--/.portfolio-item-->
-                    <li class="portfolio-item bootstrap wordpress">
-                        <div class="item-inner">
-                            <div class="portfolio-image">
-                                <img src="images/portfolio/thumb/item3.jpg" alt="">
-                                <div class="overlay">
-                                    <a class="preview btn btn-danger" title="Lorem ipsum dolor sit amet" href="images/portfolio/full/item3.jpg"><i class="icon-eye-open"></i></a>        
-                                </div> 
-                            </div>
-                            <h5>Lorem ipsum dolor sit amet</h5>          
-                        </div>           
-                    </li><!--/.portfolio-item-->
-                    <li class="portfolio-item joomla wordpress apps">
-                        <div class="item-inner">
-                            <div class="portfolio-image">
-                                <img src="images/portfolio/thumb/item4.jpg" alt="">
-                                <div class="overlay">
-                                    <a class="preview btn btn-danger" title="Lorem ipsum dolor sit amet" href="images/portfolio/full/item4.jpg"><i class="icon-eye-open"></i></a>          
-                                </div>   
-                            </div>
-                            <h5>Lorem ipsum dolor sit amet</h5>        
-                        </div>           
-                    </li><!--/.portfolio-item-->
-                    <li class="portfolio-item joomla html">
-                        <div class="item-inner">
-                            <div class="portfolio-image">
-                                <img src="images/portfolio/thumb/item5.jpg" alt="">
-                                <div class="overlay">
-                                    <a class="preview btn btn-danger" title="Lorem ipsum dolor sit amet" href="images/portfolio/full/item5.jpg"><i class="icon-eye-open"></i></a>          
-                                </div>  
-                            </div>
-                            <h5>Lorem ipsum dolor sit amet</h5>  
-                        </div>       
-                    </li><!--/.portfolio-item-->
-                    <li class="portfolio-item wordpress html">
-                        <div class="item-inner">
-                            <div class="portfolio-image">
-                                <img src="images/portfolio/thumb/item6.jpg" alt="">
-                                <div class="overlay">
-                                    <a class="preview btn btn-danger" title="Lorem ipsum dolor sit amet" href="images/portfolio/full/item6.jpg"><i class="icon-eye-open"></i></a>           
-                                </div>  
-                            </div>
-                            <h5>Lorem ipsum dolor sit amet</h5>         
-                        </div>           
-                    </li><!--/.portfolio-item-->
-                    <li class="portfolio-item joomla html">
-                        <div class="item-inner">
-                            <div class="portfolio-image">
-                                <img src="images/portfolio/thumb/item5.jpg" alt="">
-                                <div class="overlay">
-                                    <a class="preview btn btn-danger" title="Lorem ipsum dolor sit amet" href="images/portfolio/full/item5.jpg"><i class="icon-eye-open"></i></a>          
-                                </div>  
-                            </div>
-                            <h5>Lorem ipsum dolor sit amet</h5>  
-                        </div>       
-                    </li><!--/.portfolio-item-->
-                    <li class="portfolio-item wordpress html">
-                        <div class="item-inner">
-                            <div class="portfolio-image">
-                                <img src="images/portfolio/thumb/item6.jpg" alt="">
-                                <div class="overlay">
-                                    <a class="preview btn btn-danger" title="Lorem ipsum dolor sit amet" href="images/portfolio/full/item6.jpg"><i class="icon-eye-open"></i></a>           
-                                </div>   
-                            </div>
-                            <h5>Lorem ipsum dolor sit amet</h5>        
-                        </div>         
-                    </li><!--/.portfolio-item-->
-                </ul>   
-            </div><!--/.box-->
+            
         </div><!--/.container-->
-    </section><!--/#portfolio-->
+    </section>
 
-    <section id="pricing">
+    <section id="future-2">
         <div class="container">
-            <div class="box">
-                <div class="center">
-                    <h2>See our Pricings</h2>
-                    <p class="lead">Pellentesque habitant morbi tristique senectus et netus et <br>malesuada fames ac turpis egestas.</p>
-                </div><!--/.center-->   
-                <div class="big-gap"></div>
-                <div id="pricing-table" class="row">
-                    <div class="col-sm-4">
-                        <ul class="plan">
-                            <li class="plan-name">Basic</li>
-                            <li class="plan-price">$29</li>
-                            <li>5GB Storage</li>
-                            <li>1GB RAM</li>
-                            <li>400GB Bandwidth</li>
-                            <li>10 Email Address</li>
-                            <li>Forum Support</li>
-                            <li class="plan-action"><a href="#" class="btn btn-primary btn-lg">Signup</a></li>
-                        </ul>
-                    </div><!--/.col-sm-4-->
-                    <div class="col-sm-4">
-                        <ul class="plan featured">
-                            <li class="plan-name">Standard</li>
-                            <li class="plan-price">$49</li>
-                            <li>10GB Storage</li>
-                            <li>2GB RAM</li>
-                            <li>1TB Bandwidth</li>
-                            <li>100 Email Address</li>
-                            <li>Forum Support</li>
-                            <li class="plan-action"><a href="#" class="btn btn-primary btn-lg">Signup</a></li>
-                        </ul>
-                    </div><!--/.col-sm-4-->
-                    <div class="col-sm-4">
-                        <ul class="plan">
-                            <li class="plan-name">Advanced</li>
-                            <li class="plan-price">$199</li>
-                            <li>30GB Storage</li>
-                            <li>5GB RAM</li>
-                            <li>5TB Bandwidth</li>
-                            <li>1000 Email Address</li>
-                            <li>Forum Support</li>
-                            <li class="plan-action"><a href="#" class="btn btn-primary btn-lg">Signup</a></li>
-                        </ul>
-                    </div><!--/.col-sm-4-->
-                </div> 
-            </div> 
+            
         </div>
-    </section><!--/#pricing-->
+    </section>
 
-    <section id="about-us">
+    <section id="acerca-de">
         <div class="container">
             <div class="box">
                 <div class="center">
-                    <h2>Meet the Team</h2>
-                    <p class="lead">Pellentesque habitant morbi tristique senectus et netus et<br>malesuada fames ac turpis egestas.</p>
+                    <h2>Conoce al equipo</h2>
+                    <p class="lead">Poner acá los integrantes de la contraloría </p>
                 </div>
                 <div class="gap"></div>
                 <div id="team-scroller" class="carousel scale">
@@ -270,19 +159,19 @@
                             <div class="row">
                                 <div class="col-sm-4">
                                     <div class="member">
-                                        <p><img class="img-responsive img-thumbnail img-circle" src="images/team1.jpg" alt="" ></p>
+                                        <p><img class="img-responsive img-thumbnail img-circle" src="img/team1.jpg" alt="" ></p>
                                         <h3>Agnes Smith<small class="designation">CEO &amp; Founder</small></h3>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="member">
-                                        <p><img class="img-responsive img-thumbnail img-circle" src="images/team2.jpg" alt="" ></p>
+                                        <p><img class="img-responsive img-thumbnail img-circle" src="img/team2.jpg" alt="" ></p>
                                         <h3>Donald Ford<small class="designation">Senior Vice President</small></h3>
                                     </div>
                                 </div>        
                                 <div class="col-sm-4">
                                     <div class="member">
-                                        <p><img class="img-responsive img-thumbnail img-circle" src="images/team3.jpg" alt="" ></p>
+                                        <p><img class="img-responsive img-thumbnail img-circle" src="img/team3.jpg" alt="" ></p>
                                         <h3>Karen Richardson<small class="designation">Assitant Vice President</small></h3>
                                     </div>
                                 </div>
@@ -292,19 +181,19 @@
                             <div class="row">
                                 <div class="col-sm-4">
                                     <div class="member">
-                                        <p><img class="img-responsive img-thumbnail img-circle" src="images/team3.jpg" alt="" ></p>
+                                        <p><img class="img-responsive img-thumbnail img-circle" src="img/team3.jpg" alt="" ></p>
                                         <h3>David Robbins<small class="designation">Co-Founder</small></h3>
                                     </div>
                                 </div>   
                                 <div class="col-sm-4">
                                     <div class="member">
-                                        <p><img class="img-responsive img-thumbnail img-circle" src="images/team1.jpg" alt="" ></p>
+                                        <p><img class="img-responsive img-thumbnail img-circle" src="img/team1.jpg" alt="" ></p>
                                         <h3>Philip Mejia<small class="designation">Marketing Manager</small></h3>
                                     </div>
                                 </div>     
                                 <div class="col-sm-4">
                                     <div class="member">
-                                        <p><img class="img-responsive img-thumbnail img-circle" src="images/team2.jpg" alt="" ></p>
+                                        <p><img class="img-responsive img-thumbnail img-circle" src="img/team2.jpg" alt="" ></p>
                                         <h3>Charles Erickson<small class="designation">Support Manager</small></h3>
                                     </div>
                                 </div>
@@ -322,12 +211,12 @@
         </div><!--/.container-->
     </section><!--/#about-us-->
 
-    <section id="contact">
+    <section id="contacto">
         <div class="container">
             <div class="box last">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h1>Contact Form</h1>
+                        <h1>Formulario de Contacto</h1>
                         <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
                         <div class="status alert alert-success" style="display: none"></div>
                         <form id="main-contact-form" class="contact-form" name="contact-form" method="post" action="sendemail.php" role="form">
@@ -356,7 +245,7 @@
                         </form>
                     </div><!--/.col-sm-6-->
                     <div class="col-sm-6">
-                        <h1>Our Address</h1>
+                        <h1>Nuestra Dirección</h1>
                         <div class="row">
                             <div class="col-md-6">
                                 <address>
@@ -375,7 +264,7 @@
                                 </address>
                             </div>
                         </div>
-                        <h1>Connect with us</h1>
+                        <h1>Redes Sociales</h1>
                         <div class="row">
                             <div class="col-md-6">
                                 <ul class="social">
@@ -405,7 +294,7 @@
                     &copy; 2013 <a target="_blank" href="http://shapebootstrap.net/" title="Free Twitter Bootstrap WordPress Themes and HTML templates">ShapeBootstrap</a>. All Rights Reserved.
                 </div>
                 <div class="col-sm-6">
-                    <img class="pull-right" src="images/shapebootstrap.png" alt="ShapeBootstrap" title="ShapeBootstrap">
+                    <img class="pull-right" src="img/shapebootstrap.png" alt="ShapeBootstrap" title="ShapeBootstrap">
                 </div>
             </div>
         </div>

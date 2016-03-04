@@ -48,10 +48,10 @@ a:focus {
   z-index: 99999;
 }
 #main-slider {
-  background-image: url(../images/slider-bg.jpg);
+  background-image: url(../img/slider-bg-5.jpg);
   background-attachment: fixed;
   background-size: cover;
-  background-position: 50% 50%;
+  background-position: 50% 130%;
   background-repeat: no-repeat;
   padding: 200px 0;
   color: #fff;
@@ -120,24 +120,24 @@ a:focus {
   text-shadow: 0 3px rgba(0, 0, 0, 0.1);
   color: #fff;
 }
-#contact .box {
+#contacto .box {
   background-color: #222;
   color: #999;
 }
-#contact .box h1,
-#contact .box h2,
-#contact .box h3 {
+#contacto .box h1,
+#contacto .box h2,
+#contacto .box h3 {
   color: #fff;
 }
-#contact .box a {
+#contacto .box a {
   color: #999;
 }
-#contact .box a:hover {
+#contacto .box a:hover {
   color: #52b6ec;
 }
-#contact .box input[type="text"],
-#contact .box input[type="email"],
-#contact .box textarea {
+#contacto .box input[type="text"],
+#contacto .box input[type="email"],
+#contacto .box textarea {
   background-color: #111;
   border: 0;
   -webkit-transition: 300ms;
@@ -145,9 +145,9 @@ a:focus {
   -o-transition: 300ms;
   transition: 300ms;
 }
-#contact .box input[type="text"]:focus,
-#contact .box input[type="email"]:focus,
-#contact .box textarea:focus {
+#contacto .box input[type="text"]:focus,
+#contacto .box input[type="email"]:focus,
+#contacto .box textarea:focus {
   background-color: #000;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
@@ -631,4 +631,23 @@ textarea#message {
     opacity: 1;
     -o-transform: scale(1);
   }
+}
+
+
+#asociaciones .center img
+{
+  height: 100px;
+  width: 100px;
+
+  border-radius: 50px;
+}
+
+#asociaciones .texto
+{
+  margin: 50px 0 25px 0;
+}
+
+#asociaciones .row
+{
+  margin-bottom: 25px;
 }
