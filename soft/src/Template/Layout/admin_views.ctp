@@ -29,7 +29,7 @@
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrar Asociaciones
             <span class="caret"></span></a>
             <ul class="dropdown-menu">
-          <li><a href="/association/add">Agregar Asociación</a></li>
+          <li><?php echo $this->Html->link('Agregar Asociaciones', '/associations/add');?></li>
         </ul>
       </li>
       <li class="dropdown">

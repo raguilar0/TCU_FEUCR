@@ -7,6 +7,7 @@ class AssociationsController extends AppController
 {
 	public function index()
 	{
+		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
 		
 	}
 	
