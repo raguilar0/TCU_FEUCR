@@ -16,6 +16,7 @@ class AssociationsController extends AppController
 
 		$association = $this->Associations->newEntity($this->request->data); //El parámetro es para validar los datos
 
+
 		if($this->request->is('post'))
 		{
 
