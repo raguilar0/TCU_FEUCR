@@ -8,7 +8,7 @@ class AssociationsController extends AppController
 	public function index()
 	{
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
-		
+
 	}
 	
 	public function add()
@@ -31,6 +31,13 @@ class AssociationsController extends AppController
 		}
 
 		$this->set('association',$association); // set() Pasa la variable association a la vista.
+	}
+
+	public function modify()
+	{
+		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
+
+		
 	}
 	
 }

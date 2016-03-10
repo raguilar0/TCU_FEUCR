@@ -13,6 +13,7 @@
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
+    <?php echo $this->Html->meta('favicon.ico','webroot/favicon.ico',array('type' => 'icon'));?>
 </head><!--/head-->
 
 <body
@@ -24,20 +25,21 @@
           <a class="navbar-brand" href="#">FEUCR</a>
         </div>
         <ul class="nav navbar-nav">
-          <li class="active"><a href="#">Inicio</a></li>
+          <li class="active"><?php echo $this->Html->link('Inicio', '/associations/');?></li>
           <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrar Asociaciones
+            <a class="dropdown-toggle" data-toggle="dropdown" href="">Administrar Asociaciones
             <span class="caret"></span></a>
             <ul class="dropdown-menu">
           <li><?php echo $this->Html->link('Agregar Asociaciones', '/associations/add');?></li>
+          <li><?php echo $this->Html->link('Modificar Asociaciones', '/associations/modify');?></li>
         </ul>
       </li>
       <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrar Montos
             <span class="caret"></span></a>
             <ul class="dropdown-menu">
-                <li><a href="http://plataforma-feucr-daemonandrey.c9users.io/soft/amounts">Consultar Montos</a></li>
-                <li><a href="http://plataforma-feucr-daemonandrey.c9users.io/soft/amounts/add">Agregar Monto</a></li>
+                <li><?php echo $this->Html->link('Consultar Montos', '/amounts');?></li>
+                <li><?php echo $this->Html->link('Agregar Montos', '/amounts/add');?></li>
         </ul>
       </li>
     </ul>
