@@ -2,15 +2,33 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
 
 class AssociationsController extends AppController
 {
+
+
+
 	public function index()
 	{
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
 
 	}
 	
+	public function showAssociations($id = null)
+	{
+		$this->viewBuilder()->layout('admin_views');
+
+		$query = $this->Associations->find()
+				->select(['name','id']);
+		$query->hydrate(false); //Quita elementos innecesarios de la consulta
+
+		$data = $query->toArray();	
+
+		$this->set('data',$data);
+		
+	}
+
 	public function add()
 	{
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
@@ -37,7 +55,25 @@ class AssociationsController extends AppController
 	{
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
 
-		
+
+
+		if($this->request->is('ajax'))
+		{
+			$query = $this->Associations->find('all', 
+				['conditions' => ['Associations.name LIKE'=> '%'.$this->request->data['name'].'%']
+				]);
+
+			$data = $query->toArray();
+
+
+
+
+
+			die($data);
+		}
+
+
 	}
+
 	
 }
