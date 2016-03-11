@@ -39,6 +39,7 @@ class AssociationsController extends AppController
 		if($this->request->is('post'))
 		{
 
+
 			if($this->Associations->save($association)) //Guarda los datos
 			{
 				$this->Flash->success(__('La Asociación ha sido guardada exitosamente'));
@@ -51,27 +52,39 @@ class AssociationsController extends AppController
 		$this->set('association',$association); // set() Pasa la variable association a la vista.
 	}
 
-	public function modify()
+	public function modify($id = null)
 	{
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
 
+		$association = $this->Associations->get($id);
 
-
-		if($this->request->is('ajax'))
+		if($this->request->is(array('post','put')))
 		{
-			$query = $this->Associations->find('all', 
-				['conditions' => ['Associations.name LIKE'=> '%'.$this->request->data['name'].'%']
-				]);
+			
+			$association->acronym = $this->request->data['acronym'];
 
-			$data = $query->toArray();
+			//TODO:pendiente Agregar las actualizaciones de los otros campos
+			
+			if($this->Associations->save($association))
+			{
+				return $this->redirect(['action'=>'index']);
+			}
 
+			
 
+		}
+		else
+		{
+			
 
-
-
-			die($data);
+			$this->set('data',$association); // set() Pasa la variable association a la vista.
 		}
 
+		
+	}
+
+	public function delete()
+	{
 
 	}
 
