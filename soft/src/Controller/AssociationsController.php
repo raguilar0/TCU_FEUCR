@@ -42,11 +42,11 @@ class AssociationsController extends AppController
 
 			if($this->Associations->save($association)) //Guarda los datos
 			{
-				$this->Flash->success(__('La Asociación ha sido guardada exitosamente'));
-                return $this->redirect(['action' => 'add']); //Redirecciona a la vista del index cuando guarda los datos. 
+				//$this->Flash->success(__('La Asociación ha sido guardada exitosamente'));
+                //return $this->redirect(['action' => 'add']); //Redirecciona a la vista del index cuando guarda los datos. 
 			}
 
-			$this->Flash->error(__('No es posible guardar la asociación en este momento'));
+			//$this->Flash->error(__('No es posible guardar la asociación en este momento'));
 		}
 
 		$this->set('association',$association); // set() Pasa la variable association a la vista.
@@ -63,15 +63,11 @@ class AssociationsController extends AppController
 			
 			$asso = $this->Associations->newEntity($this->request->data);
 
-			$callback = "0";
-
-			if(!$asso->errors())
-			{
-				$association->acronym = $this->request->data['acronym'];
-				$association->name = $this->request->data['name'];
-				$association->location = $this->request->data['location'];
-				$association->schedule = $this->request->data['schedule'];
-				$association->authorized_card = $this->request->data['authorized_card'];
+			$association->acronym = $this->request->data['acronym'];
+			$association->name = $this->request->data['name'];
+			$association->location = $this->request->data['location'];
+			$association->schedule = $this->request->data['schedule'];
+			$association->authorized_card = $this->request->data['authorized_card'];
 
 			if($this->Associations->save($association))
 			{
@@ -79,9 +75,6 @@ class AssociationsController extends AppController
 
 			}
 
-			}
-
-			die($callback);
 
 		}
 		else

@@ -49,12 +49,12 @@
 
     echo "</div>";
 
-
+ 	echo "<h4>".$this->Form->submit('Actualizar Asociación', ['class' => 'form-control', 'id' => 'asso_id'])."</h4>";
 
     echo $this->Form->end();
 ?>
 
-<button id="asso_id" class="form-control">Actualizar Datos</button>
+
 
 <div class="row text-right">
 	<div class="col-xs-12">
@@ -64,12 +64,17 @@
 </div>
 
 <script>
-$(document).ready(function(){
-	$("#asso_id").click(function(){
-		$.post($("form").attr("action"),$("form").serialize(), 
+	$('form').submit(function(e){
+		e.preventDefault();
+		ajaxRequest();
+	});
+
+	function ajaxRequest()
+	{
+			$.post($("form").attr("action"),$("form").serialize(), 
 			function(data, status)
 			{
-				if(data == "1")
+				if(status == "success")
 				{
 					$("#callback").text("¡Los datos se actualizaron con éxito!");
 					$("#callback").css("color","#01DF01");
@@ -77,28 +82,12 @@ $(document).ready(function(){
 				}
 				else
 				{
-					if($("#name").val() == "")
-					{
-						$("#name").css("background-color","#FA5858");
-					}
-
-					if($("#acronym").val() == "")
-					{
-						$("#acronym").css("background-color","#FA5858");
-					}
-
-					if($("#location").val() == "")
-					{
-						$("#location").css("background-color","#FA5858");
-					}
-
-					$("#callback").text("Debe llenar el o los campos en rojo");
-					$("#callback").css("color","red");
+					$("#callback").text("Lo sentimos. Ocurrió un error inesperado. Inténtelo más tarde.");
+					$("#callback").css("color","#01DF01");
+					$("input").css("background-color","white");
 				}				
 
-			}
-		);
+			});
+	}
 
-	});
-});
 </script>
