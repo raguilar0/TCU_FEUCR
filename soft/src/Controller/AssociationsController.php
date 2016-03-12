@@ -61,31 +61,45 @@ class AssociationsController extends AppController
 		if($this->request->is(array('post','put')))
 		{
 			
-			$association->acronym = $this->request->data['acronym'];
+			$asso = $this->Associations->newEntity($this->request->data);
 
-			//TODO:pendiente Agregar las actualizaciones de los otros campos
-			
+			$callback = "0";
+
+			if(!$asso->errors())
+			{
+				$association->acronym = $this->request->data['acronym'];
+				$association->name = $this->request->data['name'];
+				$association->location = $this->request->data['location'];
+				$association->schedule = $this->request->data['schedule'];
+				$association->authorized_card = $this->request->data['authorized_card'];
+
 			if($this->Associations->save($association))
 			{
-				return $this->redirect(['action'=>'index']);
+					$callback = "1";
+
 			}
 
-			
+			}
+
+			die($callback);
 
 		}
 		else
 		{
-			
-
 			$this->set('data',$association); // set() Pasa la variable association a la vista.
 		}
 
 		
 	}
 
-	public function delete()
+	public function delete($id = null)
 	{
+		$association = $this->Associations->get($id);
 
+		if($this->Associations->delete($association))
+		{
+			return $this->redirect(['action'=>'showAssociations']);
+		}
 	}
 
 	

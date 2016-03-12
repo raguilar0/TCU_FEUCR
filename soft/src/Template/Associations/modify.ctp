@@ -28,7 +28,7 @@
 	echo "<div class='form-group'>";
     echo "<h4>".$this->Form->input('acronym', ['class' => 'form-control', 'label'=>'Sigla', 'value'=>$data['acronym']])."</h4>";
 
-    echo "<h4>".$this->Form->input('name', ['class' => 'form-control','label'=>'Nombre de la Asociación', 'value'=>$data['name']])."</h4>";
+    echo "<h4>".$this->Form->input('name', ['class' => 'form-control','label'=>'Nombre de la Asociación', 'value'=>$data['name'], 'id'=>'name'])."</h4>";
 
     echo "<h4>".$this->Form->input('location', ['class' => 'form-control','label'=>'Localización','value'=>$data['location']])."</h4>";
 
@@ -47,19 +47,55 @@
     }
 
 
-    echo "<h4>".$this->Form->submit('Actualizar Asociación', ['class' => 'form-control', 'id' => 'asso_id'])."</h4>";
     echo "</div>";
+
+
 
     echo $this->Form->end();
 ?>
 
+<button id="asso_id" class="form-control">Actualizar Datos</button>
+
+<div class="row text-right">
+	<div class="col-xs-12">
+		<h4 id="callback" style="color:#01DF01"></h4>	
+	</div>
+
+</div>
+
 <script>
 $(document).ready(function(){
-	$("#submit").click(function(){
-		$.post("modify",$("#name").serialize(), 
+	$("#asso_id").click(function(){
+		$.post($("form").attr("action"),$("form").serialize(), 
 			function(data, status)
 			{
-				$("#datos").text(data);
+				if(data == "1")
+				{
+					$("#callback").text("¡Los datos se actualizaron con éxito!");
+					$("#callback").css("color","#01DF01");
+					$("input").css("background-color","white");
+				}
+				else
+				{
+					if($("#name").val() == "")
+					{
+						$("#name").css("background-color","#FA5858");
+					}
+
+					if($("#acronym").val() == "")
+					{
+						$("#acronym").css("background-color","#FA5858");
+					}
+
+					if($("#location").val() == "")
+					{
+						$("#location").css("background-color","#FA5858");
+					}
+
+					$("#callback").text("Debe llenar el o los campos en rojo");
+					$("#callback").css("color","red");
+				}				
+
 			}
 		);
 

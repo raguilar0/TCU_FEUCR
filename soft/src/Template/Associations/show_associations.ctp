@@ -17,3 +17,18 @@
 
 	
 ?>
+
+<script >
+	$(document).ready(function(){
+	$(".glyphicon-trash").click(function(){
+		var action = confirm("¿Realmente desea borrar esta Asociación?");
+
+		if(action == false)
+		{
+			$(".glyphicon-trash").attr('href','./showAssociations');
+		}
+
+
+	});
+});
+</script>
