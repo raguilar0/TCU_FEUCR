@@ -10,6 +10,8 @@ class AmountsController extends AppController
 		
 	}
 	
+
+
 	public function add()
 	{
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
@@ -31,5 +33,8 @@ class AmountsController extends AppController
 
 		$this->set('amount',$amount); // set() Pasa la variable amount a la vista.
 	}
-	
+
+
+
+
 }

@@ -19,29 +19,33 @@ class AssociationsController extends AppController
 	{
 		$this->viewBuilder()->layout('admin_views');
 
-		$firstQuery = $this->Associations->find()
-						-> select(['headquarters'])
-						-> distinct(['headquarters']); //Obtiene todas las sedes distintas que hay
+		if($id)
+		{
 
-		$firstQuery->hydrate(false); //Quita elementos innecesarios
+			$firstQuery = $this->Associations->find()
+							-> select(['headquarters'])
+							-> distinct(['headquarters']); //Obtiene todas las sedes distintas que hay
 
-		$firstQuery = $firstQuery->toArray();
+			$firstQuery->hydrate(false); //Quita elementos innecesarios
 
-		$secondQuery = array();
+			$firstQuery = $firstQuery->toArray();
 
-//Por cada sede recupera las asocias dentro de esa sede
-		for ($i=0; $i < count($firstQuery) ; $i++) { 
-			$query = $this->Associations->find()
-				->select(['name','id'])
-				->where(["headquarters = '".$firstQuery[$i]['headquarters']."'"]);
-			$query->hydrate(false); //Quita elementos innecesarios de la consulta	
+			$secondQuery = array();
 
-			
+	//Por cada sede recupera las asocias dentro de esa sede
+			for ($i=0; $i < count($firstQuery) ; $i++) { 
+				$query = $this->Associations->find()
+					->select(['name','id'])
+					->where(["headquarters = '".$firstQuery[$i]['headquarters']."'"]);
+				$query->hydrate(false); //Quita elementos innecesarios de la consulta	
 
-			$secondQuery[$firstQuery[$i]['headquarters']] = $query->toArray();
+				
+
+				$secondQuery[$firstQuery[$i]['headquarters']] = $query->toArray();
+			}
+
+			$this->set('data',$secondQuery);
 		}
-
-		$this->set('data',$secondQuery);
 		
 	}
 
@@ -71,44 +75,52 @@ class AssociationsController extends AppController
 	{
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
 
-		$association = $this->Associations->get($id);
-
-		if($this->request->is(array('post','put')))
+		if($id)
 		{
-			
-			$asso = $this->Associations->newEntity($this->request->data);
+			$association = $this->Associations->get($id);
 
-			$association->acronym = $this->request->data['acronym'];
-			$association->name = $this->request->data['name'];
-			$association->location = $this->request->data['location'];
-			$association->schedule = $this->request->data['schedule'];
-			$association->authorized_card = $this->request->data['authorized_card'];
-			$association->headquarters = $this->request->data['headquarters'];
-
-			if($this->Associations->save($association))
+			if($this->request->is(array('post','put')))
 			{
-					
+				
+				$asso = $this->Associations->newEntity($this->request->data);
+
+				$association->acronym = $this->request->data['acronym'];
+				$association->name = $this->request->data['name'];
+				$association->location = $this->request->data['location'];
+				$association->schedule = $this->request->data['schedule'];
+				$association->authorized_card = $this->request->data['authorized_card'];
+				$association->headquarters = $this->request->data['headquarters'];
+
+				if($this->Associations->save($association))
+				{
+						
+
+				}
+
 
 			}
-
-
+			else
+			{
+				$this->set('data',$association); // set() Pasa la variable association a la vista.
+			}
 		}
-		else
-		{
-			$this->set('data',$association); // set() Pasa la variable association a la vista.
-		}
+
 
 		
 	}
 
 	public function delete($id = null)
 	{
-		$association = $this->Associations->get($id);
-
-		if($this->Associations->delete($association))
+		if($id)
 		{
-			return $this->redirect(['action'=>'showAssociations']);
+			$association = $this->Associations->get($id);
+
+			if($this->Associations->delete($association))
+			{
+				return $this->redirect(['action'=>'showAssociations']);
+			}
 		}
+
 	}
 
 	
