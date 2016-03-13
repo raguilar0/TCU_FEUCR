@@ -7,32 +7,7 @@ class AmountsController extends AppController
 {
 	public function index()
 	{
-		$this->viewBuilder()->layout('admin_views');
-
-		$this->loadModel('Associations');
-		$firstQuery = $this->Associations->find()
-						-> select(['headquarters'])
-						-> distinct(['headquarters']); //Obtiene todas las sedes distintas que hay
-
-		$firstQuery->hydrate(false); //Quita elementos innecesarios
-
-		$firstQuery = $firstQuery->toArray();
-
-		$secondQuery = array();
-
-//Por cada sede recupera las asocias dentro de esa sede
-		for ($i=0; $i < count($firstQuery) ; $i++) { 
-			$query = $this->Associations->find()
-				->select(['name','id'])
-				->where(["headquarters = '".$firstQuery[$i]['headquarters']."'"]);
-			$query->hydrate(false); //Quita elementos innecesarios de la consulta	
-
-			
-
-			$secondQuery[$firstQuery[$i]['headquarters']] = $query->toArray();
-		}
-
-		$this->set('data',$secondQuery);
+		
 	}
 	
 
@@ -59,17 +34,7 @@ class AmountsController extends AppController
 		$this->set('amount',$amount); // set() Pasa la variable amount a la vista.
 	}
 
-	public function showInformation($id = null)
-	{
-		$this->viewBuilder()->layout('admin_views');
 
-		if($id)
-		{
-			$amount = $this->Amounts->get($id);
-
-			$this->set('data',$amounts);
-		}
-	}
 
 
 }
