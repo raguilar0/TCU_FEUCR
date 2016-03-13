@@ -2,7 +2,7 @@
 
 <div class="row text-center addBtn">
 	<div class="col-xs-12">
-	<?php echo $this->Html->link('Agregar Asociación','/associations/add/',['class'=>'btn btn-danger']);?>
+	<?php echo $this->Html->link('Agregar Asociación','/associations/add/',['class'=>'btn btn-success']);?>
 	</div>
 </div>
 
@@ -19,7 +19,7 @@
 
 		echo "<div class = 'col-xs-12 col-md-4 colSedes'>";
 
-		echo "<button data-toggle='collapse' class='btn btn-primary' data-target='#id".$counter."'>".$key."</button>";
+		echo "<button data-toggle='collapse' class='btn btn-info' data-target='#id".$counter."'>".$key."</button>";
 		echo "<div id = 'id".$counter."'class='collapse'>";
 			for ($i=0; $i < count($data[$key]); $i++) { 
 			 	
