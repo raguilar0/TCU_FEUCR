@@ -4,7 +4,7 @@
  
 <!-- link to add new users page -->
 <!-- <div class='upper-right-opt'>
-    <?php echo $this->Html->link( '+ New User', array( 'action' => 'add' ) ); ?>
+<?php echo $this->Html->link( '+ New User', array( 'action' => 'add' ) ); ?>
 </div>
  -->
 <table style='padding:5px;'>
@@ -18,7 +18,6 @@
      
 <?php
  
-     
     //loop to show all retrieved records
     foreach( $amounts as $amount ){
      
