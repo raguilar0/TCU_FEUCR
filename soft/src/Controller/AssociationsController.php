@@ -15,37 +15,34 @@ class AssociationsController extends AppController
 
 	}
 	
-	public function showAssociations($id = null)
+	public function showAssociations()
 	{
 		$this->viewBuilder()->layout('admin_views');
 
-		if($id)
-		{
 
-			$firstQuery = $this->Associations->find()
-							-> select(['headquarters'])
-							-> distinct(['headquarters']); //Obtiene todas las sedes distintas que hay
+		$firstQuery = $this->Associations->find()
+						-> select(['headquarters'])
+						-> distinct(['headquarters']); //Obtiene todas las sedes distintas que hay
 
-			$firstQuery->hydrate(false); //Quita elementos innecesarios
+		$firstQuery->hydrate(false); //Quita elementos innecesarios
 
-			$firstQuery = $firstQuery->toArray();
+		$firstQuery = $firstQuery->toArray();
 
-			$secondQuery = array();
+		$secondQuery = array();
 
-	//Por cada sede recupera las asocias dentro de esa sede
-			for ($i=0; $i < count($firstQuery) ; $i++) { 
-				$query = $this->Associations->find()
-					->select(['name','id'])
-					->where(["headquarters = '".$firstQuery[$i]['headquarters']."'"]);
-				$query->hydrate(false); //Quita elementos innecesarios de la consulta	
+//Por cada sede recupera las asocias dentro de esa sede
+		for ($i=0; $i < count($firstQuery) ; $i++) { 
+			$query = $this->Associations->find()
+				->select(['name','id'])
+				->where(["headquarters = '".$firstQuery[$i]['headquarters']."'"]);
+			$query->hydrate(false); //Quita elementos innecesarios de la consulta	
 
-				
+			
 
-				$secondQuery[$firstQuery[$i]['headquarters']] = $query->toArray();
-			}
-
-			$this->set('data',$secondQuery);
+			$secondQuery[$firstQuery[$i]['headquarters']] = $query->toArray();
 		}
+
+		$this->set('data',$secondQuery);
 		
 	}
 
