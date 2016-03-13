@@ -16,7 +16,8 @@ class AssociationsTable extends Table
         $validator
             ->notEmpty('acronym')
             ->requirePresence('name')
-            ->notEmpty('location');
+            ->notEmpty('location')
+            ->notEmpty('headquarters');
 
         return $validator;
     }

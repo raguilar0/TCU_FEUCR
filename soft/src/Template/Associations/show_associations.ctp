@@ -1,34 +1,56 @@
-<h1>Elije una Sede y posteriormente una Asociación</h1>
+<h1 style="text-align:center;">Elije una Sede y posteriormente una Asociación</h1>
 
+<div class="row text-center addBtn">
+	<div class="col-xs-12">
+	<?php echo $this->Html->link('Agregar Asociación','/associations/add/',['class'=>'btn btn-danger']);?>
+	</div>
+</div>
 
 <?php
 
-	echo $this->Html->link('Agregue una Asociación', '/associations/add')."<br>";
-
-	foreach($data as $item)
-	{
-		echo $item['name'];
-
-		echo $this->Html->link('','/associations/modify/'.$item['id'],['class'=>'glyphicon glyphicon-pencil']);
-
-		echo $this->Html->link('','/associations/delete/'.$item['id'],['class'=>'glyphicon glyphicon-trash'])."<br>";
-
-	}
-
+	$counter = 0;
 	
-?>
+	foreach ($data as $key => $value) {
 
-<script >
-	$(document).ready(function(){
-	$(".glyphicon-trash").click(function(){
-		var action = confirm("¿Realmente desea borrar esta Asociación?");
-
-		if(action == false)
+		if(($counter % 12) == 0)
 		{
-			$(".glyphicon-trash").attr('href','./showAssociations');
+			echo "<div class = 'row'>";
+		}
+
+		echo "<div class = 'col-xs-12 col-md-4 colSedes'>";
+
+		echo "<button data-toggle='collapse' class='btn btn-primary' data-target='#id".$counter."'>".$key."</button>";
+		echo "<div id = 'id".$counter."'class='collapse'>";
+			for ($i=0; $i < count($data[$key]); $i++) { 
+			 	
+				echo "<h4>";
+				echo $data[$key][$i]['name']." ";
+				echo $this->Html->link('','/associations/modify/'.$data[$key][$i]['id'],['class'=>'glyphicon glyphicon-pencil'])." ";
+				echo $this->Html->link('','/associations/delete/'.$data[$key][$i]['id'],['class'=>'glyphicon glyphicon-trash']);
+
+				echo "</h4>";
+				
+			 }
+
+		echo "</div>";
+
+		echo "</div>";
+
+		$counter += 4;
+
+		if(($counter % 12) == 0)
+		{
+			echo "</div>";
 		}
 
 
-	});
-});
-</script>
+
+	}
+
+	if(($counter % 12) != 0)
+	{
+		echo "</div>";
+	}
+
+
+?>

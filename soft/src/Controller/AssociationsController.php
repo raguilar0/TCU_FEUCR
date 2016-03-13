@@ -19,13 +19,29 @@ class AssociationsController extends AppController
 	{
 		$this->viewBuilder()->layout('admin_views');
 
-		$query = $this->Associations->find()
-				->select(['name','id']);
-		$query->hydrate(false); //Quita elementos innecesarios de la consulta
+		$firstQuery = $this->Associations->find()
+						-> select(['headquarters'])
+						-> distinct(['headquarters']); //Obtiene todas las sedes distintas que hay
 
-		$data = $query->toArray();	
+		$firstQuery->hydrate(false); //Quita elementos innecesarios
 
-		$this->set('data',$data);
+		$firstQuery = $firstQuery->toArray();
+
+		$secondQuery = array();
+
+//Por cada sede recupera las asocias dentro de esa sede
+		for ($i=0; $i < count($firstQuery) ; $i++) { 
+			$query = $this->Associations->find()
+				->select(['name','id'])
+				->where(["headquarters = '".$firstQuery[$i]['headquarters']."'"]);
+			$query->hydrate(false); //Quita elementos innecesarios de la consulta	
+
+			
+
+			$secondQuery[$firstQuery[$i]['headquarters']] = $query->toArray();
+		}
+
+		$this->set('data',$secondQuery);
 		
 	}
 
@@ -42,11 +58,10 @@ class AssociationsController extends AppController
 
 			if($this->Associations->save($association)) //Guarda los datos
 			{
-				//$this->Flash->success(__('La Asociación ha sido guardada exitosamente'));
-                //return $this->redirect(['action' => 'add']); //Redirecciona a la vista del index cuando guarda los datos. 
+
 			}
 
-			//$this->Flash->error(__('No es posible guardar la asociación en este momento'));
+
 		}
 
 		$this->set('association',$association); // set() Pasa la variable association a la vista.
@@ -68,10 +83,11 @@ class AssociationsController extends AppController
 			$association->location = $this->request->data['location'];
 			$association->schedule = $this->request->data['schedule'];
 			$association->authorized_card = $this->request->data['authorized_card'];
+			$association->headquarters = $this->request->data['headquarters'];
 
 			if($this->Associations->save($association))
 			{
-					$callback = "1";
+					
 
 			}
 

@@ -7,6 +7,7 @@
 
     <title>Contraloría FEUCR</title>
     <?= $this->Html->css('bootstrap.min.css') ?>
+
   
     <?= $this->Html->css('views.css') ?>
 
@@ -15,6 +16,7 @@
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
     <?php echo $this->Html->meta('favicon.ico','webroot/favicon.ico',array('type' => 'icon'));?>
+
 </head><!--/head-->
 
 <body
@@ -52,6 +54,6 @@
 
      <?=$this->Html->script('jquery.js') ?>
      <?=$this->Html->script('bootstrap.min.js') ?>
-
+     <?=$this->Html->script('jquery_association.js') ?>
 </body>
 </html>

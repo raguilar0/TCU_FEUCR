@@ -12,6 +12,23 @@ body
 
 }
 
+h1{
+  margin-bottom: 40px;
+}
+
+.addBtn
+{
+  margin-bottom: 50px;
+}
+
+
+
+.colSedes
+{
+  margin-bottom: 25px;
+}
+
+
 #asso_id
 {
 	margin:auto;
