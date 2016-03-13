@@ -22,10 +22,14 @@ h1{
 }
 
 
-
 .colSedes
 {
   margin-bottom: 25px;
+}
+
+.colSedes .glyphicon-trash
+{
+  color: red;
 }
 
 

@@ -1,4 +1,4 @@
-<h1 style="text-align:center;">Elije una Sede y posteriormente una Asociación</h1>
+<h1 style="text-align:center;">Elegí una Sede y posteriormente una Asociación</h1>
 
 <div class="row text-center addBtn">
 	<div class="col-xs-12">
@@ -25,8 +25,6 @@
 			 	
 				echo "<h4>";
 				echo $data[$key][$i]['name']." ";
-				echo $this->Html->link('','/associations/modify/'.$data[$key][$i]['id'],['class'=>'glyphicon glyphicon-pencil'])." ";
-				echo $this->Html->link('','/associations/delete/'.$data[$key][$i]['id'],['class'=>'glyphicon glyphicon-trash']);
 
 				echo "</h4>";
 				
