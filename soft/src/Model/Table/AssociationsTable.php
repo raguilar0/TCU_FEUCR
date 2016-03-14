@@ -9,6 +9,8 @@ class AssociationsTable extends Table
     public function initialize(array $config)
     {
         $this->addBehavior('Timestamp');
+         $this->belongsTo('Headquarters');
+    
     }
 
     public function validationDefault(Validator $validator)

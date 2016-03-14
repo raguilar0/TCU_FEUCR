@@ -26,7 +26,7 @@
 				echo "<h4>";
 				echo $data[$key][$i]['name']." ";
 				echo $this->Html->link('', '/associations/modify/'.$data[$key][$i]['id'], ['class'=>'glyphicon glyphicon-pencil'])." ";
-				echo $this->Html->link('', '/associations/delete/'.$data[$key][$i]['id'], ['class'=>'glyphicon glyphicon-trash']);
+				echo $this->Html->link('', '/associations/delete/'.$data[$key][$i]['id'], ['class'=>'glyphicon glyphicon-trash'], ['confirm'=>'Seguro?']);
 
 				echo "</h4>";
 				

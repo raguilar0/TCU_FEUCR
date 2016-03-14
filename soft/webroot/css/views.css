@@ -16,11 +16,23 @@ h1{
   margin-bottom: 40px;
 }
 
+#addHeadquartersBtn
+{
+  width: 50px;
+  height: 35px;
+  margin-top: 30px;
+}
+
 .addBtn
 {
   margin-bottom: 50px;
 }
 
+#sedes_label
+{
+  font-weight: bold;
+  font-size: 19px;
+}
 
 .colSedes
 {
@@ -33,10 +45,20 @@ h1{
 }
 
 
+#sede_id
+{
+  margin:auto;
+  width: 150px;
+  background-color: #0080FF;
+  color: white;
+}
+
 #asso_id
 {
 	margin:auto;
 	width: 150px;
+    background-color: #0080FF;
+  color: white;
 }
 
 

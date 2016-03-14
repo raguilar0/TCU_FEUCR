@@ -19,27 +19,29 @@ class AssociationsController extends AppController
 	{
 		$this->viewBuilder()->layout('admin_views');
 
+		$this->loadModel('Headquarters');
 
-		$firstQuery = $this->Associations->find()
-						-> select(['headquarters'])
-						-> distinct(['headquarters']); //Obtiene todas las sedes distintas que hay
-
-		$firstQuery->hydrate(false); //Quita elementos innecesarios
+		$firstQuery = $this->Headquarters->find()
+						->hydrate(false)
+						->select(['id', 'name']);
 
 		$firstQuery = $firstQuery->toArray();
 
+		
+		$end = count($firstQuery);
 		$secondQuery = array();
-
-//Por cada sede recupera las asocias dentro de esa sede
-		for ($i=0; $i < count($firstQuery) ; $i++) { 
+		//Por cada sede recupera las asocias dentro de esa sede
+		for ($i=0; $i < $end ; $i++) { 
 			$query = $this->Associations->find()
+				->hydrate(false)
 				->select(['name','id'])
-				->where(["headquarters = '".$firstQuery[$i]['headquarters']."'"]);
-			$query->hydrate(false); //Quita elementos innecesarios de la consulta	
+				->where(['headquarter_id'=> $firstQuery[$i]['id']]);
+
 
 			
 
-			$secondQuery[$firstQuery[$i]['headquarters']] = $query->toArray();
+			$secondQuery[$firstQuery[$i]['name']] = $query->toArray();
+
 		}
 
 		$this->set('data',$secondQuery);
@@ -53,19 +55,46 @@ class AssociationsController extends AppController
 		$association = $this->Associations->newEntity($this->request->data); //El parámetro es para validar los datos
 
 
+
 		if($this->request->is('post'))
 		{
 
+			$this->loadModel('Headquarters'); //Carga el modelo de esta asociación
+			$headquarter = $this->Headquarters->find()
+							-> select(['id']) //Realiza la consulta
+							-> where(["name = '".$this->request->data['headquarter_id']."'"]); //Obtiene el id donde la sede  elegida por el usuario
+			$headquarter->hydrate(false);
 
-			if($this->Associations->save($association)) //Guarda los datos
+			$headquarter = $headquarter->toArray();
+
+			$association['headquarter_id'] = $headquarter[0]['id']; //Reemplaza la elección del usuario por el id 
+
+			if($this->Associations->save($association)) //Guarda los date_offset_get()
 			{
 
 			}
 
 
 		}
+		else
+		{
+			//Hago esta operación en el else, porque no me interesa cargarlo cuando voy a guardar los datos
 
-		$this->set('association',$association); // set() Pasa la variable association a la vista.
+			$this->loadModel('Headquarters'); //Carga el modelo de esta asociación
+
+			$headquarter = $this->Headquarters->find()
+							-> select(['name']); //Realiza la consulta
+
+			$headquarter->hydrate(false); //Quita elementos inncesarios
+			$headquarter = $headquarter->toArray(); //Convierte el resultado a un array
+
+
+
+			$association['headquarter'] = $headquarter; //Lo asocia
+
+			}
+
+			$this->set('association',$association); // set() Pasa la variable association a la vista.
 	}
 
 	public function modify($id = null)
@@ -75,6 +104,17 @@ class AssociationsController extends AppController
 		if($id)
 		{
 			$association = $this->Associations->get($id);
+
+			$head = $this->Associations->Headquarters->find()
+							->hydrate(false)
+							->select(['id','name'])
+							->where(['id'=>$association->headquarter_id]);
+
+			$head = $head->toArray();
+
+			$association->headquarter_id = $head[0]['name'];
+
+			debug($association);
 
 			if($this->request->is(array('post','put')))
 			{
