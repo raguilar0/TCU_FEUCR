@@ -5,14 +5,14 @@
 
 <?php
 
-	echo $this->Form->create($data);
+	echo $this->Form->create($data, ['id'=>'submit3']);
 	echo "<div class='form-group'>";
 
     echo "<h4>".$this->Form->input('name', ['class' => 'form-control','label'=>'Nombre de la Asociación', 'value'=>$data['name'], 'maxlength'=> '256'])."</h4>";
 
     echo "<h4>".$this->Form->input('acronym', ['class' => 'form-control', 'label'=>'Sigla', 'value'=>$data['acronym'], 'maxlength'=> '256'])."</h4>";
 
-    echo "<h4>".$this->Form->input('headquarters', ['class' => 'form-control','label'=>'Sede', 'maxlength'=> '100', 'value'=>$data['headquarters']])."</h4>";
+    echo "<h4>".$this->Form->input('headquarter', ['class' => 'form-control','label'=>'Sede', 'maxlength'=> '100', 'value'=>$data['headquarter_id']])."</h4>";
 
     echo "<h4>".$this->Form->input('location', ['class' => 'form-control','label'=>'Localización','value'=>$data['location'], 'maxlength'=> '1024'])."</h4>";
 
