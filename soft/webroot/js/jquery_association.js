@@ -39,7 +39,7 @@ $('#asso_id, #sede_id').click(function(){
 
 **/
 
-/
+
 function modifyAssociation()
 {
     $.post($("#submit3").attr("action"),$("#submit3").serialize(), 
