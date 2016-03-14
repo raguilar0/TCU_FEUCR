@@ -18,8 +18,7 @@
      
 <?php
  
-    //loop to show all retrieved records
-    foreach( $amounts as $amount ){
+    foreach( $amount as $amount ){
      
         echo "<tr>";
             echo "<td>{$amount['Amount']['id']}</td>";
@@ -30,12 +29,12 @@
             echo "<td class='actions'>";
                 echo $this->Html->link( 'Edit', array('action' => 'edit', $amount['Amount']['id']) );
                  
-                //in cakephp 2.0, we won't use get request for deleting records
-                //we use post request (for security purposes)
+               /* 
                 echo $this->Form->postLink( 'Delete', array(
                         'action' => 'delete', 
                         $amount['Amount']['id']), array(
-                            'confirm'=>'Are you sure you want to delete that user?' ) );
+                            'confirm'=>'Seguro que desea eliminar el monto?' ) );
+                */
             echo "</td>";
         echo "</tr>";
     }

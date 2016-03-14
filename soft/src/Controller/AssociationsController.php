@@ -32,7 +32,7 @@ class AssociationsController extends AppController
 
 //Por cada sede recupera las asocias dentro de esa sede
 		for ($i=0; $i < count($firstQuery) ; $i++) { 
-			$query = $this->Associations->find()
+				$query = $this->Associations->find()
 				->select(['name','id'])
 				->where(["headquarters = '".$firstQuery[$i]['headquarters']."'"]);
 			$query->hydrate(false); //Quita elementos innecesarios de la consulta	
