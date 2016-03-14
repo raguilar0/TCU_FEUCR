@@ -7,12 +7,41 @@ use Cake\ORM\TableRegistry;
 class AssociationsController extends AppController
 {
 
-
+	public function view($id = null)
+	{
+		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
+		if($id)
+		{
+			$association = $this->Associations->get($id);
+			$this->set('data',$association); // set() Pasa la variable association a la vista.
+		}
+		else
+		{
+			// Redirige de vuelta al index
+			return $this->redirect(['action'=>'index']);
+		}
+	}
 
 	public function index()
 	{
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
+		
+		$firstQuery = $this->Associations->find()
+						-> select(['headquarters'])
+						-> distinct(['headquarters']); //Obtiene todas las sedes distintas que hay
 
+		$firstQuery->hydrate(false); //Quita elementos innecesarios
+		$firstQuery = $firstQuery->toArray();
+		$secondQuery = array();
+		//Por cada sede recupera las asocias dentro de esa sede
+		for ($i=0; $i < count($firstQuery) ; $i++) { 
+			$query = $this->Associations->find()
+				->select(['name','id'])
+				->where(["headquarters = '".$firstQuery[$i]['headquarters']."'"]);
+			$query->hydrate(false); //Quita elementos innecesarios de la consulta	
+			$secondQuery[$firstQuery[$i]['headquarters']] = $query->toArray();
+		}
+		$this->set('data',$secondQuery);
 	}
 	
 	public function showAssociations()
@@ -30,7 +59,7 @@ class AssociationsController extends AppController
 
 		$secondQuery = array();
 
-//Por cada sede recupera las asocias dentro de esa sede
+		//Por cada sede recupera las asocias dentro de esa sede
 		for ($i=0; $i < count($firstQuery) ; $i++) { 
 			$query = $this->Associations->find()
 				->select(['name','id'])
