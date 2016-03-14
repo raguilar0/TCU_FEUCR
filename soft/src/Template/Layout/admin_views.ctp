@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 
     <title>Contraloría FEUCR</title>
     <?= $this->Html->css('bootstrap.min.css') ?>
@@ -51,8 +51,9 @@
         <?= $this->fetch('content') ?>  
     </div>
 
-    <?=$this->Html->script('jquery_association.js') ?>
+
      <?=$this->Html->script('jquery.js') ?>
      <?=$this->Html->script('bootstrap.min.js') ?>
+     <?=$this->Html->script('jquery_association.js') ?>
 </body>
 </html>
