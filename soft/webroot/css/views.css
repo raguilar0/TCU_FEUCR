@@ -23,6 +23,20 @@ h1{
   margin-top: 30px;
 }
 
+#asso_admin_btn
+{
+  width: 180px;
+  height:40px;
+  font-size: 17px;
+  text-align: center;
+  margin-top: 25px;
+}
+
+.read_association
+{
+  font-size: 16px;
+}
+
 #sedes_label
 {
   font-weight: bold;

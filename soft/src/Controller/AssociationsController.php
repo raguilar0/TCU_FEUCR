@@ -25,7 +25,22 @@ class AssociationsController extends AppController
 	public function index()
 	{
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
-
+		$this->loadModel('Headquarters');
+		$firstQuery = $this->Headquarters->find()
+						->hydrate(false)
+						->select(['id', 'name']);
+		$firstQuery = $firstQuery->toArray();
+		$end = count($firstQuery);
+		$secondQuery = array();
+		//Por cada sede recupera las asocias dentro de esa sede
+		for ($i=0; $i < $end ; $i++) { 
+			$query = $this->Associations->find()
+				->hydrate(false)
+				->select(['name','id'])
+				->where(['headquarter_id'=> $firstQuery[$i]['id']]);
+			$secondQuery[$firstQuery[$i]['name']] = $query->toArray();
+		}
+		$this->set('data',$secondQuery);
 	}
 	
 	public function showAssociations($id = null)
@@ -82,9 +97,26 @@ class AssociationsController extends AppController
 		
 	}
 
-	public function read()
+	public function read($id = null)
 	{
+		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
 
+		if($id)
+		{
+			$association = $this->Associations->get($id);
+
+			$headquarter = $this->Associations->Headquarters->find()
+							->hydrate(false)
+							->select(['name'])
+							-> where(['id'=> $association['headquarter_id']]);
+
+			$headquarter = $headquarter->toArray();
+
+			$association['headquarter']= $headquarter[0]['name'];
+
+			$this->set('data',$association);
+
+		}
 	}
 
 	public function add()
