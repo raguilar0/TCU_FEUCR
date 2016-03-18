@@ -1,4 +1,5 @@
-<h1> Sección de Administración de Asociaciones</h1>
+<h1> Sección de Asociaciones</h1>
+
 
 <div class="row">
 

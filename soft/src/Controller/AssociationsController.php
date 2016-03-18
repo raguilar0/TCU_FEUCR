@@ -7,7 +7,20 @@ use Cake\ORM\TableRegistry;
 class AssociationsController extends AppController
 {
 
-
+	public function view($id = null)
+	{
+		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
+		if($id)
+		{
+			$association = $this->Associations->get($id);
+			$this->set('data',$association); // set() Pasa la variable association a la vista.
+		}
+		else
+		{
+			// Redirige de vuelta al index
+			return $this->redirect(['action'=>'index']);
+		}
+	}
 
 	public function index()
 	{
