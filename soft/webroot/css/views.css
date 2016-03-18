@@ -23,9 +23,18 @@ h1{
   margin-top: 30px;
 }
 
-.addBtn
+#asso_admin_btn
 {
-  margin-bottom: 50px;
+  width: 180px;
+  height:40px;
+  font-size: 17px;
+  text-align: center;
+  margin-top: 25px;
+}
+
+.read_association
+{
+  font-size: 16px;
 }
 
 #sedes_label
@@ -57,10 +66,24 @@ h1{
 {
 	margin:auto;
 	width: 150px;
-    background-color: #0080FF;
+  background-color: #0080FF;
   color: white;
 }
 
+
+#sede_update_id_btn
+{
+    
+  width: 150px;
+  color: white;
+}
+
+#sede_delete_id_btn
+{
+  
+  width: 150px;
+  color: white;
+}
 
 #callback
 {

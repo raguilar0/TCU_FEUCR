@@ -7,27 +7,29 @@ use Cake\ORM\TableRegistry;
 class AssociationsController extends AppController
 {
 
-
+	public function view($id = null)
+	{
+		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
+		if($id)
+		{
+			$association = $this->Associations->get($id);
+			$this->set('data',$association); // set() Pasa la variable association a la vista.
+		}
+		else
+		{
+			// Redirige de vuelta al index
+			return $this->redirect(['action'=>'index']);
+		}
+	}
 
 	public function index()
 	{
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
-
-	}
-	
-	public function showAssociations()
-	{
-		$this->viewBuilder()->layout('admin_views');
-
 		$this->loadModel('Headquarters');
-
 		$firstQuery = $this->Headquarters->find()
 						->hydrate(false)
 						->select(['id', 'name']);
-
 		$firstQuery = $firstQuery->toArray();
-
-		
 		$end = count($firstQuery);
 
 
@@ -37,16 +39,85 @@ class AssociationsController extends AppController
 				->hydrate(false)
 				->select(['name','id'])
 				->where(['headquarter_id'=> $firstQuery[$i]['id']]);
+			$secondQuery[$firstQuery[$i]['name']] = $query->toArray();
+		}
+		$this->set('data',$secondQuery);
+	}
+	
+	public function showAssociations($id = null)
+	{
+		if($id)
+		{
+			$this->viewBuilder()->layout('admin_views');
 
+			$this->loadModel('Headquarters');
+
+			$firstQuery = $this->Headquarters->find()
+							->hydrate(false)
+							->select(['id', 'name']);
+
+			$firstQuery = $firstQuery->toArray();
 
 			
+			$end = count($firstQuery);
+			$secondQuery = array();
+			//Por cada sede recupera las asocias dentro de esa sede
+			for ($i=0; $i < $end ; $i++) { 
+				$query = $this->Associations->find()
+					->hydrate(false)
+					->select(['name','id'])
+					->where(['headquarter_id'=> $firstQuery[$i]['id']]);
 
-			$secondQuery[$firstQuery[$i]['name']] = $query->toArray();
+
+				
+
+				$secondQuery[$firstQuery[$i]['name']] = $query->toArray();
+
+			}
+
+			switch ($id) {
+				case 1:
+						$secondQuery['link'] = 'read';
+					break;
+
+				case 2:
+						$secondQuery['link'] = 'add';
+					break;
+
+				case 3:
+						$secondQuery['link'] = 'modify';
+					break;										
+				
+				case 4:
+						$secondQuery['link'] = 'delete';
+					break;	
+			}
+
+			$this->set('data',$secondQuery);
+		}
+		
+	}
+
+	public function read($id = null)
+	{
+		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
+
+		if($id)
+		{
+			$association = $this->Associations->get($id);
+
+			$headquarter = $this->Associations->Headquarters->find()
+							->hydrate(false)
+							->select(['name'])
+							-> where(['id'=> $association['headquarter_id']]);
+
+			$headquarter = $headquarter->toArray();
+
+			$association['headquarter']= $headquarter[0]['name'];
+
+			$this->set('data',$association);
 
 		}
-
-		$this->set('data',$secondQuery);
-		
 	}
 
 	public function add()
@@ -100,6 +171,7 @@ class AssociationsController extends AppController
 
 	public function modify($id = null)
 	{
+
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
 
 		if($id)
@@ -108,14 +180,13 @@ class AssociationsController extends AppController
 
 			$head = $this->Associations->Headquarters->find()
 							->hydrate(false)
-							->select(['id','name'])
-							->where(['id'=>$association->headquarter_id]);
+							->select(['name']);
 
 			$head = $head->toArray();
 
-			$association->headquarter_id = $head[0]['name'];
+			$association['headquarter']= $head;
 
-			debug($association);
+
 
 			if($this->request->is(array('post','put')))
 			{
@@ -205,5 +276,26 @@ class AssociationsController extends AppController
 		
 	}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
 	
 }
