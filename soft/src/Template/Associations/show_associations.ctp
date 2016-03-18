@@ -1,14 +1,14 @@
 <h1 style="text-align:center;">Elegí una Sede y posteriormente una Asociación</h1>
 
-<div class="row text-center addBtn">
-	<div class="col-xs-12">
-	<?php echo $this->Html->link('Agregar Asociación','/associations/add/',['class'=>'btn btn-success']);?>
-	</div>
-</div>
 
 <?php
 
+	$link = $data['link'];
+
+	unset($data['link']);
+
 	$counter = 0;
+	
 	
 	foreach ($data as $key => $value) {
 
@@ -24,13 +24,12 @@
 			for ($i=0; $i < count($data[$key]); $i++) { 
 			 	
 				echo "<h4>";
-				echo $data[$key][$i]['name']." ";
-				echo $this->Html->link('', '/associations/modify/'.$data[$key][$i]['id'], ['class'=>'glyphicon glyphicon-pencil'])." ";
-				echo $this->Html->link('', '/associations/delete/'.$data[$key][$i]['id'], ['class'=>'glyphicon glyphicon-trash'], ['confirm'=>'Seguro?']);
-
+				echo $this->Html->link($data[$key][$i]['name'], '/associations/'.$link."/".$data[$key][$i]['id'], ['onclick'=>'confirmAction()', 'id'=>'associations']);
 				echo "</h4>";
 				
 			 }
+
+
 
 		echo "</div>";
 
@@ -46,6 +45,7 @@
 
 
 	}
+
 
 	if(($counter % 12) != 0)
 	{

@@ -23,11 +23,6 @@ h1{
   margin-top: 30px;
 }
 
-.addBtn
-{
-  margin-bottom: 50px;
-}
-
 #sedes_label
 {
   font-weight: bold;
@@ -57,10 +52,24 @@ h1{
 {
 	margin:auto;
 	width: 150px;
-    background-color: #0080FF;
+  background-color: #0080FF;
   color: white;
 }
 
+
+#sede_update_id_btn
+{
+    
+  width: 150px;
+  color: white;
+}
+
+#sede_delete_id_btn
+{
+  
+  width: 150px;
+  color: white;
+}
 
 #callback
 {

@@ -5,6 +5,9 @@
 	echo $this->Form->create($association, ['id'=>'submit1']);
 	echo "<div class='form-group'>";
 
+
+
+
     echo "<div class = 'row'>";
 
     echo "<div class = 'col-xs-12 col-md-4'>";
@@ -37,13 +40,14 @@
 
     echo "</div>";
 
+
+
+
+
+
     echo "<h4>".$this->Form->input('acronym', ['class' => 'form-control', 'label'=>'Sigla', 'maxlength'=> '256'])."</h4>";
 
    
-
-
-
-
 
 
     //echo "<h4>".$this->Form->input('headquarters', ['class' => 'form-control','label'=>'Sede', 'maxlength'=> '100'])."</h4>";

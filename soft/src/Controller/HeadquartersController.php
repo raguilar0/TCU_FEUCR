@@ -19,6 +19,7 @@ class HeadquartersController extends AppController
 	{
 		$headquarter = $this->Headquarters->newEntity($this->request->data); //El parámetro es para validar los datos
 
+				debug($this->request->data);
 
 		if($this->request->is('post'))
 		{
@@ -35,60 +36,99 @@ class HeadquartersController extends AppController
 
 
 		}
+		
 
 	}
 
-	public function modify($id = null)
+
+	public function getInformation()
 	{
-		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
-
-		if($id)
+		if($this->request->is(array('post','put')))
 		{
-			$association = $this->Headquarters->get($id);
+			$session = $this->request->session(); //Creamos una variable de session para guardar el id de la sede antigua, en caso de que haya que modificarla
 
-			if($this->request->is(array('post','put')))
+			$headquarter = $this->Headquarters->find()
+							->hydrate(false)
+							-> select(['id','name', 'image_name']) //Realiza la consulta
+							-> where(["name" => $this->request->data['headquarter_id']]);
+							
+
+			$headquarter = $headquarter->toArray();
+
+			$session->write('id_headquarter', $headquarter[0]['id']);
+			$data = $headquarter[0]['image_name'].",".$headquarter[0]['name'];
+			die($data);
+		}
+		else
+		{
+			return "0";
+		}
+	}
+
+
+
+
+
+
+public function modifyHeadquarter()
+	{	
+		$headquarter = $this->Headquarters->get($this->request->session()->read('id_headquarter'));
+
+		$headquarter->name = $this->request->data['name'];
+		$headquarter->image_name = $this->request->data['image_name'];
+
+		if($this->Headquarters->save($headquarter))
+		{
+			die("1");
+		}
+
+	}
+
+//TODO:Desplegarle al usuario el error 500 u otro para que sepa qué hacer (Se da por no action de la base)
+	public function deleteHeadquarter()
+	{
+
+		$headquarter = $this->Headquarters->get($this->request->session()->read('id_headquarter'));
+
+		if($this->Headquarters->delete($headquarter))
+		{
+			die("1");
+		}
+		else
+		{
+			die("0");
+		}
+		
+
+	}
+
+//TODO:implementar el eliminar y el modificar
+	public function verify()
+	{
+		if($this->request->is(array('post','put')))
+		{
+			if($this->request->data['delete'] == 'Eliminar')
 			{
-				
-				$asso = $this->Headquarters->newEntity($this->request->data);
-
-				$association->acronym = $this->request->data['acronym'];
-				$association->name = $this->request->data['name'];
-				$association->location = $this->request->data['location'];
-				$association->schedule = $this->request->data['schedule'];
-				$association->authorized_card = $this->request->data['authorized_card'];
-				$association->headquarters = $this->request->data['headquarters'];
-
-				if($this->Headquarters->save($association))
-				{
-						
-
-				}
-
-
+				deleteHeadquarte();
+				die('1');
 			}
 			else
 			{
-				$this->set('data',$association); // set() Pasa la variable association a la vista.
+				$this->modifyHeadquarter($this->request->data);
+				die('1');
 			}
-		}
 
-
-		
-	}
-
-	public function delete($id = null)
-	{
-		if($id)
-		{
-			$association = $this->Headquarters->get($id);
-
-			if($this->Headquarters->delete($association))
-			{
-				return $this->redirect(['action'=>'showHeadquarters']);
-			}
+			debug($this->request->data['delete'] == 'Eliminar');
 		}
 
 	}
 
-	
+
+
+
+
+
+
+
+
 }

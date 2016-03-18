@@ -15,37 +15,63 @@ class AssociationsController extends AppController
 
 	}
 	
-	public function showAssociations()
+	public function showAssociations($id = null)
 	{
-		$this->viewBuilder()->layout('admin_views');
+		if($id)
+		{
+			$this->viewBuilder()->layout('admin_views');
 
-		$this->loadModel('Headquarters');
+			$this->loadModel('Headquarters');
 
-		$firstQuery = $this->Headquarters->find()
-						->hydrate(false)
-						->select(['id', 'name']);
+			$firstQuery = $this->Headquarters->find()
+							->hydrate(false)
+							->select(['id', 'name']);
 
-		$firstQuery = $firstQuery->toArray();
-
-		
-		$end = count($firstQuery);
-		$secondQuery = array();
-		//Por cada sede recupera las asocias dentro de esa sede
-		for ($i=0; $i < $end ; $i++) { 
-			$query = $this->Associations->find()
-				->hydrate(false)
-				->select(['name','id'])
-				->where(['headquarter_id'=> $firstQuery[$i]['id']]);
-
+			$firstQuery = $firstQuery->toArray();
 
 			
+			$end = count($firstQuery);
+			$secondQuery = array();
+			//Por cada sede recupera las asocias dentro de esa sede
+			for ($i=0; $i < $end ; $i++) { 
+				$query = $this->Associations->find()
+					->hydrate(false)
+					->select(['name','id'])
+					->where(['headquarter_id'=> $firstQuery[$i]['id']]);
 
-			$secondQuery[$firstQuery[$i]['name']] = $query->toArray();
 
+				
+
+				$secondQuery[$firstQuery[$i]['name']] = $query->toArray();
+
+			}
+
+			switch ($id) {
+				case 1:
+						$secondQuery['link'] = 'read';
+					break;
+
+				case 2:
+						$secondQuery['link'] = 'add';
+					break;
+
+				case 3:
+						$secondQuery['link'] = 'modify';
+					break;										
+				
+				case 4:
+						$secondQuery['link'] = 'delete';
+					break;	
+			}
+
+			$this->set('data',$secondQuery);
 		}
-
-		$this->set('data',$secondQuery);
 		
+	}
+
+	public function read()
+	{
+
 	}
 
 	public function add()
@@ -99,6 +125,7 @@ class AssociationsController extends AppController
 
 	public function modify($id = null)
 	{
+
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
 
 		if($id)
@@ -107,14 +134,13 @@ class AssociationsController extends AppController
 
 			$head = $this->Associations->Headquarters->find()
 							->hydrate(false)
-							->select(['id','name'])
-							->where(['id'=>$association->headquarter_id]);
+							->select(['name']);
 
 			$head = $head->toArray();
 
-			$association->headquarter_id = $head[0]['name'];
+			$association['headquarter']= $head;
 
-			debug($association);
+
 
 			if($this->request->is(array('post','put')))
 			{
@@ -160,5 +186,26 @@ class AssociationsController extends AppController
 
 	}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
 	
 }
