@@ -10,24 +10,25 @@
 <table style='padding:5px;'>
     <!-- table heading -->
     <tr style='background-color:#fff;'>
-        <th>ID</th>
-        <th>Monto</th>
+        <th>Monto Máximo</th>
         <th>Fecha de Tracto</th>
         <th>Fecha de Cierre</th>
+        <th>Asociación</th>
     </tr>
      
 <?php
  
-    foreach( $amount as $amount ){
+    foreach( $amount as $value ){
      
         echo "<tr>";
-            echo "<td>{$amount['Amount']['id']}</td>";
-            echo "<td>{$amount['Amount']['amount']}</td>";
-            echo "<td>{$amount['Amount']['date']}</td>"; 
-            echo "<td>{$amount['Amount']['deadline']}</td>";
+            //echo "<td>".$value['id']."</td>";
+            echo "<td>".$value['amount']."</td>";
+            echo "<td>".$value['date']."</td>"; 
+            echo "<td>".$value['deadline']."</td>";
+            echo "<td>".$value['association_id']."</td>";
             //here are the links to edit and delete actions
             echo "<td class='actions'>";
-                echo $this->Html->link( 'Edit', array('action' => 'edit', $amount['Amount']['id']) );
+                echo $this->Html->link( 'Edit', array('action' => 'edit', $value['id']) );
                  
                /* 
                 echo $this->Form->postLink( 'Delete', array(
@@ -38,6 +39,7 @@
             echo "</td>";
         echo "</tr>";
     }
+
 ?>
      
 </table>

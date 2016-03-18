@@ -29,18 +29,12 @@ class AssociationsController extends AppController
 
 		
 		$end = count($firstQuery);
-		$secondQuery = array();
-<<<<<<< HEAD
 
-//Por cada sede recupera las asocias dentro de esa sede
-		for ($i=0; $i < count($firstQuery) ; $i++) { 
-				$query = $this->Associations->find()
-=======
+
 		//Por cada sede recupera las asocias dentro de esa sede
 		for ($i=0; $i < $end ; $i++) { 
 			$query = $this->Associations->find()
 				->hydrate(false)
->>>>>>> 0d2c2f60f8a000ce464580173334c32591106b39
 				->select(['name','id'])
 				->where(['headquarter_id'=> $firstQuery[$i]['id']]);
 
@@ -165,6 +159,50 @@ class AssociationsController extends AppController
 			}
 		}
 
+	}
+	
+	
+	public function generalInformation($id = null) {
+		$this->viewBuilder()->layout('admin_views'); //Se deja este hasta mientras se haga el de representante
+
+		if($id) {
+			$association = $this->Associations->get($id);
+
+			$head = $this->Associations->Headquarters->find()
+							->hydrate(false)
+							->select(['id','name'])
+							->where(['id'=>$association->headquarter_id]);
+
+			$head = $head->toArray();
+
+			$association->headquarter_id = $head[0]['name'];
+
+			debug($association);
+
+			if($this->request->is(array('post','put')))	{
+				
+				$asso = $this->Associations->newEntity($this->request->data);
+
+				$association->acronym = $this->request->data['acronym'];
+				$association->name = $this->request->data['name'];
+				$association->location = $this->request->data['location'];
+				$association->schedule = $this->request->data['schedule'];
+				$association->authorized_card = $this->request->data['authorized_card'];
+				$association->headquarters = $this->request->data['headquarters'];
+
+				if($this->Associations->save($association))	{
+						
+
+				}
+
+
+			}else{
+				$this->set('data',$association); // set() Pasa la variable association a la vista.
+			}
+		}
+
+
+		
 	}
 
 	
