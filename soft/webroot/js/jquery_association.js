@@ -50,15 +50,15 @@ function modifyAssociation()
     $.post($("#submit3").attr("action"),$("#submit3").serialize(), 
     function(data, status)
     {
-        if(status == "success")
+        if(data == "1")
         {
             $("#callback").text("¡Los datos se guardaron con éxito!");
             $("#callback").css("color","#01DF01");
         }
         else
         {
-            $("#callback").text("Lo sentimos. Ocurrió un error inesperado. Inténtelo más tarde.");
-            $("#callback").css("color","#01DF01");
+            $("#callback").text("Lo sentimos. Es probable que este nombre de asociación o de la sigla ya exista y por lo tanto no puede agregarse.");
+            $("#callback").css("color","red");
         }               
 
     });
@@ -69,17 +69,17 @@ function addAssociation()
 {
     $.post($("#submit1").attr("action"),$("#submit1").serialize(), 
     function(data, status)
-    {
+    {   
 
-        if(status == "success")
+        if(data == "1")
         {
             $("#callback").text("¡Los datos se guardaron con éxito!");
             $("#callback").css("color","#01DF01");
         }
         else
         {
-            $("#callback").text("Lo sentimos. Ocurrió un error inesperado. Inténtelo más tarde.");
-            $("#callback").css("color","#01DF01");
+            $("#callback").text("Lo sentimos. Es probable que este nombre de asociación o de la sigla ya exista y por lo tanto no puede agregarse.");
+            $("#callback").css("color","red");
         }               
 
     });
@@ -92,7 +92,7 @@ function addHeadquarter()
     function(data, status)
     {
 
-        if(status == "success")
+        if(data == "1")
         {
             $("#callback").text("¡Los datos se guardaron con éxito!");
             $("#callback").css("color","#58ACFA");
@@ -102,8 +102,8 @@ function addHeadquarter()
         }
         else
         {
-            $("#callback").text("Lo sentimos. Ocurrió un error inesperado. Inténtelo más tarde.");
-            $("#callback").css("color","#01DF01");
+            $("#callback").text("Lo sentimos. Es probable que el nombre de esta sede ya exista y por lo tanto no pudo guardarse en la base de datos.");
+            $("#callback").css("color","red");
         }               
 
     });
@@ -175,7 +175,7 @@ function evaluateOnchangeSelect(){
 
 function loadHeadquarterData()
 {
-    $.post("/FEUCR/soft/headquarters/getInformation",$("#submit3").serialize(), 
+    $.post("/soft/headquarters/get_information",$("#submit3").serialize(), 
     function(data, status)
     {
 
@@ -200,7 +200,7 @@ function loadHeadquarterData()
 
 function deleteHeadquarter()
 {
-    $.post("/FEUCR/soft/headquarters/deleteHeadquarter",$("#submit4").serialize(), 
+    $.post("/soft/headquarters/deleteHeadquarter",$("#submit4").serialize(), 
     function(data, status)
     {
         if(data == "1")
@@ -223,21 +223,20 @@ function deleteHeadquarter()
 
 function modifyHeadquarter()
 {
-    $.post("/FEUCR/soft/headquarters/modifyHeadquarter",$("#submit4").serialize(), 
+    $.post("/soft/headquarters/modifyHeadquarter",$("#submit4").serialize(), 
     function(data, status)
     {
         if(data == "1")
         {
             $("#callback").text("¡Los datos se actualizaron con éxito!");
             $("#callback").css("color","#58ACFA");
-
+            
             setTimeout(function(){location.reload();},1000);
-
         }
         else
         {
-            $("#callback").text("Lo sentimos. Ocurrió un error inesperado. Inténtelo más tarde.");
-            $("#callback").css("color","#01DF01");
+            $("#callback").text("Lo sentimos. Es probable que el nombre de esta sede ya exista y por lo tanto no pudo guardarse en la base de datos.");
+            $("#callback").css("color","red");
         }               
 
     });
@@ -256,7 +255,7 @@ function confirmAction()
 
         if(action == false)
         {
-            $('#associations').attr('href','/FEUCR/soft/associations/');
+            $('#associations').attr('href','/soft/associations/');
         }
     }
 

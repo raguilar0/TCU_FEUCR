@@ -36,3 +36,12 @@
   </tbody>
 </table>
 </div>
+
+<br>
+<br>
+
+<div class="row text-center">
+  <div class="col-xs-12">
+     <?php echo $this->Html->link('Atrás', '/associations/show_associations/1', ['class'=>'btn btn-primary']);?>
+  </div>
+</div>

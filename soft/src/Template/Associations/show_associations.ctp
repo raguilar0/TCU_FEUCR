@@ -1,4 +1,12 @@
-<h1 style="text-align:center;">Elegí una Sede y posteriormente una Asociación</h1>
+<div class = 'row text-center'>
+    <div class='col-xs-12'>
+<h1>Elegí una Sede y posteriormente una Asociación</h1>
+    </div>
+</div>
+
+<br>
+<br>
+
 
 
 <?php
@@ -54,3 +62,13 @@
 
 
 ?>
+
+<br>
+<br>
+
+
+<div class="row text-center">
+  <div class="col-xs-12">
+     <?php echo $this->Html->link('Atrás', '/associations/', ['class'=>'btn btn-primary']);?>
+  </div>
+</div>
