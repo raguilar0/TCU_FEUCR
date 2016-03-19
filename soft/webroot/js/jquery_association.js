@@ -175,7 +175,7 @@ function evaluateOnchangeSelect(){
 
 function loadHeadquarterData()
 {
-    $.post("/FEUCR/soft/headquarters/getInformation",$("#submit3").serialize(), 
+    $.post("/FEUCR/soft/headquarters/get_information",$("#submit3").serialize(), 
     function(data, status)
     {
 
@@ -249,6 +249,7 @@ function confirmAction()
     var href = $('#associations').attr('href');
 
     href = href.split('/');
+
 
     if(href[4] == 'delete')
     {

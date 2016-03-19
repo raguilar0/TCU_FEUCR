@@ -43,6 +43,8 @@ class HeadquartersController extends AppController
 
 	public function getInformation()
 	{
+		
+
 		if($this->request->is(array('post','put')))
 		{
 			$session = $this->request->session(); //Creamos una variable de session para guardar el id de la sede antigua, en caso de que haya que modificarla
