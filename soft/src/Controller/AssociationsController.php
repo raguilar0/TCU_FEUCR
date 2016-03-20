@@ -172,7 +172,8 @@ class AssociationsController extends AppController
 	{
 
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
-
+		$this->loadModel('Amounts');
+		
 		if($id)
 		{
 			$association = $this->Associations->get($id);
