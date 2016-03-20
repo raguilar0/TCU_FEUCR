@@ -19,7 +19,7 @@
 
 </head><!--/head-->
 
-<body
+<body>
 
     <header id="header" role="banner">
        <nav class="navbar navbar-inverse">
@@ -28,7 +28,7 @@
           <a class="navbar-brand" href="#">FEUCR</a>
         </div>
         <ul class="nav navbar-nav">
-          <li class="active"><?php echo $this->Html->link('Administrar Asociaciones', '/associations/');?></li>
+          <li class="active"><?php echo $this->Html->link('Administrar Asociaciones', '/associations/', ['id'=>'active-navbar']);?></li>
           <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrar Montos
                 <span class="caret"></span></a>
@@ -50,6 +50,8 @@
     <div class="container body">
         
         <?= $this->fetch('content') ?>  
+        
+        
     </div>
 
 

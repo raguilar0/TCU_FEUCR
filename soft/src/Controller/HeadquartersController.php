@@ -18,22 +18,20 @@ class HeadquartersController extends AppController
 	public function add()
 	{
 		$headquarter = $this->Headquarters->newEntity($this->request->data); //El parámetro es para validar los datos
-
-				debug($this->request->data);
-
+		
+		$response = "1";
+		
 		if($this->request->is('post'))
 		{
 
 
-			if($this->Headquarters->save($headquarter)) //Guarda los datos
+			if(!$this->Headquarters->save($headquarter)) //Guarda los datos
 			{
-				die('1');
-			}
-			else
-			{
-				die('0');
+				$response = "0";
+				
 			}
 
+			die($response);
 
 		}
 		
@@ -41,31 +39,30 @@ class HeadquartersController extends AppController
 	}
 
 
-	public function getInformation()
+public function getInformation()
+{
+
+	
+	if($this->request->is(array('post','put')))
 	{
-		
 
-		if($this->request->is(array('post','put')))
-		{
-			$session = $this->request->session(); //Creamos una variable de session para guardar el id de la sede antigua, en caso de que haya que modificarla
+		$session = $this->request->session(); //Creamos una variable de session para guardar el id de la sede antigua, en caso de que haya que modificarla
 
-			$headquarter = $this->Headquarters->find()
-							->hydrate(false)
-							-> select(['id','name', 'image_name']) //Realiza la consulta
-							-> where(["name" => $this->request->data['headquarter_id']]);
-							
 
-			$headquarter = $headquarter->toArray();
+		$headquarter = $this->Headquarters->find()
+						->hydrate(false)
+						-> select(['id','name', 'image_name']) //Realiza la consulta
+						-> where(["name" => $this->request->data['headquarter_id']]);
+						
 
-			$session->write('id_headquarter', $headquarter[0]['id']);
-			$data = $headquarter[0]['image_name'].",".$headquarter[0]['name'];
-			die($data);
-		}
-		else
-		{
-			return "0";
-		}
+		$headquarter = $headquarter->toArray();
+
+		$session->write('id_headquarter', $headquarter[0]['id']);
+		$data = $headquarter[0]['image_name'].",".$headquarter[0]['name'];
+		die($data);
 	}
+
+}
 
 
 
@@ -73,64 +70,61 @@ class HeadquartersController extends AppController
 
 
 public function modifyHeadquarter()
-	{	
-		$headquarter = $this->Headquarters->get($this->request->session()->read('id_headquarter'));
-
-		$headquarter->name = $this->request->data['name'];
-		$headquarter->image_name = $this->request->data['image_name'];
-
-		if($this->Headquarters->save($headquarter))
-		{
-			die("1");
-		}
-
-	}
-
-//TODO:Desplegarle al usuario el error 500 u otro para que sepa qué hacer (Se da por no action de la base)
-	public function deleteHeadquarter()
+{	
+	$response = "0";
+	
+	if($this->request->is(array('post','put')))
 	{
+		$headquarter_id = $this->request->session()->read('id_headquarter'); //Recupera el id de la variable de sessión
+		$headquarter = $this->Headquarters->get($headquarter_id); //Recupera la sede con ese id
 
-		$headquarter = $this->Headquarters->get($this->request->session()->read('id_headquarter'));
-
-		if($this->Headquarters->delete($headquarter))
+		if($headquarter['name'] == $this->request->data['name']) //Si el usuario no modificó el nombre de la sede
 		{
-			die("1");
-		}
-		else
-		{
-			die("0");
-		}
-		
+			$query = $this->Headquarters->query();
 
+			$query->update()
+				  ->set(['image_name' => $this->request->data['image_name']])
+				  ->where(['id'=>$headquarter_id])
+				  ->execute();
+
+			$response = "1";
+		}
+		else //Si modificó el nombre de la sede, hay que validar que siga siendo válido
+		{
+			$validator = $this->Headquarters->newEntity($this->request->data);
+	
+			if(!$validator->errors())
+			{
+				$headquarter->name = $this->request->data['name'];
+				$headquarter->image_name = $this->request->data['image_name'];
+				
+				if($this->Headquarters->save($headquarter))
+				{
+					$response = "1";
+				}	
+			}
+		}
 	}
 
-//TODO:implementar el eliminar y el modificar
-	public function verify()
+
+	die($response);
+}
+
+
+public function deleteHeadquarter()
+{
+
+	$response = "1";
+	$headquarter = $this->Headquarters->get($this->request->session()->read('id_headquarter'));
+
+	if(!$this->Headquarters->delete($headquarter))
 	{
-		if($this->request->is(array('post','put')))
-		{
-			if($this->request->data['delete'] == 'Eliminar')
-			{
-				deleteHeadquarte();
-				die('1');
-			}
-			else
-			{
-				$this->modifyHeadquarter($this->request->data);
-				die('1');
-			}
-
-			debug($this->request->data['delete'] == 'Eliminar');
-		}
-
+		$response = "0";
 	}
+	
+	die($response);
 
-
-
-
-
-
-
+}
 
 
 }

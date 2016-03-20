@@ -10,6 +10,7 @@ $('#submit2').submit(function(e){
     addHeadquarter();
 });
 
+
 $('#submit3').submit(function(e){
     e.preventDefault();
     modifyAssociation();
@@ -23,67 +24,28 @@ $('#submit4').submit(function(e){
 
 
 
-/**
-$('#asso_id, #sede_id').click(function(){
-    if(this.id == 'asso_id')
-    {
-        addAssociation();
-    }
-    else
-    {
-        if(this.id == 'sede_id')
-        {
-            addHeadquarter();
-        }
-        else
-        {
-
-        }        
-    }
-});
-
-**/
-
-
-function modifyAssociation()
-{
-    $.post($("#submit3").attr("action"),$("#submit3").serialize(), 
-    function(data, status)
-    {
-        if(status == "success")
-        {
-            $("#callback").text("¡Los datos se guardaron con éxito!");
-            $("#callback").css("color","#01DF01");
-        }
-        else
-        {
-            $("#callback").text("Lo sentimos. Ocurrió un error inesperado. Inténtelo más tarde.");
-            $("#callback").css("color","#01DF01");
-        }               
-
-    });
-}
 
 //Esta función sirve para agregar una asociación 
 function addAssociation()
 {
     $.post($("#submit1").attr("action"),$("#submit1").serialize(), 
     function(data, status)
-    {
+    {   
 
-        if(status == "success")
+        if(data == "1")
         {
             $("#callback").text("¡Los datos se guardaron con éxito!");
             $("#callback").css("color","#01DF01");
         }
         else
         {
-            $("#callback").text("Lo sentimos. Ocurrió un error inesperado. Inténtelo más tarde.");
-            $("#callback").css("color","#01DF01");
+            $("#callback").text("Lo sentimos. Es probable que este nombre de asociación o de la sigla ya exista y por lo tanto no puede agregarse.");
+            $("#callback").css("color","red");
         }               
 
     });
 }
+
 
 //Este método sirve para agregar una sede
 function addHeadquarter()
@@ -91,33 +53,6 @@ function addHeadquarter()
     $.post($("#submit2").attr("action"),$("#submit2").serialize(), 
     function(data, status)
     {
-
-        if(status == "success")
-        {
-            $("#callback").text("¡Los datos se guardaron con éxito!");
-            $("#callback").css("color","#58ACFA");
-
-            setTimeout(function(){location.reload();},1000);
-
-        }
-        else
-        {
-            $("#callback").text("Lo sentimos. Ocurrió un error inesperado. Inténtelo más tarde.");
-            $("#callback").css("color","#01DF01");
-        }               
-
-    });
-}
-
-//Esta función sirve para modificar las Sedes
-
-/**
-function modifyHeadquarter()
-{
-    $.post($("#submit4").attr("action"),$("#submit4").serialize(), 
-    function(data, status)
-    {
-        alert(data);
 
         if(data == "1")
         {
@@ -129,27 +64,36 @@ function modifyHeadquarter()
         }
         else
         {
-            $("#callback").text("Lo sentimos. Ocurrió un error inesperado. Inténtelo más tarde.");
-            $("#callback").css("color","#01DF01");
+            $("#callback").text("Lo sentimos. Es probable que el nombre de esta sede ya exista y por lo tanto no pudo guardarse en la base de datos.");
+            $("#callback").css("color","red");
         }               
 
     });
 }
-**/
 
-//Este evento se dispara cuando se presiona el botón de basura de las asociaciones
-$(document).ready(function(){
-    $(".glyphicon-trash").click(function(){
-        var action = confirm("¿Realmente desea borrar esta Asociación?");
 
-        if(action == false)
+function modifyAssociation()
+{
+    $.post($("#submit3").attr("action"),$("#submit3").serialize(), 
+    function(data, status)
+    {
+        if(data == "1")
         {
-            $(".glyphicon-trash").attr('href','./showAssociations');
+            $("#callback").text("¡Los datos se guardaron con éxito!");
+            $("#callback").css("color","#01DF01");
         }
-
+        else
+        {
+            $("#callback").text("Lo sentimos. Es probable que este nombre de asociación o de la sigla ya exista y por lo tanto no puede agregarse.");
+            $("#callback").css("color","red");
+        }               
 
     });
-});
+}
+
+
+
+
 
 
 
@@ -175,7 +119,9 @@ function evaluateOnchangeSelect(){
 
 function loadHeadquarterData()
 {
-    $.post("/FEUCR/soft/headquarters/get_information",$("#submit3").serialize(), 
+
+    $.post("/soft/headquarters/get_information",$("#submit3").serialize(), 
+
     function(data, status)
     {
 
@@ -200,7 +146,7 @@ function loadHeadquarterData()
 
 function deleteHeadquarter()
 {
-    $.post("/FEUCR/soft/headquarters/deleteHeadquarter",$("#submit4").serialize(), 
+    $.post("/soft/headquarters/deleteHeadquarter",$("#submit4").serialize(), 
     function(data, status)
     {
         if(data == "1")
@@ -223,21 +169,21 @@ function deleteHeadquarter()
 
 function modifyHeadquarter()
 {
-    $.post("/FEUCR/soft/headquarters/modifyHeadquarter",$("#submit4").serialize(), 
+    $.post("/soft/headquarters/modifyHeadquarter",$("#submit4").serialize(), 
     function(data, status)
     {
+
         if(data == "1")
         {
             $("#callback").text("¡Los datos se actualizaron con éxito!");
             $("#callback").css("color","#58ACFA");
-
+            
             setTimeout(function(){location.reload();},1000);
-
         }
         else
         {
-            $("#callback").text("Lo sentimos. Ocurrió un error inesperado. Inténtelo más tarde.");
-            $("#callback").css("color","#01DF01");
+            $("#callback").text("Lo sentimos. Es probable que el nombre de esta sede ya exista y por lo tanto no pudo guardarse en la base de datos.");
+            $("#callback").css("color","red");
         }               
 
     });
@@ -257,7 +203,7 @@ function confirmAction()
 
         if(action == false)
         {
-            $('#associations').attr('href','/FEUCR/soft/associations/');
+            $('#associations').attr('href','/soft/associations/');
         }
     }
 

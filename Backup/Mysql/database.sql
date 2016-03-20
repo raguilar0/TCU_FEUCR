@@ -1,3 +1,11 @@
+CREATE TABLE headquarters
+(
+	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	name varchar(100) NOT NULL,
+	image_name varchar(100) NOT NULL
+	
+);
+
 CREATE TABLE associations
 (
   id INT UNSIGNED AUTO_INCREMENT,
@@ -9,7 +17,11 @@ CREATE TABLE associations
   headquarter_id INT UNSIGNED NOT NULL,
   PRIMARY KEY(id),
   FOREIGN KEY(headquarter_id) REFERENCES headquarters(id)
+
 );
+
+
+
 
 CREATE TABLE headquarters
 (

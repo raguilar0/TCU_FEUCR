@@ -1,6 +1,7 @@
 <?php
 namespace App\Model\Table;
 
+use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
@@ -19,7 +20,11 @@ class AssociationsTable extends Table
             ->notEmpty('acronym')
             ->requirePresence('name')
             ->notEmpty('location')
-            ->notEmpty('headquarters');
+            ->notEmpty('headquarters')
+            ->add('name', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'])
+            ->add('acronym', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'])
+            ->add('id', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+
 
         return $validator;
     }

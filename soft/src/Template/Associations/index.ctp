@@ -8,7 +8,7 @@
 <br>
 <br>
 
-<div class="row">
+<div class="row text-center">
 
 <?php
 		echo "<div class='col-xs-12 col-md-3'>".$this->Html->link('Consultar Asociación','/associations/show_associations/1',['class'=>'btn btn-info','id'=>'asso_admin_btn'])."</div>";

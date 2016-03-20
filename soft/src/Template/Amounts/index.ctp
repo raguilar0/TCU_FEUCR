@@ -10,35 +10,36 @@
 <table style='padding:5px;'>
     <!-- table heading -->
     <tr style='background-color:#fff;'>
-        <th>ID</th>
-        <th>Monto</th>
+        <th>Monto Máximo</th>
         <th>Fecha de Tracto</th>
         <th>Fecha de Cierre</th>
+        <th>Asociación</th>
     </tr>
      
 <?php
  
-    //loop to show all retrieved records
-    foreach( $amounts as $amount ){
+    foreach( $amount as $value ){
      
         echo "<tr>";
-            echo "<td>{$amount['Amount']['id']}</td>";
-            echo "<td>{$amount['Amount']['amount']}</td>";
-            echo "<td>{$amount['Amount']['date']}</td>"; 
-            echo "<td>{$amount['Amount']['deadline']}</td>";
+            //echo "<td>".$value['id']."</td>";
+            echo "<td>".$value['amount']."</td>";
+            echo "<td>".$value['date']."</td>"; 
+            echo "<td>".$value['deadline']."</td>";
+            echo "<td>".$value['association_id']."</td>";
             //here are the links to edit and delete actions
             echo "<td class='actions'>";
-                echo $this->Html->link( 'Edit', array('action' => 'edit', $amount['Amount']['id']) );
+                echo $this->Html->link( 'Edit', array('action' => 'edit', $value['id']) );
                  
-                //in cakephp 2.0, we won't use get request for deleting records
-                //we use post request (for security purposes)
+               /* 
                 echo $this->Form->postLink( 'Delete', array(
                         'action' => 'delete', 
                         $amount['Amount']['id']), array(
-                            'confirm'=>'Are you sure you want to delete that user?' ) );
+                            'confirm'=>'Seguro que desea eliminar el monto?' ) );
+                */
             echo "</td>";
         echo "</tr>";
     }
+
 ?>
      
 </table>

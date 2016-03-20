@@ -1,7 +1,13 @@
 
 
+<div class = 'row text-center'>
+    <div class='col-xs-12'>
+        <h1>¡Acá podés <b>Modificar</b> la Asociación!</h1>
+    </div>
+</div>
 
-<h1>¡Acá podés <b>Modificar</b> la Asociación!</h1>
+<br>
+<br>
 
 <?php
 	echo $this->Form->create($data, ['id'=>'submit3']);
@@ -85,7 +91,7 @@
 
     <br><br>
 
-    <h3 style="text-align: center;"> ¡Podés modificar la <b>Sede</b> también!</h3><br><br>
+    <h3 style="text-align: center;"> ¡Podés <b>modificar la Sede</b> también!</h3><br><br>
     
     <?php
 
@@ -130,3 +136,9 @@
 
 </div>
 
+
+<div class="row text-center">
+  <div class="col-xs-12">
+     <?php echo $this->Html->link('Atrás', '/associations/show_associations/3', ['class'=>'btn btn-primary']);?>
+  </div>
+</div>

@@ -31,7 +31,8 @@ class AssociationsController extends AppController
 						->select(['id', 'name']);
 		$firstQuery = $firstQuery->toArray();
 		$end = count($firstQuery);
-		$secondQuery = array();
+
+
 		//Por cada sede recupera las asocias dentro de esa sede
 		for ($i=0; $i < $end ; $i++) { 
 			$query = $this->Associations->find()
@@ -48,7 +49,9 @@ class AssociationsController extends AppController
 		if($id)
 		{
 			$this->viewBuilder()->layout('admin_views');
+			
 
+			
 			$this->loadModel('Headquarters');
 
 			$firstQuery = $this->Headquarters->find()
@@ -77,10 +80,6 @@ class AssociationsController extends AppController
 			switch ($id) {
 				case 1:
 						$secondQuery['link'] = 'read';
-					break;
-
-				case 2:
-						$secondQuery['link'] = 'add';
 					break;
 
 				case 3:
@@ -129,23 +128,24 @@ class AssociationsController extends AppController
 
 		if($this->request->is('post'))
 		{
-
+			$response = "1"; //Funciona como booleano, para decidir qué mostrar en el ajax.
+			
 			$this->loadModel('Headquarters'); //Carga el modelo de esta asociación
 			$headquarter = $this->Headquarters->find()
+							->hydrate(false)
 							-> select(['id']) //Realiza la consulta
 							-> where(["name = '".$this->request->data['headquarter_id']."'"]); //Obtiene el id donde la sede  elegida por el usuario
-			$headquarter->hydrate(false);
 
 			$headquarter = $headquarter->toArray();
 
 			$association['headquarter_id'] = $headquarter[0]['id']; //Reemplaza la elección del usuario por el id 
 
-			if($this->Associations->save($association)) //Guarda los date_offset_get()
+			if(!$this->Associations->save($association)) //Guarda los date_offset_get()
 			{
-
+				$response = "0";
 			}
-
-
+			
+			die($response);
 		}
 		else
 		{
@@ -190,21 +190,89 @@ class AssociationsController extends AppController
 			if($this->request->is(array('post','put')))
 			{
 				
-				$asso = $this->Associations->newEntity($this->request->data);
+				$response = "0"; //Funciona como booleano para decirle al ajax qué desplegar
 
-				$association->acronym = $this->request->data['acronym'];
-				$association->name = $this->request->data['name'];
-				$association->location = $this->request->data['location'];
-				$association->schedule = $this->request->data['schedule'];
-				$association->authorized_card = $this->request->data['authorized_card'];
-				$association->headquarters = $this->request->data['headquarters'];
 
-				if($this->Associations->save($association))
-				{
+				$autorized = (isset($this->request->data['authorized_card']) ? 1 : 0); //Verifica si se checkó el checkbox de las tarjetas
+
+
+
+				$newHeadquarter = $this->Associations->Headquarters->find() //Independientemente de si el usuario cambió de sede o no, se recupera la sede que se 
+						->hydrate(false)									// recupera la sede para posteriormente actualizar ese campo
+						->select(['id'])
+						->where(['name'=>$this->request->data['headquarter_id']]);
 						
+				$newHeadquarter = $newHeadquarter->toArray();
+
+				
+				if(($association['name'] == $this->request->data['name']) && ($association['acronym'] == $this->request->data['acronym']))
+				{
+					$query = $this->Associations->query();
+
+					$query->update()
+						  ->set(['location'=> $this->request->data['location'], 'schedule'=>$this->request->data['schedule'], 'headquarter_id'=> $newHeadquarter[0]['id'], 'authorized_card'=>$autorized])
+						  ->where(['id'=> $id])
+						  ->execute();
+
+						  $response = "1";
+				}
+				else
+				{
+
+					$validator = $this->Associations->newEntity($this->request->data);
+					
+					if(!$validator->errors())
+					{
+						
+						$association->acronym = $this->request->data['acronym'];
+						$association->name = $this->request->data['name'];
+						$association->location = $this->request->data['location'];
+						$association->schedule = $this->request->data['schedule'];
+						
+						$association->authorized_card = $autorized;
+																					
+						$association->headquarter_id = $newHeadquarter[0]['id'];
+
+		
+						if($this->Associations->save($association))
+						{
+							$response = "1";
+						}
+						
+					}
 
 				}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				
+				die($response);
 
 			}
 			else
@@ -225,10 +293,59 @@ class AssociationsController extends AppController
 
 			if($this->Associations->delete($association))
 			{
-				return $this->redirect(['action'=>'showAssociations']);
+				return $this->redirect(['action'=>'show_association/4']);
+			}
+			else
+			{
+				return $this->redirect(['action'=>'show_association/4']);
 			}
 		}
 
+	}
+	
+	
+	public function generalInformation($id = null) {
+		$this->viewBuilder()->layout('admin_views'); //Se deja este hasta mientras se haga el de representante
+
+		$id = 1;
+		if($id) {
+			$association = $this->Associations->get($id);
+
+			$head = $this->Associations->Headquarters->find()
+							->hydrate(false)
+							->select(['id','name'])
+							->where(['id'=>$association->headquarter_id]);
+
+			$head = $head->toArray();
+
+			$association->headquarter_id = $head[0]['name'];
+
+
+
+			if($this->request->is(array('post','put')))	{
+				
+				$asso = $this->Associations->newEntity($this->request->data);
+
+				$association->acronym = $this->request->data['acronym'];
+				$association->name = $this->request->data['name'];
+				$association->location = $this->request->data['location'];
+				$association->schedule = $this->request->data['schedule'];
+				$association->authorized_card = $this->request->data['authorized_card'];
+				$association->headquarters = $this->request->data['headquarters'];
+
+				if($this->Associations->save($association))	{
+						
+
+				}
+
+
+			}else{
+				$this->set('data',$association); // set() Pasa la variable association a la vista.
+			}
+		}
+
+
+		
 	}
 
 

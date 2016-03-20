@@ -1,4 +1,11 @@
-<h1>¡Acá podés <b>agregar</b> una nueva Asociación!</h1>
+<div class = 'row text-center'>
+    <div class='col-xs-12'>
+        <h1>¡Acá podés <b>agregar</b> una nueva Asociación!</h1>
+    </div>
+</div>
+
+<br>
+<br>
 
 <?php
 
@@ -66,7 +73,10 @@
     echo "</div>";
 
     echo $this->Form->end();
+
 ?>
+
+
 
 
 
@@ -104,4 +114,12 @@
         <h4 id="callback" style="color:#01DF01"></h4>   
     </div>
 
+</div>
+
+<br>
+
+<div class="row text-center">
+  <div class="col-xs-12">
+     <?php echo $this->Html->link('Atrás', '/associations/', ['class'=>'btn btn-primary']);?>
+  </div>
 </div>
