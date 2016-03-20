@@ -22,12 +22,12 @@
 
 		if(($counter % 12) == 0)
 		{
-			echo "<div class = 'row'>";
+			echo "<div class = 'row text-center'>";
 		}
 
 		echo "<div class = 'col-xs-12 col-md-4 colSedes'>";
 
-		echo "<button data-toggle='collapse' class='btn btn-info' data-target='#id".$counter."'>".$key."</button>";
+		echo "<button data-toggle='collapse'  class=' btn btn-info' data-target='#id".$counter."'> ".$key."</button>";
 		echo "<div id = 'id".$counter."'class='collapse'>";
 			for ($i=0; $i < count($data[$key]); $i++) { 
 			 	

@@ -45,7 +45,9 @@ public function getInformation()
 	
 	if($this->request->is(array('post','put')))
 	{
+
 		$session = $this->request->session(); //Creamos una variable de session para guardar el id de la sede antigua, en caso de que haya que modificarla
+
 
 		$headquarter = $this->Headquarters->find()
 						->hydrate(false)
@@ -71,22 +73,40 @@ public function modifyHeadquarter()
 {	
 	$response = "0";
 	
-	$headquarter = $this->Headquarters->get($this->request->session()->read('id_headquarter'));
-
-	$validator = $headquarters->newEntity($this->request->data);
-	
-	if(!$validator->errors())
+	if($this->request->is(array('post','put')))
 	{
-		$headquarter->name = $this->request->data['name'];
-		$headquarter->image_name = $this->request->data['image_name'];
-		
-		if($this->Headquarters->save($headquarter))
+		$headquarter_id = $this->request->session()->read('id_headquarter'); //Recupera el id de la variable de sessión
+		$headquarter = $this->Headquarters->get($headquarter_id); //Recupera la sede con ese id
+
+		if($headquarter['name'] == $this->request->data['name']) //Si el usuario no modificó el nombre de la sede
 		{
+			$query = $this->Headquarters->query();
+
+			$query->update()
+				  ->set(['image_name' => $this->request->data['image_name']])
+				  ->where(['id'=>$headquarter_id])
+				  ->execute();
+
 			$response = "1";
-		}	
+		}
+		else //Si modificó el nombre de la sede, hay que validar que siga siendo válido
+		{
+			$validator = $this->Headquarters->newEntity($this->request->data);
+	
+			if(!$validator->errors())
+			{
+				$headquarter->name = $this->request->data['name'];
+				$headquarter->image_name = $this->request->data['image_name'];
+				
+				if($this->Headquarters->save($headquarter))
+				{
+					$response = "1";
+				}	
+			}
+		}
 	}
 
-	
+
 	die($response);
 }
 

@@ -192,42 +192,86 @@ class AssociationsController extends AppController
 			{
 				
 				$response = "0"; //Funciona como booleano para decirle al ajax qué desplegar
+
+
+				$autorized = (isset($this->request->data['authorized_card']) ? 1 : 0); //Verifica si se checkó el checkbox de las tarjetas
+
+
+
+				$newHeadquarter = $this->Associations->Headquarters->find() //Independientemente de si el usuario cambió de sede o no, se recupera la sede que se 
+						->hydrate(false)									// recupera la sede para posteriormente actualizar ese campo
+						->select(['id'])
+						->where(['name'=>$this->request->data['headquarter_id']]);
+						
+				$newHeadquarter = $newHeadquarter->toArray();
+
 				
-				$validator = $this->Associations->newEntity($this->request->data);
-				
-				if(!$validator->errors())
+				if(($association['name'] == $this->request->data['name']) && ($association['acronym'] == $this->request->data['acronym']))
 				{
-					$newHeadquarter = $this->Associations->Headquarters->find()
-											->hydrate(false)
-											->select(['id'])
-											->where(['name'=>$this->request->data['headquarter_id']]);
-											
-					$newHeadquarter = $newHeadquarter->toArray();
-					
-					
-					$association->acronym = $this->request->data['acronym'];
-					$association->name = $this->request->data['name'];
-					$association->location = $this->request->data['location'];
-					$association->schedule = $this->request->data['schedule'];
-					
-					$association->authorized_card = 0;
-					
-					if(isset($this->request->data['authorized_card']))
-					{
-						$association->authorized_card = 1;
-					}
-					
-					
-					
-					
-					$association->headquarter_id = $newHeadquarter[0]['id'];
-	
-					if($this->Associations->save($association))
-					{
-						$response = "1";
-					}
-					
+					$query = $this->Associations->query();
+
+					$query->update()
+						  ->set(['location'=> $this->request->data['location'], 'schedule'=>$this->request->data['schedule'], 'headquarter_id'=> $newHeadquarter[0]['id'], 'authorized_card'=>$autorized])
+						  ->where(['id'=> $id])
+						  ->execute();
+
+						  $response = "1";
 				}
+				else
+				{
+
+					$validator = $this->Associations->newEntity($this->request->data);
+					
+					if(!$validator->errors())
+					{
+						
+						$association->acronym = $this->request->data['acronym'];
+						$association->name = $this->request->data['name'];
+						$association->location = $this->request->data['location'];
+						$association->schedule = $this->request->data['schedule'];
+						
+						$association->authorized_card = $autorized;
+																					
+						$association->headquarter_id = $newHeadquarter[0]['id'];
+
+		
+						if($this->Associations->save($association))
+						{
+							$response = "1";
+						}
+						
+					}
+
+				}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 				
 				die($response);
 

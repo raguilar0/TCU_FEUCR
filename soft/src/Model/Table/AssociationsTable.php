@@ -22,7 +22,9 @@ class AssociationsTable extends Table
             ->notEmpty('location')
             ->notEmpty('headquarters')
             ->add('name', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'])
-            ->add('acronym', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->add('acronym', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'])
+            ->add('id', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+
 
         return $validator;
     }
