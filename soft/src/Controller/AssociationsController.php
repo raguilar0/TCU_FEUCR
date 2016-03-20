@@ -177,9 +177,14 @@ class AssociationsController extends AppController
 		{
 			$association = $this->Associations->get($id);
 
+			$headquarter_asso = $this->Associations->Headquarters->get($association['headquarter_id']);
+
+
+
 			$head = $this->Associations->Headquarters->find()
 							->hydrate(false)
-							->select(['name']);
+							->select(['name'])
+							-> order(['(name'=>" = '".$headquarter_asso['name']."')DESC"]); //NO LO INTENTEN EN SUS CASAS!!! XD
 
 			$head = $head->toArray();
 
