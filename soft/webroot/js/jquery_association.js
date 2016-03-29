@@ -32,15 +32,27 @@ function addAssociation()
     function(data, status)
     {   
 
-        if(data == "1")
+        var array_data = data.split(',');
+
+
+
+        if(array_data[0] == "1" && array_data[1] == "1")
         {
             $("#callback").text("¡Los datos se guardaron con éxito!");
             $("#callback").css("color","#01DF01");
         }
         else
         {
-            $("#callback").text("Lo sentimos. Es probable que este nombre de asociación o de la sigla ya exista y por lo tanto no puede agregarse.");
-            $("#callback").css("color","red");
+            if(array_data[0] == "0")
+            {                
+                $("#callback").text("Lo sentimos. Es probable que este nombre de asociación o de la sigla ya exista y por lo tanto no puede agregarse.");
+                $("#callback").css("color","red");
+            }
+            else
+            {            
+                $("#callback").text("Lo sentimos. Algo salió mal al guardar los montos");
+                $("#callback").css("color","red");
+            }
         }               
 
     });
@@ -120,7 +132,7 @@ function evaluateOnchangeSelect(){
 function loadHeadquarterData()
 {
 
-    $.post("/soft/headquarters/get_information",$("#submit3").serialize(), 
+    $.post("/FEUCR/soft/headquarters/get_information",$("#submit3").serialize(), 
 
     function(data, status)
     {
@@ -169,7 +181,7 @@ function deleteHeadquarter()
 
 function modifyHeadquarter()
 {
-    $.post("/soft/headquarters/modifyHeadquarter",$("#submit4").serialize(), 
+    $.post("/FEUCR/soft/headquarters/modifyHeadquarter",$("#submit4").serialize(), 
     function(data, status)
     {
 
@@ -196,7 +208,6 @@ function confirmAction()
 
     href = href.split('/');
 
-<<<<<<< HEAD
     found = false;
     index = (href.length - 1)
 

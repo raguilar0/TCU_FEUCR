@@ -128,7 +128,9 @@ class AssociationsController extends AppController
 
 		if($this->request->is('post'))
 		{
-			$response = "1"; //Funciona como booleano, para decidir qué mostrar en el ajax.
+
+			
+			$response = "0,0"; //Funciona como booleano, para decidir qué mostrar en el ajax.
 			
 			$this->loadModel('Headquarters'); //Carga el modelo de esta asociación
 			$headquarter = $this->Headquarters->find()
@@ -140,12 +142,35 @@ class AssociationsController extends AppController
 
 			$association['headquarter_id'] = $headquarter[0]['id']; //Reemplaza la elección del usuario por el id 
 
-			if(!$this->Associations->save($association)) //Guarda los date_offset_get()
+			if($this->Associations->save($association)) //Guarda los date_offset_get()
 			{
-				$response = "0";
+				$response = "1,0";
+
+				$query = $this->Associations->find();
+
+				$query->hydrate(false);
+				$query->select(['max_id' => $query->func()->max('id')]);
+
+				$query = $query->toArray();
+
+
+				$this->request->data['spent'] = 0;
+				$this->request->data['association_id'] = $query[0]['max_id'];
+
+
+				$amounts = $this->Associations->Amounts->newEntity($this->request->data);
+
+
+				if($this->Associations->Amounts->save($amounts))
+				{
+					$response = "1,1";
+				}
 			}
+
 			
 			die($response);
+
+			
 		}
 		else
 		{

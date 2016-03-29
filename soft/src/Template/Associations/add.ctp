@@ -68,7 +68,52 @@
     echo "  ";
     echo $this->Form->checkbox('authorized_card', ['hiddenField' => false, 'class'=>'checkbox-inline'])."</h4>";
 
-    echo "<h4>".$this->Form->submit('Guardar Asociación', ['class' => 'form-control', 'id' => 'asso_id'])."</h4>";
+
+    echo "<div class = 'row'>";
+
+        echo "<div class = 'col-xs-12 text-center col-md-1'>";
+            echo $this->Form->button('Asociar Montos',['type'=>'button' ,'data-toggle'=>'collapse', 'data-target'=>'#form_amounts', 'class'=>'btn btn-success', 'id'=>'addAmountsBtn']);
+        echo "</div>";
+    echo "</div>";
+
+
+
+
+
+echo "<div class='collapse' id='form_amounts'>";
+
+   echo " <br><br>";
+
+   echo " <h3 style='text-align: center;'> ¡Asociá la información de los <b> montos</b>!</h3><br><br>";
+    
+
+
+
+        echo "<div class='form-group'>";
+
+        echo "<h4>".$this->Form->input('amount', ['class' => 'form-control','label'=>'Monto','type'=>'number','min'=> '0', 'placeholder'=>'Cantidad a Asignar'])."</h4>";
+
+        echo "<h4>".$this->Form->input('date', ['class' => 'form-control', 'label'=>'Fecha de Tracto', 'type'=> 'date', 'id'=>'date_input'])."</h4>";
+
+        echo "<h4>".$this->Form->input('deadline', ['class' => 'form-control', 'label'=>'Fecha de Cierre', 'type'=> 'date', 'id'=>'date_input'])."</h4>";        
+
+
+        echo "</div>";
+
+echo "</div>";
+
+
+
+
+
+
+
+
+
+    echo "<div class = 'row'>";
+        echo "<div class = 'col-xs-12'>";    echo "<h4>".$this->Form->submit('Guardar Asociación', ['class' => 'form-control', 'id' => 'asso_id'])."</h4>";
+        echo "</div>";
+    echo "</div>";
 
     echo "</div>";
 
@@ -85,7 +130,7 @@
 
     <br><br>
 
-    <h3 style="text-align: center;"> ¡Agregá una <b>Sede</b>!</h3><br><br>
+    <h3 style="text-align: center;"> ¡Agregá una nueva <b>Sede</b>!</h3><br><br>
     
     <?php
 
@@ -109,6 +154,9 @@
 
 </div>
 
+
+
+
 <div class="row text-right">
     <div class="col-xs-12">
         <h4 id="callback" style="color:#01DF01"></h4>   
@@ -123,3 +171,4 @@
      <?php echo $this->Html->link('Atrás', '/associations/', ['class'=>'btn btn-primary']);?>
   </div>
 </div>
+

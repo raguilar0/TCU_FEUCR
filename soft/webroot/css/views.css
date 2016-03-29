@@ -21,7 +21,20 @@ h1{
   width: 50px;
   height: 35px;
   margin-top: 30px;
+  text-align: center;
 }
+
+#addAmountsBtn
+{
+  width: 130px;
+  height:35px;
+  margin:35px 0px 20px 0;
+  text-align: center;
+  font-weight: bold;
+}
+
+
+
 
 #asso_admin_btn
 {
@@ -94,6 +107,32 @@ h1{
 #callback
 {
   margin-top: 5%;
+}
+
+.date select
+{
+  margin: 10px 5px 10px 10px;
+  border-radius: 5px;
+  height: 35px;
+}
+
+
+@media only screen and (max-width: 400px)
+{
+  .date label
+  {
+    margin-right: 25%;
+    float: left;
+  }
+  .date select
+  {
+    margin: 10px 2px 20px 2px;
+    border-radius: 5px;
+    height: 28px;
+    clear: right;
+    float: left;
+
+  }  
 }
 
 /**
