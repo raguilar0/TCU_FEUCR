@@ -181,7 +181,8 @@ class AssociationsController extends AppController
 			$headquarter_asso = $this->Associations->Headquarters->get($association['headquarter_id']);
 
 
-
+			//Las siguientes lineas permiten devolver las sedes ordenadas primero por la sede a donde pertenece
+			//la asociacion
 			$head = $this->Associations->Headquarters->find()
 							->hydrate(false)
 							->select(['name'])

@@ -196,8 +196,7 @@ function confirmAction()
 
     href = href.split('/');
 
-
-    if(href[4] == 'delete')
+    if(href[3] == 'delete')
     {
         var action = confirm('¿Realmente desea realizar esta acción?');
 
