@@ -196,8 +196,22 @@ function confirmAction()
 
     href = href.split('/');
 
+    found = false;
+    index = (href.length - 1)
 
-    if(href[4] == 'delete')
+    while((index >= 0) && !found)
+    {
+        if(href[index] == 'delete')
+        {
+            found = true;
+        }
+        else
+        {
+            --index;
+        }
+    }
+
+    if(href[index] == 'delete')
     {
         var action = confirm('¿Realmente desea realizar esta acción?');
 

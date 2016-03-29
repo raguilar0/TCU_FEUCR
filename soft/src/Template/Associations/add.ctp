@@ -1,6 +1,6 @@
 <div class = 'row text-center'>
     <div class='col-xs-12'>
-        <h1>¡Acá podés <b>agregar</b> una nueva Asociación!</h1>
+        <h1>¡<b>Agregá</b> una nueva Asociación!</h1>
     </div>
 </div>
 

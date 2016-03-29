@@ -2,7 +2,7 @@
 
 <div class = 'row text-center'>
     <div class='col-xs-12'>
-        <h1>¡Acá podés <b>Modificar</b> la Asociación!</h1>
+        <h1>¡<b>Modificá</b> la Asociación!</h1>
     </div>
 </div>
 

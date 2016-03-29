@@ -1,7 +1,7 @@
 
 <div class="row text-center">
   <div class="col-xs-12">
-    <h1>¡Acá podés <b>ver</b> la información completa de la Asociación!</h1>
+    <h1>¡<b>Información</b> completa de la Asociación!</h1>
   </div>
 </div>
 
