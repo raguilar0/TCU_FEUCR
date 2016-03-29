@@ -172,7 +172,8 @@ class AssociationsController extends AppController
 	{
 
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
-
+		$this->loadModel('Amounts');
+		
 		if($id)
 		{
 			$association = $this->Associations->get($id);
@@ -180,7 +181,8 @@ class AssociationsController extends AppController
 			$headquarter_asso = $this->Associations->Headquarters->get($association['headquarter_id']);
 
 
-
+			//Las siguientes lineas permiten devolver las sedes ordenadas primero por la sede a donde pertenece
+			//la asociacion
 			$head = $this->Associations->Headquarters->find()
 							->hydrate(false)
 							->select(['name'])

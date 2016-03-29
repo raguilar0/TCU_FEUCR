@@ -196,6 +196,7 @@ function confirmAction()
 
     href = href.split('/');
 
+<<<<<<< HEAD
     found = false;
     index = (href.length - 1)
 
