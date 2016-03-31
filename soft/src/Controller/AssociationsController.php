@@ -113,6 +113,15 @@ class AssociationsController extends AppController
 
 			$association['headquarter']= $headquarter[0]['name'];
 
+
+			$amounts = $this->Associations->Amounts->find()
+						->where(['association_id'=>$id])
+						->order(['id'=> 'DESC']);
+
+			$amounts = $amounts->toArray();
+
+			$association['amounts'] = $amounts;
+
 			$this->set('data',$association);
 
 		}
@@ -123,7 +132,6 @@ class AssociationsController extends AppController
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
 
 		$association = $this->Associations->newEntity($this->request->data); //El parámetro es para validar los datos
-
 
 
 		if($this->request->is('post'))
@@ -159,7 +167,6 @@ class AssociationsController extends AppController
 
 
 				$amounts = $this->Associations->Amounts->newEntity($this->request->data);
-
 
 				if($this->Associations->Amounts->save($amounts))
 				{
@@ -218,14 +225,29 @@ class AssociationsController extends AppController
 			$association['headquarter']= $head;
 
 
+//Se recupera la información del monto más reciente que le fue asignado
+//a la asociación con el id = $id
+
+			$amount = $this->Associations->Amounts->find()
+							->hydrate(false)
+							->select(['id','amount','date', 'deadline'])
+							->where(['association_id'=>$id])
+							->having(['max(id)']);
+
+			$amount = $amount->toArray();
+
+			$association['amounts'] = $amount[0];
+
+			
 
 			if($this->request->is(array('post','put')))
 			{
+
 				
 				$response = "0"; //Funciona como booleano para decirle al ajax qué desplegar
 
 
-				$autorized = (isset($this->request->data['authorized_card']) ? 1 : 0); //Verifica si se checkó el checkbox de las tarjetas
+				$autorized = (isset($this->request->data['authorized_card']) ? 1 : 0); //Verifica si se checó el checkbox f las tarjetas
 
 
 
@@ -246,7 +268,11 @@ class AssociationsController extends AppController
 						  ->where(['id'=> $id])
 						  ->execute();
 
-						  $response = "1";
+
+
+
+					$response = "1"; //Booleano para el JQuery
+
 				}
 				else
 				{
@@ -276,31 +302,34 @@ class AssociationsController extends AppController
 				}
 
 
+				try
+				{
 
 
+					//Luego actualiza la información de los montos asociados a esa asociación
+						$query = $this->Associations->Amounts->query();
+
+					//Se formatean las fechas
+						$date = $this->request->data['date']['year'].$this->request->data['date']['month'].$this->request->data['date']['day'];
+
+						$deadline = $this->request->data['deadline']['year'].$this->request->data['date']['month'].$this->request->data['date']['day'];
 
 
+						$query->update()
+							  ->set(['amount'=>$this->request->data['amount'],
+							  		  'date'=>$date,
+							  		  'deadline'=>$deadline])
+							  ->where(['id'=>$amount[0]['id']])//amount ya se asignó arriba
+							  ->execute();
 
 
+				 	$response = $response.",1";
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+				}
+				catch(Exception $e)
+				{
+					$response = $response.",0";
+				}
 
 
 				
@@ -382,24 +411,5 @@ class AssociationsController extends AppController
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
 	
 }

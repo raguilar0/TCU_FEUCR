@@ -18,7 +18,7 @@
     echo "<div class = 'row'>";
 
     echo "<div class = 'col-xs-12 col-md-4'>";
-     echo "<h4>".$this->Form->input('name', ['class' => 'form-control','label'=>'Nombre de la Asociación', 'maxlength'=> '256'])."</h4>";
+     echo "<h4>".$this->Form->input('name', ['class' => 'form-control','label'=>'Nombre de la Asociación', 'maxlength'=> '256', 'placeholder'=>'Ejemplo: Asociación de Estudiantes de Matemáticas'])."</h4>";
     echo "</div >";
 
     echo "<div class = 'col-xs-6 col-md-4'>";
@@ -52,16 +52,16 @@
 
 
 
-    echo "<h4>".$this->Form->input('acronym', ['class' => 'form-control', 'label'=>'Sigla', 'maxlength'=> '256'])."</h4>";
+    echo "<h4>".$this->Form->input('acronym', ['class' => 'form-control', 'label'=>'Sigla', 'maxlength'=> '256', 'placeholder'=>'Ejemplo: AEMA'])."</h4>";
 
    
 
 
     //echo "<h4>".$this->Form->input('headquarters', ['class' => 'form-control','label'=>'Sede', 'maxlength'=> '100'])."</h4>";
 
-    echo "<h4>".$this->Form->input('location', ['class' => 'form-control','label'=>'Localización', 'maxlength'=> '1024'])."</h4>";
+    echo "<h4>".$this->Form->input('location', ['class' => 'form-control','label'=>'Localización', 'maxlength'=> '1024', 'placeholder'=>'Ejemplo: San Pedro, San José, Costa Rica'])."</h4>";
 
-    echo "<h4>".$this->Form->input('schedule', ['class' => 'form-control','label'=>'Horario', 'maxlength'=> '512'])."</h4>";
+    echo "<h4>".$this->Form->input('schedule', ['class' => 'form-control','label'=>'Horario', 'maxlength'=> '512', 'placeholder'=>'Ejemplo: 7:00 am - 10:00 pm'])."</h4>";
     
 
     echo "<h4>".$this->Form->label('Associations.authorized_card','Tarjeta Autorizada ');
@@ -93,9 +93,9 @@ echo "<div class='collapse' id='form_amounts'>";
 
         echo "<h4>".$this->Form->input('amount', ['class' => 'form-control','label'=>'Monto','type'=>'number','min'=> '0', 'placeholder'=>'Cantidad a Asignar'])."</h4>";
 
-        echo "<h4>".$this->Form->input('date', ['class' => 'form-control', 'label'=>'Fecha de Tracto', 'type'=> 'date', 'id'=>'date_input'])."</h4>";
+        echo "<h4>".$this->Form->input('date', ['class' => 'form-control', 'label'=>'Fecha de Inicio de Tracto', 'type'=> 'date', 'id'=>'date_input'])."</h4>";
 
-        echo "<h4>".$this->Form->input('deadline', ['class' => 'form-control', 'label'=>'Fecha de Cierre', 'type'=> 'date', 'id'=>'date_input'])."</h4>";        
+        echo "<h4>".$this->Form->input('deadline', ['class' => 'form-control', 'label'=>'Fecha de Cierre de Tracto', 'type'=> 'date', 'id'=>'date_input'])."</h4>";        
 
 
         echo "</div>";
@@ -138,9 +138,9 @@ echo "</div>";
 
         echo "<div class='form-group'>";
 
-        echo "<h4>".$this->Form->input('name', ['class' => 'form-control','label'=>'Nombre de la Sede', 'maxlength'=> '100'])."</h4>";
+        echo "<h4>".$this->Form->input('name', ['class' => 'form-control','label'=>'Nombre de la Sede', 'maxlength'=> '100', 'placeholder'=>'Ejemplo: Sede Rodrigo Facio'])."</h4>";
 
-        echo "<h4>".$this->Form->input('image_name', ['class' => 'form-control', 'label'=>'Nombre de la imagen', 'maxlength'=> '100'])."</h4>";
+        echo "<h4>".$this->Form->input('image_name', ['class' => 'form-control', 'label'=>'Nombre de la imagen', 'maxlength'=> '100', 'placeholder'=>'Ejemplo: facio.jpg'])."</h4>";
 
         echo "<h4>".$this->Form->submit('Guardar Sede', ['class' => 'form-control', 'id' => 'sede_id'])."</h4>";
 

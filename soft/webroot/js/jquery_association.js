@@ -19,7 +19,7 @@ $('#submit3').submit(function(e){
 
 $('#submit4').submit(function(e){
     e.preventDefault();
-   // modifyHeadquarter();
+    modifyHeadquarter();
 });
 
 
@@ -50,7 +50,7 @@ function addAssociation()
             }
             else
             {            
-                $("#callback").text("Lo sentimos. Algo salió mal al guardar los montos");
+                $("#callback").text("Lo sentimos. No se pudo guardar los montos. Revise si llenó los campos correctamente.");
                 $("#callback").css("color","red");
             }
         }               
@@ -89,16 +89,35 @@ function modifyAssociation()
     $.post($("#submit3").attr("action"),$("#submit3").serialize(), 
     function(data, status)
     {
-        if(data == "1")
+        var array_data = data.split(',');
+
+        if(array_data[0] == '1' && array_data[1] == '1')
         {
             $("#callback").text("¡Los datos se guardaron con éxito!");
             $("#callback").css("color","#01DF01");
         }
         else
         {
-            $("#callback").text("Lo sentimos. Es probable que este nombre de asociación o de la sigla ya exista y por lo tanto no puede agregarse.");
-            $("#callback").css("color","red");
-        }               
+            if(array_data[0] == '0' && array_data[1] == '0')
+            {
+                $("#callback").text("Lo sentimos. Algo ocurrió y ningún dato pudo guardarse. Verifique los datos y si el problema persiste contacte al administrador.");
+                $("#callback").css("color","red");
+            }
+            else
+            {
+                if(array_data[0] == '0' && array_data[1] == '1')
+                {
+                    $("#callback").text("Se guardó la información de los montos, pero no así la de asociaciones. Es probable que este nombre de asociación o de la sigla ya exista y por lo tanto no puede agregarse.");
+                    $("#callback").css("color","red");
+                }
+                else
+                {
+                    $("#callback").text("Se guardó la información de las asociaciones, pero no así la de los montos. Esto puede deberse a que aún no tenga montos asociados, por lo que debe primero asignar un monto  o en su defecto a un error no contemplado.");
+                    $("#callback").css("color","red");
+                }
+            }
+        }
+              
 
     });
 }
