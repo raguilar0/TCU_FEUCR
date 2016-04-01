@@ -212,9 +212,9 @@ function deleteHeadquarter()
 function modifyHeadquarter()
 {
     var path = $('#submit4').attr('action');
-    alert(path);
+
     path = path.replace('verify','modifyHeadquarter');
-    alert(path);
+
 
     $.post(path,$("#submit4").serialize(), 
     function(data, status)
@@ -244,7 +244,6 @@ function addAmounts()
     function(data, status)
     {   
 
-        alert(data);
 
         if(data == '1')
         {

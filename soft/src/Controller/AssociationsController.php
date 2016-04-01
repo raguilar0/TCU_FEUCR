@@ -236,7 +236,7 @@ class AssociationsController extends AppController
 
 			$amount = $amount->toArray();
 
-			$association['amounts'] = $amount[0];
+			$association['amounts'] = (isset($amount[0])?$amount[0]:null);
 
 			
 
