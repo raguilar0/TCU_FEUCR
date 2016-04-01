@@ -53,8 +53,8 @@ function addAssociation()
             }
             else
             {            
-                $("#callback").text("Lo sentimos. No se pudo guardar los montos. Revise si llenó los campos correctamente.");
-                $("#callback").css("color","red");
+                $("#callback").text("Se guardó la Asociación, no así los montos. Revise si llenó los campos correctamente.");
+                $("#callback").css("color","#FF8000");
             }
         }               
 
@@ -111,12 +111,12 @@ function modifyAssociation()
                 if(array_data[0] == '0' && array_data[1] == '1')
                 {
                     $("#callback").text("Se guardó la información de los montos, pero no así la de asociaciones. Es probable que este nombre de asociación o de la sigla ya exista y por lo tanto no puede agregarse.");
-                    $("#callback").css("color","red");
+                    $("#callback").css("color","#FF8000");
                 }
                 else
                 {
                     $("#callback").text("Se guardó la información de las asociaciones, pero no así la de los montos. Esto puede deberse a que aún no tenga montos asociados, por lo que debe primero asignar un monto  o en su defecto a un error no contemplado.");
-                    $("#callback").css("color","red");
+                    $("#callback").css("color","#FF8000");
                 }
             }
         }
