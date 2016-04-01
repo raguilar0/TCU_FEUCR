@@ -115,8 +115,16 @@ function modifyAssociation()
                 }
                 else
                 {
-                    $("#callback").text("Se guardó la información de las asociaciones, pero no así la de los montos. Esto puede deberse a que aún no tenga montos asociados, por lo que debe primero asignar un monto  o en su defecto a un error no contemplado.");
-                    $("#callback").css("color","#FF8000");
+                    if(!$("#addAmountsBtn").length)
+                    {
+                        $("#callback").text("¡Los datos se guardaron con éxito!");
+                        $("#callback").css("color","#01DF01");
+                    }
+                    else
+                    {
+                        $("#callback").text("Se guardó la información de la Asociación, pero no así la de los montos. Revise que los datos suministrados son correctos.");
+                        $("#callback").css("color","red");                        
+                    }
                 }
             }
         }
