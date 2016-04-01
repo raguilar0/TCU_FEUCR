@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>-->
 
+
+   
     <title>Contraloría FEUCR</title>
     <?= $this->Html->css('bootstrap.min.css') ?>
 
@@ -33,8 +35,7 @@
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrar Montos
                 <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><?php echo $this->Html->link('Consultar Montos', '/amounts');?></li>
-                    <li><?php echo $this->Html->link('Agregar Montos', '/amounts/add');?></li>
+                    <li><?php echo $this->Html->link('Agregar Montos', '/amounts/show_associations');?></li>
             </ul>
           </li>
 

@@ -1,38 +1,104 @@
-
 <div class="row text-center">
-  <div class="col-xs-12">
-    <h1>¡Acá podés <b>ver</b> la información completa de la Asociación!</h1>
-  </div>
+    <div class="col-xs-12">
+        <h1> <?php echo $data['name'].' ('.$data['acronym'].')';?> </h1>
+    </div>
 </div>
 
+<div class="row">
+    <div class="col-xs-12 col-md-4">
+        <h3><b>Ubicación</b></h3>
+    </div>
+
+    <div class="col-xs-12 col-md-8">
+        <h3><?php echo $data['location'];?> </h3>
+    </div>
+
+</div>
+
+<hr>
+
+<div class="row">
+    <div class="col-xs-12 col-md-4">
+        <h3><b>Horario</b></h3>
+    </div>
+
+    <div class="col-xs-12 col-md-8">
+          <h3><?php echo $data['schedule'];?> </h3>
+        
+    </div>   
+
+</div>
+
+<hr>
+
+<div class="row">
+    <div class="col-xs-12 col-md-4">
+        <h3><b>Tarjeta Autorizada</b></h3>
+    </div>
+
+    <div class="col-xs-12 col-md-8">
+          <h3><?php echo ($data['authorized_card'] == 1 ? 'Autorizada':'Sin Autorización');?> </h3>
+        
+    </div>
+
+</div>
+
+<hr>
+
+
+<div class="row">
+    <div class="col-xs-12 col-md-4">
+        <h3><b>Sede</b></h3>
+    </div>
+
+    <div class="col-xs-12 col-md-8">
+          <h3><?php echo $data['headquarter'];?> </h3>
+        
+    </div>  
+
+</div>
+
+<hr>
+
+
 <br>
 <br>
+
+
+<div class="row text-center">
+    <div class="col-xs-12">
+      <h2>Montos</h2>
+    </div>
+
+</div>
 
 <div class="table-responsive">
   <table class="table read_association">
   <thead>
     <tr>
-      <th>Sigla</th>
-      <th>Nombre</th>
-      <th>Ubicación</th>
-      <th>Horario</th>      
-      <th>Tarjeta Autorizada</th>
-      <th>Sede</th>         
+      <th>Cantidad Asignada</th>
+      <th>Fecha de Inicio del Tracto</th>
+      <th>Fecha de Fin del Tracto</th>
+      <th>Total en Gastos</th>              
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <?php
-          
-          echo "<td>".$data['acronym']."</td>";
-          echo "<td>".$data['name']."</td>";
-          echo "<td>".$data['location']."</td>";
-          echo "<td>".$data['schedule']."</td>";
-          echo "<td>".($data['authorized_card'] == 1 ? 'Autorizada':'Sin Autorización')."</td>";
-          echo "<td>".$data['headquarter']."</td>";
 
+      <?php
+          foreach ($data['amounts'] as $key => $value) {
+             echo "<tr>";
+
+              echo "<td>".$value['amount']."</td>";
+              echo "<td>".$value['date']."</td>";
+              echo "<td>".$value['deadline']."</td>";
+              echo "<td>".$value['spent']."</td>";                        
+             echo "</tr>";
+          }
       ?>
-    </tr>
+
+
+
+
   </tbody>
 </table>
 </div>

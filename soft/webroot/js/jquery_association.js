@@ -19,10 +19,13 @@ $('#submit3').submit(function(e){
 
 $('#submit4').submit(function(e){
     e.preventDefault();
-   // modifyHeadquarter();
+    modifyHeadquarter();
 });
 
-
+$('#submit5').submit(function(e){
+    e.preventDefault();
+    addAmounts();
+});
 
 
 //Esta función sirve para agregar una asociación 
@@ -32,15 +35,27 @@ function addAssociation()
     function(data, status)
     {   
 
-        if(data == "1")
+        var array_data = data.split(',');
+
+
+
+        if(array_data[0] == "1" && array_data[1] == "1")
         {
             $("#callback").text("¡Los datos se guardaron con éxito!");
             $("#callback").css("color","#01DF01");
         }
         else
         {
-            $("#callback").text("Lo sentimos. Es probable que este nombre de asociación o de la sigla ya exista y por lo tanto no puede agregarse.");
-            $("#callback").css("color","red");
+            if(array_data[0] == "0")
+            {                
+                $("#callback").text("Lo sentimos. Es probable que este nombre de asociación o de la sigla ya exista y por lo tanto no puede agregarse.");
+                $("#callback").css("color","red");
+            }
+            else
+            {            
+                $("#callback").text("Lo sentimos. No se pudo guardar los montos. Revise si llenó los campos correctamente.");
+                $("#callback").css("color","red");
+            }
         }               
 
     });
@@ -77,16 +92,35 @@ function modifyAssociation()
     $.post($("#submit3").attr("action"),$("#submit3").serialize(), 
     function(data, status)
     {
-        if(data == "1")
+        var array_data = data.split(',');
+
+        if(array_data[0] == '1' && array_data[1] == '1')
         {
             $("#callback").text("¡Los datos se guardaron con éxito!");
             $("#callback").css("color","#01DF01");
         }
         else
         {
-            $("#callback").text("Lo sentimos. Es probable que este nombre de asociación o de la sigla ya exista y por lo tanto no puede agregarse.");
-            $("#callback").css("color","red");
-        }               
+            if(array_data[0] == '0' && array_data[1] == '0')
+            {
+                $("#callback").text("Lo sentimos. Algo ocurrió y ningún dato pudo guardarse. Verifique los datos y si el problema persiste contacte al administrador.");
+                $("#callback").css("color","red");
+            }
+            else
+            {
+                if(array_data[0] == '0' && array_data[1] == '1')
+                {
+                    $("#callback").text("Se guardó la información de los montos, pero no así la de asociaciones. Es probable que este nombre de asociación o de la sigla ya exista y por lo tanto no puede agregarse.");
+                    $("#callback").css("color","red");
+                }
+                else
+                {
+                    $("#callback").text("Se guardó la información de las asociaciones, pero no así la de los montos. Esto puede deberse a que aún no tenga montos asociados, por lo que debe primero asignar un monto  o en su defecto a un error no contemplado.");
+                    $("#callback").css("color","red");
+                }
+            }
+        }
+              
 
     });
 }
@@ -119,8 +153,12 @@ function evaluateOnchangeSelect(){
 
 function loadHeadquarterData()
 {
+    var path = $('#submit4').attr('action');
 
-    $.post("/soft/headquarters/get_information",$("#submit3").serialize(), 
+    path = path.replace('verify','get_information');
+
+
+    $.post(path,$("#submit3").serialize(), 
 
     function(data, status)
     {
@@ -146,7 +184,11 @@ function loadHeadquarterData()
 
 function deleteHeadquarter()
 {
-    $.post("/soft/headquarters/deleteHeadquarter",$("#submit4").serialize(), 
+    var path = $('#submit4').attr('action');
+
+    path = path.replace('verify','deleteHeadquarter');
+
+    $.post(path,$("#submit4").serialize(), 
     function(data, status)
     {
         if(data == "1")
@@ -169,7 +211,12 @@ function deleteHeadquarter()
 
 function modifyHeadquarter()
 {
-    $.post("/soft/headquarters/modifyHeadquarter",$("#submit4").serialize(), 
+    var path = $('#submit4').attr('action');
+    alert(path);
+    path = path.replace('verify','modifyHeadquarter');
+    alert(path);
+
+    $.post(path,$("#submit4").serialize(), 
     function(data, status)
     {
 
@@ -190,13 +237,55 @@ function modifyHeadquarter()
 
 }
 
+
+function addAmounts()
+{
+    $.post($("#submit5").attr("action"),$("#submit5").serialize(), 
+    function(data, status)
+    {   
+
+        alert(data);
+
+        if(data == '1')
+        {
+            $("#callback").text("¡Los datos se guardaron con éxito!");
+            $("#callback").css("color","#01DF01");
+        }
+        else
+        {
+             
+            $("#callback").text("Lo sentimos. Ocurrió un error inesperado, intente más tarde. Si el problema persiste, consulte al administrador.");
+            $("#callback").css("color","red");
+            
+
+        }               
+
+    });
+}
+
+
 function confirmAction()
 {
     var href = $('#associations').attr('href');
 
     href = href.split('/');
 
-    if(href[3] == 'delete')
+    found = false;
+    index = (href.length - 1)
+
+    while((index >= 0) && !found)
+    {
+        if(href[index] == 'delete')
+        {
+            found = true;
+        }
+        else
+        {
+            --index;
+        }
+    }
+
+    if(href[index] == 'delete')
     {
         var action = confirm('¿Realmente desea realizar esta acción?');
 
@@ -207,3 +296,9 @@ function confirmAction()
     }
 
 }
+
+//El siguiente Script es para los tooltips
+
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
