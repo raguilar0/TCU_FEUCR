@@ -159,7 +159,7 @@
 
 </div>
 
-
+<!--Carga las respuestas del JQuery en el callback-->
 <div class="row text-right">
 	<div class="col-xs-12">
 		<h4 id="callback" style="color:#01DF01"></h4>	
