@@ -35,8 +35,7 @@
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrar Montos
                 <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><?php echo $this->Html->link('Consultar Montos', '/amounts');?></li>
-                    <li><?php echo $this->Html->link('Agregar Montos', '/amounts/add');?></li>
+                    <li><?php echo $this->Html->link('Agregar Montos', '/amounts/show_associations');?></li>
             </ul>
           </li>
 

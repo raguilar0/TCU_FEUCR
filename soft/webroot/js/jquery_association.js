@@ -22,7 +22,10 @@ $('#submit4').submit(function(e){
     modifyHeadquarter();
 });
 
-
+$('#submit5').submit(function(e){
+    e.preventDefault();
+    addAmounts();
+});
 
 
 //Esta función sirve para agregar una asociación 
@@ -150,8 +153,12 @@ function evaluateOnchangeSelect(){
 
 function loadHeadquarterData()
 {
+    var path = $('#submit4').attr('action');
 
-    $.post("/FEUCR/soft/headquarters/get_information",$("#submit3").serialize(), 
+    path = path.replace('verify','get_information');
+
+
+    $.post(path,$("#submit3").serialize(), 
 
     function(data, status)
     {
@@ -177,7 +184,11 @@ function loadHeadquarterData()
 
 function deleteHeadquarter()
 {
-    $.post("/soft/headquarters/deleteHeadquarter",$("#submit4").serialize(), 
+    var path = $('#submit4').attr('action');
+
+    path = path.replace('verify','deleteHeadquarter');
+
+    $.post(path,$("#submit4").serialize(), 
     function(data, status)
     {
         if(data == "1")
@@ -200,7 +211,12 @@ function deleteHeadquarter()
 
 function modifyHeadquarter()
 {
-    $.post("/FEUCR/soft/headquarters/modifyHeadquarter",$("#submit4").serialize(), 
+    var path = $('#submit4').attr('action');
+    alert(path);
+    path = path.replace('verify','modifyHeadquarter');
+    alert(path);
+
+    $.post(path,$("#submit4").serialize(), 
     function(data, status)
     {
 
@@ -220,6 +236,33 @@ function modifyHeadquarter()
     });
 
 }
+
+
+function addAmounts()
+{
+    $.post($("#submit5").attr("action"),$("#submit5").serialize(), 
+    function(data, status)
+    {   
+
+        alert(data);
+
+        if(data == '1')
+        {
+            $("#callback").text("¡Los datos se guardaron con éxito!");
+            $("#callback").css("color","#01DF01");
+        }
+        else
+        {
+             
+            $("#callback").text("Lo sentimos. Ocurrió un error inesperado, intente más tarde. Si el problema persiste, consulte al administrador.");
+            $("#callback").css("color","red");
+            
+
+        }               
+
+    });
+}
+
 
 function confirmAction()
 {
@@ -253,3 +296,9 @@ function confirmAction()
     }
 
 }
+
+//El siguiente Script es para los tooltips
+
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});

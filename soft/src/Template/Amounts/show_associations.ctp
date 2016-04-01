@@ -1,5 +1,5 @@
 <div class = 'row text-center'>
-    <div class='col-xs-10'>
+    <div class='col-xs-12'>
 		<h1>Elegí una Sede y luego una Asociación</h1>
     </div>
 </div>
@@ -11,9 +11,7 @@
 
 <?php
 
-	$link = $data['link'];
 
-	unset($data['link']);
 
 	$counter = 0;
 	
@@ -32,7 +30,7 @@
 			for ($i=0; $i < count($data[$key]); $i++) { 
 			 	
 				echo "<h4>";
-				echo $this->Html->link($data[$key][$i]['name'], '/associations/'.$link."/".$data[$key][$i]['id'], ['onclick'=>'confirmAction()', 'id'=>'associations']);
+				echo $this->Html->link($data[$key][$i]['name'], '/amounts/add/'.$data[$key][$i]['id'], ['id'=>'associations']);
 				echo "</h4>";
 				
 			 }
