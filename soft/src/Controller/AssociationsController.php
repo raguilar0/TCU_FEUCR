@@ -25,23 +25,6 @@ class AssociationsController extends AppController
 	public function index()
 	{
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
-		$this->loadModel('Headquarters');
-		$firstQuery = $this->Headquarters->find()
-						->hydrate(false)
-						->select(['id', 'name']);
-		$firstQuery = $firstQuery->toArray();
-		$end = count($firstQuery);
-
-
-		//Por cada sede recupera las asocias dentro de esa sede
-		for ($i=0; $i < $end ; $i++) { 
-			$query = $this->Associations->find()
-				->hydrate(false)
-				->select(['name','id'])
-				->where(['headquarter_id'=> $firstQuery[$i]['id']]);
-			$secondQuery[$firstQuery[$i]['name']] = $query->toArray();
-		}
-		$this->set('data',$secondQuery);
 	}
 	
 	public function showAssociations($id = null)
@@ -68,7 +51,7 @@ class AssociationsController extends AppController
 				$query = $this->Associations->find()
 					->hydrate(false)
 					->select(['name','id'])
-					->where(['headquarter_id'=> $firstQuery[$i]['id']]);
+					->andwhere(['headquarter_id'=> $firstQuery[$i]['id'], 'enable'=>1]);
 
 
 				
@@ -195,7 +178,36 @@ class AssociationsController extends AppController
 
 			$association['headquarter'] = $headquarter; //Lo asocia
 
+			/**
+				El siguiente código que asocia un date a $association
+				corrige el hecho de que una persona tenga que poner la fecha de inicio de tracto cada vez. Existen dos casos:
+
+				1) La primera vez: La primera vez no existen montos asociados a ninguna asociación, por lo que se toma la fecha actual.
+
+				2) Una vez que existan montos asociados: Cuando ya hay montos asociados, se toma como fecha de tracto actual al último monto asociado
+			**/
+
+			$date = $this->Associations->Amounts->find()
+							->hydrate(false)
+							->select(['date', 'deadline'])
+							->having(['max(id)']);
+
+			$date = $date->toArray();
+
+
+			if(!isset($date[0]))
+			{
+				$date['date'] = $date['deadline'] = date('Y-m-d');
 			}
+			else
+			{
+				$date = $date[0];
+			}
+
+			$association['date'] = $date;
+
+
+		}
 
 			$this->set('association',$association); // set() Pasa la variable association a la vista.
 	}
@@ -350,16 +362,50 @@ class AssociationsController extends AppController
 	{
 		if($id)
 		{
-			$association = $this->Associations->get($id);
+			try
+			{
+				//Obtengo los datos de la asociación con el id = $id
+				$association = $this->Associations->get($id);
 
-			if($this->Associations->delete($association))
-			{
-				return $this->redirect(['action'=>'show_association/4']);
+				//Obtengo todas las tuplas de Amounts asociadas a dicha
+				//asociación
+				$select = $this->Associations->Amounts->find()
+							->select(['amount','date','spent','deadline','association_id'])
+							->where(['id'=> $association['id']]);
+
+				//Cargo este modelo para guardar la información
+				$this->loadModel('Warehouses');
+
+				//Hago el insert con las tuplas recuperadas
+				$insert = $this->Warehouses->query()
+							->insert(['amount','date','spent','deadline','association_id'])
+							->values($select)
+							->execute();
+
+				//Borro las tuplas ya guardadas en el almacén
+
+				$delete = $this->Associations->Amounts->query();
+
+				$delete->delete()
+					  ->where(['association_id'=>$association['id']])
+					  ->execute();
+
+			//Desactivo la asociación
+				$update = $this->Associations->query();
+
+				$update->update()
+						->set(['enable'=>0])
+						->where(['id'=>$association['id']])
+						->execute();
+
 			}
-			else
+			catch(Exception $e)
 			{
-				return $this->redirect(['action'=>'show_association/4']);
+				echo "Ocurrió un error inesperado";
 			}
+
+
+		
 		}
 
 	}

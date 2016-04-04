@@ -8,7 +8,7 @@
 
    
     <title>Contraloría FEUCR</title>
-    <?= $this->Html->css('bootstrap.min.css') ?>
+    <?= $this->Html->css('bootstrap.min.css') ?> 
 
   
     <?= $this->Html->css('views.css') ?>
@@ -59,5 +59,6 @@
      <?=$this->Html->script('jquery2.js') ?>
      <?=$this->Html->script('bootstrap.min.js') ?>
      <?=$this->Html->script('jquery_association.js') ?>
+
 </body>
 </html>

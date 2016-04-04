@@ -93,9 +93,9 @@ echo "<div class='collapse' id='form_amounts'>";
 
         echo "<h4>".$this->Form->input('amount', ['class' => 'form-control','label'=>'Monto','type'=>'number','min'=> '0', 'placeholder'=>'Cantidad a Asignar'])."</h4>";
 
-        echo "<h4>".$this->Form->input('date', ['class' => 'form-control', 'label'=>'Fecha de Inicio de Tracto', 'type'=> 'date', 'id'=>'date_input'])."</h4>";
+        echo "<h4>".$this->Form->input('date', ['class' => 'form-control', 'label'=>'Fecha de Inicio de Tracto', 'type'=> 'date', 'id'=>'date_input', 'value'=>$association['date']['date']])."</h4>";
 
-        echo "<h4>".$this->Form->input('deadline', ['class' => 'form-control', 'label'=>'Fecha de Cierre de Tracto', 'type'=> 'date', 'id'=>'date_input'])."</h4>";        
+        echo "<h4>".$this->Form->input('deadline', ['class' => 'form-control', 'label'=>'Fecha de Cierre de Tracto', 'type'=> 'date', 'id'=>'date_input', 'value'=>$association['date']['deadline']])."</h4>";        
 
 
         echo "</div>";
