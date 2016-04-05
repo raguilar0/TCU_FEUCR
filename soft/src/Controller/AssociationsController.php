@@ -245,7 +245,6 @@ class AssociationsController extends AppController
 
 			$association['amounts'] = (isset($amount[0])?$amount[0]:null); //if inline
 
-			
 
 			if($this->request->is(array('post','put')))
 			{

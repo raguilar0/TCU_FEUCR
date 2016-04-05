@@ -7,12 +7,17 @@
 
 <?php
 
+
+
 	echo $this->Form->create($amount,['id'=>'submit5']);
 	    echo "<div class='form-group'>";
 
             echo "<h4>".$this->Form->input('amount', ['class' => 'form-control', 'label'=>'Monto', 'min'=>'0', 'placeholder'=>'Monto a asignar'])."</h4>";
-            echo "<h4>".$this->Form->input('date', ['class' => 'form-control','label'=>'Fecha de Inicio del Tracto','value'=> $amount['date']['date']])."</h4>";
-            echo "<h4>".$this->Form->input('deadline', ['class' => 'form-control','label'=>'Fecha de Cierre del Tracto','value'=> $amount['date']['deadline']])."</h4>";
+
+
+            echo "<h4>".$this->Form->input('date', ['class' => 'form-control','label'=>'Fecha de Inicio del Tracto', 'value'=>$amount['date']['date']])."</h4>";
+            echo "<h4>".$this->Form->input('deadline', ['class' => 'form-control','label'=>'Fecha de Cierre del Tracto', 'value'=>$amount['date']['deadline']])."</h4>";
+
 
             echo "<div class='row text-center'>";
                 echo "<div class = 'col-xs-12'>";               
