@@ -41,7 +41,7 @@ class AssociationsController extends AppController
 						 'table'=>'associations',
 						 'alias'=>'a',
 						 'type' => 'RIGHT',
-						 'conditions'=>'headquarters.id = a.headquarter_id',
+						 'conditions'=>'Headquarters.id = a.headquarter_id',
 						])
 					->where(['a.enable'=>1]);
 
@@ -241,7 +241,6 @@ class AssociationsController extends AppController
 
 			$association['amounts'] = (isset($amount[0])?$amount[0]:null); //if inline
 
-			
 
 			if($this->request->is(array('post','put')))
 			{

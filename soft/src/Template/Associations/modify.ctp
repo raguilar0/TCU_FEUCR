@@ -104,7 +104,7 @@ echo "<div class='collapse' id='form_amounts'>";
 
         echo "<h4>".$this->Form->input('date', ['class' => 'form-control', 'label'=>'Fecha de Inicio de Tracto', 'type'=> 'date', 'id'=>'date_input', 'value'=>$data['amounts']['date']])."</h4>";
 
-        echo "<h4>".$this->Form->input('deadline', ['class' => 'form-control', 'label'=>'Fecha de Cierre de Tracto', 'type'=> 'date', 'id'=>'date_input', 'value'=>$data['amounts']['date']])."</h4>";        
+        echo "<h4>".$this->Form->input('deadline', ['class' => 'form-control', 'label'=>'Fecha de Cierre de Tracto', 'type'=> 'date', 'id'=>'date_input', 'value'=>$data['amounts']['deadline']])."</h4>";        
 
 
         echo "</div>";        
