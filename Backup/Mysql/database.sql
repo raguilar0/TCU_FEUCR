@@ -26,9 +26,9 @@ CREATE TABLE associations
 CREATE TABLE amounts
 (
 	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	amount INT(32) NOT NULL,
+	amount DOUBLE NOT NULL,
 	date date NOT NULL,
-	spent INT(32) NOT NULL,
+	spent DOUBLE NOT NULL,
 	deadline date NOT NULL,
 	association_id INT UNSIGNED NOT NULL,
 	

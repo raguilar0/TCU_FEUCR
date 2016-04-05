@@ -39,6 +39,9 @@ class AmountsController extends AppController
 		$amount['association'] = $association_name[0];
 
 
+
+
+		
 		$response = 0;
 
 		if($this->request->is('post') && $id)
@@ -51,6 +54,42 @@ class AmountsController extends AppController
 				}
 
 			die($response);
+		}
+		else
+		{
+			/**
+				El siguiente código que asocia un date a $association
+				corrige el hecho de que una persona tenga que poner la fecha de inicio de tracto cada vez. Existen dos casos:
+	
+				1) La primera vez: La primera vez no existen montos asociados a ninguna asociación, por lo que se toma la fecha actual.
+	
+				2) Una vez que existan montos asociados: Cuando ya hay montos asociados, se toma como fecha de tracto actual al último monto asociado
+			**/
+	
+			$date = $this->Amounts->find()
+							->hydrate(false)
+							->select(['date', 'deadline'])
+							->order(['id'=>'DESC'])
+							->limit(1);
+	
+			$date = $date->toArray();
+	
+	
+	
+	
+	
+			if(!isset($date[0]))
+			{
+				$date['date'] = $date['deadline'] = date('Y-m-d');
+			}
+			else
+			{
+				$date = $date[0];
+			}
+	
+			unset($date[0]);
+			
+			$amount['date'] = $date;			
 		}
 		
 		$this->set('amount',$amount);
@@ -77,7 +116,7 @@ class AmountsController extends AppController
 						 'table'=>'associations',
 						 'alias'=>'a',
 						 'type' => 'RIGHT',
-						 'conditions'=>'headquarters.id = a.headquarter_id',
+						 'conditions'=>'Headquarters.id = a.headquarter_id',
 						])
 					->where(['a.enable'=>1]);
 
