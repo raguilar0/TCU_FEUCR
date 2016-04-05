@@ -48,7 +48,7 @@ function addAssociation()
         {
             if(array_data[0] == "0")
             {                
-                $("#callback").text("Lo sentimos. Es probable que este nombre de asociación o de la sigla ya exista y por lo tanto no puede agregarse.");
+                $("#callback").text("Lo sentimos. Es probable que este nombre de asociación o de la sigla ya exista y por lo tanto no puede agregarse. Puede revisar las asociaciones deshabilitadas y en el caso de que se encuentre ahí, habilitarla.");
                 $("#callback").css("color","red");
             }
             else

@@ -67,37 +67,26 @@ class AmountsController extends AppController
 	{
 
 		$this->viewBuilder()->layout('admin_views');
-		
-
-		
-		$this->loadModel('Headquarters');
-
-		$firstQuery = $this->Headquarters->find()
-						->hydrate(false)
-						->select(['id', 'name']);
-
-		$firstQuery = $firstQuery->toArray();
-
-		
-		$end = count($firstQuery);
-		$secondQuery = array();
-		//Por cada sede recupera las asocias dentro de esa sede
-		for ($i=0; $i < $end ; $i++) { 
-			$query = $this->Amounts->Associations->find()
-				->hydrate(false)
-				->select(['name','id'])
-				->where(['headquarter_id'=> $firstQuery[$i]['id']]);
-
-
 			
+			$this->loadModel('Headquarters');
 
-			$secondQuery[$firstQuery[$i]['name']] = $query->toArray();
+			$query = $this->Headquarters->find()
+					->hydrate(false)
+					->select(['a.name','a.id','name'])
+					->join([
+						 'table'=>'associations',
+						 'alias'=>'a',
+						 'type' => 'RIGHT',
+						 'conditions'=>'headquarters.id = a.headquarter_id',
+						])
+					->where(['a.enable'=>1]);
 
-		}
+
+			$query = $query->toArray();
 
 		
 
-		$this->set('data',$secondQuery);
+		$this->set('data',$query);
 		
 		
 	}

@@ -1,5 +1,5 @@
 <div class = 'row text-center'>
-    <div class='col-xs-12'>
+    <div class='col-xs-10'>
 		<h1>Elegí una Sede y luego una Asociación</h1>
     </div>
 </div>
@@ -12,36 +12,52 @@
 <?php
 
 
-
 	$counter = 0;
-	
-	
-	foreach ($data as $key => $value) {
+	$last = "";
+	$div = "";
+
+	foreach ($data as $key) {
 
 		if(($counter % 12) == 0)
 		{
 			echo "<div class = 'row text-center'>";
 		}
 
-		echo "<div class = 'col-xs-12 col-md-4 colSedes'>";
 
-		echo "<button data-toggle='collapse'  class=' btn btn-info' data-target='#id".$counter."'> ".$key."</button>";
-		echo "<div id = 'id".$counter."'class='collapse'>";
-			for ($i=0; $i < count($data[$key]); $i++) { 
-			 	
-				echo "<h4>";
-				echo $this->Html->link($data[$key][$i]['name'], '/amounts/add/'.$data[$key][$i]['id'], ['id'=>'associations']);
-				echo "</h4>";
+		if($last != $key['name'])
+		{
+			echo $div;
+			echo $div;
+
+									
+
+			echo "<div class = 'col-xs-12 col-md-4 colSedes'>";
+			
+			echo "<button data-toggle='collapse'  class=' btn btn-info' data-target='#id".$counter."'> ".$key['name']."</button>";
+
+			echo "<div id = 'id".$counter."'class='collapse'>";
+
+
+
+
+
+			$div = "</div>";
+			$div = "</div>";
+
+			$last = $key['name'];
+			$counter += 4;
+		}
+
+
+		echo "<h4>";
+		echo $this->Html->link($key['a']['name'], '/amounts/add/'.$key['a']['id'], ['onclick'=>'confirmAction()', 'id'=>'associations']);
+		echo "</h4>";
+
 				
-			 }
+			
 
 
 
-		echo "</div>";
-
-		echo "</div>";
-
-		$counter += 4;
 
 		if(($counter % 12) == 0)
 		{
@@ -52,6 +68,15 @@
 
 	}
 
+	if(isset($data[0]))
+	{
+		echo "</div>";
+		echo "</div>";
+	}
+	else
+	{
+		echo "<h2> No hay asociaciones registradas.</h2>";
+	}
 
 	if(($counter % 12) != 0)
 	{

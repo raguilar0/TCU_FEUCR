@@ -40,6 +40,10 @@
           </li>
 
           <li>
+            <?php echo $this->Html->link('Asociaciones Deshabilitadas', '/associations/show_disables');?>
+          </li>
+
+          <li>
             <?php echo $this->Html->link('Bitácora', '/associations/');?>
           </li>
 

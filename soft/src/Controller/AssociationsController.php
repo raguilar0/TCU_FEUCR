@@ -34,50 +34,41 @@ class AssociationsController extends AppController
 			$this->viewBuilder()->layout('admin_views');
 			
 
-			
-			$this->loadModel('Headquarters');
-
-			$firstQuery = $this->Headquarters->find()
-							->hydrate(false)
-							->select(['id', 'name']);
-
-			$firstQuery = $firstQuery->toArray();
-
-			
-			$end = count($firstQuery);
-			$secondQuery = array();
-			//Por cada sede recupera las asocias dentro de esa sede
-			for ($i=0; $i < $end ; $i++) { 
-				$query = $this->Associations->find()
+			$query = $this->Associations->Headquarters->find()
 					->hydrate(false)
-					->select(['name','id'])
-					->andwhere(['headquarter_id'=> $firstQuery[$i]['id'], 'enable'=>1]);
+					->select(['a.name','a.id','name'])
+					->join([
+						 'table'=>'associations',
+						 'alias'=>'a',
+						 'type' => 'RIGHT',
+						 'conditions'=>'headquarters.id = a.headquarter_id',
+						])
+					->where(['a.enable'=>1]);
 
 
-				
+			$query = $query->toArray();
 
-				$secondQuery[$firstQuery[$i]['name']] = $query->toArray();
-
-			}
+		
 
 			switch ($id) {
-				case 1:
-						$secondQuery['link'] = 'read';
-					break;
+					case 1:
+							$query['link'] = 'read';
+						break;
 
-				case 3:
-						$secondQuery['link'] = 'modify';
-					break;										
-				
-				case 4:
-						$secondQuery['link'] = 'delete';
-					break;	
+					case 3:
+							$query['link'] = 'modify';
+						break;										
+					
+					case 4:
+							$query['link'] = 'delete';
+						break;	
 			}
 
-			$this->set('data',$secondQuery);
+			$this->set('data',$query);
+
 		}
-		
 	}
+
 
 	public function read($id = null)
 	{
@@ -248,7 +239,7 @@ class AssociationsController extends AppController
 
 			$amount = $amount->toArray();
 
-			$association['amounts'] = (isset($amount[0])?$amount[0]:null);
+			$association['amounts'] = (isset($amount[0])?$amount[0]:null); //if inline
 
 			
 
@@ -398,6 +389,9 @@ class AssociationsController extends AppController
 						->where(['id'=>$association['id']])
 						->execute();
 
+
+			return $this->redirect(['action'=>'show_associations/4']);
+
 			}
 			catch(Exception $e)
 			{
@@ -449,13 +443,43 @@ class AssociationsController extends AppController
 			}else{
 				$this->set('data',$association); // set() Pasa la variable association a la vista.
 			}
-		}
-
-
-		
+		}		
 	}
 
 
+	public function showDisables()
+	{
+		$this->viewBuilder()->layout('admin_views'); //Se deja este hasta mientras se haga el de representante
+			$query = $this->Associations->Headquarters->find()
+					->hydrate(false)
+					->select(['a.name','a.id','name'])
+					->join([
+						 'table'=>'associations',
+						 'alias'=>'a',
+						 'type' => 'RIGHT',
+						 'conditions'=>'headquarters.id = a.headquarter_id',
+						])
+					->where(['a.enable'=>0]);
 
+		$query = $query->toArray();
+
+
+		$this->set('data', $query);
+	}
+
+	public function enable($id = null)
+	{
+		if($id)
+		{
+			$query = $this->Associations->query();
+
+			$query->update()
+				  ->set(['enable'=> 1])
+				  ->where(['id'=> $id])
+				  ->execute();			
+			
+			return $this->redirect(['action'=>'show_disables']);
+		}
+	}
 	
 }

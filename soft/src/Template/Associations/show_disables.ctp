@@ -11,9 +11,6 @@
 
 <?php
 
-	$link = $data['link'];
-
-	unset($data['link']);
 
 	$counter = 0;
 	$last = "";
@@ -55,7 +52,7 @@
 
 
 		echo "<h4>";
-		echo $this->Html->link($key['a']['name'], '/associations/'.$link."/".$key['a']['id'], ['onclick'=>'confirmAction()', 'id'=>'associations']);
+		echo $this->Html->link($key['a']['name'], '/associations/enable/'.$key['a']['id'], ['onclick'=>'confirmAction()', 'id'=>'associations']);
 		echo "</h4>";
 
 				
