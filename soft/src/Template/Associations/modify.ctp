@@ -96,15 +96,17 @@ echo "<div class='collapse' id='form_amounts'>";
     
 
 //En caso de que no se le haya asignado un monto a esta asociación, esta información no se despliega
+
     if(!is_null($data['amounts']))
     {
+
         echo "<div class='form-group'>";
 
         echo "<h4>".$this->Form->input('amount', ['class' => 'form-control','label'=>'Monto','type'=>'number','min'=> '0', 'value'=>$data['amounts']['amount']])."</h4>";
 
         echo "<h4>".$this->Form->input('date', ['class' => 'form-control', 'label'=>'Fecha de Inicio de Tracto', 'type'=> 'date', 'id'=>'date_input', 'value'=>$data['amounts']['date']])."</h4>";
 
-        echo "<h4>".$this->Form->input('deadline', ['class' => 'form-control', 'label'=>'Fecha de Cierre de Tracto', 'type'=> 'date', 'id'=>'date_input', 'value'=>$data['amounts']['date']])."</h4>";        
+        echo "<h4>".$this->Form->input('deadline', ['class' => 'form-control', 'label'=>'Fecha de Cierre de Tracto', 'type'=> 'date', 'id'=>'date_input', 'value'=>$data['amounts']['deadline']])."</h4>";        
 
 
         echo "</div>";        
