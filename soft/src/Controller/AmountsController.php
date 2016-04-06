@@ -41,14 +41,10 @@ class AmountsController extends AppController
 			$amount['association'] = $association_name[0];
 
 
-<<<<<<< HEAD
-
 
 		
-		$response = 0;
-=======
 			$response = 0;
->>>>>>> 33d5e1df375103a1fb243945588b3c9af8489ee1
+
 
 			if($this->request->is('post'))
 			{
@@ -98,10 +94,12 @@ class AmountsController extends AppController
 				
 				$amount['date'] = $date;			
 			}
-		
+		}
+
 		$this->set('amount',$amount);
 
 	}
+
 
 	public function edit($amount_id)
 	{

@@ -322,7 +322,6 @@ class AssociationsController extends AppController
 
 						$deadline = $this->request->data['deadline']['year'].$this->request->data['deadline']['month'].$this->request->data['deadline']['day'];
 					
-						debug($this->request->data);
 
 						$query->update()
 							  ->set(['amount'=>$this->request->data['amount'],
@@ -399,7 +398,7 @@ class AssociationsController extends AppController
 						->execute();
 
 
-			//return $this->redirect(['action'=>'show_associations/4']);
+			return $this->redirect(['action'=>'show_associations/4']);
 
 			}
 			catch(Exception $e)

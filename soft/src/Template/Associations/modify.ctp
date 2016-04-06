@@ -99,7 +99,7 @@ echo "<div class='collapse' id='form_amounts'>";
 
     if(!is_null($data['amounts']))
     {
-        debug($data['amounts']);
+
         echo "<div class='form-group'>";
 
         echo "<h4>".$this->Form->input('amount', ['class' => 'form-control','label'=>'Monto','type'=>'number','min'=> '0', 'value'=>$data['amounts']['amount']])."</h4>";
