@@ -96,6 +96,7 @@ echo "<div class='collapse' id='form_amounts'>";
     
 
 //En caso de que no se le haya asignado un monto a esta asociación, esta información no se despliega
+
     if(!is_null($data['amounts']))
     {
         debug($data['amounts']);

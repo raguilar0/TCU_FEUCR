@@ -23,7 +23,7 @@ $('#submit4').submit(function(e){
 });
 
 $('#submit5').submit(function(e){
-    e.preventDefault();
+   e.preventDefault();
     addAmounts();
 });
 
@@ -92,6 +92,7 @@ function modifyAssociation()
     $.post($("#submit3").attr("action"),$("#submit3").serialize(), 
     function(data, status)
     {
+
         var array_data = data.split(',');
 
         if(array_data[0] == '1' && array_data[1] == '1')

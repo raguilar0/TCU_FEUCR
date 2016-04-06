@@ -89,11 +89,13 @@ class AssociationsController extends AppController
 
 
 			$amounts = $this->Associations->Amounts->find()
+						->select(['amount'=>'round(amount,0 )','date','deadline'])
 						->where(['association_id'=>$id])
 						->order(['id'=> 'DESC']);
-
+						
+			
 			$amounts = $amounts->toArray();
-
+			
 			$association['amounts'] = $amounts;
 
 			$this->set('data',$association);
@@ -181,7 +183,8 @@ class AssociationsController extends AppController
 			$date = $this->Associations->Amounts->find()
 							->hydrate(false)
 							->select(['date', 'deadline'])
-							->having(['max(id)']);
+							->order(['id'=>'DESC'])
+							->limit(1);
 
 			$date = $date->toArray();
 
@@ -231,13 +234,16 @@ class AssociationsController extends AppController
 //Se recupera la información del monto más reciente que le fue asignado
 //a la asociación con el id = $id
 
-			$amount = $this->Associations->Amounts->find();
 
-							$amount->hydrate(false);
-							$amount->select(['max_id'=>$amount->func()->max('id'),'amount','date', 'deadline'])
-							->where(['association_id'=>$id]);
+			$amount = $this->Associations->Amounts->find()
+							->hydrate(false)
+							->select(['id','amount','date', 'deadline'])
+							->order(['id'=>'DESC'])
+							->limit(1);
+
 
 			$amount = $amount->toArray();
+			
 
 			$association['amounts'] = (isset($amount[0])?$amount[0]:null); //if inline
 
@@ -314,8 +320,9 @@ class AssociationsController extends AppController
 					//Se formatean las fechas
 						$date = $this->request->data['date']['year'].$this->request->data['date']['month'].$this->request->data['date']['day'];
 
-						$deadline = $this->request->data['deadline']['year'].$this->request->data['date']['month'].$this->request->data['date']['day'];
-
+						$deadline = $this->request->data['deadline']['year'].$this->request->data['deadline']['month'].$this->request->data['deadline']['day'];
+					
+						debug($this->request->data);
 
 						$query->update()
 							  ->set(['amount'=>$this->request->data['amount'],
@@ -361,8 +368,11 @@ class AssociationsController extends AppController
 				//asociación
 				$select = $this->Associations->Amounts->find()
 							->select(['amount','date','spent','deadline','association_id'])
-							->where(['id'=> $association['id']]);
+							->where(['association_id'=> $association['id']]);
 
+				
+
+				
 				//Cargo este modelo para guardar la información
 				$this->loadModel('Warehouses');
 
@@ -389,7 +399,7 @@ class AssociationsController extends AppController
 						->execute();
 
 
-			return $this->redirect(['action'=>'show_associations/4']);
+			//return $this->redirect(['action'=>'show_associations/4']);
 
 			}
 			catch(Exception $e)
@@ -456,7 +466,7 @@ class AssociationsController extends AppController
 						 'table'=>'associations',
 						 'alias'=>'a',
 						 'type' => 'RIGHT',
-						 'conditions'=>'headquarters.id = a.headquarter_id',
+						 'conditions'=>'Headquarters.id = a.headquarter_id',
 						])
 					->where(['a.enable'=>0]);
 
