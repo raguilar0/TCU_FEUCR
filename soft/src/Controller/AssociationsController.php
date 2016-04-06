@@ -231,11 +231,11 @@ class AssociationsController extends AppController
 //Se recupera la información del monto más reciente que le fue asignado
 //a la asociación con el id = $id
 
-			$amount = $this->Associations->Amounts->find()
-							->hydrate(false)
-							->select(['id','amount','date', 'deadline'])
-							->where(['association_id'=>$id])
-							->having(['max(id)']);
+			$amount = $this->Associations->Amounts->find();
+
+							$amount->hydrate(false);
+							$amount->select(['max_id'=>$amount->func()->max('id'),'amount','date', 'deadline'])
+							->where(['association_id'=>$id]);
 
 			$amount = $amount->toArray();
 
