@@ -37,13 +37,35 @@ class AppController extends Controller
      *
      * @return void
      */
-    public function initialize()
+
+    /*public function initialize()
     {
         parent::initialize();
 
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
     }
+    */
+    public function initialize()
+    {
+        $this->loadComponent('Flash');
+        $this->loadComponent('Auth', [
+            'loginRedirect' => [
+                'controller' => 'associations',
+                'action' => 'index'
+            ],
+            'logoutRedirect' => [
+                'controller' => 'users',
+                'action' => 'logout',
+                'home'
+            ]
+        ]);
+    }
+
+    public function beforeFilter(Event $event)
+        {
+            $this->Auth->allow(['index', 'view', 'display']);
+        }
 
     /**
      * Before render callback.
@@ -60,3 +82,4 @@ class AppController extends Controller
         }
     }
 }
+?>
