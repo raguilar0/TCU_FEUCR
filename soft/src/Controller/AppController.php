@@ -48,14 +48,15 @@ class AppController extends Controller
     */
     public function initialize()
     {
+
         $this->loadComponent('Flash');
         $this->loadComponent('Auth', [
             'loginRedirect' => [
-                'controller' => 'associations',
+                'controller' => 'Associations',
                 'action' => 'index'
             ],
             'logoutRedirect' => [
-                'controller' => 'users',
+                'controller' => 'Users',
                 'action' => 'logout',
                 'home'
             ]
