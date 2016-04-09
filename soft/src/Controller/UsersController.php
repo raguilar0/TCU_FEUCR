@@ -46,8 +46,7 @@ class UsersController extends AppController
                 $user = $this->Auth->identify();
                 if ($user) {
                     $this->Auth->setUser($user);
-
-                    return $this->redirect($this->Auth->redirectUrl('/associations/')); //Se le puede indicar explícitamente a dónde ir
+                    return $this->redirect($this->Auth->redirectUrl());
                 }
                 $this->Flash->error(__('Invalid username or password, try again'));
             }

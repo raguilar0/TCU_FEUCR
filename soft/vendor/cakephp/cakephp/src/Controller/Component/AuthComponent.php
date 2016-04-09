@@ -642,19 +642,14 @@ class AuthComponent extends Component
      */
     public function logout()
     {
-		
         $this->_setDefaults();
         if (empty($this->_authenticateObjects)) {
             $this->constructAuthenticate();
         }
-		
         $user = (array)$this->user();
         $this->dispatchEvent('Auth.logout', [$user]);
-		
         $this->storage()->redirectUrl(false);
-		
         $this->storage()->delete();
-		
         return Router::normalize($this->_config['logoutRedirect']);
     }
 
@@ -734,7 +729,6 @@ class AuthComponent extends Component
      */
     public function redirectUrl($url = null)
     {
-		
         if ($url !== null) {
             $redir = $url;
             $this->storage()->redirectUrl($redir);
