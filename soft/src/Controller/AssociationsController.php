@@ -427,28 +427,35 @@ class AssociationsController extends AppController
 
 			$head = $head->toArray();
 
-			$association->headquarter_id = $head[0]['name'];
+			$association['headquarter'] = $head[0]['name'];
 
 
 
-			if($this->request->is(array('post','put')))	{
-				
-				$asso = $this->Associations->newEntity($this->request->data);
+			if($this->request->is(array('post','put')))	
+			{
+				$response = '0';
 
-				$association->acronym = $this->request->data['acronym'];
-				$association->name = $this->request->data['name'];
-				$association->location = $this->request->data['location'];
-				$association->schedule = $this->request->data['schedule'];
-				$association->authorized_card = $this->request->data['authorized_card'];
-				$association->headquarters = $this->request->data['headquarters'];
-
-				if($this->Associations->save($association))	{
-						
+				try
+				{
+					$query = $this->Associations->query();
+	
+					$query->update()
+					  ->set(['schedule'=> $this->request->data['schedule']])
+					  ->where(['id'=> $id])
+					  ->execute();	
+					  
+					$response = '1';
+				}
+				catch(Exception $e)
+				{
 
 				}
 
+				die($response);
 
-			}else{
+			}
+			else
+			{
 				$this->set('data',$association); // set() Pasa la variable association a la vista.
 			}
 		}		
