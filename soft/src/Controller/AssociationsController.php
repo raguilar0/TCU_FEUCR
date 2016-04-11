@@ -89,7 +89,7 @@ class AssociationsController extends AppController
 
 
 			$amounts = $this->Associations->Amounts->find()
-						->select(['amount'=>'round(amount,0 )','date','deadline'])
+						->select(['amount'=>'round(amount,0 )','date','deadline', 'spent', 'amount_saving'])
 						->where(['association_id'=>$id])
 						->order(['id'=> 'DESC']);
 						
