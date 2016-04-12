@@ -1,4 +1,4 @@
-$('#submit6').submit(function(e){
+$('#submit1').submit(function(e){
     e.preventDefault();
     modifyAssociation();
 });
@@ -6,7 +6,7 @@ $('#submit6').submit(function(e){
 
 function modifyAssociation()
 {
-    $.post($("#submit6").attr("action"),$("#submit6").serialize(), 
+    $.post($("#submit1").attr("action"),$("#submit1").serialize(), 
     function(data, status)
     {
         if(data == '1')

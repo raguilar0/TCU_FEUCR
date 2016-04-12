@@ -46,14 +46,24 @@ CREATE TABLE invoices
 	clarifications varchar(1024),
 	image_name varchar(100),
 	detail varchar(1024),
-	kind INT(1),
-	state INT(1),
+	kind INT(1) DEFAULT 0,
+	state INT(1) NOT NULL DEFAULT 0,
 	date date,
 	attendant varchar(100),
 	association_id INT UNSIGNED NOT NULL,
-	FOREIGN KEY(association_id) REFERENCES associations(id)
+	FOREIGN KEY(association_id) REFERENCES associations(id),
+	CHECK(kind > -1 and kind < 3)
 );
 
+CREATE TABLE boxes
+(
+	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	amount DOUBLE NOT NULL DEFAULT 0,
+	kind INT(1) DEFAULT 0,
+	association_id INT UNSIGNED NOT NULL,
+	FOREIGN KEY(association_id) REFERENCES associations(id),
+	CHECK(kind > -1 and kind < 2)
+);
 
 CREATE TABLE warehouses
 (

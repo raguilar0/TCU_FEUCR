@@ -27,6 +27,12 @@ class AssociationsController extends AppController
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
 	}
 	
+
+	public function indexAssociations()
+	{
+		$this->viewBuilder()->layout('associations_view'); //Carga un layout personalizado para esta vista
+	}
+
 	public function showAssociations($id = null)
 	{
 		if($id)
@@ -414,7 +420,7 @@ class AssociationsController extends AppController
 	
 	
 	public function generalInformation($id = null) {
-		$this->viewBuilder()->layout('admin_views'); //Se deja este hasta mientras se haga el de representante
+		$this->viewBuilder()->layout('associations_view'); //Se deja este hasta mientras se haga el de representante
 
 		$id = 1;
 		if($id) {
