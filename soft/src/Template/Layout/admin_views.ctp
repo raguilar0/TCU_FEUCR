@@ -6,11 +6,11 @@
    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>-->
 
 
-   
-    <title>Contraloría FEUCR</title>
-    <?= $this->Html->css('bootstrap.min.css') ?> 
 
-  
+    <title>Contraloría FEUCR</title>
+    <?= $this->Html->css('bootstrap.min.css') ?>
+
+
     <?= $this->Html->css('views.css') ?>
 
 
@@ -31,7 +31,7 @@
         </div>
         <ul class="nav navbar-nav">
           <li class="active"><?php echo $this->Html->link('Administrar Asociaciones', '/associations/', ['id'=>'active-navbar']);?></li>
-          <li class="dropdown">
+          <li class="dropdown active">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrar Montos
                 <span class="caret"></span></a>
                 <ul class="dropdown-menu">
@@ -39,12 +39,20 @@
             </ul>
           </li>
 
-          <li>
+          <li class="active">
+            <?php echo $this->Html->link('Administración de Usuarios', '/users/');?>
+          </li>
+
+          <li class="active">
             <?php echo $this->Html->link('Asociaciones Deshabilitadas', '/associations/show_disables');?>
           </li>
 
-          <li>
+          <li class="active">
             <?php echo $this->Html->link('Bitácora', '/associations/');?>
+          </li>
+
+          <li class="active">
+            <?php echo $this->Html->link('Salir', '/users/logout');?>
           </li>
 
       </ul>
@@ -53,10 +61,10 @@
     </header><!--/#header-->
 
     <div class="container body">
-        
-        <?= $this->fetch('content') ?>  
-        
-        
+
+        <?= $this->fetch('content') ?>
+
+
     </div>
 
 
