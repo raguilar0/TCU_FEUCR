@@ -27,6 +27,12 @@ class AssociationsController extends AppController
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
 	}
 	
+
+	public function indexAssociations()
+	{
+		$this->viewBuilder()->layout('associations_view'); //Carga un layout personalizado para esta vista
+	}
+
 	public function showAssociations($id = null)
 	{
 		if($id)
@@ -89,7 +95,7 @@ class AssociationsController extends AppController
 
 
 			$amounts = $this->Associations->Amounts->find()
-						->select(['amount'=>'round(amount,0 )','date','deadline'])
+						->select(['amount'=>'round(amount,0 )','date','deadline', 'spent', 'amount_saving'])
 						->where(['association_id'=>$id])
 						->order(['id'=> 'DESC']);
 						
@@ -414,7 +420,7 @@ class AssociationsController extends AppController
 	
 	
 	public function generalInformation($id = null) {
-		$this->viewBuilder()->layout('admin_views'); //Se deja este hasta mientras se haga el de representante
+		$this->viewBuilder()->layout('associations_view'); //Se deja este hasta mientras se haga el de representante
 
 		$id = 1;
 		if($id) {
@@ -427,28 +433,35 @@ class AssociationsController extends AppController
 
 			$head = $head->toArray();
 
-			$association->headquarter_id = $head[0]['name'];
+			$association['headquarter'] = $head[0]['name'];
 
 
 
-			if($this->request->is(array('post','put')))	{
-				
-				$asso = $this->Associations->newEntity($this->request->data);
+			if($this->request->is(array('post','put')))	
+			{
+				$response = '0';
 
-				$association->acronym = $this->request->data['acronym'];
-				$association->name = $this->request->data['name'];
-				$association->location = $this->request->data['location'];
-				$association->schedule = $this->request->data['schedule'];
-				$association->authorized_card = $this->request->data['authorized_card'];
-				$association->headquarters = $this->request->data['headquarters'];
-
-				if($this->Associations->save($association))	{
-						
+				try
+				{
+					$query = $this->Associations->query();
+	
+					$query->update()
+					  ->set(['schedule'=> $this->request->data['schedule']])
+					  ->where(['id'=> $id])
+					  ->execute();	
+					  
+					$response = '1';
+				}
+				catch(Exception $e)
+				{
 
 				}
 
+				die($response);
 
-			}else{
+			}
+			else
+			{
 				$this->set('data',$association); // set() Pasa la variable association a la vista.
 			}
 		}		
