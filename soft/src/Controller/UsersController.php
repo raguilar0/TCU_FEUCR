@@ -27,6 +27,58 @@ class UsersController extends AppController
         $this->set(compact('user'));
     }
 
+    public function showUsers($id = null)
+    {
+      $this->viewBuilder()->layout('admin_views');
+      $this->set('users', $this->Users->find('all'));
+
+    }
+
+    public function showAssociations($id = null)
+  	{
+      $this->loadModel('Associations');
+      $this->loadModel('Headquarters');
+
+  		if($id)
+  		{
+  			$this->viewBuilder()->layout('admin_views');
+
+
+  			$query = $this->Associations->Headquarters->find()
+  					->hydrate(false)
+  					->select(['a.name','a.id','name'])
+  					->join([
+  						 'table'=>'associations',
+  						 'alias'=>'a',
+  						 'type' => 'RIGHT',
+  						 'conditions'=>'Headquarters.id = a.headquarter_id',
+  						])
+  					->where(['a.enable'=>1]);
+
+
+  			$query = $query->toArray();
+
+
+
+  			switch ($id) {
+  					case 1:
+  							$query['link'] = 'read';
+  						break;
+
+  					case 3:
+  							$query['link'] = 'modify';
+  						break;
+
+  					case 4:
+  							$query['link'] = 'delete';
+  						break;
+  			}
+
+  			$this->set('data',$query);
+
+  		}
+  	}
+
     public function read()
     {
 
