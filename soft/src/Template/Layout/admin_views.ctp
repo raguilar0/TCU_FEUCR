@@ -74,7 +74,6 @@
      <?=$this->Html->script('jquery2.js') ?>
      <?=$this->Html->script('bootstrap.min.js') ?>
      <?=$this->Html->script('jquery_association_admin.js') ?>
-     <?=$this->Html->script('jquery_associations.js') ?>
 
 </body>
 </html>
