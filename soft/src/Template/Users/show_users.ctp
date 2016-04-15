@@ -40,6 +40,9 @@
 
 
 <?php
+
+/*
+
 echo "<div class = 'col-md-6 col-md-4'>";
   echo $this->Form->button('',['type'=>'button' ,'data-toggle'=>'collapse', 'data-target'=>'#add_users', 'class'=>'glyphicon glyphicon-plus btn btn-success', 'id'=>'addHeadquartersBtn']);
 echo "</div >";
@@ -59,6 +62,7 @@ echo "<div class='collapse' id='add_users'>";
 	 echo "</div>";
    echo $this->Form->end();
 echo "</div>";
+*/
 
 ?>
 <div class="row text-center">

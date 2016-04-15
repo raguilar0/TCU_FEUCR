@@ -55,15 +55,16 @@ class UsersController extends AppController
   						])
   					->where(['a.enable'=>1]);
 
-
   			$query = $query->toArray();
 
-
-
+        debug($id);
   			switch ($id) {
   					case 1:
   							$query['link'] = 'read';
   						break;
+
+            case 2:
+                $query['link'] = 'add';
 
   					case 3:
   							$query['link'] = 'modify';
@@ -74,22 +75,13 @@ class UsersController extends AppController
   						break;
   			}
 
+        debug($query['link']);
   			$this->set('data',$query);
 
   		}
   	}
 
     public function read()
-    {
-
-    }
-
-    public function modify()
-    {
-
-    }
-
-    public function delete()
     {
 
     }
@@ -108,10 +100,21 @@ class UsersController extends AppController
         $this->set('user', $user);
     }
 
+    public function modify()
+    {
+
+    }
+
+    public function delete()
+    {
+
+    }
+
     public function login()
         {
           $this->viewBuilder()->layout('admin_views');
-
+        //  $user = $this->Users->find();
+        //  $this->set('user', $user);
             if ($this->request->is('post')) {
                 $user = $this->Auth->identify();
                 if ($user) {
@@ -120,6 +123,7 @@ class UsersController extends AppController
                 }
                 $this->Flash->error(__('Nombre de usuario o contraseña invalidos, intentelo de nuevo.'));
             }
+
         }
 
         public function logout()
