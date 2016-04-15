@@ -34,7 +34,7 @@
             $kind = $data['invoices_type'];
 
             foreach ($kind as $key => $value) {
-                echo "<option>".$value."</option>"."<br>";
+                echo "<option>".$key."</option>"."<br>";
             }
             
         echo "</select>";
@@ -46,11 +46,15 @@
 
     echo "<div class = 'row'>";
 
-	    echo "<div class = 'col-xs-12 col-md-6'>";
+	    echo "<div class = 'col-xs-12 col-md-4'>";
+	     echo "<h4>".$this->Form->input('attendant', ['class' => 'form-control','label'=>'Responsable', 'maxlength'=> '100', 'placeholder'=>'Ejemplo: Andrey Pérez'])."</h4>";
+	    echo "</div >";	
+
+	    echo "<div class = 'col-xs-12 col-md-4'>";
 	     echo "<h4>".$this->Form->input('provider', ['class' => 'form-control','label'=>'Proveedor', 'maxlength'=> '100', 'placeholder'=>'Ejemplo: PriceSmart'])."</h4>";
 	    echo "</div >";	      
 
-	    echo "<div class = 'col-xs-12 col-md-6'>";
+	    echo "<div class = 'col-xs-12 col-md-4'>";
         	echo "<h4>".$this->Form->input('date', ['class' => 'form-control', 'label'=>'Fecha', 'type'=> 'date', 'id'=>'date_input'])."</h4>";
 	    echo "</div >";    
     
@@ -80,3 +84,11 @@
     echo $this->Form->end();
 
 ?>
+
+<br>
+
+<div class="row text-right">
+	<div class="col-xs-12">
+		<p id="callback" style="font-size:20px"></p>
+	</div>
+</div>

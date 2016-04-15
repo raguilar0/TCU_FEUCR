@@ -58,11 +58,10 @@ CREATE TABLE invoices
 CREATE TABLE boxes
 (
 	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	amount DOUBLE NOT NULL DEFAULT 0,
-	kind INT(1) DEFAULT 0,
+	little_amount DOUBLE NOT NULL DEFAULT 0,
+	big_amount DOUBLE NOT NULL DEFAULT 0,
 	association_id INT UNSIGNED NOT NULL,
-	FOREIGN KEY(association_id) REFERENCES associations(id),
-	CHECK(kind > -1 and kind < 2)
+	FOREIGN KEY(association_id) REFERENCES associations(id)
 );
 
 CREATE TABLE warehouses
