@@ -1,4 +1,4 @@
-<!-- src/Template/Users/index.ctp -->
+<!-- src/Template/Users/show_users.ctp -->
 
 <div class="row text-center">
 	<div class="col-xs-12">
@@ -23,7 +23,7 @@
   <tbody>
 
       <?php
-          foreach ($users as $key) {
+          foreach ($data as $key) {
              echo "<tr>";
               echo "<td>".$key['id']."</td>";
               echo "<td>".$key['username']."</td>";

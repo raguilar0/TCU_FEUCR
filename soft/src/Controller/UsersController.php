@@ -57,7 +57,6 @@ class UsersController extends AppController
 
   			$query = $query->toArray();
 
-        debug($id);
   			switch ($id) {
   					case 1:
   							$query['link'] = 'read';
@@ -76,7 +75,6 @@ class UsersController extends AppController
   						break;
   			}
 
-        debug($query['link']);
   			$this->set('data',$query);
 
   		}
@@ -84,6 +82,9 @@ class UsersController extends AppController
 
     public function read()
     {
+      $this->viewBuilder()->layout('admin_views');
+      $user = $this->Users->find();
+      $this->set('data',$user);
 
     }
 

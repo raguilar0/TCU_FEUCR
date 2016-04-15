@@ -12,7 +12,6 @@
 <?php
 
 	$link = $data['link'];
-  debug($data);
 
 	unset($data['link']);
 
@@ -46,9 +45,6 @@
 		}
 
 		echo "<h4>";
-    debug($link);
-    debug($key);
-    debug($id);
 		echo $this->Html->link($key['a']['name'], '/users/'.$link."/".$key['a']['id'], ['onclick'=>'confirmAction()', 'id'=>'associations']);
 		echo "</h4>";
 
