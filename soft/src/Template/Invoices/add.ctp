@@ -8,7 +8,7 @@
 
 <?php
 
-	echo $this->Form->create($data, ['id'=>'submit2']);
+	echo $this->Form->create($data, ['id'=>'submit2', 'enctype'=>'multipart/form-data']);
 	echo "<div class='form-group'>";
 
 
@@ -29,7 +29,7 @@
     echo "<div class = 'col-xs-12 col-md-4'>";
 
     echo "<label for='sel1' id = 'tipos_label'>Tipo</label>";
-       echo "<select class='form-control' name = 'kind' >";
+       echo "<select class='form-control' name = 'kind'>";
 
             $kind = $data['invoices_type'];
 
@@ -76,9 +76,17 @@
 
 
 
-    echo "<div class = 'row'>";
+    echo "<div class = 'row text-left'>";
+
+        echo "<div class = 'col-xs-12'>";    echo "<h4>".$this->Form->input('file',['type'=>'file', 'required'])."</h4>";
+        echo "</div>";
+
+    echo  "</div>";
+
+    echo  "<div class='row text-center'>";
         echo "<div class = 'col-xs-12'>";    echo "<h4>".$this->Form->submit('Guardar Factura', ['class' => 'form-control', 'id' => 'asso_id'])."</h4>";
         echo "</div>";
+
     echo  "</div>";
 
     echo $this->Form->end();

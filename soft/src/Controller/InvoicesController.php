@@ -20,18 +20,30 @@ class InvoicesController extends AppController
 
 		if($this->request->is('post'))
 		{
+			$this->loadComponent('Upload');
+
+			
 			$response = '0';
+			
+			$file = $invoice['file'];
+			unset($invoice['file']); //Quitamos los datos del archivo
 
-			$invoice['image_name'] = 'prueba';
-			$invoice['association_id'] = 1;
-			$invoice['kind'] = $invoices_type[$this->request->data['kind']];
-
-			if($this->Invoices->save($invoice)) //
+			if(!empty($file))
 			{
-				$response = '1';
-			}
+				if($this->Upload->save($file))
+				{
+					$invoice['image_name'] = $file['name'];
+					$invoice['association_id'] = 1;
+					$invoice['kind'] = $invoices_type[$this->request->data['kind']];
 
-			die($response);
+					if($this->Invoices->save($invoice)) //
+					{
+						$response = '1';
+					}
+
+					die($response);
+				}
+			}
 		}
 		else
 		{
