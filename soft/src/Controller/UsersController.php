@@ -65,6 +65,7 @@ class UsersController extends AppController
 
             case 2:
                 $query['link'] = 'add';
+              break;
 
   					case 3:
   							$query['link'] = 'modify';
