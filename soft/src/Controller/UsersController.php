@@ -80,10 +80,11 @@ class UsersController extends AppController
   		}
   	}
 
-    public function read()
+    public function read($id)
     {
       $this->viewBuilder()->layout('admin_views');
-      $user = $this->Users->find();
+      $user = $this->Users->find()
+      ->where(['associations_id'=>$id]);
       $this->set('data',$user);
 
     }

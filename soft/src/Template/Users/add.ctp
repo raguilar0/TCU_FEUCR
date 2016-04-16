@@ -17,6 +17,7 @@ echo "<div class='form-group' id=form_login>";
       echo "<h4>".$this->Form->input('last_name_1', ['class' => 'form-control','label'=>'Primer Apellido'])."</h4>";
       echo "<h4>".$this->Form->input('last_name_2', ['class' => 'form-control','label'=>'Segundo Apellido'])."</h4>";
       //echo "<h4>".$this->Form->input('role', ['class' => 'form-control','label'=>'Rol'])."</h4>";
+      echo "<h4>".$this->Form->input('associations_id', ['class' => 'form-control', 'label'=> 'Asociación'])."</h4>";
     echo "</div>";
   echo "</div>";
 echo "</div>";

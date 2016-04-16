@@ -46,7 +46,8 @@
 
 		echo "<h4>";
 		echo $this->Html->link($key['a']['name'], '/users/'.$link."/".$key['a']['id'], ['onclick'=>'confirmAction()', 'id'=>'associations']);
-		echo "</h4>";
+    //echo "key[id] en show associations".debug($key['a']['id']);
+    echo "</h4>";
 
 		if(($counter % 12) == 0)
 		{
