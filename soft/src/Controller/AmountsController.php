@@ -26,9 +26,24 @@ class AmountsController extends AppController
 	{
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
 		
+
 		
 		if($id)
 		{
+
+
+			$amounts_type = array('Tracto'=> 0, 'Superávit' => 2);
+
+			$this->loadModel('Tracts');
+
+			$date = $this->Tracts->find()
+							->hydrate(false)
+							->select(['date', 'deadline','id'])
+							->order(['id'=>'DESC'])
+							->limit(1);
+
+			$date = $date->toArray();	
+
 			$amount = $this->Amounts->newEntity($this->request->data); //El parámetro es para validar los datos
 
 			$association_name = $this->Amounts->Associations->find()
@@ -49,6 +64,8 @@ class AmountsController extends AppController
 			if($this->request->is('post'))
 			{
 				$amount['association_id'] = $id;
+				$amount['tract_id'] = $date[0]['id'];
+				$amount['type'] = $amounts_type[$this->request->data['type']];
 
 					if($this->Amounts->save($amount)) //Guarda los datos
 					{
@@ -60,37 +77,9 @@ class AmountsController extends AppController
 
 			else
 			{
-				/**
-					El siguiente código que asocia un date a $association
-					corrige el hecho de que una persona tenga que poner la fecha de inicio de tracto cada vez. Existen dos casos:
-		
-					1) La primera vez: La primera vez no existen montos asociados a ninguna asociación, por lo que se toma la fecha actual.
-		
-					2) Una vez que existan montos asociados: Cuando ya hay montos asociados, se toma como fecha de tracto actual al último monto asociado
-				**/
-		
-				$date = $this->Amounts->find()
-								->hydrate(false)
-								->select(['date', 'deadline'])
-								->order(['id'=>'DESC'])
-								->limit(1);
-		
-				$date = $date->toArray();
 		
 		
-		
-		
-		
-				if(!isset($date[0]))
-				{
-					$date['date'] = $date['deadline'] = date('Y-m-d');
-				}
-				else
-				{
-					$date = $date[0];
-				}
-		
-				unset($date[0]);
+				$amount['amounts_type'] = $amounts_type;
 				
 				$amount['date'] = $date;			
 			}

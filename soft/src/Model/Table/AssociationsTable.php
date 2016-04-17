@@ -12,6 +12,8 @@ class AssociationsTable extends Table
         $this->addBehavior('Timestamp');
         $this->belongsTo('Headquarters');
         $this->hasMany('Amounts');
+        $this->hasMany('Boxes');
+        $this->hasMany('Invoices');
     
     }
 

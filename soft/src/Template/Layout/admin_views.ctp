@@ -46,7 +46,10 @@
                   <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrar Montos
                   <span class="caret"></span></a>
                   <ul class="dropdown-menu">
+                      <li><?php echo $this->Html->link('Agregar Nuevo Tracto', '/tracts/add');?></li>                  
                       <li><?php echo $this->Html->link('Agregar Montos', '/amounts/show_associations');?></li>
+
+                      <li><?php echo $this->Html->link('Ver Montos Detallados', '/associations/detailed_information');?></li>
               </ul>
             </li>
 

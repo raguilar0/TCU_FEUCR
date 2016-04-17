@@ -27,10 +27,10 @@ CREATE TABLE amounts
 (
 	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	amount DOUBLE NOT NULL,
-	amount_saving DOUBLE NOT NULL DEFAULT 0,
 	date date NOT NULL,
 	spent DOUBLE NOT NULL DEFAULT 0,
-	deadline date NOT NULL,
+	detail varchar(2048) NOT NULL,
+	type INT(2) NOT NULL DEFAULT 0,
 	association_id INT UNSIGNED NOT NULL,
 	
 	FOREIGN KEY(association_id) REFERENCES associations(id)

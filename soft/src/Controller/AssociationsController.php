@@ -94,16 +94,24 @@ class AssociationsController extends AppController
 			$association['headquarter']= $headquarter[0]['name'];
 
 
+/**Obtenemos las fechas de los montos asociados**/
+
 			$amounts = $this->Associations->Amounts->find()
-						->select(['amount'=>'round(amount,0 )','date','deadline', 'spent', 'amount_saving'])
-						->where(['association_id'=>$id])
-						->order(['id'=> 'DESC']);
-						
-			
+					->hydrate(false)
+					->select(['t.date','t.deadline'])
+					->join([
+						 'table'=>'tracts',
+						 'alias'=>'t',
+						 'type' => 'RIGHT',
+						 'conditions'=>'Amounts.tract_id = t.id',
+						])
+					->order(['Amounts.id'=> 'DESC']);
+
 			$amounts = $amounts->toArray();
+
 			
 			$association['amounts'] = $amounts;
-
+			
 			$this->set('data',$association);
 
 		}
@@ -186,7 +194,10 @@ class AssociationsController extends AppController
 				2) Una vez que existan montos asociados: Cuando ya hay montos asociados, se toma como fecha de tracto actual al último monto asociado
 			**/
 
-			$date = $this->Associations->Amounts->find()
+
+			$this->loadModel('Tracts');
+
+			$date = $this->Tracts->find()
 							->hydrate(false)
 							->select(['date', 'deadline'])
 							->order(['id'=>'DESC'])
@@ -205,7 +216,7 @@ class AssociationsController extends AppController
 			}
 
 			$association['date'] = $date;
-
+			
 
 		}
 
@@ -240,7 +251,7 @@ class AssociationsController extends AppController
 //Se recupera la información del monto más reciente que le fue asignado
 //a la asociación con el id = $id
 
-
+			/**
 			$amount = $this->Associations->Amounts->find()
 							->hydrate(false)
 							->select(['id','amount','date', 'deadline'])
@@ -253,6 +264,7 @@ class AssociationsController extends AppController
 
 			$association['amounts'] = (isset($amount[0])?$amount[0]:null); //if inline
 
+			**/
 
 			if($this->request->is(array('post','put')))
 			{
@@ -502,5 +514,48 @@ class AssociationsController extends AppController
 			return $this->redirect(['action'=>'show_disables']);
 		}
 	}
+
 	
+	public function detailedInformation($id = null)
+	{
+		$this->viewBuilder()->layout('admin_views');
+		if($id)
+		{
+
+			$amounts = $this->Associations->Amounts->find()
+						->hydrate(false)
+						->select(['amount','max'=>'max(id)','amount_saving', 'date', 'spent', 'deadline'])
+						->where(['association_id'=>$id]);
+			$amounts = $amounts->toArray();
+
+			if(is_null($amounts[0]['amount']))
+			{
+				$amounts = [];
+			}
+
+
+
+			$invoices = $this->Associations->Invoices->find()
+						->hydrate(false)
+						->where(['association_id'=>$id]);  //State = 1, aprobada
+			$invoices = $invoices->toArray();
+
+			$box = $this->Associations->Boxes->find()
+					->hydrate(false)
+					->select(['little_amount','big_amount'])
+					->where(['association_id'=>$id]);
+
+			$box = $box->toArray();
+
+			$information['amounts'] = $amounts;
+			$information['invoices'] = $invoices;
+			$information['box'] = $box;
+
+			$this->set('data', $information);
+		}
+		else
+		{
+			#TODO:redirigir al /associations
+		}
+	}
 }

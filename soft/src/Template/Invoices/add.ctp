@@ -78,7 +78,7 @@
 
     echo "<div class = 'row text-left'>";
 
-        echo "<div class = 'col-xs-12'>";    echo "<h4>".$this->Form->input('file',['type'=>'file', 'required'])."</h4>";
+        echo "<div class = 'col-xs-12'>";    echo "<h4>".$this->Form->input('file',['type'=>'file', 'required','label'=>'Imagen de la Factura'])."</h4>";
         echo "</div>";
 
     echo  "</div>";

@@ -73,7 +73,7 @@
 </div>
 
 <div class="table-responsive">
-  <table class="table read_association">
+  <table class="table tables">
   <thead>
     <tr>
       <th>Cantidad Asignada</th>
