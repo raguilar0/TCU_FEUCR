@@ -122,11 +122,11 @@ class AssociationsController extends AppController
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
 
 		$association = $this->Associations->newEntity($this->request->data); //El parámetro es para validar los datos
+		
+		$amounts_type = array('Tracto'=> 0, 'Superávit' => 2);
 
-
-		if($this->request->is('post'))
+		if($this->request->is(array('post','put')))
 		{
-
 			
 			$response = "0,0"; //Funciona como booleano, para decidir qué mostrar en el ajax.
 			
@@ -144,33 +144,48 @@ class AssociationsController extends AppController
 			{
 				$response = "1,0";
 
-				$query = $this->Associations->find();
-
-				$query->hydrate(false);
-				$query->select(['max_id' => $query->func()->max('id')]);
-
-				$query = $query->toArray();
 
 
-				$this->request->data['spent'] = 0;
-				$this->request->data['association_id'] = $query[0]['max_id'];
+				$asso_id = $this->Associations->find()
+								->hydrate(false)
+								->select(['id'])
+								->order(['id'=>'DESC'])
+								->limit(1);
 
+				$asso_id = $asso_id->toArray();
 
-				$amounts = $this->Associations->Amounts->newEntity($this->request->data);
+					$this->loadModel('Tracts');
 
-				if($this->Associations->Amounts->save($amounts))
-				{
-					$response = "1,1";
-				}
-			}
+					$tract = $this->Tracts->find()
+									->hydrate(false)
+									->select(['id'])
+									->order(['id'=>'DESC'])
+									->limit(1);
 
+					$tract = $tract->toArray();
+
+					$this->request->data['association_id'] = $asso_id[0]['id'];
+					$this->request->data['tract_id'] = $tract[0]['id'];
+					$this->request->data['type'] = $amounts_type[$this->request->data['type']];
+
+						$amounts = $this->Associations->Amounts->newEntity($this->request->data);
+
+						if($this->Associations->Amounts->save($amounts))
+						{
+							$response = "1,1";
+						}
+					}
+	
 			
-			die($response);
+				die($response);
 
 			
 		}
 		else
 		{
+			
+			$association['amounts_type'] = $amounts_type;
+
 			//Hago esta operación en el else, porque no me interesa cargarlo cuando voy a guardar los datos
 
 			$this->loadModel('Headquarters'); //Carga el modelo de esta asociación
@@ -384,7 +399,7 @@ class AssociationsController extends AppController
 				//Obtengo todas las tuplas de Amounts asociadas a dicha
 				//asociación
 				$select = $this->Associations->Amounts->find()
-							->select(['amount','date','spent','deadline','association_id'])
+							->select(['amount','date','spent','detail','type','association_id','tract_id'])
 							->where(['association_id'=> $association['id']]);
 
 				
@@ -395,7 +410,7 @@ class AssociationsController extends AppController
 
 				//Hago el insert con las tuplas recuperadas
 				$insert = $this->Warehouses->query()
-							->insert(['amount','date','spent','deadline','association_id'])
+							->insert(['amount','date','spent','detail','type','association_id','tract_id'])
 							->values($select)
 							->execute();
 

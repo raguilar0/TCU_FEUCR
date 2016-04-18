@@ -91,18 +91,42 @@ echo "<div class='collapse' id='form_amounts'>";
 
         echo "<div class='form-group'>";
 
-        echo "<h4>".$this->Form->input('amount', ['class' => 'form-control','label'=>'Monto','type'=>'number','min'=> '0', 'placeholder'=>'Cantidad a Asignar'])."</h4>";
+            echo "<div class='row text-center'>";
 
-        echo "<h4>".$this->Form->input('amount_saving', ['class' => 'form-control','label'=>'Monto de Ahorro','type'=>'number','min'=> '0', 'placeholder'=>'Monto a Asignar'])."</h4>";
+                echo "<div class = 'col-xs-12 col-md-4'>"; 
+                echo "<h4>".$this->Form->input('amount', ['class' => 'form-control', 'label'=>'Monto', 'min'=>'0', 'placeholder'=>'Monto a asignar'])."</h4>";
+                echo "</div>";
 
-        echo "<h4>".$this->Form->input('date', ['class' => 'form-control', 'label'=>'Fecha de Inicio de Tracto', 'type'=> 'date', 'id'=>'date_input', 'value'=>$association['date']['date']])."</h4>";
+                echo "<div class = 'col-xs-12 col-md-4'>";
 
-        echo "<h4>".$this->Form->input('deadline', ['class' => 'form-control', 'label'=>'Fecha de Cierre de Tracto', 'type'=> 'date', 'id'=>'date_input', 'value'=>$association['date']['deadline']])."</h4>";        
+                echo "<label for='sel1' id = 'tipos_label'><h4>Tipo</h4></label>";
+                   echo "<select class='form-control' name = 'type'>";
 
+
+                        $kind = $association['amounts_type'];
+
+                        foreach ($kind as $key => $value) {
+                            echo "<option>".$key."</option>"."<br>";
+                        }
+                        
+                    echo "</select>";
+                echo "</div>";
+
+                echo "<div class = 'col-xs-12 col-md-4'>"; 
+                echo "<h4>".$this->Form->input('date', ['class' => 'form-control', 'label'=>'Fecha', 'type'=>'date'])."</h4>";
+                echo "</div>";                                
+
+            echo "</div>";
+
+            echo "<div class='row text-center'>";
+                echo "<div class='col-xs-12'>";
+                    echo "<h4>Detalle</h4>";
+                    echo "<h4>".$this->Form->textarea('detail', ['class' => 'form-control','placeholder'=>'Detalle del monto'])."</h4>";
+                echo "</div>";
+            echo "</div>";      
 
         echo "</div>";
-
-echo "</div>";
+    echo "</div>";
 
 
 

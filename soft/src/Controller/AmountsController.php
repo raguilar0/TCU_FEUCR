@@ -90,6 +90,8 @@ class AmountsController extends AppController
 	}
 
 
+
+
 	public function edit($amount_id)
 	{
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
