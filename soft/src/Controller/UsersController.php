@@ -84,7 +84,7 @@ class UsersController extends AppController
     {
       $this->viewBuilder()->layout('admin_views');
       $user = $this->Users->find()
-      ->where(['associations_id'=>$id]);
+      ->where(['association_id'=>$id]);
       $this->set('data',$user);
 
     }
