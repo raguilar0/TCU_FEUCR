@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -37,7 +37,6 @@
 
           <a class="navbar-brand" href="#">FEUCR</a>
         </div>
-<<<<<<< HEAD
         <ul class="nav navbar-nav">
           <li class="active"><?php echo $this->Html->link('Administrar Asociaciones', '/associations/', ['id'=>'active-navbar']);?></li>
           <li class="dropdown active">
@@ -65,29 +64,6 @@
           </li>
 
       </ul>
-=======
-
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li class="active"><?php echo $this->Html->link('Administrar Asociaciones', '/associations/', ['id'=>'active-navbar']);?></li>
-            <li class="dropdown">
-                  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrar Montos
-                  <span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                      <li><?php echo $this->Html->link('Agregar Montos', '/amounts/show_associations');?></li>
-              </ul>
-            </li>
-
-            <li>
-              <?php echo $this->Html->link('Asociaciones Deshabilitadas', '/associations/show_disables');?>
-            </li>
-
-            <li>
-              <?php echo $this->Html->link('Bitácora', '/associations/');?>
-            </li>
-        </ul>
-      </div>
->>>>>>> origin/CRUD_Associations
   </div>
 </nav>
 
