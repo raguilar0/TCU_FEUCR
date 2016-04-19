@@ -14,6 +14,18 @@ class TractsTable extends Table
     }
 
 
+	public function validationDefault(Validator $validator)
+    {
+        $validator
+            ->notEmpty('number')
+            ->add('number', 'validFormat', [
+                            'rule' => array('custom', '/^[1-4]$/'),
+                            'message' => 'Solo números entre [1-4]'
+            ]);
+
+
+        return $validator;
+    }
 	
 	
 }

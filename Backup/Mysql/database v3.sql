@@ -27,7 +27,7 @@ CREATE TABLE associations
 CREATE TABLE tracts
 (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  number INT UNSIGNED NOT NULL,
+  number INT UNSIGNED NOT NULL DEFAULT 0,
   date date NOT NULL,
   deadline date NOT NULL,
 

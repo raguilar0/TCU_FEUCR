@@ -55,8 +55,6 @@ class AmountsController extends AppController
 
 			$amount['association'] = $association_name[0];
 
-
-
 		
 			$response = 0;
 

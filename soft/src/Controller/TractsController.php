@@ -14,7 +14,7 @@ class TractsController extends AppController
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
 	}
 	
-	public function add($id = null)
+	public function add()
 	{
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
 
@@ -22,16 +22,17 @@ class TractsController extends AppController
 
 		if($this->request->is('post'))
 		{
-			$tract['association_id'] = 1;
+
+			//$tract = $this->Tracts->patchEntity($tract, $this->request->data);
 			if($this->Tracts->save($tract))
 			{
 
 			}
 		}
-		else
-		{
-			$this->set('tract', $tract);
-		}
+		
+
+		$this->set('tract', $tract);
+		
 	}
 
 	

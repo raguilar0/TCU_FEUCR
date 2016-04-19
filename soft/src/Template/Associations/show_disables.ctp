@@ -77,7 +77,7 @@
 	}
 	else
 	{
-		echo "<h2> No hay asociaciones registradas.</h2>";
+		echo "<h3 style='text-align:center'> No hay asociaciones registradas.</h3>";
 	}
 
 	if(($counter % 12) != 0)

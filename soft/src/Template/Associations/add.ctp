@@ -8,7 +8,6 @@
 <br>
 
 <?php
-
 	echo $this->Form->create($association, ['id'=>'submit1']);
 	echo "<div class='form-group'>";
 
@@ -40,9 +39,12 @@
 
     echo "</div >";    
 
+
     echo "<div class = 'col-xs-6 col-md-4'>";
       echo $this->Form->button('',['type'=>'button' ,'data-toggle'=>'collapse', 'data-target'=>'#form_headquarter', 'class'=>'glyphicon glyphicon-plus btn btn-success', 'id'=>'addHeadquartersBtn']);
-    echo "</div >";
+    echo "</div >";    
+
+
 
 
     echo "</div>";
@@ -59,7 +61,7 @@
 
     //echo "<h4>".$this->Form->input('headquarters', ['class' => 'form-control','label'=>'Sede', 'maxlength'=> '100'])."</h4>";
 
-    echo "<h4>".$this->Form->input('location', ['class' => 'form-control','label'=>'Localización', 'maxlength'=> '1024', 'placeholder'=>'Ejemplo: San Pedro, San José, Costa Rica'])."</h4>";
+    echo "<h4>".$this->Form->input('location', ['class' => 'form-control','label'=>'Dirección', 'maxlength'=> '1024', 'placeholder'=>'Ejemplo: San Pedro, San José, Costa Rica'])."</h4>";
 
     echo "<h4>".$this->Form->input('schedule', ['class' => 'form-control','label'=>'Horario', 'maxlength'=> '512', 'placeholder'=>'Ejemplo: 7:00 am - 10:00 pm'])."</h4>";
     
@@ -72,15 +74,29 @@
     echo "<div class = 'row'>";
 
         echo "<div class = 'col-xs-12 text-center col-md-1'>";
-            echo $this->Form->button('Asociar Montos',['type'=>'button' ,'data-toggle'=>'collapse', 'data-target'=>'#form_amounts', 'class'=>'btn btn-success', 'id'=>'addAmountsBtn']);
+
+        if(!empty($association['tract']))
+        {
+                    echo $this->Form->button('Asociar Montos',['type'=>'button' ,'data-toggle'=>'collapse', 'data-target'=>'#form_amounts', 'class'=>'btn btn-success', 'id'=>'addAmountsBtn']);
+        }
+        else
+        {
+            echo "<h5 style='color:green;'>Para obtener una mayor funcionalidad, agregá un tracto primero.</h5>";
+        }
+                
         echo "</div>";
-    echo "</div>";
+
+
+    echo "</div>";    
 
 
 
 
 
-echo "<div class='collapse' id='form_amounts'>";
+
+if(!empty($association['tract']))
+{
+   echo "<div class='collapse' id='form_amounts'>";
 
    echo " <br><br>";
 
@@ -126,7 +142,9 @@ echo "<div class='collapse' id='form_amounts'>";
             echo "</div>";      
 
         echo "</div>";
-    echo "</div>";
+    echo "</div>"; 
+}
+
 
 
 

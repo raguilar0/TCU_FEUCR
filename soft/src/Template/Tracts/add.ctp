@@ -1,4 +1,13 @@
+<div class="row text-center">
+	<div class="col-xs-12">
+		<h1>¡Agregá un nuevo <strong>Tracto</strong>!</h1>
+	</div>
+</div>
+<br>
+
 <?php
+debug($tract);
+
 	echo $this->Form->create($tract, ['id'=>'submit_add_tract']);
 		echo "<div class='form-group'>";
 
@@ -8,7 +17,7 @@
 	    echo "<div class = 'row'>";
 
 	    echo "<div class = 'col-xs-12'>";
-	     echo "<h4>".$this->Form->input('number', ['class' => 'form-control','label'=>'Número de Tracto', 'placeholder'=>'Posibles valores: 1,2,3,4', 'type'=>'number'])."</h4>";
+	     echo "<h4>".$this->Form->input('number', ['class' => 'form-control','label'=>'Número de Tracto', 'placeholder'=>'Posibles valores: 1,2,3,4'])."</h4>";
 	    echo "</div >";
 
 
@@ -34,3 +43,11 @@
 
 
 ?>
+
+
+<div class="row text-right">
+    <div class="col-xs-12">
+        <h4 id="callback"></h4>   
+    </div>
+
+</div>

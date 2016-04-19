@@ -98,13 +98,14 @@ class AssociationsController extends AppController
 
 			$amounts = $this->Associations->Amounts->find()
 					->hydrate(false)
-					->select(['t.date','t.deadline'])
+					->select(['tract.number','tract.date','tract.deadline','amount','spent'])
 					->join([
 						 'table'=>'tracts',
-						 'alias'=>'t',
+						 'alias'=>'tract',
 						 'type' => 'RIGHT',
-						 'conditions'=>'Amounts.tract_id = t.id',
+						 'conditions'=>'Amounts.tract_id = tract.id',
 						])
+					->andwhere(['type'=>0, 'association_id'=>$id])
 					->order(['Amounts.id'=> 'DESC']);
 
 			$amounts = $amounts->toArray();
@@ -124,6 +125,7 @@ class AssociationsController extends AppController
 		$association = $this->Associations->newEntity($this->request->data); //El parámetro es para validar los datos
 		
 		$amounts_type = array('Tracto'=> 0, 'Superávit' => 2);
+
 
 		if($this->request->is(array('post','put')))
 		{
@@ -212,26 +214,15 @@ class AssociationsController extends AppController
 
 			$this->loadModel('Tracts');
 
-			$date = $this->Tracts->find()
+			$tract = $this->Tracts->find()
 							->hydrate(false)
-							->select(['date', 'deadline'])
+							->select(['date', 'deadline','id'])
 							->order(['id'=>'DESC'])
 							->limit(1);
 
-			$date = $date->toArray();
+			$tract = $tract->toArray();
 
-
-			if(!isset($date[0]))
-			{
-				$date['date'] = $date['deadline'] = date('Y-m-d');
-			}
-			else
-			{
-				$date = $date[0];
-			}
-
-			$association['date'] = $date;
-			
+			$association['tract'] = $tract;
 
 		}
 
@@ -242,7 +233,6 @@ class AssociationsController extends AppController
 	{
 
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
-		$this->loadModel('Amounts');
 		
 		if($id)
 		{
@@ -288,7 +278,7 @@ class AssociationsController extends AppController
 				$response = "0"; //Funciona como booleano para decirle al ajax qué desplegar
 
 
-				$autorized = (isset($this->request->data['authorized_card']) ? 1 : 0); //Verifica si se checó el checkbox f las tarjetas
+				$autorized = (isset($this->request->data['authorized_card']) ? 1 : 0); //Verifica si se checó el checkbox de las tarjetas
 
 
 
@@ -319,7 +309,7 @@ class AssociationsController extends AppController
 				{
 
 					$validator = $this->Associations->newEntity($this->request->data);
-					
+
 					if(!$validator->errors())
 					{
 						
@@ -342,6 +332,7 @@ class AssociationsController extends AppController
 
 				}
 
+/**
 
 				try
 				{
@@ -371,7 +362,7 @@ class AssociationsController extends AppController
 				{
 					$response = $response.",0";
 				}
-
+**/
 
 				
 				die($response);

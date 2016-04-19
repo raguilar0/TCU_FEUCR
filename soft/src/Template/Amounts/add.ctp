@@ -2,7 +2,21 @@
     <div class="col-xs-12">
         <h1><?php echo $amount['association']['name']. " (".$amount['association']['acronym'].")";?></h1>  
 
-        <h3><?php echo "Tracto: ".$amount['date'][0]['date']." - ".$amount['date'][0]['deadline'];?></h3>  
+
+        <h3><?php
+
+                if(!empty($amount['date']))
+                {
+                    $message = "Tracto: ".$amount['date'][0]['date']." - ".$amount['date'][0]['deadline'];
+                }
+                else
+                {
+                    $message = "Debe crear un tracto primero antes de poder asignar montos.";
+                }
+
+         echo $message;
+         ?>
+         </h3>  
     </div>
 </div>
 
@@ -10,6 +24,9 @@
 <br>
 
 <?php
+
+if(!empty($amount['date']))
+{
 
 
 	echo $this->Form->create($amount,['id'=>'submit5']);
@@ -59,6 +76,7 @@
             echo "</div>";
 
         echo $this->Form->end();
+}
 ?>
 
 
