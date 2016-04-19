@@ -1,0 +1,69 @@
+body
+{
+	background-color:#e5e5e5;
+}
+
+.body
+{
+	background-color: white;
+	padding-bottom: 1%;
+	border-radius: 15px;
+
+}
+
+
+#img_invoice
+{
+	height: 100px;
+	width:100px;
+	border:1px solid black;
+	box-shadow: 5px -5px 10px black;
+	border-radius: 10px;
+}
+
+#img_boxes
+{
+	height: 100px;
+	width:100px;
+	border:1px solid black;
+	box-shadow: 5px -5px 10px black;
+	border-radius: 10px;
+}
+
+#asso_id
+{
+	margin:auto;
+	width: 150px;
+  background-color: #0080FF;
+  color: white;
+}
+
+#tipos_label
+{
+	font-size: 19px;
+}
+
+.date select
+{
+  margin: 10px 5px 10px 10px;
+  border-radius: 5px;
+  height: 35px;
+}
+
+
+@media only screen and (max-width: 400px)
+{
+  .date label
+  {
+    margin-right: 52%;
+    float: left;
+  }
+  .date select
+  {
+    margin: 10px 2px 20px 2px;
+    border-radius: 5px;
+    height: 35px;
+    clear: right;
+
+  }  
+}

@@ -77,21 +77,26 @@
   <thead>
     <tr>
       <th>Cantidad Asignada</th>
+      <th>Monto de Ahorro</th>
       <th>Fecha de Inicio del Tracto</th>
       <th>Fecha de Fin del Tracto</th>
       <th>Total en Gastos</th>              
+      <th>Saldo</th>   
     </tr>
   </thead>
   <tbody>
+
 
       <?php
           foreach ($data['amounts'] as $key => $value) {
              echo "<tr>";
 
               echo "<td>".$value['amount']."</td>";
+              echo "<td>".$value['amount_saving']."</td>";
               echo "<td>".$value['date']."</td>";
               echo "<td>".$value['deadline']."</td>";
               echo "<td>".$value['spent']."</td>";                        
+              echo "<td>".(($value['amount']+$value['amount_saving'])-$value['spent'])."</td>";   
              echo "</tr>";
           }
       ?>

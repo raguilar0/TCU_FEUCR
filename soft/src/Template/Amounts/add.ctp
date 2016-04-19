@@ -14,6 +14,8 @@
 
             echo "<h4>".$this->Form->input('amount', ['class' => 'form-control', 'label'=>'Monto', 'min'=>'0', 'placeholder'=>'Monto a asignar'])."</h4>";
 
+            echo "<h4>".$this->Form->input('amount_saving', ['class' => 'form-control', 'label'=>'Monto de Ahorro', 'min'=>'0', 'placeholder'=>'Monto a Asignar'])."</h4>";
+
 
             echo "<h4>".$this->Form->input('date', ['class' => 'form-control','label'=>'Fecha de Inicio del Tracto', 'value'=>$amount['date']['date']])."</h4>";
             echo "<h4>".$this->Form->input('deadline', ['class' => 'form-control','label'=>'Fecha de Cierre del Tracto', 'value'=>$amount['date']['deadline']])."</h4>";
