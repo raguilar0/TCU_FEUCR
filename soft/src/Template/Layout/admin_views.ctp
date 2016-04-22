@@ -18,6 +18,7 @@
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
     <?php echo $this->Html->meta('favicon.ico','webroot/favicon.ico',array('type' => 'icon'));?>
+    <?=$this->Html->script('jquery2.js') ?>
 
 </head><!--/head-->
 
@@ -74,7 +75,6 @@
     </div>
 
 
-     <?=$this->Html->script('jquery2.js') ?>
      <?=$this->Html->script('bootstrap.min.js') ?>
      <?=$this->Html->script('jquery_association_admin.js') ?>
 
