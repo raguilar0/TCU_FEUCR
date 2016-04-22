@@ -6,7 +6,6 @@
 <br>
 
 <?php
-debug($tract);
 
 	echo $this->Form->create($tract, ['id'=>'submit_add_tract']);
 		echo "<div class='form-group'>";
@@ -22,11 +21,11 @@ debug($tract);
 
 
 	    echo "<div class = 'col-xs-12'>";
-	     echo "<h4>".$this->Form->input('date', ['label'=>'Fecha de Inicio', 'type'=>'date'])."</h4>";
+	     echo "<h4>".$this->Form->input('date', ['label'=>'Fecha de Inicio', 'type'=>'date', 'value'=>$tract['dates']['date']])."</h4>";
 	    echo "</div >";
 
 	    echo "<div class = 'col-xs-12'>";
-	     echo "<h4>".$this->Form->input('deadline', ['class' => 'form-control','label'=>'Fecha Final', 'type'=>'date'])."</h4>";
+	     echo "<h4>".$this->Form->input('deadline', ['class' => 'form-control','label'=>'Fecha Final', 'type'=>'date', 'value'=>$tract['dates']['deadline']])."</h4>";
 	    echo "</div >";						    					    
 
 	    echo "</div >";

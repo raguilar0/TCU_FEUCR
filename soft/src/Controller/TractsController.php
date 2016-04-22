@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
+use Cake\Event\Event;
 
 class TractsController extends AppController
 {
@@ -23,11 +24,31 @@ class TractsController extends AppController
 		if($this->request->is('post'))
 		{
 
-			//$tract = $this->Tracts->patchEntity($tract, $this->request->data);
 			if($this->Tracts->save($tract))
 			{
-
+				
 			}
+            else
+            {
+                //$this->response->statusCode(500);             
+            }
+		}
+		else
+		{
+			$date = $this->Tracts->find()
+					->hydrate(false)
+					->select(['date', 'deadline'])
+					->order(['id'=>'DESC'])
+					->limit(1);
+			$date = $date->toArray();
+
+			if(!empty($date))
+			{
+				$tract['dates'] = $date[0];
+			}
+
+			
+
 		}
 		
 

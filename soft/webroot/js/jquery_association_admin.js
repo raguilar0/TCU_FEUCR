@@ -29,7 +29,7 @@ $('#submit5').submit(function(e){
 
 $("#submit_add_tract").submit(function(e){
   e.preventDefault();
- addTract();
+  addTract();
 });
 
 
@@ -264,22 +264,24 @@ function addTract()
 
         if(xhttp.readyState == 4 && xhttp.status == 200)
         {
+            document.getElementById("doc").innerHTML = xhttp.responseText;
+            //document.getElementById("callback").innerHTML = "¡Los datos se guardaron con éxito!";
+            //document.getElementById("callback").style.color = "#01DF01";
 
-            document.getElementById("callback").innerHTML = "¡Los datos se guardaron con éxito!";
-            document.getElementById("callback").style.color = "#01DF01";
-
-            alert(xhttp.responseText);
+            //alert(xhttp.status);
             //setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 3000);
-            setTimeout(function(){location.reload();},1000);
+            //setTimeout(function(){location.reload();},1000);
         }
         else
         {
             if(xhttp.status == 500)
             {
-                document.getElementById("callback").innerHTML = "Ocurrió un error inesperado. Revise los datos e intentelo nuevamente. Si el problema persiste, contacte al administrador";
-                document.getElementById("callback").style.color = "red";
+                document.getElementById("doc").innerHTML = xhttp.responseText;
+                //alert(xhttp.status);
+                //document.getElementById("callback").innerHTML = "Ocurrió un error inesperado. Revise los datos e intentelo nuevamente. Si el problema persiste, contacte al administrador";
+                ///document.getElementById("callback").style.color = "red";
                 //setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 6000);
-                setTimeout(function(){location.reload();}, 1000);
+                //setTimeout(function(){location.reload();}, 1000);
             } 
 
             
