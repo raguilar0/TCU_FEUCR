@@ -43,6 +43,7 @@
 
 ?>
 
+<?= $this->Flash->render('addTractSuccess') ?>
 
 <div class="row text-right">
     <div class="col-xs-12">

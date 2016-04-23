@@ -264,7 +264,8 @@ function addTract()
 
         if(xhttp.readyState == 4 && xhttp.status == 200)
         {
-            document.getElementById("doc").innerHTML = xhttp.responseText;
+            alert(xhttp.responseText);
+            //document.getElementById("doc").innerHTML = xhttp.responseText;
             //document.getElementById("callback").innerHTML = "¡Los datos se guardaron con éxito!";
             //document.getElementById("callback").style.color = "#01DF01";
 
