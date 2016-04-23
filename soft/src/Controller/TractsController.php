@@ -26,11 +26,14 @@ class TractsController extends AppController
 
 			if($this->Tracts->save($tract))
 			{
-				
+				$this->response->statusCode(200);
 			}
             else
             {
-                //$this->response->statusCode(500);             
+            	$this->response->statusCode(404);
+            	$response['success'] = $tract->errors();
+            	$this->set(compact('response'));
+            	$this->set('_serialize','response');        
             }
 		}
 		else
@@ -47,12 +50,12 @@ class TractsController extends AppController
 				$tract['dates'] = $date[0];
 			}
 
-			
+		$this->set('tract', $tract);			
 
 		}
 		
 
-		$this->set('tract', $tract);
+
 		
 	}
 
