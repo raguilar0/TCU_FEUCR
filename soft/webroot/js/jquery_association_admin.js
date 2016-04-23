@@ -264,26 +264,22 @@ function addTract()
 
         if(xhttp.readyState == 4 && xhttp.status == 200)
         {
-            alert(xhttp.responseText);
-            //document.getElementById("doc").innerHTML = xhttp.responseText;
-            //document.getElementById("callback").innerHTML = "¡Los datos se guardaron con éxito!";
-            //document.getElementById("callback").style.color = "#01DF01";
 
-            //alert(xhttp.status);
-            //setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 3000);
-            //setTimeout(function(){location.reload();},1000);
+            document.getElementById("callback").innerHTML = "¡Los datos se guardaron con éxito!";
+            document.getElementById("callback").style.color = "#01DF01";
+
+            setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 3000);
+         
         }
         else
         {
-            if(xhttp.status == 404)
+            if( xhttp.status == 404)
             {
-                //document.getElementById("doc").innerHTML = xhttp.responseText;
-                alert(xhttp.status);
-                alert(xhttp.responseText);
-                //document.getElementById("callback").innerHTML = "Ocurrió un error inesperado. Revise los datos e intentelo nuevamente. Si el problema persiste, contacte al administrador";
-                ///document.getElementById("callback").style.color = "red";
-                //setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 6000);
-                //setTimeout(function(){location.reload();}, 1000);
+
+               document.getElementById("callback").innerHTML = "Ocurrió un error al guardar los datos. Puede deberse a lo siguiente: <br> <ul><li>Introdujo un valor en el campo de Número de Tracto fuera de [1,4]</li><li>Introdujo una fecha de inicio y de final que ya existe en la base de datos</li></ul>";
+               document.getElementById("callback").style.color = "red";
+               setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 9000);
+           
             } 
 
             

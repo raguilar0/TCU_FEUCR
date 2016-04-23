@@ -4,6 +4,7 @@ namespace App\Model\Table;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\ORM\Rule\IsUnique;
 
 class TractsTable extends Table
 {
@@ -25,6 +26,13 @@ class TractsTable extends Table
 
 
         return $validator;
+    }
+
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->isUnique(['date','deadline']));
+
+        return $rules;
     }
 	
 	

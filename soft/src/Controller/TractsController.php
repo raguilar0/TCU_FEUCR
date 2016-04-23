@@ -26,23 +26,13 @@ class TractsController extends AppController
 
 			if($this->Tracts->save($tract))
 			{
-<<<<<<< HEAD
+
 				$this->Flash->success('Se agregó el tracto exitosamente', ['key' => 'addTractSuccess']);
 			}
             else
             {
-                
-                return $tract['error'];
-=======
-				$this->response->statusCode(200);
-			}
-            else
-            {
             	$this->response->statusCode(404);
-            	$response['success'] = $tract->errors();
-            	$this->set(compact('response'));
-            	$this->set('_serialize','response');        
->>>>>>> 9062913e8aab816b77185b7208eb99755d5f6b9b
+
             }
 		}
 		else
@@ -59,21 +49,13 @@ class TractsController extends AppController
 				$tract['dates'] = $date[0];
 			}
 
-<<<<<<< HEAD
+
 			$this->set('tract', $tract);
-=======
-		$this->set('tract', $tract);			
->>>>>>> 9062913e8aab816b77185b7208eb99755d5f6b9b
+
 
 		}
 		
-
-<<<<<<< HEAD
-		
-=======
-
->>>>>>> 9062913e8aab816b77185b7208eb99755d5f6b9b
-		
+		//$this->set('tract', $tract);
 	}
 
 	

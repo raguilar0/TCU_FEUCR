@@ -22,7 +22,7 @@
 
 </head><!--/head-->
 
-<body id="doc">
+<body>
 
 
        <nav class="navbar navbar-inverse">

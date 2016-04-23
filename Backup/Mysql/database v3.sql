@@ -41,7 +41,7 @@ CREATE TABLE amounts
   date date NOT NULL,
   spent DOUBLE NOT NULL DEFAULT 0,
   detail varchar(2048) NOT NULL,
-  type INT(2) NOT NULL DEFAULT 0,
+  type INT(2) NOT NULL DEFAULT 0, --0:tracto, 1:monto generado, 2:superávit
   association_id INT UNSIGNED NOT NULL,
   tract_id INT UNSIGNED NOT NULL,
 
@@ -79,7 +79,7 @@ CREATE TABLE boxes
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   little_amount DOUBLE NOT NULL DEFAULT 0,
   big_amount DOUBLE NOT NULL DEFAULT 0,
-  type INT UNSIGNED NOT NULL DEFAULT 0,
+  type INT UNSIGNED NOT NULL DEFAULT 0, --0:tracto, 1:monto generado, 2:superávit
   association_id INT UNSIGNED NOT NULL,
   tract_id INT UNSIGNED NOT NULL,
 

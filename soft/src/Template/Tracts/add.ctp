@@ -45,7 +45,7 @@
 
 <?= $this->Flash->render('addTractSuccess') ?>
 
-<div class="row text-right">
+<div class="row text-left">
     <div class="col-xs-12">
         <h4 id="callback"></h4>   
     </div>

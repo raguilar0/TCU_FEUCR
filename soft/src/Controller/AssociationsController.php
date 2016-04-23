@@ -148,11 +148,7 @@ class AssociationsController extends AppController
 
 
 
-				$asso_id = $this->Associations->find()
-								->hydrate(false)
-								->select(['id'])
-								->order(['id'=>'DESC'])
-								->limit(1);
+
 
 				$asso_id = $asso_id->toArray();
 
@@ -529,17 +525,31 @@ class AssociationsController extends AppController
 		{
 
 			$amounts = $this->Associations->Amounts->find()
-						->hydrate(false)
-						->select(['amount','max'=>'max(id)','amount_saving', 'date', 'spent', 'deadline'])
-						->where(['association_id'=>$id]);
+								->hydrate(false)
+								->select(['id','amount','spent','tract.date','tract.deadline'])
+								->where(['association_id'=>$id])
+								->join([
+									'table'=>'tracts',
+									'alias'=>'tract',
+									'type'=>'RIGHT',
+									'conditions'=>'Amounts.tract_id = tract.id'
+
+									])
+								->order(['tract.id'=>'DESC']);
+
+
 			$amounts = $amounts->toArray();
 
-			if(is_null($amounts[0]['amount']))
+
+
+
+/**
+			if(($amounts['amount']))
 			{
 				$amounts = [];
 			}
 
-
+**/
 
 			$invoices = $this->Associations->Invoices->find()
 						->hydrate(false)

@@ -1,4 +1,6 @@
 <?php //variables de uso común
+	 
+
 	 $monto_ahorro = $monto_tracto = $caja_fuerte = $caja_chica = $total_gastos = 0;
 
 	$periodo_tracto = "";
@@ -11,8 +13,8 @@
 
 	if(!empty($data['amounts']))
 	{
-		$periodo_tracto = "Período de Tracto: ".$data['amounts'][0]['date']." - ".$data['amounts'][0]['deadline'];
-		$monto_ahorro = $data['amounts'][0]['amount_saving'];
+		$periodo_tracto = "Período de Tracto: ".$data['amounts'][0]['tract']['date']." - ".$data['amounts'][0]['tract']['deadline'];
+		$monto_ahorro = 0; //TODO: agregar el monto de ahorro
 		$monto_tracto =  $data['amounts'][0]['amount'];
 	}
 
