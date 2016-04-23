@@ -275,10 +275,11 @@ function addTract()
         }
         else
         {
-            if(xhttp.status == 500)
+            if(xhttp.status == 404)
             {
-                document.getElementById("doc").innerHTML = xhttp.responseText;
-                //alert(xhttp.status);
+                //document.getElementById("doc").innerHTML = xhttp.responseText;
+                alert(xhttp.status);
+                alert(xhttp.responseText);
                 //document.getElementById("callback").innerHTML = "Ocurrió un error inesperado. Revise los datos e intentelo nuevamente. Si el problema persiste, contacte al administrador";
                 ///document.getElementById("callback").style.color = "red";
                 //setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 6000);
