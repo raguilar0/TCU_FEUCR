@@ -13,7 +13,7 @@
 
 	if(!empty($data['amounts']))
 	{
-		$periodo_tracto = "Período de Tracto: ".$data['amounts'][0]['tract']['date']." - ".$data['amounts'][0]['tract']['deadline'];
+		$periodo_tracto = "Período de Tracto:<br><br> ".$data['amounts'][0]['tract']['date']." - ".$data['amounts'][0]['tract']['deadline'];
 		$monto_ahorro = 0; //TODO: agregar el monto de ahorro
 		$monto_tracto =  $data['amounts'][0]['amount'];
 	}

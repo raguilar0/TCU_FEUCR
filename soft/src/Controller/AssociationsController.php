@@ -67,11 +67,19 @@ class AssociationsController extends AppController
 					
 					case 4:
 							$query['link'] = 'delete';
-						break;	
+						break;
+
+					case 5:
+							$query['link'] = 'detailed_information';
+						break;							
 			}
 
 			$this->set('data',$query);
 
+		}
+		else
+		{
+			$this->redirect(['action'=>'/']);
 		}
 	}
 
@@ -115,6 +123,10 @@ class AssociationsController extends AppController
 			
 			$this->set('data',$association);
 
+		}
+		else
+		{
+			$this->redirect(['action'=>'/']);
 		}
 	}
 
@@ -369,6 +381,10 @@ class AssociationsController extends AppController
 				$this->set('data',$association); // set() Pasa la variable association a la vista.
 			}
 		}
+		else
+		{
+			$this->redirect(['action'=>'/']);
+		}
 
 
 		
@@ -429,6 +445,10 @@ class AssociationsController extends AppController
 
 		
 		}
+		else
+		{
+			$this->redirect(['action'=>'/']);
+		}
 
 	}
 	
@@ -478,6 +498,10 @@ class AssociationsController extends AppController
 			{
 				$this->set('data',$association); // set() Pasa la variable association a la vista.
 			}
+		}
+		else
+		{
+			$this->redirect(['action'=>'/']);
 		}		
 	}
 
@@ -514,6 +538,10 @@ class AssociationsController extends AppController
 				  ->execute();			
 			
 			return $this->redirect(['action'=>'show_disables']);
+		}
+		else
+		{
+			$this->redirect(['action'=>'/']);
 		}
 	}
 
@@ -571,7 +599,7 @@ class AssociationsController extends AppController
 		}
 		else
 		{
-			#TODO:redirigir al /associations
+			$this->redirect(['action'=>'/']);
 		}
 	}
 }

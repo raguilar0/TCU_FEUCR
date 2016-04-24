@@ -20,6 +20,8 @@
     <?php echo $this->Html->meta('favicon.ico','webroot/favicon.ico',array('type' => 'icon'));?>
     <?=$this->Html->script('jquery2.js') ?>
 
+    <?= $this->Html->css('jquery-ui/jquery-ui.min.css') ?>
+
 </head><!--/head-->
 
 <body>
@@ -50,7 +52,7 @@
                       <li><?php echo $this->Html->link('Agregar Nuevo Tracto', '/tracts/add');?></li>                  
                       <li><?php echo $this->Html->link('Agregar Montos', '/amounts/show_associations');?></li>
 
-                      <li><?php echo $this->Html->link('Ver Montos Detallados', '/associations/detailed_information');?></li>
+                      <li><?php echo $this->Html->link('Ver Montos Detallados', '/associations/show_associations/5');?></li>
               </ul>
             </li>
 
@@ -77,6 +79,9 @@
 
      <?=$this->Html->script('bootstrap.min.js') ?>
      <?=$this->Html->script('jquery_association_admin.js') ?>
+
+      <?=$this->Html->script('modernizr/modernizr-custom.js') ?>
+     <?=$this->Html->script('jquery-ui/jquery-ui.min.js') ?>
 
 </body>
 </html>

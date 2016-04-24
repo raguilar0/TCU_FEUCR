@@ -332,3 +332,12 @@ function confirmAction()
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
 });
+
+
+    $(document).ready( function(){
+        if(!Modernizr.date)
+        {           
+            $('#date').datepicker();            
+            $('#deadline').datepicker();  
+        }        
+    });

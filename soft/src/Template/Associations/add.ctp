@@ -129,7 +129,8 @@ if(!empty($association['tract']))
                 echo "</div>";
 
                 echo "<div class = 'col-xs-12 col-md-4'>"; 
-                echo "<h4>".$this->Form->input('date', ['class' => 'form-control', 'label'=>'Fecha', 'type'=>'date'])."</h4>";
+                //echo "<h4>".$this->Form->input('date', ['class' => 'form-control', 'label'=>'Fecha', 'type'=>'date'])."</h4>";
+                echo "<h4><label for='#date'>Fecha</label>"."<br><input name='date' type='date' id = 'date' class='form-control date'>"."</h4>";
                 echo "</div>";                                
 
             echo "</div>";
