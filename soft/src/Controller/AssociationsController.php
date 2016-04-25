@@ -563,8 +563,8 @@ class AssociationsController extends AppController
 									'conditions'=>'Amounts.tract_id = tract.id'
 
 									])
-								->order(['tract.id'=>'DESC']);
-
+								->order(['tract.id'=>'DESC', 'Amounts.id'=>'DESC'])
+								->limit(1);
 
 			$amounts = $amounts->toArray();
 
