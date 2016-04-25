@@ -28,8 +28,8 @@ $('#submit5').submit(function(e){
 });
 
 $("#submit_add_tract").submit(function(e){
-  e.preventDefault();
-  addTract();
+  //e.preventDefault();
+  //addTract();
 });
 
 
@@ -334,10 +334,10 @@ $(document).ready(function(){
 });
 
 
-    $(document).ready( function(){
-        if(!Modernizr.date)
-        {           
-            $('#date').datepicker();            
-            $('#deadline').datepicker();  
-        }        
-    });
+$(document).ready( function(){
+    if(!Modernizr.inputtypes.date)
+    {           
+        $('#date').datepicker();            
+        $('#deadline').datepicker();  
+    }        
+});
