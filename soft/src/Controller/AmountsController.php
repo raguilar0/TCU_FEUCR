@@ -31,12 +31,48 @@ class AmountsController extends AppController
 		if($id)
 		{
 
+/********************* Get Headquarters ****************************************/
+
+		    $headquarters = $this->Amounts->Associations->Headquarters->find()
+		    				->hydrate(false)
+		    				->select(['name']);
+		    				
+		    $headquarters = $headquarters->toArray();
+
+
+/************************ End Get Headquarters**********************************/
+
+
+/************************ Get Associatios *************************************/
+
+	if(!empty($headquarters))
+	{
+
+		
+		$associations = $this->Amounts->Associations->find() //Se obtienen las asociaciones de la primera sede
+						->hydrate(false)
+						->select(['name'])
+						->andwhere(['headquarter_id'=>1,'enable'=>1]); 
+						
+		$associations = $associations->toArray();		
+	}
+
+
+
+
+
+
+
+
+
+
+
 
 			$amounts_type = array('Tracto'=> 0, 'Superávit' => 2);
 
 			$this->loadModel('Tracts');
 
-			$date = $this->Tracts->find()
+			$date = $this->Tracts->find() //Se trae el ultimo tracto
 							->hydrate(false)
 							->select(['date', 'deadline','id'])
 							->order(['id'=>'DESC'])
@@ -84,10 +120,32 @@ class AmountsController extends AppController
 		}
 
 		$this->set('amount',$amount);
+		$this->set('head',$headquarters);
+		$this->set('associations',$associations);
 
 	}
 
 
+public function getAssociations($headquarter_name)
+{
+	$headquarter_id = $this->Amounts->Associations->Headquarters->find() //Se busca primero el id de esa sede por medio del nombre
+							->hydrate(false)
+							->select(['id'])
+							->where(['name'=>$headquarter_name]);
+							
+	$headquarter_id = $headquarter_id->toArray();
+	
+	
+	$associations = $this->Amounts->Associations->find() //Se obtienen los nombres de las asociaciones con el id recuperado
+					->hydrate(false)
+					->select(['name'])
+					->where(['headquarter_id'=>$headquarter_id]);
+					
+	$associations = $associations->toArray();
+	
+	
+	
+}
 
 
 	public function edit($amount_id)
