@@ -74,6 +74,8 @@ function addHeadquarter()
     function(data, status)
     {
 
+        alert(data);
+
         if(data == "1")
         {
             $("#callback").text("¡Los datos se guardaron con éxito!");
@@ -228,6 +230,41 @@ function modifyHeadquarter()
 
 function addAmounts()
 {
+//TODO: Agregar el id al url, para guardar el monto en la asociación correspondiente
+ var xhttp = new XMLHttpRequest();
+    
+        xhttp.onreadystatechange = function()
+        {
+    
+            if(xhttp.readyState == 4 && xhttp.status == 200)
+            {
+                alert(xhttp.responseText);
+             
+            }
+            else
+            {
+                if( xhttp.status == 404)
+                {
+    
+                   document.getElementById("callback").innerHTML = "Error: Se envió un nombre de sede que no coincide con nuestros registros.";
+                   document.getElementById("callback").style.color = "red";
+                   setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 9000);
+               
+                } 
+    
+                
+            }          
+               
+        };
+    
+        xhttp.open("GET", "/FEUCR/soft/amounts/getAssociationId/"+document.getElementById("associations").value,true);
+        //xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send();
+       
+
+
+
+    /**
     $.post($("#submit5").attr("action"),$("#submit5").serialize(), 
     function(data, status)
     {   
@@ -248,6 +285,8 @@ function addAmounts()
         }               
 
     });
+
+    **/
 }
 
 

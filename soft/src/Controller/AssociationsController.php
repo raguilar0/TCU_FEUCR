@@ -49,7 +49,8 @@ class AssociationsController extends AppController
 						 'type' => 'RIGHT',
 						 'conditions'=>'Headquarters.id = a.headquarter_id',
 						])
-					->where(['a.enable'=>1]);
+					->where(['a.enable'=>1])
+					->order(['Headquarters.name']);
 
 
 			$query = $query->toArray();

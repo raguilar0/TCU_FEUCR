@@ -33,37 +33,23 @@ class AmountsController extends AppController
 
 /********************* Get Headquarters ****************************************/
 
-		    $headquarters = $this->Amounts->Associations->Headquarters->find()
-		    				->hydrate(false)
-		    				->select(['name']);
-		    				
-		    $headquarters = $headquarters->toArray();
+			$query = $this->Amounts->Associations->Headquarters->find() //Se trae solo las sedes que tienen alguna asocicación asociada :p
+					->hydrate(false)
+					->select(['Headquarters.name'])
+					->join([
+						 'table'=>'associations',
+						 'alias'=>'a',
+						 'type' => 'RIGHT',
+						 'conditions'=>'Headquarters.id = a.headquarter_id',
+						])
+					->where(['a.enable'=>1])
+					->group(['Headquarters.name']); //Elimina repetidos
+
+
+			$headquarters = $query->toArray();
 
 
 /************************ End Get Headquarters**********************************/
-
-
-/************************ Get Associatios *************************************/
-
-	if(!empty($headquarters))
-	{
-
-		
-		$associations = $this->Amounts->Associations->find() //Se obtienen las asociaciones de la primera sede
-						->hydrate(false)
-						->select(['name'])
-						->andwhere(['headquarter_id'=>1,'enable'=>1]); 
-						
-		$associations = $associations->toArray();		
-	}
-
-
-
-
-
-
-
-
 
 
 
@@ -121,32 +107,52 @@ class AmountsController extends AppController
 
 		$this->set('amount',$amount);
 		$this->set('head',$headquarters);
-		$this->set('associations',$associations);
 
 	}
 
 
-public function getAssociations($headquarter_name)
-{
-	$headquarter_id = $this->Amounts->Associations->Headquarters->find() //Se busca primero el id de esa sede por medio del nombre
-							->hydrate(false)
-							->select(['id'])
-							->where(['name'=>$headquarter_name]);
-							
-	$headquarter_id = $headquarter_id->toArray();
-	
-	
-	$associations = $this->Amounts->Associations->find() //Se obtienen los nombres de las asociaciones con el id recuperado
-					->hydrate(false)
-					->select(['name'])
-					->where(['headquarter_id'=>$headquarter_id]);
-					
-	$associations = $associations->toArray();
-	
-	
-	
-}
+	public function getAssociations($headquarter_name)
+	{
 
+		if($this->request->is("GET"))
+		{
+			$headquarter_id = $this->Amounts->Associations->Headquarters->find() //Se busca primero el id de esa sede por medio del nombre
+									->hydrate(false)
+									->select(['id'])
+									->where(['name'=>$headquarter_name]);
+									
+			$headquarter_id = $headquarter_id->toArray();
+			
+			
+			$associations = $this->Amounts->Associations->find() //Se obtienen los nombres de las asociaciones con el id recuperado
+							->hydrate(false)
+							->select(['name'])
+							->where(['headquarter_id'=>$headquarter_id[0]['id']]);
+							
+			$associations = $associations->toArray();
+			
+			$associations = json_encode($associations);
+
+			die($associations);
+		}
+
+		
+	}
+
+
+	public function getAssociationId($association_name)
+	{
+			$association_id = $this->Amounts->Associations->find() //Se busca primero el id de esa sede por medio del nombre
+									->hydrate(false)
+									->select(['id'])
+									->where(['name'=>$association_name]);
+									
+			$association_id = $association_id->toArray();
+
+			$association_id = json_encode($association_id);
+
+			die($association_id);
+	}
 
 	public function edit($amount_id)
 	{
@@ -171,7 +177,8 @@ public function getAssociations($headquarter_name)
 						 'type' => 'RIGHT',
 						 'conditions'=>'Headquarters.id = a.headquarter_id',
 						])
-					->where(['a.enable'=>1]);
+					->where(['a.enable'=>1])
+					->order(['Headquarters.name']);
 
 
 			$query = $query->toArray();

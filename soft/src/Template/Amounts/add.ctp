@@ -1,4 +1,4 @@
-<div class="row text-center">
+<div class="row text-center" onload="getAssociations()">
     <div class="col-xs-12">
         <h1><?php echo $amount['association']['name']. " (".$amount['association']['acronym'].")";?></h1>  
 
@@ -30,7 +30,7 @@
         echo "<div class = 'col-xs-12 col-md-5'>";
     
         echo "<label><h4><strong>Sedes</strong></h4></label>";
-           echo "<select class='form-control' name = 'type' onchange='prueba();'>";
+           echo "<select class='form-control' id= 'headquarter_id' name = 'type' onchange='getAssociations();'>";
     
     
     
@@ -46,13 +46,8 @@
         echo "<div class = 'col-xs-12 col-md-7'>";
     
         echo "<label><h4><strong>Asociaciones</strong></h4></label>";
-           echo "<select class='form-control' name = 'type'>";
-    
-    
-    
-                foreach ($associations as $key => $value) {
-                    echo "<option>".$value['name']."</option>"."<br>";
-                }
+           echo "<select class='form-control' name = 'type' id = 'associations'>";
+
                 
             echo "</select>";
         echo "</div>";        
@@ -72,6 +67,12 @@
 
 
 <script>
+
+$(document).ready( function ()
+    {
+        getAssociations();
+    });
+
     function getAssociations()
     {
         var xhttp = new XMLHttpRequest();
@@ -82,10 +83,15 @@
             if(xhttp.readyState == 4 && xhttp.status == 200)
             {
     
-                document.getElementById("callback").innerHTML = "¡Los datos se guardaron con éxito!";
-                document.getElementById("callback").style.color = "#01DF01";
-    
-                setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 3000);
+                var html = "";
+                var obj = JSON.parse(xhttp.responseText);
+
+                for(var key in obj)
+                {
+                    html += "<option>"+obj[key].name+"</option>";
+                }
+
+                document.getElementById("associations").innerHTML = html;
              
             }
             else
@@ -93,7 +99,7 @@
                 if( xhttp.status == 404)
                 {
     
-                   document.getElementById("callback").innerHTML = "Ocurrió un error al guardar los datos. Puede deberse a lo siguiente: <br> <ul><li>Introdujo un valor en el campo de Número de Tracto fuera de [1,4]</li><li>Introdujo una fecha de inicio y de final que ya existe en la base de datos</li></ul>";
+                   document.getElementById("callback").innerHTML = "Error: Se envió un nombre de sede que no coincide con nuestros registros.";
                    document.getElementById("callback").style.color = "red";
                    setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 9000);
                
@@ -104,9 +110,9 @@
                
         };
     
-        xhttp.open("POST", document.getElementById("submit_add_tract").action,true);
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send($("#submit_add_tract").serialize());
+        xhttp.open("GET", "/FEUCR/soft/amounts/getAssociations/"+document.getElementById("headquarter_id").value,true);
+        //xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send();
        
     }
     
