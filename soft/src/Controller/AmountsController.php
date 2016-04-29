@@ -24,65 +24,28 @@ class AmountsController extends AppController
 
 	public function add($id = null)
 	{
-		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
+		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vist
 		
 
+		$this->loadModel('Tracts');
+
+		$date = $this->Tracts->find() //Se trae el ultimo tracto
+						->hydrate(false)
+						->select(['date', 'deadline','id'])
+						->order(['id'=>'DESC'])
+						->limit(1);
+
+		$date = $date->toArray();
 		
-		if($id)
-		{
-
-/********************* Get Headquarters ****************************************/
-
-			$query = $this->Amounts->Associations->Headquarters->find() //Se trae solo las sedes que tienen alguna asocicación asociada :p
-					->hydrate(false)
-					->select(['Headquarters.name'])
-					->join([
-						 'table'=>'associations',
-						 'alias'=>'a',
-						 'type' => 'RIGHT',
-						 'conditions'=>'Headquarters.id = a.headquarter_id',
-						])
-					->where(['a.enable'=>1])
-					->group(['Headquarters.name']); //Elimina repetidos
-
-
-			$headquarters = $query->toArray();
-
-
-/************************ End Get Headquarters**********************************/
-
-
-
-
-			$amounts_type = array('Tracto'=> 0, 'Superávit' => 2);
-
-			$this->loadModel('Tracts');
-
-			$date = $this->Tracts->find() //Se trae el ultimo tracto
-							->hydrate(false)
-							->select(['date', 'deadline','id'])
-							->order(['id'=>'DESC'])
-							->limit(1);
-
-			$date = $date->toArray();	
-
-			$amount = $this->Amounts->newEntity($this->request->data); //El parámetro es para validar los datos
-
-			$association_name = $this->Amounts->Associations->find()
-								->hydrate(false)
-								->select(['name','acronym'])							
-								->where(['id'=>$id]);
-
-			$association_name = $association_name->toArray();
-
-			$amount['association'] = $association_name[0];
-
-		
-			$response = 0;
-
+		$amounts_type = array('Tracto'=> 0, 'Superávit' => 2);
+		$amount = $this->Amounts->newEntity($this->request->data); //El parámetro es para validar los datos
 
 			if($this->request->is('post'))
 			{
+				
+				
+				$response = 0;
+				
 				$amount['association_id'] = $id;
 				$amount['tract_id'] = $date[0]['id'];
 				$amount['type'] = $amounts_type[$this->request->data['type']];
@@ -99,14 +62,41 @@ class AmountsController extends AppController
 			{
 		
 		
+						
+	/********************* Get Headquarters ****************************************/
+	
+				$query = $this->Amounts->Associations->Headquarters->find() //Se trae solo las sedes que tienen alguna asocicación asociada :p
+						->hydrate(false)
+						->select(['Headquarters.name'])
+						->join([
+							 'table'=>'associations',
+							 'alias'=>'a',
+							 'type' => 'RIGHT',
+							 'conditions'=>'Headquarters.id = a.headquarter_id',
+							])
+						->where(['a.enable'=>1])
+						->group(['Headquarters.name']); //Elimina repetidos
+	
+	
+				$headquarters = $query->toArray();
+	
+	
+	/************************ End Get Headquarters**********************************/
+				
+			
+				
+	
+				
+
+		
 				$amount['amounts_type'] = $amounts_type;
 				
-				$amount['date'] = $date;			
+				$amount['date'] = $date;	
+				
+				$this->set('amount',$amount);
+				$this->set('head',$headquarters);
 			}
-		}
-
-		$this->set('amount',$amount);
-		$this->set('head',$headquarters);
+		
 
 	}
 

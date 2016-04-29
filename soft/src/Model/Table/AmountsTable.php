@@ -28,14 +28,13 @@ class AmountsTable extends Table
             ->notEmpty('deadline')
             ->notEmpty('detail', 'Ingrese el detalle del monto')
             ->add('detail', 'validFormat', [
-                                    'rule' => array('custom', '/^[a-zA-Z0-9$%@ \-]*$/'),
+                                    'rule' => array('custom', '/[a-zA-Z0-9$%@\-]+$/'),
                                     'message' => 'Debe contener solamente letras.'
             ])
             ->add('detail', [
-                'length' => [
-                            'rule' => ['maxLength', 2048],
-                            'message' => 'Debe contener máximo 2048 caracteres.',
-                            ]
+                        'lengthBetween' => ['rule' => ['lengthBetween', 1, 8192],
+                                        'message' => 'Debe contener mínimo 1 y máximo 100 caracteres.',
+                        ]
             ]);
 
         return $validator;

@@ -32,7 +32,7 @@ class AssociationsTable extends Table
             ])
             ->notEmpty('location')
             ->add('location', 'validFormat', [
-                        'rule' => array('custom', '/^[A-Za-z0-9\-,]+$/'),
+                        'rule' => array('custom', '/[A-Za-z0-9]+$/'),
                         'message' => 'Solo letras y números.'
             ])
             ->notEmpty('headquarters')

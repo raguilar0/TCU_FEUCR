@@ -233,12 +233,14 @@ function addAmounts()
 //TODO: Agregar el id al url, para guardar el monto en la asociación correspondiente
  var xhttp = new XMLHttpRequest();
     
+    
         xhttp.onreadystatechange = function()
         {
     
             if(xhttp.readyState == 4 && xhttp.status == 200)
             {
-                alert(xhttp.responseText);
+               document.getElementById("callback").innerHTML = "Los datos se guardaron exitosamente!";
+               setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 9000);
              
             }
             else
@@ -256,10 +258,22 @@ function addAmounts()
             }          
                
         };
+        
+        
+        var object = JSON.parse(getAssociationId());
+        
+         //Con esto obtengo la direccion relativa a la computadora en la que estoy
+         var path = location.pathname;
+         path = path.substring(0,path.length)+"/"+object[0].id;
+        
     
-        xhttp.open("GET", "/FEUCR/soft/amounts/getAssociationId/"+document.getElementById("associations").value,true);
-        //xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send();
+
+        
+        
+        
+        xhttp.open("POST", path,true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send($("#submit5").serialize());
        
 
 
@@ -289,7 +303,45 @@ function addAmounts()
     **/
 }
 
+function getAssociationId()
+{
+    var xhttp = new XMLHttpRequest();
+    var respo;
+    
+        xhttp.onreadystatechange = function()
+        {
+    
+            if(xhttp.readyState == 4 && xhttp.status == 200)
+            {
+                respo = xhttp.responseText;
+             
+            }
+            else
+            {
+                if( xhttp.status == 404)
+                {
+    
+                   document.getElementById("callback").innerHTML = "Error: Se envió un nombre de sede que no coincide con nuestros registros.";
+                   document.getElementById("callback").style.color = "red";
+                   setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 9000);
+               
+                } 
+    
+                
+            }          
+               
+        };
+        
+        var path = location.pathname; //Con esto obtengo la direccion relativa a la computadora en la que estoy
+        path = path.substring(0,path.length-4)+"/getAssociationId/"+document.getElementById("associations").value;
 
+        //path = path.replace("add","getAssociationId/"+document.getElementById("associations").value);
+        xhttp.open("GET", path,false);
+        //xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send();  
+        
+        return respo;
+}
 
 
 

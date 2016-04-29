@@ -1,6 +1,6 @@
-<div class="row text-center" onload="getAssociations()">
+<div class="row text-center">
     <div class="col-xs-12">
-        <h1><?php echo $amount['association']['name']. " (".$amount['association']['acronym'].")";?></h1>  
+        <h1 id="association_name"></h1>  
 
 
         <h3><?php
@@ -46,7 +46,7 @@
         echo "<div class = 'col-xs-12 col-md-7'>";
     
         echo "<label><h4><strong>Asociaciones</strong></h4></label>";
-           echo "<select class='form-control' name = 'type' id = 'associations'>";
+           echo "<select class='form-control' name = 'type' id = 'associations' onchange = 'changeAssociation();'>";
 
                 
             echo "</select>";
@@ -90,9 +90,12 @@ $(document).ready( function ()
                 {
                     html += "<option>"+obj[key].name+"</option>";
                 }
-
+                
+                
                 document.getElementById("associations").innerHTML = html;
-             
+                
+                changeAssociation();
+                
             }
             else
             {
@@ -114,6 +117,12 @@ $(document).ready( function ()
         //xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send();
        
+    }
+    
+
+    function changeAssociation()
+    {
+        document.getElementById("association_name").innerHTML = document.getElementById("associations").value;
     }
     
     
