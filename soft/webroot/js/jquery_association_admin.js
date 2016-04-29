@@ -27,6 +27,11 @@ $('#submit5').submit(function(e){
     addAmounts();
 });
 
+$("#submit_add_tract").submit(function(e){
+  e.preventDefault();
+ addTract();
+});
+
 
 //Esta función sirve para agregar una asociación 
 function addAssociation()
@@ -93,41 +98,15 @@ function modifyAssociation()
     function(data, status)
     {
 
-        var array_data = data.split(',');
-
-        if(array_data[0] == '1' && array_data[1] == '1')
+        if(data == '1')
         {
             $("#callback").text("¡Los datos se guardaron con éxito!");
             $("#callback").css("color","#01DF01");
         }
         else
         {
-            if(array_data[0] == '0' && array_data[1] == '0')
-            {
-                $("#callback").text("Lo sentimos. Algo ocurrió y ningún dato pudo guardarse. Verifique los datos y si el problema persiste contacte al administrador.");
-                $("#callback").css("color","red");
-            }
-            else
-            {
-                if(array_data[0] == '0' && array_data[1] == '1')
-                {
-                    $("#callback").text("Se guardó la información de los montos, pero no así la de asociaciones. Es probable que este nombre de asociación o de la sigla ya exista y por lo tanto no puede agregarse.");
-                    $("#callback").css("color","#FF8000");
-                }
-                else
-                {
-                    if(!$("#addAmountsBtn").length)
-                    {
-                        $("#callback").text("¡Los datos se guardaron con éxito!");
-                        $("#callback").css("color","#01DF01");
-                    }
-                    else
-                    {
-                        $("#callback").text("Se guardó la información de la Asociación, pero no así la de los montos. Revise que los datos suministrados son correctos.");
-                        $("#callback").css("color","red");                        
-                    }
-                }
-            }
+            $("#callback").text("Es probable que este nombre de asociación o de la sigla ya exista y por lo tanto no puede agregarse.");
+            $("#callback").css("color","red");
         }
               
 
@@ -264,11 +243,54 @@ function addAmounts()
              
             $("#callback").text("Lo sentimos. Ocurrió un error inesperado, intente más tarde. Si el problema persiste, consulte al administrador.");
             $("#callback").css("color","red");
-            
+            setTimeout(function(){location.reload();},1000);
 
         }               
 
     });
+}
+
+
+
+
+
+
+function addTract()
+{
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function()
+    {
+
+        if(xhttp.readyState == 4 && xhttp.status == 200)
+        {
+
+            document.getElementById("callback").innerHTML = "¡Los datos se guardaron con éxito!";
+            document.getElementById("callback").style.color = "#01DF01";
+
+            alert(xhttp.responseText);
+            //setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 3000);
+            setTimeout(function(){location.reload();},1000);
+        }
+        else
+        {
+            if(xhttp.status == 500)
+            {
+                document.getElementById("callback").innerHTML = "Ocurrió un error inesperado. Revise los datos e intentelo nuevamente. Si el problema persiste, contacte al administrador";
+                document.getElementById("callback").style.color = "red";
+                //setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 6000);
+                setTimeout(function(){location.reload();}, 1000);
+            } 
+
+            
+        }          
+           
+    };
+
+    xhttp.open("POST", document.getElementById("submit_add_tract").action,true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send($("#submit_add_tract").serialize());
+   
 }
 
 

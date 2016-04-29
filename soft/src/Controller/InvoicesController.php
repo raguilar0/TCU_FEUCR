@@ -13,13 +13,37 @@ class InvoicesController extends AppController
 		$invoice = $this->Invoices->newEntity($this->request->data); //El parámetro es para validar los datos
 
 
-		$invoices_type = array(0=>'Tracto', 1=>'Ingresos Generados',2 =>'Superávit');
+		$invoices_type = array('Tracto'=> 0, 'Ingresos Generados'=> 1, 'Superávit' => 2);
 
 		$invoice['invoices_type'] = $invoices_type;
 
+
 		if($this->request->is('post'))
 		{
+			$this->loadComponent('Upload');
 
+			
+			$response = '0';
+			
+			$file = $invoice['file'];
+			unset($invoice['file']); //Quitamos los datos del archivo
+
+			if(!empty($file))
+			{
+				if($this->Upload->save($file))
+				{
+					$invoice['image_name'] = $file['name'];
+					$invoice['association_id'] = 1;
+					$invoice['kind'] = $invoices_type[$this->request->data['kind']];
+
+					if($this->Invoices->save($invoice)) //
+					{
+						$response = '1';
+					}
+
+					die($response);
+				}
+			}
 		}
 		else
 		{

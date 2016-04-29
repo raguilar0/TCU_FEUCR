@@ -62,10 +62,6 @@ class UsersController extends AppController
   							$query['link'] = 'read';
   						break;
 
-            case 2:
-                $query['link'] = 'add';
-              break;
-
   					case 3:
   							$query['link'] = 'modify';
   						break;
@@ -92,7 +88,25 @@ class UsersController extends AppController
     public function add()
     {
         $user = $this->Users->newEntity();
+        $this->loadModel('Associations');
+
+        $role = array('Administrador'=> 0, 'Representante' => 1);
+
         if ($this->request->is('post')) {
+
+          $association_id =
+          $this->Users->Associations->find()
+                                    ->hydrate(false)
+                                    ->select(['id'])
+                                    ->where(['name'=>$this->request->data['association_id']]);
+
+          $association_id = $association_id->toArray();
+
+          $this->request->data['association_id'] = $association_id;
+
+          //$this->request->data['role'] = $role[$this->request->data['role']];
+
+
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('El usuario ha sido agregado.'));
@@ -100,6 +114,11 @@ class UsersController extends AppController
             }
             $this->Flash->error(__('Error al agregar usuario.'));
         }
+
+        $association = $this->Associations->find();
+
+        $this->set('role', $role);
+        $this->set('association', $association);
         $this->set('user', $user);
     }
 

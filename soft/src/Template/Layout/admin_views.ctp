@@ -37,33 +37,40 @@
 
           <a class="navbar-brand" href="#">FEUCR</a>
         </div>
-        <ul class="nav navbar-nav">
-          <li class="active"><?php echo $this->Html->link('Administrar Asociaciones', '/associations/', ['id'=>'active-navbar']);?></li>
-          <li class="dropdown active">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrar Montos
-                <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                    <li><?php echo $this->Html->link('Agregar Montos', '/amounts/show_associations');?></li>
-            </ul>
-          </li>
 
-          <li class="active">
-            <?php echo $this->Html->link('Administración de Usuarios', '/users/');?>
-          </li>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="active"><?php echo $this->Html->link('Administrar Asociaciones', '/associations/', ['id'=>'active-navbar']);?></li>
+            <li class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrar Montos
+                  <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                      <li><?php echo $this->Html->link('Agregar Nuevo Tracto', '/tracts/add');?></li>
+                      <li><?php echo $this->Html->link('Agregar Montos', '/amounts/show_associations');?></li>
 
-          <li class="active">
-            <?php echo $this->Html->link('Asociaciones Deshabilitadas', '/associations/show_disables');?>
-          </li>
+                      <li><?php echo $this->Html->link('Ver Montos Detallados', '/associations/detailed_information');?></li>
+              </ul>
+            </li>
 
-          <li class="active">
-            <?php echo $this->Html->link('Bitácora', '/associations/');?>
-          </li>
+            <li class="active">
+              <?php echo $this->Html->link('Administración de Usuarios', '/users/');?>
+            </li>
 
-          <li class="active">
-            <?php echo $this->Html->link('Salir', '/users/logout');?>
-          </li>
+            <li>
+              <?php echo $this->Html->link('Asociaciones Deshabilitadas', '/associations/show_disables');?>
+            </li>
 
-      </ul>
+            <li>
+              <?php echo $this->Html->link('Bitácora', '/associations/');?>
+            </li>
+
+            <li class="active">
+              <?php echo $this->Html->link('Salir', '/users/logout');?>
+            </li>
+
+        </ul>
+      </div>
+
   </div>
 </nav>
 
@@ -79,7 +86,6 @@
      <?=$this->Html->script('jquery2.js') ?>
      <?=$this->Html->script('bootstrap.min.js') ?>
      <?=$this->Html->script('jquery_association_admin.js') ?>
-     <?=$this->Html->script('jquery_associations.js') ?>
 
 </body>
 </html>

@@ -94,16 +94,25 @@ class AssociationsController extends AppController
 			$association['headquarter']= $headquarter[0]['name'];
 
 
+/**Obtenemos las fechas de los montos asociados**/
+
 			$amounts = $this->Associations->Amounts->find()
-						->select(['amount'=>'round(amount,0 )','date','deadline', 'spent', 'amount_saving'])
-						->where(['association_id'=>$id])
-						->order(['id'=> 'DESC']);
-						
-			
+					->hydrate(false)
+					->select(['tract.number','tract.date','tract.deadline','amount','spent'])
+					->join([
+						 'table'=>'tracts',
+						 'alias'=>'tract',
+						 'type' => 'RIGHT',
+						 'conditions'=>'Amounts.tract_id = tract.id',
+						])
+					->andwhere(['type'=>0, 'association_id'=>$id])
+					->order(['Amounts.id'=> 'DESC']);
+
 			$amounts = $amounts->toArray();
+
 			
 			$association['amounts'] = $amounts;
-
+			
 			$this->set('data',$association);
 
 		}
@@ -114,11 +123,12 @@ class AssociationsController extends AppController
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
 
 		$association = $this->Associations->newEntity($this->request->data); //El parámetro es para validar los datos
+		
+		$amounts_type = array('Tracto'=> 0, 'Superávit' => 2);
 
 
-		if($this->request->is('post'))
+		if($this->request->is(array('post','put')))
 		{
-
 			
 			$response = "0,0"; //Funciona como booleano, para decidir qué mostrar en el ajax.
 			
@@ -136,33 +146,48 @@ class AssociationsController extends AppController
 			{
 				$response = "1,0";
 
-				$query = $this->Associations->find();
-
-				$query->hydrate(false);
-				$query->select(['max_id' => $query->func()->max('id')]);
-
-				$query = $query->toArray();
 
 
-				$this->request->data['spent'] = 0;
-				$this->request->data['association_id'] = $query[0]['max_id'];
+				$asso_id = $this->Associations->find()
+								->hydrate(false)
+								->select(['id'])
+								->order(['id'=>'DESC'])
+								->limit(1);
 
+				$asso_id = $asso_id->toArray();
 
-				$amounts = $this->Associations->Amounts->newEntity($this->request->data);
+					$this->loadModel('Tracts');
 
-				if($this->Associations->Amounts->save($amounts))
-				{
-					$response = "1,1";
-				}
-			}
+					$tract = $this->Tracts->find()
+									->hydrate(false)
+									->select(['id'])
+									->order(['id'=>'DESC'])
+									->limit(1);
 
+					$tract = $tract->toArray();
+
+					$this->request->data['association_id'] = $asso_id[0]['id'];
+					$this->request->data['tract_id'] = $tract[0]['id'];
+					$this->request->data['type'] = $amounts_type[$this->request->data['type']];
+
+						$amounts = $this->Associations->Amounts->newEntity($this->request->data);
+
+						if($this->Associations->Amounts->save($amounts))
+						{
+							$response = "1,1";
+						}
+					}
+	
 			
-			die($response);
+				die($response);
 
 			
 		}
 		else
 		{
+			
+			$association['amounts_type'] = $amounts_type;
+
 			//Hago esta operación en el else, porque no me interesa cargarlo cuando voy a guardar los datos
 
 			$this->loadModel('Headquarters'); //Carga el modelo de esta asociación
@@ -186,26 +211,18 @@ class AssociationsController extends AppController
 				2) Una vez que existan montos asociados: Cuando ya hay montos asociados, se toma como fecha de tracto actual al último monto asociado
 			**/
 
-			$date = $this->Associations->Amounts->find()
+
+			$this->loadModel('Tracts');
+
+			$tract = $this->Tracts->find()
 							->hydrate(false)
-							->select(['date', 'deadline'])
+							->select(['date', 'deadline','id'])
 							->order(['id'=>'DESC'])
 							->limit(1);
 
-			$date = $date->toArray();
+			$tract = $tract->toArray();
 
-
-			if(!isset($date[0]))
-			{
-				$date['date'] = $date['deadline'] = date('Y-m-d');
-			}
-			else
-			{
-				$date = $date[0];
-			}
-
-			$association['date'] = $date;
-
+			$association['tract'] = $tract;
 
 		}
 
@@ -216,7 +233,6 @@ class AssociationsController extends AppController
 	{
 
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
-		$this->loadModel('Amounts');
 		
 		if($id)
 		{
@@ -240,7 +256,7 @@ class AssociationsController extends AppController
 //Se recupera la información del monto más reciente que le fue asignado
 //a la asociación con el id = $id
 
-
+			/**
 			$amount = $this->Associations->Amounts->find()
 							->hydrate(false)
 							->select(['id','amount','date', 'deadline'])
@@ -253,6 +269,7 @@ class AssociationsController extends AppController
 
 			$association['amounts'] = (isset($amount[0])?$amount[0]:null); //if inline
 
+			**/
 
 			if($this->request->is(array('post','put')))
 			{
@@ -261,7 +278,7 @@ class AssociationsController extends AppController
 				$response = "0"; //Funciona como booleano para decirle al ajax qué desplegar
 
 
-				$autorized = (isset($this->request->data['authorized_card']) ? 1 : 0); //Verifica si se checó el checkbox f las tarjetas
+				$autorized = (isset($this->request->data['authorized_card']) ? 1 : 0); //Verifica si se checó el checkbox de las tarjetas
 
 
 
@@ -292,7 +309,7 @@ class AssociationsController extends AppController
 				{
 
 					$validator = $this->Associations->newEntity($this->request->data);
-					
+
 					if(!$validator->errors())
 					{
 						
@@ -315,6 +332,7 @@ class AssociationsController extends AppController
 
 				}
 
+/**
 
 				try
 				{
@@ -344,7 +362,7 @@ class AssociationsController extends AppController
 				{
 					$response = $response.",0";
 				}
-
+**/
 
 				
 				die($response);
@@ -372,7 +390,7 @@ class AssociationsController extends AppController
 				//Obtengo todas las tuplas de Amounts asociadas a dicha
 				//asociación
 				$select = $this->Associations->Amounts->find()
-							->select(['amount','date','spent','deadline','association_id'])
+							->select(['amount','date','spent','detail','type','association_id','tract_id'])
 							->where(['association_id'=> $association['id']]);
 
 				
@@ -383,7 +401,7 @@ class AssociationsController extends AppController
 
 				//Hago el insert con las tuplas recuperadas
 				$insert = $this->Warehouses->query()
-							->insert(['amount','date','spent','deadline','association_id'])
+							->insert(['amount','date','spent','detail','type','association_id','tract_id'])
 							->values($select)
 							->execute();
 
@@ -502,5 +520,48 @@ class AssociationsController extends AppController
 			return $this->redirect(['action'=>'show_disables']);
 		}
 	}
+
 	
+	public function detailedInformation($id = null)
+	{
+		$this->viewBuilder()->layout('admin_views');
+		if($id)
+		{
+
+			$amounts = $this->Associations->Amounts->find()
+						->hydrate(false)
+						->select(['amount','max'=>'max(id)','amount_saving', 'date', 'spent', 'deadline'])
+						->where(['association_id'=>$id]);
+			$amounts = $amounts->toArray();
+
+			if(is_null($amounts[0]['amount']))
+			{
+				$amounts = [];
+			}
+
+
+
+			$invoices = $this->Associations->Invoices->find()
+						->hydrate(false)
+						->where(['association_id'=>$id]);  //State = 1, aprobada
+			$invoices = $invoices->toArray();
+
+			$box = $this->Associations->Boxes->find()
+					->hydrate(false)
+					->select(['little_amount','big_amount'])
+					->where(['association_id'=>$id]);
+
+			$box = $box->toArray();
+
+			$information['amounts'] = $amounts;
+			$information['invoices'] = $invoices;
+			$information['box'] = $box;
+
+			$this->set('data', $information);
+		}
+		else
+		{
+			#TODO:redirigir al /associations
+		}
+	}
 }
