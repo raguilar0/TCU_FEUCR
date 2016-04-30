@@ -155,6 +155,8 @@ class AssociationsController extends AppController
 
 			$association['headquarter_id'] = $headquarter[0]['id']; //Reemplaza la elección del usuario por el id 
 
+			debug($association->errors());
+
 			if($this->Associations->save($association)) //Guarda los date_offset_get()
 			{
 				$response = "1,0";

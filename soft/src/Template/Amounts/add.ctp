@@ -27,31 +27,34 @@
 
 <div class="row text-center">
     <?php
-        echo "<div class = 'col-xs-12 col-md-5'>";
-    
-        echo "<label><h4><strong>Sedes</strong></h4></label>";
-           echo "<select class='form-control' id= 'headquarter_id' name = 'type' onchange='getAssociations();'>";
-    
-    
-    
-                foreach ($head as $key => $value) {
-                    echo "<option>".$value['name']."</option>"."<br>";
-                }
-                
-            echo "</select>";
-        echo "</div>";
+        if(!empty($amount['date']))
+        {
+            echo "<div class = 'col-xs-12 col-md-5'>";
+        
+            echo "<label><h4><strong>Sedes</strong></h4></label>";
+               echo "<select class='form-control' id= 'headquarter_id' name = 'type' onchange='getAssociations();'>";
         
         
         
-        echo "<div class = 'col-xs-12 col-md-7'>";
-    
-        echo "<label><h4><strong>Asociaciones</strong></h4></label>";
-           echo "<select class='form-control' name = 'type' id = 'associations' onchange = 'changeAssociation();'>";
+                    foreach ($head as $key => $value) {
+                        echo "<option>".$value['name']."</option>"."<br>";
+                    }
+                    
+                echo "</select>";
+            echo "</div>";
+            
+            
+            
+            echo "<div class = 'col-xs-12 col-md-7'>";
+        
+            echo "<label><h4><strong>Asociaciones</strong></h4></label>";
+               echo "<select class='form-control' name = 'type' id = 'associations' onchange = 'changeAssociation();'>";
 
-                
-            echo "</select>";
-        echo "</div>";        
-        
+                    
+                echo "</select>";
+            echo "</div>"; 
+        }
+            
         
     ?>
     
@@ -64,71 +67,6 @@
 <br>
 <br>
 <br>
-
-
-<script>
-
-$(document).ready( function ()
-    {
-        getAssociations();
-    });
-
-    function getAssociations()
-    {
-        var xhttp = new XMLHttpRequest();
-    
-        xhttp.onreadystatechange = function()
-        {
-    
-            if(xhttp.readyState == 4 && xhttp.status == 200)
-            {
-    
-                var html = "";
-                var obj = JSON.parse(xhttp.responseText);
-
-                for(var key in obj)
-                {
-                    html += "<option>"+obj[key].name+"</option>";
-                }
-                
-                
-                document.getElementById("associations").innerHTML = html;
-                
-                changeAssociation();
-                
-            }
-            else
-            {
-                if( xhttp.status == 404)
-                {
-    
-                   document.getElementById("callback").innerHTML = "Error: Se envió un nombre de sede que no coincide con nuestros registros.";
-                   document.getElementById("callback").style.color = "red";
-                   setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 9000);
-               
-                } 
-    
-                
-            }          
-               
-        };
-    
-        xhttp.open("GET", "/FEUCR/soft/amounts/getAssociations/"+document.getElementById("headquarter_id").value,true);
-        //xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send();
-       
-    }
-    
-
-    function changeAssociation()
-    {
-        document.getElementById("association_name").innerHTML = document.getElementById("associations").value;
-    }
-    
-    
-</script>
-
-
 
 
 
@@ -203,7 +141,7 @@ if(!empty($amount['date']))
 
 <div class="row text-center">
   <div class="col-xs-12">
-     <?php echo $this->Html->link('Atrás', '/amounts/show_associations', ['class'=>'btn btn-primary']);?>
+     <?php echo $this->Html->link('Atrás', '/associations', ['class'=>'btn btn-primary']);?>
   </div>
 </div>
 

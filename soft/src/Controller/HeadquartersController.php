@@ -19,15 +19,13 @@ class HeadquartersController extends AppController
 	{
 		$headquarter = $this->Headquarters->newEntity($this->request->data); //El parámetro es para validar los datos
 		
-		$response = "1";
+		$response = "0";
 		
 		if($this->request->is('post'))
 		{
-
-			debug($this->request->data);
 			if(!$this->Headquarters->save($headquarter)) //Guarda los datos
 			{
-				$response = "0";
+				$response = "1";
 				
 			}
 

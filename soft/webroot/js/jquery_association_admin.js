@@ -1,7 +1,7 @@
 
 $('#submit1').submit(function(e){
-    e.preventDefault();
-    addAssociation();
+    //e.preventDefault();
+    //addAssociation();
 });
 
 
@@ -41,7 +41,7 @@ function addAssociation()
     {   
 
         var array_data = data.split(',');
-
+        alert(data);
 
 
         if(array_data[0] == "1" && array_data[1] == "1")
@@ -74,7 +74,6 @@ function addHeadquarter()
     function(data, status)
     {
 
-        alert(data);
 
         if(data == "1")
         {
@@ -432,3 +431,66 @@ $(document).ready( function(){
         $('#deadline').datepicker();  
     }        
 });
+
+
+//El siguiente script es para cargar las sedes y asociaciones que partenencen en esa sede. Esto en un dropdown
+
+
+$(document).ready( function ()
+    {
+        getAssociations();
+    });
+
+    function getAssociations()
+    {
+        var xhttp = new XMLHttpRequest();
+    
+        xhttp.onreadystatechange = function()
+        {
+    
+            if(xhttp.readyState == 4 && xhttp.status == 200)
+            {
+    
+                var html = "";
+                var obj = JSON.parse(xhttp.responseText);
+
+                for(var key in obj)
+                {
+                    html += "<option>"+obj[key].name+"</option>";
+                }
+                
+                
+                document.getElementById("associations").innerHTML = html;
+                
+                changeAssociation();
+                
+            }
+            else
+            {
+                if( xhttp.status == 404)
+                {
+    
+                   document.getElementById("callback").innerHTML = "Error: Se envió un nombre de sede que no coincide con nuestros registros.";
+                   document.getElementById("callback").style.color = "red";
+                   setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 9000);
+               
+                } 
+    
+                
+            }          
+               
+        };
+    
+        xhttp.open("GET", "/FEUCR/soft/amounts/getAssociations/"+document.getElementById("headquarter_id").value,true);
+        //xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send();
+       
+    }
+    
+
+    function changeAssociation()
+    {
+        document.getElementById("association_name").innerHTML = document.getElementById("associations").value;
+    }
+    
+    

@@ -27,7 +27,7 @@ class AssociationsTable extends Table
             ])
             ->requirePresence('name')
             ->add('name', 'validFormat', [
-                        'rule' => array('custom', '/^[A-Za-z0-9]+$/'),
+                        'rule' => array('custom', '/[A-Za-z0-9]([A-Za-z0-9]| )+/'),
                         'message' => 'Solo letras y números.'
             ])
             ->notEmpty('location')
