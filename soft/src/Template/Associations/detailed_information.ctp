@@ -1,9 +1,9 @@
 <?php //variables de uso común
 	 
-
 	 $monto_ahorro = $monto_tracto = $caja_fuerte = $caja_chica = $total_gastos = 0;
 
-	$periodo_tracto = "";
+	$periodo_tracto =  "";
+	$association_name = $association[0]['name'];
 	
 	if(!empty($data['box']))
 	{
@@ -26,8 +26,10 @@
 
 <div class="row text-center">
 	<div class="col-xs-12">
-		<h1><?php echo $periodo_tracto;?> </h1>
-		<h2>Facturas</h2>
+		<h1><?php echo $association_name;?> </h1>
+		<h2><?php echo $periodo_tracto;?> </h2>
+		<?php echo "<br>"; ?>
+		<h3><strong>Facturas</strong></h3>
 	</div>
 </div>
 
@@ -186,3 +188,10 @@
 	</div>	
 </div>
 
+<br>
+
+<div class="row text-center">
+  <div class="col-xs-12">
+     <?php echo $this->Html->link('Atrás', '/associations/show_associations/5', ['class'=>'btn btn-primary']);?>
+  </div>
+</div>

@@ -23,7 +23,7 @@ class HeadquartersController extends AppController
 		
 		if($this->request->is('post'))
 		{
-			if(!$this->Headquarters->save($headquarter)) //Guarda los datos
+			if($this->Headquarters->save($headquarter)) //Guarda los datos
 			{
 				$response = "1";
 				

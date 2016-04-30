@@ -28,7 +28,7 @@ class AmountsTable extends Table
             ->notEmpty('deadline')
             ->notEmpty('detail', 'Ingrese el detalle del monto')
             ->add('detail', 'validFormat', [
-                                    'rule' => array('custom', '/[a-zA-Z0-9$%@\-]+$/'),
+                                    'rule' => array('custom', '/[a-zA-Z0-9$.%@\-]+$/'),
                                     'message' => 'Debe contener solamente letras.'
             ])
             ->add('detail', [

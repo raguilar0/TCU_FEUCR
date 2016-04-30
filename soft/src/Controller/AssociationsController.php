@@ -7,6 +7,8 @@ use Cake\ORM\TableRegistry;
 class AssociationsController extends AppController
 {
 
+//TODO: Si se agrega una asociación sin que hayan sedes, muestra el mensaje de que se agregó la asociación. Arreglarlo
+
 	public function view($id = null)
 	{
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
@@ -107,7 +109,7 @@ class AssociationsController extends AppController
 
 			$amounts = $this->Associations->Amounts->find()
 					->hydrate(false)
-					->select(['tract.number','tract.date','tract.deadline','amount','spent'])
+					->select(['tract.number','tract.date','tract.deadline','amount','spent', 'date'])
 					->join([
 						 'table'=>'tracts',
 						 'alias'=>'tract',
@@ -155,31 +157,38 @@ class AssociationsController extends AppController
 
 			$association['headquarter_id'] = $headquarter[0]['id']; //Reemplaza la elección del usuario por el id 
 
-			debug($association->errors());
+
 
 			if($this->Associations->save($association)) //Guarda los date_offset_get()
 			{
 				$response = "1,0";
 
 
+				$asso_id = $this->Associations->find()
+								->hydrate(false)
+								->select(['id'])
+								->order(['id'=>'DESC'])
+								->limit(1);
 
 
+					$asso_id = $asso_id->toArray();
 
-				$asso_id = $asso_id->toArray();
+						$this->loadModel('Tracts');
 
-					$this->loadModel('Tracts');
+						$tract = $this->Tracts->find()
+										->hydrate(false)
+										->select(['id'])
+										->order(['id'=>'DESC'])
+										->limit(1);
 
-					$tract = $this->Tracts->find()
-									->hydrate(false)
-									->select(['id'])
-									->order(['id'=>'DESC'])
-									->limit(1);
-
-					$tract = $tract->toArray();
-
-					$this->request->data['association_id'] = $asso_id[0]['id'];
-					$this->request->data['tract_id'] = $tract[0]['id'];
-					$this->request->data['type'] = $amounts_type[$this->request->data['type']];
+						$tract = $tract->toArray();
+						
+						if(!empty($tract))
+						{
+							$this->request->data['association_id'] = $asso_id[0]['id'];
+							$this->request->data['tract_id'] = $tract[0]['id'];
+							$this->request->data['type'] = $amounts_type[$this->request->data['type']];
+						}
 
 						$amounts = $this->Associations->Amounts->newEntity($this->request->data);
 
@@ -395,6 +404,7 @@ class AssociationsController extends AppController
 
 	public function delete($id = null)
 	{
+		//TODO: Implementar esto hasta que existan facturas
 		if($id)
 		{
 			try
@@ -572,6 +582,14 @@ class AssociationsController extends AppController
 			$amounts = $amounts->toArray();
 
 
+			$association_name = $this->Associations->find()
+								->hydrate(false)
+								->select(['name'])
+								->where(['id'=>$id]);
+
+			$association_name = $association_name->toArray();					
+
+
 
 
 /**
@@ -599,6 +617,7 @@ class AssociationsController extends AppController
 			$information['box'] = $box;
 
 			$this->set('data', $information);
+			$this->set('association', $association_name);			
 		}
 		else
 		{

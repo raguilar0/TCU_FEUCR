@@ -1,7 +1,7 @@
 
 $('#submit1').submit(function(e){
-    //e.preventDefault();
-    //addAssociation();
+    e.preventDefault();
+    addAssociation();
 });
 
 
@@ -28,8 +28,8 @@ $('#submit5').submit(function(e){
 });
 
 $("#submit_add_tract").submit(function(e){
-  //e.preventDefault();
-  //addTract();
+  e.preventDefault();
+  addTract();
 });
 
 
@@ -41,7 +41,7 @@ function addAssociation()
     {   
 
         var array_data = data.split(',');
-        alert(data);
+
 
 
         if(array_data[0] == "1" && array_data[1] == "1")
@@ -73,7 +73,6 @@ function addHeadquarter()
     $.post($("#submit2").attr("action"),$("#submit2").serialize(), 
     function(data, status)
     {
-
 
         if(data == "1")
         {
