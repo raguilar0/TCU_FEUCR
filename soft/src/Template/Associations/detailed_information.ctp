@@ -1,5 +1,40 @@
+<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#tract">Montos de Tracto</a></li>
+  <li><a data-toggle="tab" href="#generated">Ingresos Generados</a></li>
+  <li><a data-toggle="tab" href="#surplus">Superávit</a></li>
+</ul>
+
+
+
+
+
+
+<div class="tab-content">
+  <div id="tract" class="tab-pane fade in active">
+
+<div class="row text-center">
+	<div class="col-xs-12 col-md-6">
+	  <?php
+		echo "<label><h4><strong>Año</strong></h4></label>";
+   		echo "<select class='form-control' id= 'tracts_id' name = 'type' onchange='getAmounts(0,0);'>";
+
+
+
+        foreach ($dates as $key => $value) {
+        	echo $key;
+            echo "<option>".$value['tract']['date']."</option>"."<br>";
+        }
+        
+    	echo "</select>";
+    	?>
+	</div>	
+
+</div>
+
+
 <?php //variables de uso común
 	 
+
 	 $monto_ahorro = $monto_tracto = $caja_fuerte = $caja_chica = $total_gastos = 0;
 
 	$periodo_tracto =  "";
@@ -187,6 +222,99 @@
 		</table>			
 	</div>	
 </div>
+
+
+
+
+
+
+  </div>
+
+
+
+
+
+
+
+
+  <div id="surplus" class="tab-pane fade">
+    <h3>Menu 1</h3>
+    <p>Some content in menu 1.</p>
+  </div>
+  <div id="generated" class="tab-pane fade">
+    <h3>Menu 2</h3>
+    <p>Some content in menu 2.</p>
+  </div>
+</div>
+
+
+
+
+<script>
+$(document).ready( function ()
+    {
+        getAmounts(0,0);
+    });
+
+    function getAmounts(amount_type, box_type)
+    {
+        var xhttp = new XMLHttpRequest();
+    
+        xhttp.onreadystatechange = function()
+        {
+    
+            if(xhttp.readyState == 4 && xhttp.status == 200)
+            {
+            	alert(xhttp.responseText);
+    			/**
+                var html = "";
+                var obj = JSON.parse(xhttp.responseText);
+
+                for(var key in obj)
+                {
+                    html += "<option>"+obj[key].name+"</option>";
+                }
+                
+                
+                document.getElementById("associations").innerHTML = html;
+                
+                changeAssociation();
+                **/
+            }
+            else
+            {
+                if( xhttp.status == 404)
+                {
+    /**
+                   document.getElementById("callback").innerHTML = "Error: Se envió un nombre de sede que no coincide con nuestros registros.";
+                   document.getElementById("callback").style.color = "red";
+                   setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 9000);
+               **/
+                } 
+    
+                
+            }          
+               
+        };
+    
+    	var path = location.pathname;
+
+    	path = path.replace('detailed_information','getAmounts');
+
+    	path = path+"/"+amount_type+"/"+box_type+"/"+document.getElementById("tracts_id").value;
+
+        xhttp.open("GET",path,false);
+        //xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send();
+       
+    }
+</script>
+
+
+
+
+
+
 
 <br>
 

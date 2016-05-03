@@ -565,9 +565,66 @@ class AssociationsController extends AppController
 		if($id)
 		{
 
+
+
+			$tract_dates = $this->Associations->Amounts->find()
+								->hydrate(false)
+								->select(['tract.date','tract.deadline','type','tract.number'])
+								->andwhere(['association_id'=>$id, 'type'=>0])
+								->join([
+									'table'=>'tracts',
+									'alias'=>'tract',
+									'type'=>'RIGHT',
+									'conditions'=>'Amounts.tract_id = tract.id'
+
+									])
+								//->order(['tract.id'=>'DESC', 'Amounts.id'=>'DESC']);
+								//->order(['type'=>'ASC']);
+								->group(['tract.date']);
+								//->limit(1);
+
+			$tract_dates = $tract_dates->toArray();
+
+
+			$this->set('dates',$tract_dates);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+			
+
+			$last_tract = $this->Tracts->find()
+								->hydrate(false)
+								->select(['id'])
+								->order(['id'=>'DESC'])
+								->limit(1);
+
 			$amounts = $this->Associations->Amounts->find()
 								->hydrate(false)
-								->select(['id','amount','spent','tract.date','tract.deadline'])
+								->select(['id','amount','spent','tract.date','tract.deadline','type'])
 								->where(['association_id'=>$id])
 								->join([
 									'table'=>'tracts',
@@ -576,8 +633,9 @@ class AssociationsController extends AppController
 									'conditions'=>'Amounts.tract_id = tract.id'
 
 									])
-								->order(['tract.id'=>'DESC', 'Amounts.id'=>'DESC'])
-								->limit(1);
+								//->order(['tract.id'=>'DESC', 'Amounts.id'=>'DESC']);
+								->order(['tract.id'=>'DESC']);
+								//->limit(1);
 
 			$amounts = $amounts->toArray();
 
@@ -592,17 +650,9 @@ class AssociationsController extends AppController
 
 
 
-/**
-			if(($amounts['amount']))
-			{
-				$amounts = [];
-			}
-
-**/
-
 			$invoices = $this->Associations->Invoices->find()
 						->hydrate(false)
-						->where(['association_id'=>$id]);  //State = 1, aprobada
+						->where(['association_id'=>$id]);  //TODO:State = 1, aprobada
 			$invoices = $invoices->toArray();
 
 			$box = $this->Associations->Boxes->find()
@@ -617,11 +667,73 @@ class AssociationsController extends AppController
 			$information['box'] = $box;
 
 			$this->set('data', $information);
-			$this->set('association', $association_name);			
+			$this->set('association', $association_name);		
+
+
+**/
 		}
 		else
 		{
 			$this->redirect(['action'=>'/']);
 		}
 	}
+
+
+
+	public function getAmounts($association_id = null, $amount_type = null, $box_type = null, $date = null)
+	{
+		$amount = $this->Associations->Amounts->find()
+							->hydrate(false)
+							->select(['tract.number','amount'])
+							->andwhere(['association_id'=>$association_id, 'type'=>$amount_type])
+							->join([
+								'table'=>'tracts',
+								'alias'=>'tract',
+								'type'=>'RIGHT',
+								'conditions'=>'Amounts.tract_id = tract.id and tract.date = '."'".$date."'"
+
+								]);
+							//->order(['tract.id'=>'DESC', 'Amounts.id'=>'DESC']);
+							//->order(['type'=>'ASC']);
+							
+								//->limit(1);
+
+			$amount = $amount->toArray();
+
+
+			$box = $this->Associations->Boxes->find()
+							->hydrate(false)
+							->select(['little_amount','big_amount'])
+							->andwhere(['association_id'=>$association_id, 'type'=>$box_type])
+							->join([
+								'table'=>'tracts',
+								'alias'=>'tract',
+								'type'=>'RIGHT',
+								'conditions'=>'Boxes.tract_id = tract.id and tract.date = '."'".$date."'"
+
+								]);
+
+			$box = $box->toArray();
+			
+
+
+			$information['amount'] = $amount;
+			$information['boxes'] = $box;
+
+			$information = json_encode($information);
+
+
+			die($information);
+	}
+
+
+
+
+
+
+
+
+
+
+
 }

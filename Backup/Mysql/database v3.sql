@@ -74,7 +74,7 @@ CREATE TABLE invoices
   UNIQUE(image_name)
 );
 
-CREATE TABLE boxes
+CREATE TABLE boxes 
 (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   little_amount DOUBLE NOT NULL DEFAULT 0,
