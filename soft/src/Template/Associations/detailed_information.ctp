@@ -41,30 +41,7 @@
 </div>
 
 
-<?php //variables de uso común
-	 
 
-	 $monto_ahorro = $monto_tracto = $caja_fuerte = $caja_chica = $total_gastos = 0;
-
-	$periodo_tracto =  "";
-	
-	if(!empty($data['box']))
-	{
-		$caja_fuerte =  $data['box'][0]['big_amount'];
-		$caja_chica =  $data['box'][0]['little_amount'];
-	}
-
-	if(!empty($data['amounts']))
-	{
-		$periodo_tracto = "Período de Tracto:<br><br> ".$data['amounts'][0]['tract']['date']." - ".$data['amounts'][0]['tract']['deadline'];
-		$monto_ahorro = 0; //TODO: agregar el monto de ahorro
-		$monto_tracto =  $data['amounts'][0]['amount'];
-	}
-
-
-
-
-?>
 <br>
 <br>
 <div class="row text-center">
@@ -118,7 +95,7 @@
 
 <div class="row">
 	<div class="col-xs-12">
-		<?php echo "<strong style='font-size:20px;'>Total: ".$total_gastos."</strong>";?>
+		<?php //echo "<strong style='font-size:20px;'>Total: ".$total_gastos."</strong>";?>
 	</div>
 </div>
 
@@ -143,7 +120,7 @@
 
 			<tr>
 				<th>Monto de Ahorro</th>
-				<td><?php echo $monto_ahorro?></td>
+				<td><?php //echo $monto_ahorro?></td>
 			</tr>
 
 			<tr>
@@ -160,17 +137,17 @@
 		<table class="table table-striped">
 			<tr>
 				<th>Caja Fuerte</th>
-				<td><?php echo $caja_fuerte?></td>
+				<td><?php //echo $caja_fuerte?></td>
 			</tr>
 
 			<tr>
 				<th>Caja Chica</th>
-				<td><?php echo $caja_chica?></td>
+				<td><?php //echo $caja_chica?></td>
 			</tr>
 
 			<tr>
 				<th>Total</th>
-				<td><?php echo ($caja_chica+$caja_fuerte)?></td>
+				<td><?php //echo ($caja_chica+$caja_fuerte)?></td>
 			</tr>
 									
 		</table>		
@@ -187,12 +164,12 @@
 		<table class="table table-striped">
 			<tr>
 				<th>Saldo inicial de cajas</th>
-				<td><?php echo ($caja_fuerte+$caja_chica) ?></td>
+				<td><?php //echo ($caja_fuerte+$caja_chica) ?></td>
 			</tr>
 
 			<tr>
 				<th>Ahorro del período anterior</th>
-				<td><?php echo $monto_ahorro ?></td>
+				<td><?php //echo $monto_ahorro ?></td>
 			</tr>
 
 			<tr>
@@ -217,12 +194,12 @@
 
 			<tr>
 				<th>Total de cajas</th>
-				<td><?php echo ($caja_chica+$caja_fuerte)?></td>
+				<td><?php //echo ($caja_chica+$caja_fuerte)?></td>
 			</tr>
 
 			<tr>
 				<th><u>Cuenta</u></th>
-				<td><?php echo (($caja_fuerte+$caja_chica+$monto_ahorro+$monto_tracto)-$total_gastos)-($caja_chica+$caja_fuerte)?></td>
+				<td><?php// echo (($caja_fuerte+$caja_chica+$monto_ahorro+$monto_tracto)-$total_gastos)-($caja_chica+$caja_fuerte)?></td>
 			</tr>												
 		</table>			
 	</div>	
@@ -243,67 +220,13 @@
 
 
   <div id="surplus" class="tab-pane fade">
-	<div class="row text-center">
-		
-		<div class="col-xs-12 col-md-6 col-md-offset-3">
-		  <?php
-			echo "<label><h4><strong>Elegí el tracto</strong></h4></label>";
-	   		echo "<select class='form-control' id= 'tracts_id' name = 'type' onchange='getAmounts(0,0,0);'>";
-	
-	
-	
-	        foreach ($dates as $key => $value) {
-	        	echo $key;
-	            echo "<option>".$value['tract']['date']."</option>"."<br>";
-	        }
-	        
-	    	echo "</select>";
-	    	?>
-		</div>	
-	
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-  </div>
-  
-  
-  <!--************************************************ INGRESOS GENERADOS ********************** -->
-  <div id="generated" class="tab-pane fade">
   	
-  	
-  	<div class="row text-center">
+<div class="row text-center">
 	
 	<div class="col-xs-12 col-md-6 col-md-offset-3">
 	  <?php
 		echo "<label><h4><strong>Elegí el tracto</strong></h4></label>";
-   		echo "<select class='form-control' id= 'tracts_id' name = 'type' onchange='getAmounts(0,0,0);'>";
+   		echo "<select class='form-control' id= 'tracts_id' name = 'type' onchange='getAmounts(2,2,2);'>";
 
 
 
@@ -376,7 +299,198 @@
 
 <div class="row">
 	<div class="col-xs-12">
-		<?php echo "<strong style='font-size:20px;'>Total: ".$total_gastos."</strong>";?>
+		<?php //echo "<strong style='font-size:20px;'>Total: ".$total_gastos."</strong>";?>
+	</div>
+</div>
+
+<br>
+<hr>
+
+<br>
+<br>
+
+
+
+<div class="row">
+
+	<div class="col-xs-12 text-center">
+		<h3>Cuadro de Ingresos</h3>
+
+		<table class="table table-striped">
+			<tr>
+				<th>Monto de Superávit</th>
+				<td id="tract_amount"></td>
+			</tr>
+
+
+			<tr>
+				<th>Total</th>
+				<td class = "tract_saving_total" ></td>
+			</tr>
+									
+		</table>
+	</div>
+
+
+</div>
+
+<br>
+
+<div class="row">
+	<div class="col-xs-12 text-center">
+		<h3>Estado General del Tracto</h3>
+
+		<table class="table table-striped">
+
+			<tr>
+				<th>Monto Asignado</th>
+				<td class = "tract_saving_total" ></td>
+			</tr>
+				
+
+			<tr>
+				<th>Total de gastos</th>
+				<td id="total_spent"></td>
+			</tr>
+
+			<tr>
+				<th><u>Saldo final</u></th>
+				<td id="final_balance"></td>
+			</tr>
+
+		</table>			
+	</div>	
+</div>
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+  </div>
+  
+  
+  <!--************************************************ INGRESOS GENERADOS ********************** -->
+  <div id="generated" class="tab-pane fade">
+  	
+  	
+  	<div class="row text-center">
+	
+	<div class="col-xs-12 col-md-6 col-md-offset-3">
+	  <?php
+		echo "<label><h4><strong>Elegí el tracto</strong></h4></label>";
+   		echo "<select class='form-control' id= 'tracts_id' name = 'type' onchange='getAmounts(1,1,1);'>";
+
+
+
+        foreach ($dates as $key => $value) {
+        	echo $key;
+            echo "<option>".$value['tract']['date']."</option>"."<br>";
+        }
+        
+    	echo "</select>";
+    	?>
+	</div>	
+
+</div>
+  	
+  	
+  	
+  	
+  	
+  	
+<br>
+<br>
+<div class="row text-center">
+	<div class="col-xs-12">
+		<h3><strong>Facturas</strong></h3>
+	</div>
+</div>
+
+<div class="table-responsive">
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Fecha</th>
+				<th>Número de Factura</th>
+				<th>Detalle</th>
+				<th>Proveedor</th>
+				<th>Monto</th>
+				<th>Encargado</th>
+				<th>Aclaraciones</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<?php
+				/**
+				$invoices = $data['invoices'];
+
+				$counter = 0;
+
+				foreach ($invoices as $key) {
+					echo "<tr>";
+						echo "<td>".$counter."</td>";
+						echo "<td>".$key['date']."</td>";
+						echo "<td>".$key['number']."</td>";
+						echo "<td>".$key['detail']."</td>";
+						echo "<td>".$key['provider']."</td>";
+						echo "<td>".$key['amount']."</td>";
+						echo "<td>".$key['attendant']."</td>";
+						echo "<td>".$key['clarifications']."</td>";
+					echo "</tr>";
+
+					++$counter;
+					$total_gastos = $total_gastos + $key['amount'];
+				}
+			**/
+			?>
+		</tbody>
+	</table>	
+</div>
+
+<div class="row">
+	<div class="col-xs-12">
+		<?php //echo "<strong style='font-size:20px;'>Total: ".$total_gastos."</strong>";?>
 	</div>
 </div>
 
@@ -401,7 +515,7 @@
 
 			<tr>
 				<th>Monto de Ahorro</th>
-				<td><?php echo $monto_ahorro?></td>
+				<td><?php// echo $monto_ahorro?></td>
 			</tr>
 
 			<tr>
@@ -418,17 +532,17 @@
 		<table class="table table-striped">
 			<tr>
 				<th>Caja Fuerte</th>
-				<td><?php echo $caja_fuerte?></td>
+				<td><?php //echo $caja_fuerte?></td>
 			</tr>
 
 			<tr>
 				<th>Caja Chica</th>
-				<td><?php echo $caja_chica?></td>
+				<td><?php //echo $caja_chica?></td>
 			</tr>
 
 			<tr>
 				<th>Total</th>
-				<td><?php echo ($caja_chica+$caja_fuerte)?></td>
+				<td><?php //echo ($caja_chica+$caja_fuerte)?></td>
 			</tr>
 									
 		</table>		
@@ -445,7 +559,7 @@
 		<table class="table table-striped">
 			<tr>
 				<th>Saldo inicial de cajas</th>
-				<td><?php echo ($caja_fuerte+$caja_chica) ?></td>
+				<td><?php //echo ($caja_fuerte+$caja_chica) ?></td>
 			</tr>
 
 
@@ -471,12 +585,12 @@
 
 			<tr>
 				<th>Total de cajas</th>
-				<td><?php echo ($caja_chica+$caja_fuerte)?></td>
+				<td><?php //echo ($caja_chica+$caja_fuerte)?></td>
 			</tr>
 
 			<tr>
 				<th><u>Cuenta de ahorro</u></th>
-				<td><?php echo (($caja_fuerte+$caja_chica+$monto_ahorro+$monto_tracto)-$total_gastos)-($caja_chica+$caja_fuerte)?></td>
+				<td><?php //echo (($caja_fuerte+$caja_chica+$monto_ahorro+$monto_tracto)-$total_gastos)-($caja_chica+$caja_fuerte)?></td>
 			</tr>												
 		</table>			
 	</div>	
@@ -516,6 +630,7 @@ $(document).ready( function ()
     
             if(xhttp.readyState == 4 && xhttp.status == 200)
             {
+
             	setValues(xhttp.responseText);
     			/**
                 var html = "";
@@ -554,7 +669,7 @@ $(document).ready( function ()
 
     	path = path+"/"+amount_type+"/"+box_type+"/"+"/"+invoice_type+"/"+document.getElementById("tracts_id").value;
 
-        xhttp.open("GET",path,false);
+        xhttp.open("GET",path,true);
         //xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send();
        
