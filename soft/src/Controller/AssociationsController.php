@@ -569,7 +569,7 @@ class AssociationsController extends AppController
 
 			$tract_dates = $this->Associations->Amounts->find()
 								->hydrate(false)
-								->select(['tract.date','tract.deadline','type','tract.number'])
+								->select(['tract.date','type','tract.number'])
 								->andwhere(['association_id'=>$id, 'type'=>0])
 								->join([
 									'table'=>'tracts',
@@ -586,8 +586,17 @@ class AssociationsController extends AppController
 			$tract_dates = $tract_dates->toArray();
 
 
-			$this->set('dates',$tract_dates);
+			$association_name = $this->Associations->find()
+								->hydrate(false)
+								->select(['name'])
+								->where(['id'=>$id]);
 
+			$association_name = $association_name->toArray();
+
+
+
+			$this->set('dates',$tract_dates);
+			$this->set('association_name',$association_name);
 
 
 
@@ -680,11 +689,11 @@ class AssociationsController extends AppController
 
 
 
-	public function getAmounts($association_id = null, $amount_type = null, $box_type = null, $date = null)
+	public function getAmounts($association_id = null, $amount_type = null, $box_type = null,$invoice_type = null, $date = null)
 	{
 		$amount = $this->Associations->Amounts->find()
 							->hydrate(false)
-							->select(['tract.number','amount'])
+							->select(['tract.number','amount','spent','tract.deadline'])
 							->andwhere(['association_id'=>$association_id, 'type'=>$amount_type])
 							->join([
 								'table'=>'tracts',
@@ -715,11 +724,24 @@ class AssociationsController extends AppController
 
 			$box = $box->toArray();
 			
+			$invoices = $this->Associations->Invoices->find()
+							->hydrate(false)
+							->andwhere(['association_id'=>$association_id, 'kind'=>$invoice_type])
+							->join([
+								'table'=>'tracts',
+								'alias'=>'tract',
+								'type'=>'RIGHT',
+								'conditions'=>'Invoices.tract_id = tract.id and tract.date = '."'".$date."'"
+
+								]);
+
+			$invoices = $invoices->toArray();
 
 
 			$information['amount'] = $amount;
-			$information['boxes'] = $box;
-
+			//$information['boxes'] = $box;
+			//$information['invoices'] = $invoices;
+			
 			$information = json_encode($information);
 
 

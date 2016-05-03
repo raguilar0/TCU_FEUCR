@@ -58,7 +58,7 @@ CREATE TABLE invoices
   clarifications varchar(2048),
   image_name varchar(256),
   detail varchar(2048),
-  kind INT(1) DEFAULT 0,
+  kind INT(1) DEFAULT 0, --0 = Tracto, 1 = Ingresos generados, 2 = Superavit
   state INT(1) NOT NULL DEFAULT 0,
   date date,
   attendant varchar(100),
