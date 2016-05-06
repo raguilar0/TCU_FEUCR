@@ -1,0 +1,1 @@
+insert into boxes(id,little_amount,big_amount,type,association_id,tract_id) values(1,25000,100000,0,1,1);

@@ -43,6 +43,21 @@ class AmountsController extends AppController
 			if($this->request->is('post'))
 			{
 				
+				if($date[0]['id'] > 1) //TODO: Agregar acá el ahorro del período anterior
+				{
+					$this->loadModel('Boxes');
+
+					$last_amount = $this->Boxes->find()
+									->hydrate(false)
+									->select(['little_amount', 'big_amount'])
+									->andwhere(['tract_id'=>($date[0]['id'] - 1), 'association_id'=>$id, 'type'=>$amounts_type[$this->request->data['type']]]);
+
+					$last_amount = $last_amount->toArray();
+
+					$total = ($last_amount[0]['little_amount'] + $last_amount[0]['big_amount']);
+
+					$amount['initial_amount'] = $total;
+				}	
 				
 				$response = 0;
 				

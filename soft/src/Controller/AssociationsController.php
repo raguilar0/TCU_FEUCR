@@ -693,7 +693,7 @@ class AssociationsController extends AppController
 	{
 		$amount = $this->Associations->Amounts->find()
 							->hydrate(false)
-							->select(['tract.number','amount','spent','tract.deadline'])
+							->select(['tract.number','amount','spent','tract.deadline', 'initial_amount'])
 							->andwhere(['association_id'=>$association_id, 'type'=>$amount_type])
 							->join([
 								'table'=>'tracts',
@@ -739,7 +739,7 @@ class AssociationsController extends AppController
 
 
 			$information['amount'] = $amount;
-			//$information['boxes'] = $box;
+			$information['boxes'] = $box;
 			//$information['invoices'] = $invoices;
 			
 			$information = json_encode($information);

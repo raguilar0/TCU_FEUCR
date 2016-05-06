@@ -137,17 +137,17 @@
 		<table class="table table-striped">
 			<tr>
 				<th>Caja Fuerte</th>
-				<td><?php //echo $caja_fuerte?></td>
+				<td id="big_amount_tract"></td>
 			</tr>
 
 			<tr>
 				<th>Caja Chica</th>
-				<td><?php //echo $caja_chica?></td>
+				<td id="little_amount_tract"></td>
 			</tr>
 
 			<tr>
 				<th>Total</th>
-				<td><?php //echo ($caja_chica+$caja_fuerte)?></td>
+				<td class="boxes_total_tract"></td>
 			</tr>
 									
 		</table>		
@@ -164,7 +164,7 @@
 		<table class="table table-striped">
 			<tr>
 				<th>Saldo inicial de cajas</th>
-				<td><?php //echo ($caja_fuerte+$caja_chica) ?></td>
+				<td id="tract_initial_amount"></td>
 			</tr>
 
 			<tr>
@@ -189,17 +189,17 @@
 
 			<tr>
 				<th><u>Saldo final</u></th>
-				<td id="final_balance"></td>
+				<td id="tract_final_balance"></td>
 			</tr>
 
 			<tr>
 				<th>Total de cajas</th>
-				<td><?php //echo ($caja_chica+$caja_fuerte)?></td>
+				<td class="boxes_total_tract"></td>
 			</tr>
 
 			<tr>
 				<th><u>Cuenta</u></th>
-				<td><?php// echo (($caja_fuerte+$caja_chica+$monto_ahorro+$monto_tracto)-$total_gastos)-($caja_chica+$caja_fuerte)?></td>
+				<td id = "tract_count"></td>
 			</tr>												
 		</table>			
 	</div>	
@@ -679,15 +679,67 @@ $(document).ready( function ()
     {
     	object = JSON.parse(json);
 
-    	document.getElementById("tract_amount").innerHTML = object.amount[0].amount;
-    	var classes = document.getElementsByClassName("tract_saving_total");
-    	classes[0].innerHTML = object.amount[0].amount; //TODO:Hacer la suma del monto de ahorro y el de tracto 
-    	classes[1].innerHTML = object.amount[0].amount; //TODO:Hacer la suma del monto de ahorro y el de tracto 
+
+
+
+    	var total_boxes = 0;
+    	var little_amount_tract = 0;
+    	var big_amount_tract = 0;
+
+    	var boxes_classes = document.getElementsByClassName("boxes_total_tract");
+
+
+    	if(object.boxes.length > 0)
+    	{
+	    	little_amount_tract = object.boxes[0].little_amount;
+	    	big_amount_tract = object.boxes[0].big_amount;
+	    	total_boxes = (object.boxes[0].little_amount + object.boxes[0].big_amount);   		
+    	}
+
+    	boxes_classes[0].innerHTML = total_boxes; 
+    	boxes_classes[1].innerHTML = total_boxes;  
+    	document.getElementById("little_amount_tract").innerHTML = little_amount_tract;
+    	document.getElementById("big_amount_tract").innerHTML = big_amount_tract;
+
+
+//*******************************END BOXES****************************//
+
+		var tract_amount = 0;
+		var tract_saving_total = 0;
+		var total_income = 0;
+		var total_spent = 0;
+		var tract_initial_amount = 0;
+		var final_balance = 0;
+		var tract_final_balance = 0;
+		var tract_count = 0;
+		var date = "";
+
+		if(object.amount.length > 0)
+		{
+			 tract_amount = object.amount[0].amount;
+			 tract_saving_total = object.amount[0].amount;
+			 total_income = (object.amount[0].initial_amount + object.amount[0].amount); 
+			 total_spent = object.amount[0].spent;
+			 tract_initial_amount = object.amount[0].initial_amount;
+			 tract_final_balance = ((object.amount[0].initial_amount + object.amount[0].amount) - object.amount[0].spent);
+			 tract_count = (tract_final_balance - total_boxes);
+			 date = "Periodo del tracto: <br><br>"+document.getElementById("tracts_id").value + " - " +object.amount[0].tract.deadline+"<br><br>";			
+		}
+
+		amount_classes = document.getElementsByClassName("tract_saving_total");
+    	document.getElementById("tract_amount").innerHTML = tract_amount;
     	
-    	document.getElementById("tract_date").innerHTML = "Periodo del tracto: <br><br>"+document.getElementById("tracts_id").value + " - " +object.amount[0].tract.deadline+"<br><br>";
-    	document.getElementById("total_income").innerHTML = object.amount[0].amount; //TODO: Sumar el saldo incial de cajas y el monto de ahorro
-    	document.getElementById("total_spent").innerHTML = object.amount[0].spent;
-    	document.getElementById("final_balance").innerHTML = (object.amount[0].amount - object.amount[0].spent); //TODO: El amount no es el correcto, lo correcto es sumar el ahorro, las cajas y el ingreso de tracto
+    	amount_classes[0].innerHTML =  tract_amount; //TODO:Hacer la suma del monto de ahorro y el de tracto 
+    	amount_classes[1].innerHTML =  tract_amount ; //TODO:Hacer la suma del monto de ahorro y el de tracto 
+    	
+    	document.getElementById("tract_date").innerHTML = date;
+    	document.getElementById("total_income").innerHTML = total_income;//TODO: Sumar el saldo incial de cajas y el monto de ahorro
+    	document.getElementById("total_spent").innerHTML = total_spent;
+    	document.getElementById("tract_initial_amount").innerHTML = tract_initial_amount;
+ 
+    	document.getElementById("tract_final_balance").innerHTML =  tract_final_balance; //TODO: El amount no es el correcto, lo correcto es sumar el ahorro, las cajas y el ingreso de tracto
+
+    	document.getElementById("tract_count").innerHTML = tract_count;
     }
 </script>
 

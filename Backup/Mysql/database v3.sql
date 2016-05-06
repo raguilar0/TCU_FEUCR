@@ -38,6 +38,7 @@ CREATE TABLE amounts
 (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   amount DOUBLE NOT NULL,
+  initial_amount DOUBLE DEFAULT 0,
   date date NOT NULL,
   spent DOUBLE NOT NULL DEFAULT 0,
   detail varchar(2048) NOT NULL,
