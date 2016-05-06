@@ -31,7 +31,7 @@ class AmountsController extends AppController
 
 		$date = $this->Tracts->find() //Se trae el ultimo tracto
 						->hydrate(false)
-						->select(['date', 'deadline','id'])
+						->select(['date', 'deadline','id', 'number'])
 						->order(['id'=>'DESC'])
 						->limit(1);
 
@@ -42,8 +42,14 @@ class AmountsController extends AppController
 
 			if($this->request->is('post'))
 			{
+
+				$little_amount = 0;
+				$big_amount = 0;
+				$type = $amounts_type[$this->request->data['type']];
+				$tract_id = $date[0]['id'];
 				
-				if($date[0]['id'] > 1) //TODO: Agregar acá el ahorro del período anterior
+				
+				if(($date[0]['id'] > 1) && ($date[0]['number'] < 4)) //TODO: Agregar acá el ahorro del período anterior
 				{
 					$this->loadModel('Boxes');
 
@@ -57,8 +63,25 @@ class AmountsController extends AppController
 					$total = ($last_amount[0]['little_amount'] + $last_amount[0]['big_amount']);
 
 					$amount['initial_amount'] = $total;
+
+					//*****************Seteamos los variables con los valores correspondientes ***///////
+
+					$little_amount = $last_amount[0]['little_amount'];
+					$big_amount = $last_amount[0]['big_amount'];
+
+
 				}	
 				
+
+				//*****************Guardamos la caja del período actual ***///////
+
+				if($this->createBoxes($little_amount, $big_amount, $tract_id,$id,$type))
+				{
+
+				}
+
+
+
 				$response = 0;
 				
 				$amount['association_id'] = $id;
@@ -115,6 +138,27 @@ class AmountsController extends AppController
 
 	}
 
+	private function createBoxes($little_amount, $big_amount, $tract_id, $association_id, $type)
+	{
+		$this->loadModel("Boxes");
+
+		$data['little_amount'] = $little_amount;
+		$data['big_amount'] = $big_amount;
+		$data['tract_id'] = $tract_id;
+		$data['association_id'] = $association_id;
+		$data['type'] = $type;
+
+		$boxes = $this->Boxes->newEntity($data);
+
+		$success = false;
+
+		if($this->Boxes->save($boxes))
+		{
+			$success = true;
+		}
+
+		return $success;
+	}
 
 	public function getAssociations($headquarter_name)
 	{

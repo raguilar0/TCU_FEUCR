@@ -594,7 +594,6 @@ class AssociationsController extends AppController
 			$association_name = $association_name->toArray();
 
 
-
 			$this->set('dates',$tract_dates);
 			$this->set('association_name',$association_name);
 
