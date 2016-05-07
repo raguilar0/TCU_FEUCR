@@ -1,7 +1,7 @@
 <ul class="nav nav-tabs">
-  <li class="active"><a data-toggle="tab" href="#tract">Montos de Tracto</a></li>
-  <li><a data-toggle="tab" href="#generated">Ingresos Generados</a></li>
-  <li><a data-toggle="tab" href="#surplus">Superávit</a></li>
+  <li class="active"><a data-toggle="tab" href="#tract" onclick="getAmounts(0,0,0, document.getElementById('tracts_id'));">Montos de Tracto</a></li>
+  <li><a data-toggle="tab" href="#generated" onclick="getAmounts(1,1,1,document.getElementById('generated_id'));">Ingresos Generados</a></li>
+  <li><a data-toggle="tab" href="#surplus" onclick="getAmounts(2,2,2,document.getElementById('surplus_id'));">Superávit</a></li>
 </ul>
 
 
@@ -25,7 +25,7 @@
 	<div class="col-xs-12 col-md-6 col-md-offset-3">
 	  <?php
 		echo "<label><h4><strong>Elegí el tracto</strong></h4></label>";
-   		echo "<select class='form-control' id= 'tracts_id' name = 'type' onchange='getAmounts(0,0,0);'>";
+   		echo "<select class='form-control' id= 'tracts_id' name = 'type' onchange='getAmounts(0,0,0,this);'>";
 
 
 
@@ -65,37 +65,15 @@
 			</tr>
 		</thead>
 
-		<tbody>
-			<?php
-				/**
-				$invoices = $data['invoices'];
+		<tbody id="tract_invoices">
 
-				$counter = 0;
-
-				foreach ($invoices as $key) {
-					echo "<tr>";
-						echo "<td>".$counter."</td>";
-						echo "<td>".$key['date']."</td>";
-						echo "<td>".$key['number']."</td>";
-						echo "<td>".$key['detail']."</td>";
-						echo "<td>".$key['provider']."</td>";
-						echo "<td>".$key['amount']."</td>";
-						echo "<td>".$key['attendant']."</td>";
-						echo "<td>".$key['clarifications']."</td>";
-					echo "</tr>";
-
-					++$counter;
-					$total_gastos = $total_gastos + $key['amount'];
-				}
-			**/
-			?>
 		</tbody>
 	</table>	
 </div>
 
 <div class="row">
-	<div class="col-xs-12">
-		<?php //echo "<strong style='font-size:20px;'>Total: ".$total_gastos."</strong>";?>
+	<div class="col-xs-12" id="tract_invoices_total">
+		
 	</div>
 </div>
 
@@ -226,7 +204,7 @@
 	<div class="col-xs-12 col-md-6 col-md-offset-3">
 	  <?php
 		echo "<label><h4><strong>Elegí el tracto</strong></h4></label>";
-   		echo "<select class='form-control' id= 'tracts_id' name = 'type' onchange='getAmounts(2,2,2);'>";
+   		echo "<select class='form-control' id= 'surplus_id' name = 'type' onchange='getAmounts(2,2,2,this);'>";
 
 
 
@@ -269,37 +247,16 @@
 			</tr>
 		</thead>
 
-		<tbody>
-			<?php
-				/**
-				$invoices = $data['invoices'];
+		<tbody id="surplus_invoices">
 
-				$counter = 0;
-
-				foreach ($invoices as $key) {
-					echo "<tr>";
-						echo "<td>".$counter."</td>";
-						echo "<td>".$key['date']."</td>";
-						echo "<td>".$key['number']."</td>";
-						echo "<td>".$key['detail']."</td>";
-						echo "<td>".$key['provider']."</td>";
-						echo "<td>".$key['amount']."</td>";
-						echo "<td>".$key['attendant']."</td>";
-						echo "<td>".$key['clarifications']."</td>";
-					echo "</tr>";
-
-					++$counter;
-					$total_gastos = $total_gastos + $key['amount'];
-				}
-			**/
-			?>
+			
 		</tbody>
 	</table>	
 </div>
 
 <div class="row">
-	<div class="col-xs-12">
-		<?php //echo "<strong style='font-size:20px;'>Total: ".$total_gastos."</strong>";?>
+	<div class="col-xs-12" id="surplus_total_invoices">
+		
 	</div>
 </div>
 
@@ -319,13 +276,13 @@
 		<table class="table table-striped">
 			<tr>
 				<th>Monto de Superávit</th>
-				<td id="tract_amount"></td>
+				<td class="surplus_amount"></td>
 			</tr>
 
 
 			<tr>
 				<th>Total</th>
-				<td class = "tract_saving_total" ></td>
+				<td class = "surplus_amount" ></td>
 			</tr>
 									
 		</table>
@@ -338,24 +295,24 @@
 
 <div class="row">
 	<div class="col-xs-12 text-center">
-		<h3>Estado General del Tracto</h3>
+		<h3>Estado General</h3>
 
 		<table class="table table-striped">
 
 			<tr>
 				<th>Monto Asignado</th>
-				<td class = "tract_saving_total" ></td>
+				<td class = "surplus_amount" ></td>
 			</tr>
 				
 
 			<tr>
 				<th>Total de gastos</th>
-				<td id="total_spent"></td>
+				<td id="surplus_total_spent"></td>
 			</tr>
 
 			<tr>
 				<th><u>Saldo final</u></th>
-				<td id="final_balance"></td>
+				<td id="surplus_final_balance"></td>
 			</tr>
 
 		</table>			
@@ -363,49 +320,8 @@
 </div>
   	
   	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-  </div>
+
+</div>
   
   
   <!--************************************************ INGRESOS GENERADOS ********************** -->
@@ -417,7 +333,7 @@
 	<div class="col-xs-12 col-md-6 col-md-offset-3">
 	  <?php
 		echo "<label><h4><strong>Elegí el tracto</strong></h4></label>";
-   		echo "<select class='form-control' id= 'tracts_id' name = 'type' onchange='getAmounts(1,1,1);'>";
+   		echo "<select class='form-control' id= 'generated_id' name = 'type' onchange='getAmounts(1,1,1,this);'>";
 
 
 
@@ -460,37 +376,15 @@
 			</tr>
 		</thead>
 
-		<tbody>
-			<?php
-				/**
-				$invoices = $data['invoices'];
+		<tbody id="generated_invoices">
 
-				$counter = 0;
-
-				foreach ($invoices as $key) {
-					echo "<tr>";
-						echo "<td>".$counter."</td>";
-						echo "<td>".$key['date']."</td>";
-						echo "<td>".$key['number']."</td>";
-						echo "<td>".$key['detail']."</td>";
-						echo "<td>".$key['provider']."</td>";
-						echo "<td>".$key['amount']."</td>";
-						echo "<td>".$key['attendant']."</td>";
-						echo "<td>".$key['clarifications']."</td>";
-					echo "</tr>";
-
-					++$counter;
-					$total_gastos = $total_gastos + $key['amount'];
-				}
-			**/
-			?>
 		</tbody>
 	</table>	
 </div>
 
 <div class="row">
-	<div class="col-xs-12">
-		<?php //echo "<strong style='font-size:20px;'>Total: ".$total_gastos."</strong>";?>
+	<div class="col-xs-12" id="generated_invoices_total">
+
 	</div>
 </div>
 
@@ -507,24 +401,30 @@
 	<div class="col-xs-12 col-md-6 text-center">
 		<h3>Cuadro de Ingresos</h3>
 
-		<table class="table table-striped">
-			<tr>
-				<th>Monto de Tracto</th>
-				<td id="tract_amount"></td>
-			</tr>
+		<div class="table-responsive">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Fecha</th>
+						<th>Detalle</th>
+						<th>Monto</th>
+					</tr>
+				</thead>
 
-			<tr>
-				<th>Monto de Ahorro</th>
-				<td><?php// echo $monto_ahorro?></td>
-			</tr>
+				<tbody id="generated_incomes">
 
-			<tr>
-				<th>Total</th>
-				<td class = "tract_saving_total" ></td>
-			</tr>
-									
-		</table>
+				</tbody>
+			</table>
+
+		</div>
+		
+		<div class="generated_amount">
+			
+		</div>
+
 	</div>
+
 
 	<div class="col-xs-12 col-md-6 text-center">
 		<h3>Cajas</h3>
@@ -532,17 +432,17 @@
 		<table class="table table-striped">
 			<tr>
 				<th>Caja Fuerte</th>
-				<td><?php //echo $caja_fuerte?></td>
+				<td id="generated_big_amount"></td>
 			</tr>
 
 			<tr>
 				<th>Caja Chica</th>
-				<td><?php //echo $caja_chica?></td>
+				<td id="generated_little_amount"></td>
 			</tr>
 
 			<tr>
 				<th>Total</th>
-				<td><?php //echo ($caja_chica+$caja_fuerte)?></td>
+				<td class="generated_total_boxes"></td>
 			</tr>
 									
 		</table>		
@@ -559,38 +459,38 @@
 		<table class="table table-striped">
 			<tr>
 				<th>Saldo inicial de cajas</th>
-				<td><?php //echo ($caja_fuerte+$caja_chica) ?></td>
+				<td id="generated_initial_amount"></td>
 			</tr>
 
 
 			<tr>
 				<th>Ingresos del período</th>
-				<td class = "tract_saving_total" ></td>
+				<td class="generated_amount"></td>
 			</tr>
 				
 			<tr>
 				<th><u>Total de ingresos</u></th>
-				<td id = "total_income"></td>
+				<td id = "generated_total_income"></td>
 			</tr>
 
 			<tr>
 				<th>Total de gastos</th>
-				<td id="total_spent"></td>
+				<td id="generated_total_spent"></td>
 			</tr>
 
 			<tr>
 				<th><u>Saldo final</u></th>
-				<td id="final_balance"></td>
+				<td id="generated_final_balance"></td>
 			</tr>
 
 			<tr>
 				<th>Total de cajas</th>
-				<td><?php //echo ($caja_chica+$caja_fuerte)?></td>
+				<td class="generated_total_boxes"></td>
 			</tr>
 
 			<tr>
 				<th><u>Cuenta de ahorro</u></th>
-				<td><?php //echo (($caja_fuerte+$caja_chica+$monto_ahorro+$monto_tracto)-$total_gastos)-($caja_chica+$caja_fuerte)?></td>
+				<td id="generated_saving_count"></td>
 			</tr>												
 		</table>			
 	</div>	
@@ -618,10 +518,10 @@
 <script>
 $(document).ready( function ()
     {
-        getAmounts(0,0,0);
+        getAmounts(0,0,0, document.getElementById("tracts_id"));
     });
 
-    function getAmounts(amount_type, box_type, invoice_type)
+    function getAmounts(amount_type, box_type, invoice_type, object)
     {
         var xhttp = new XMLHttpRequest();
     
@@ -630,32 +530,27 @@ $(document).ready( function ()
     
             if(xhttp.readyState == 4 && xhttp.status == 200)
             {
+            	switch(amount_type)
+            	{
+            		case 0:
+            			setTractValues(xhttp.responseText);
+            		break;
 
-            	setValues(xhttp.responseText);
-    			/**
-                var html = "";
-                var obj = JSON.parse(xhttp.responseText);
+            		case 1:
+            			setGeneratedValues(xhttp.responseText);
+            		break;
 
-                for(var key in obj)
-                {
-                    html += "<option>"+obj[key].name+"</option>";
-                }
-                
-                
-                document.getElementById("associations").innerHTML = html;
-                
-                changeAssociation();
-                **/
+            		case 2:
+            			setSurplusValues(xhttp.responseText);
+            		break;            		            		
+            	}
+            	
             }
             else
             {
                 if( xhttp.status == 404)
                 {
-    /**
-                   document.getElementById("callback").innerHTML = "Error: Se envió un nombre de sede que no coincide con nuestros registros.";
-                   document.getElementById("callback").style.color = "red";
-                   setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 9000);
-               **/
+
                 } 
     
                 
@@ -667,7 +562,7 @@ $(document).ready( function ()
 
     	path = path.replace('detailed_information','getAmounts');
 
-    	path = path+"/"+amount_type+"/"+box_type+"/"+"/"+invoice_type+"/"+document.getElementById("tracts_id").value;
+    	path = path+"/"+amount_type+"/"+box_type+"/"+invoice_type+"/"+object.value;
 
         xhttp.open("GET",path,true);
         //xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -675,8 +570,9 @@ $(document).ready( function ()
        
     }
     
-    function setValues(json)
+    function setTractValues(json)
     {
+
     	object = JSON.parse(json);
 
 
@@ -704,27 +600,73 @@ $(document).ready( function ()
 
 //*******************************END BOXES****************************//
 
+
+    	var invoices_length = object.invoices.length;
+    	var html = "";
+    	var invoices_total = 0;
+    	var total_message = "";
+
+    	if(invoices_length > 0)
+    	{
+    		
+
+    		for(i = 0; i < invoices_length; ++i)
+    		{
+    			html+="<tr>";
+
+    			html+="<td>"+(i+1)+"</td>";
+    			html+="<td>"+(object.invoices[i].date.split("T"))[0]+"</td>";
+    			html+="<td>"+object.invoices[i].number+"</td>";
+				html+="<td>"+object.invoices[i].detail+"</td>";
+				html+="<td>"+object.invoices[i].provider+"</td>";
+				html+="<td>"+object.invoices[i].amount+"</td>";
+				html+="<td>"+object.invoices[i].attendant+"</td>";
+				html+="<td>"+object.invoices[i].clarifications+"</td>";
+
+    			html+="</tr>";
+
+    			invoices_total += object.invoices[i].amount;
+    		}
+
+
+    		total_message = "<h4>Total: "+invoices_total+"</h4>";
+    		
+    	}
+
+    	document.getElementById("tract_invoices_total").innerHTML = total_message;
+		document.getElementById("tract_invoices").innerHTML = html;
+
+
+
+
+//*********************** END INVOICES *************************//
+
 		var tract_amount = 0;
 		var tract_saving_total = 0;
 		var total_income = 0;
-		var total_spent = 0;
 		var tract_initial_amount = 0;
 		var final_balance = 0;
 		var tract_final_balance = 0;
 		var tract_count = 0;
 		var date = "";
 
+		if(object.initial_amount.length > 0)
+		{
+ 			tract_initial_amount = object.initial_amount[0].amount;
+		}	
+
 		if(object.amount.length > 0)
 		{
 			 tract_amount = object.amount[0].amount;
 			 tract_saving_total = object.amount[0].amount;
-			 total_income = (object.amount[0].initial_amount + object.amount[0].amount); 
-			 total_spent = object.amount[0].spent;
-			 tract_initial_amount = object.amount[0].initial_amount;
-			 tract_final_balance = ((object.amount[0].initial_amount + object.amount[0].amount) - object.amount[0].spent);
+			 total_income = (tract_initial_amount + tract_amount); 
+			
+			 tract_final_balance = ((tract_initial_amount + tract_amount ) - invoices_total);
 			 tract_count = (tract_final_balance - total_boxes);
 			 date = "Periodo del tracto: <br><br>"+document.getElementById("tracts_id").value + " - " +object.amount[0].tract.deadline+"<br><br>";			
 		}
+
+	
 
 		amount_classes = document.getElementsByClassName("tract_saving_total");
     	document.getElementById("tract_amount").innerHTML = tract_amount;
@@ -734,13 +676,256 @@ $(document).ready( function ()
     	
     	document.getElementById("tract_date").innerHTML = date;
     	document.getElementById("total_income").innerHTML = total_income;//TODO: Sumar el saldo incial de cajas y el monto de ahorro
-    	document.getElementById("total_spent").innerHTML = total_spent;
+    	document.getElementById("total_spent").innerHTML = invoices_total;
     	document.getElementById("tract_initial_amount").innerHTML = tract_initial_amount;
  
     	document.getElementById("tract_final_balance").innerHTML =  tract_final_balance; //TODO: El amount no es el correcto, lo correcto es sumar el ahorro, las cajas y el ingreso de tracto
 
     	document.getElementById("tract_count").innerHTML = tract_count;
+
+
     }
+
+
+
+
+
+
+  function setGeneratedValues(json)
+{
+
+	object = JSON.parse(json);
+
+
+
+
+    var total_boxes = 0;
+    var little_amount_generated = 0;
+    var big_amount_generated = 0;
+
+    var boxes_classes = document.getElementsByClassName("generated_total_boxes");
+
+
+    if(object.boxes.length > 0)
+    {
+        little_amount_generated = object.boxes[0].little_amount;
+        big_amount_generated = object.boxes[0].big_amount;
+        total_boxes = (object.boxes[0].little_amount + object.boxes[0].big_amount);         
+    }
+
+    boxes_classes[0].innerHTML = total_boxes; 
+    boxes_classes[1].innerHTML = total_boxes;  
+    document.getElementById("generated_little_amount").innerHTML = little_amount_generated;
+    document.getElementById("generated_big_amount").innerHTML = big_amount_generated;
+
+
+//*******************************END BOXES****************************//
+
+    var invoices_length = object.invoices.length;
+    var html = "";
+    var invoices_total = 0;
+    var total_message = "";
+
+    if(invoices_length > 0)
+    {
+        
+
+        for(i = 0; i < invoices_length; ++i)
+        {
+            html+="<tr>";
+
+            html+="<td>"+(i+1)+"</td>";
+            html+="<td>"+(object.invoices[i].date.split("T"))[0]+"</td>";
+            html+="<td>"+object.invoices[i].number+"</td>";
+            html+="<td>"+object.invoices[i].detail+"</td>";
+            html+="<td>"+object.invoices[i].provider+"</td>";
+            html+="<td>"+object.invoices[i].amount+"</td>";
+            html+="<td>"+object.invoices[i].attendant+"</td>";
+            html+="<td>"+object.invoices[i].clarifications+"</td>";
+
+            html+="</tr>";
+
+            invoices_total += object.invoices[i].amount;
+        }
+
+
+        total_message = "<h4>Total: "+invoices_total+"</h4>";
+        
+    }
+
+    document.getElementById("generated_invoices_total").innerHTML = total_message;
+    document.getElementById("generated_invoices").innerHTML = html;
+
+//**************************** END INVOICES **********************//
+
+    amount_classes = document.getElementsByClassName("generated_amount");
+    
+    html = "";
+    var incomes_total = 0;
+    total_message = "";
+    var incomes_length = object.amount.length;;
+
+    if(incomes_total > 0)
+    {
+        for(i = 0; i < incomes_length; ++i)
+        {
+            html+="<tr>";
+
+            html+="<td>"+(i+1)+"</td>";
+            html+="<td>"+(object.amounts[i].date.split("T"))[0]+"</td>";
+            html+="<td>"+object.amounts[i].detail+"</td>";
+            html+="<td>"+object.amounts[i].amount+"</td>";
+
+            html+="</tr>";
+
+            incomes_total += object.invoices[i].amount;
+        }
+
+
+        total_message = "<h4>Total: "+incomes_total+"</h4>";
+    }
+
+    amount_classes[0].innerHTML = total_message;
+    document.getElementById("generated_incomes").innerHTML = html;
+
+//****************************** END INCOMES **************************//
+
+
+    var generated_initial_amount = 0;
+
+    var generated_final_balance = 0;
+
+    var date = "";
+
+    if(object.initial_amount > 0)
+    {
+        generated_initial_amount = object.amount[0].initial_amount;
+
+    }
+
+    if(object.amount.length > 0)
+    {
+         generated_final_balance = ((incomes_total + generated_initial_amount) - invoices_total);         
+         date = "Periodo del tracto: <br><br>"+document.getElementById("tracts_id").value + " - " +object.amount[0].tract.deadline+"<br><br>";          
+    }
+
+
+    amount_classes[1].innerHTML =  incomes_total; 
+ 
+    
+    document.getElementById("tract_date").innerHTML = date;
+    document.getElementById("generated_total_income").innerHTML = incomes_total;
+    document.getElementById("generated_total_spent").innerHTML = invoices_total;
+    document.getElementById("generated_initial_amount").innerHTML = generated_initial_amount;
+
+    document.getElementById("generated_final_balance").innerHTML =  generated_final_balance; //TODO: El amount no es el correcto, lo correcto es sumar el ahorro, las cajas y el ingreso de tracto
+
+    document.getElementById("generated_saving_count").innerHTML = 0; //TODO:Agregar una nueva tabla para la cuenta de ahorro de las asociaciones
+
+
+
+
+    /************************** END AMOUNTS ********************************************************/
+
+
+}
+
+
+
+function setSurplusValues(json)
+{
+	
+	object = JSON.parse(json);
+
+
+
+	var invoices_length = object.invoices.length;
+	var html = "";
+	var invoices_total = 0;
+	var total_message = "";
+
+	if(invoices_length > 0)
+	{
+		
+
+		for(i = 0; i < invoices_length; ++i)
+		{
+			html+="<tr>";
+
+			html+="<td>"+(i+1)+"</td>";
+			html+="<td>"+(object.invoices[i].date.split("T"))[0]+"</td>";
+			html+="<td>"+object.invoices[i].number+"</td>";
+			html+="<td>"+object.invoices[i].detail+"</td>";
+			html+="<td>"+object.invoices[i].provider+"</td>";
+			html+="<td>"+object.invoices[i].amount+"</td>";
+			html+="<td>"+object.invoices[i].attendant+"</td>";
+			html+="<td>"+object.invoices[i].clarifications+"</td>";
+
+			html+="</tr>";
+
+			invoices_total += object.invoices[i].amount;
+		}
+
+
+		total_message = "<h4>Total: "+invoices_total+"</h4>";
+		
+	}
+
+	document.getElementById("surplus_total_invoices").innerHTML = total_message;
+	document.getElementById("surplus_invoices").innerHTML = html;
+
+//******************* END INVOICES **********************///
+
+
+	var surplus_amount = 0;
+	var surplus_final_balance = 0;
+	var date = "";
+
+	if(object.amount.length > 0)
+	{
+		 surplus_amount = object.amount[0].amount;
+		 
+
+		 surplus_final_balance = (surplus_amount - invoices_total);
+
+		 date = "Periodo del tracto: <br><br>"+document.getElementById("tracts_id").value + " - " +object.amount[0].tract.deadline+"<br><br>";			
+	}
+
+	amount_classes = document.getElementsByClassName("surplus_amount");
+
+	
+	amount_classes[0].innerHTML =  surplus_amount; 
+	amount_classes[1].innerHTML =  surplus_amount ; 
+	amount_classes[2].innerHTML =  surplus_amount ; 
+	
+	document.getElementById("tract_date").innerHTML = date;
+	document.getElementById("surplus_total_spent").innerHTML = invoices_total;
+	document.getElementById("surplus_final_balance").innerHTML =  surplus_final_balance; 
+
+
+
+
+
+	/************************** END AMOUNTS ********************************************************/
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </script>
 
 

@@ -109,7 +109,7 @@ class AssociationsController extends AppController
 
 			$amounts = $this->Associations->Amounts->find()
 					->hydrate(false)
-					->select(['tract.number','tract.date','tract.deadline','amount','spent', 'date'])
+					->select(['tract.number','tract.date','tract.deadline','amount', 'date'])
 					->join([
 						 'table'=>'tracts',
 						 'alias'=>'tract',
@@ -570,7 +570,7 @@ class AssociationsController extends AppController
 			$tract_dates = $this->Associations->Amounts->find()
 								->hydrate(false)
 								->select(['tract.date','type','tract.number'])
-								->andwhere(['association_id'=>$id, 'type'=>0])
+								->where(['association_id'=>$id])
 								->join([
 									'table'=>'tracts',
 									'alias'=>'tract',
@@ -598,87 +598,6 @@ class AssociationsController extends AppController
 			$this->set('association_name',$association_name);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/**
-			
-
-			$last_tract = $this->Tracts->find()
-								->hydrate(false)
-								->select(['id'])
-								->order(['id'=>'DESC'])
-								->limit(1);
-
-			$amounts = $this->Associations->Amounts->find()
-								->hydrate(false)
-								->select(['id','amount','spent','tract.date','tract.deadline','type'])
-								->where(['association_id'=>$id])
-								->join([
-									'table'=>'tracts',
-									'alias'=>'tract',
-									'type'=>'RIGHT',
-									'conditions'=>'Amounts.tract_id = tract.id'
-
-									])
-								//->order(['tract.id'=>'DESC', 'Amounts.id'=>'DESC']);
-								->order(['tract.id'=>'DESC']);
-								//->limit(1);
-
-			$amounts = $amounts->toArray();
-
-
-			$association_name = $this->Associations->find()
-								->hydrate(false)
-								->select(['name'])
-								->where(['id'=>$id]);
-
-			$association_name = $association_name->toArray();					
-
-
-
-
-			$invoices = $this->Associations->Invoices->find()
-						->hydrate(false)
-						->where(['association_id'=>$id]);  //TODO:State = 1, aprobada
-			$invoices = $invoices->toArray();
-
-			$box = $this->Associations->Boxes->find()
-					->hydrate(false)
-					->select(['little_amount','big_amount'])
-					->where(['association_id'=>$id]);
-
-			$box = $box->toArray();
-
-			$information['amounts'] = $amounts;
-			$information['invoices'] = $invoices;
-			$information['box'] = $box;
-
-			$this->set('data', $information);
-			$this->set('association', $association_name);		
-
-
-**/
 		}
 		else
 		{
@@ -692,7 +611,7 @@ class AssociationsController extends AppController
 	{
 		$amount = $this->Associations->Amounts->find()
 							->hydrate(false)
-							->select(['tract.number','amount','spent','tract.deadline', 'initial_amount'])
+							->select(['tract.number','amount','tract.deadline'])
 							->andwhere(['association_id'=>$association_id, 'type'=>$amount_type])
 							->join([
 								'table'=>'tracts',
@@ -701,10 +620,6 @@ class AssociationsController extends AppController
 								'conditions'=>'Amounts.tract_id = tract.id and tract.date = '."'".$date."'"
 
 								]);
-							//->order(['tract.id'=>'DESC', 'Amounts.id'=>'DESC']);
-							//->order(['type'=>'ASC']);
-							
-								//->limit(1);
 
 			$amount = $amount->toArray();
 
@@ -722,10 +637,28 @@ class AssociationsController extends AppController
 								]);
 
 			$box = $box->toArray();
+
+
+
+			$initial_amount = $this->Associations->InitialAmounts->find()
+							->hydrate(false)
+							->select(['amount'])
+							->andwhere(['association_id'=>$association_id, 'type'=>$amount_type])
+							->join([
+								'table'=>'tracts',
+								'alias'=>'tract',
+								'type'=>'RIGHT',
+								'conditions'=>'InitialAmounts.tract_id = tract.id and tract.date = '."'".$date."'"
+
+								]);
+
+			$initial_amount = $initial_amount->toArray();
+
 			
 			$invoices = $this->Associations->Invoices->find()
 							->hydrate(false)
-							->andwhere(['association_id'=>$association_id, 'kind'=>$invoice_type])
+							->select(['date','number','detail','provider','amount','attendant','clarifications'])
+							->andwhere(['association_id'=>$association_id, 'kind'=>$invoice_type, 'state'=>1])
 							->join([
 								'table'=>'tracts',
 								'alias'=>'tract',
@@ -739,8 +672,9 @@ class AssociationsController extends AppController
 
 			$information['amount'] = $amount;
 			$information['boxes'] = $box;
-			//$information['invoices'] = $invoices;
-			
+			$information['invoices'] = $invoices;
+			$information['initial_amount'] = $initial_amount;
+
 			$information = json_encode($information);
 
 

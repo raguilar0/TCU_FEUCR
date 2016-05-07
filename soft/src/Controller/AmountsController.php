@@ -48,8 +48,8 @@ class AmountsController extends AppController
 				$type = $amounts_type[$this->request->data['type']];
 				$tract_id = $date[0]['id'];
 				
-				
-				if(($date[0]['id'] > 1) && ($date[0]['number'] < 4)) //TODO: Agregar acá el ahorro del período anterior
+
+				if(($date[0]['id'] > 1) && ($date[0]['number'] < 4) && ($type == 0)) //TODO: Agregar acá el ahorro del período anterior
 				{
 					$this->loadModel('Boxes');
 
@@ -62,7 +62,10 @@ class AmountsController extends AppController
 
 					$total = ($last_amount[0]['little_amount'] + $last_amount[0]['big_amount']);
 
-					$amount['initial_amount'] = $total;
+					if($this->createInitialAmounts($total, $tract_id, $id, $type))
+					{
+
+					}
 
 					//*****************Seteamos los variables con los valores correspondientes ***///////
 
@@ -75,7 +78,7 @@ class AmountsController extends AppController
 
 				//*****************Guardamos la caja del período actual ***///////
 
-				if($this->createBoxes($little_amount, $big_amount, $tract_id,$id,$type))
+				if(($type == 0) && $this->createBoxes($little_amount, $big_amount, $tract_id,$id,$type))
 				{
 
 				}
@@ -136,6 +139,27 @@ class AmountsController extends AppController
 			}
 		
 
+	}
+
+	private function createInitialAmounts($amount, $tract_id, $association_id, $type)
+	{
+		$this->loadModel("InitialAmounts");
+
+		$data['amount'] = $amount;
+		$data['tract_id'] = $tract_id;
+		$data['association_id'] = $association_id;
+		$data['type'] = $type;
+
+		$initial_amounts = $this->InitialAmounts->newEntity($data);
+
+		$success = false;
+
+		if($this->InitialAmounts->save($initial_amounts))
+		{
+			$success = true;
+		}
+
+		return $success;
 	}
 
 	private function createBoxes($little_amount, $big_amount, $tract_id, $association_id, $type)
