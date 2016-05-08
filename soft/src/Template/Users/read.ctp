@@ -30,7 +30,7 @@
               echo "<td>".$key['name']."</td>";
               echo "<td>".$key['last_name_1']."</td>";
               echo "<td>".$key['last_name_2']."</td>";
-							echo "<td>".$this->Form->button('',['type'=>'button' ,'data-toggle'=>'collapse', 'data-target'=>'#modify_users', 'class'=>'glyphicon glyphicon-pencil btn btn-primary collapsed', 'id'=>'modifyUsersBtn'])."</td>";
+							//echo "<td>".$this->Form->button('',['type'=>'button' ,'data-toggle'=>'collapse', 'data-target'=>'#modify_users', 'class'=>'glyphicon glyphicon-pencil btn btn-primary collapsed', 'id'=>'modifyUsersBtn'])."</td>";
              echo "</tr>";
           }
       ?>

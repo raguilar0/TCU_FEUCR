@@ -102,13 +102,24 @@ class UsersController extends AppController
 
           $association_id = $association_id->toArray();
 
-          $this->request->data['association_id'] = $association_id;
+          $this->request->data['association_id'] = $association_id[0]['id'];
 
-          //$this->request->data['role'] = $role[$this->request->data['role']];
+          $role = $this->request->data['role'];
 
+          debug($role);
+
+          if($this->request->data['role'] == 'Administrador'){
+              $this->request->data['role'] = 'admin';
+          }
+          if($this->request->data['role'] == 'Representante'){
+              $this->request->data['role'] = 'rep';
+          }
+
+          debug($this->request->data['role']);
 
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
+              debug($this->request->data);
                 $this->Flash->success(__('El usuario ha sido agregado.'));
                 return $this->redirect(['action' => 'add']);
             }
@@ -122,8 +133,18 @@ class UsersController extends AppController
         $this->set('user', $user);
     }
 
-    public function modify()
+    public function modify($id)
     {
+      $this->viewBuilder()->layout('admin_views');
+      $this->loadModel('Associations');
+      $this->loadModel('Users');
+      $user = $this->Users->find()
+                          ->where(['association_id'=>$id]);
+      $this->set('user',$user);
+
+
+
+
 
     }
 

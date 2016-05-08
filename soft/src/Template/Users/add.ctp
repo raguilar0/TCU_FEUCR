@@ -27,7 +27,8 @@ echo "<div class='form-group' id=form_login>";
           echo "</select>";
       echo "</div>";
     echo "</div>";
-/*
+
+
     echo "<div class = 'col-xs-6 col-md-4'>";
     echo "<label for='sel1' id = 'role_label'><h4>Rol:</h4></label>";
        echo "<select class='form-control' name = 'role'>";
@@ -38,7 +39,7 @@ echo "<div class='form-group' id=form_login>";
             }
         echo "</select>";
     echo "</div>";
-*/
+
 
   echo "</div>";
 echo "</div>";
