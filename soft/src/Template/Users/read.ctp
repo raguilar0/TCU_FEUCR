@@ -25,7 +25,6 @@
       <?php
           foreach ($data as $key) {
              echo "<tr>";
-              echo "<td>".$key['id']."</td>";
               echo "<td>".$key['username']."</td>";
               echo "<td>".$key['name']."</td>";
               echo "<td>".$key['last_name_1']."</td>";

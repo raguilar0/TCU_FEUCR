@@ -78,12 +78,15 @@ class UsersController extends AppController
 
     public function read($id)
     {
-      $this->viewBuilder()->layout('admin_views');
-      $user = $this->Users->find()
-      ->where(['association_id'=>$id]);
-      $this->set('data',$user);
+      $role = $this->request->session()->read('Auth.User.role');
+      debug($this->request->session()->read('Auth.User.role'));
 
+        $this->viewBuilder()->layout('admin_views');
+        $user = $this->Users->find()
+        ->where(['association_id'=>$id]);
+        $this->set('data',$user);
     }
+
 
     public function add()
     {
@@ -136,12 +139,12 @@ class UsersController extends AppController
     public function modify($id)
     {
       $this->viewBuilder()->layout('admin_views');
-      $this->loadModel('Associations');
-      $this->loadModel('Users');
-      $user = $this->Users->find()
-                          ->where(['association_id'=>$id]);
-      $this->set('user',$user);
+      if($id){
 
+        $user = $this->Users->find()
+                            ->where(['association_id'=>$id]);
+        $this->set('user',$user);
+      }
 
 
 

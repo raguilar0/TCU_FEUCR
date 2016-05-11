@@ -24,10 +24,8 @@
   <tbody>
 
       <?php
-			echo $this->Form->create(null,['url'=>[ 'controller'=>'users','action'=>'verify'], 'id'=>'submit4']);
           foreach ($user as $key) {
              echo "<tr>";
-              echo "<td>".$key['id']."</td>";
               echo "<td>".$key['username']."</td>";
               echo "<td>".$key['name']."</td>";
               echo "<td>".$key['last_name_1']."</td>";
@@ -46,7 +44,7 @@
   <br><br>
 
   <?php
-  echo $this->Form->create(null,['url'=>[ 'controller'=>'users','action'=>'verify']]);
+  echo $this->Form->create($user,['url'=>[ 'controller'=>'users','action'=>'verify']]);
   echo "<div class='form-group'>";
     echo "<h4>".$this->Form->input('username', ['class' => 'form-control','label'=>'Nombre de usuario', 'maxlength'=> '50', 'id'=>'users_username'])."</h4>";
     echo "<h4>".$this->Form->input('name', ['class' => 'form-control', 'label'=>'Nombre', 'maxlength'=> '30', 'id'=>'users_name'])."</h4>";
