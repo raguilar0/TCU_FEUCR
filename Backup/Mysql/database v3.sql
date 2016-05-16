@@ -24,6 +24,14 @@ CREATE TABLE associations
 
 );
 
+CREATE TABLE surpluses(
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  amount DOUBLE NOT NULL,
+  date date NOT NULL,
+  detail varchar(2048) NOT NULL,
+  association_id INT UNSIGNED NOT NULL
+);
+
 CREATE TABLE tracts
 (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
