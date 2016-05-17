@@ -694,9 +694,8 @@ $(document).ready( function ()
   function setGeneratedValues(json)
 {
 
+	alert(json);
 	object = JSON.parse(json);
-
-
 
 
     var total_boxes = 0;
@@ -765,20 +764,20 @@ $(document).ready( function ()
     total_message = "";
     var incomes_length = object.amount.length;;
 
-    if(incomes_total > 0)
+    if(incomes_length > 0)
     {
         for(i = 0; i < incomes_length; ++i)
         {
             html+="<tr>";
 
             html+="<td>"+(i+1)+"</td>";
-            html+="<td>"+(object.amounts[i].date.split("T"))[0]+"</td>";
-            html+="<td>"+object.amounts[i].detail+"</td>";
-            html+="<td>"+object.amounts[i].amount+"</td>";
+            html+="<td>"+(object.amount[i].date.split("T"))[0]+"</td>";
+            html+="<td>"+object.amount[i].detail+"</td>";
+            html+="<td>"+object.amount[i].amount+"</td>";
 
             html+="</tr>";
 
-            incomes_total += object.invoices[i].amount;
+            incomes_total += object.amount[i].amount;
         }
 
 

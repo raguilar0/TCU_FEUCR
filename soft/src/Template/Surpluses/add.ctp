@@ -48,7 +48,7 @@ echo $this->Form->create($surplus);
 
 <div class="row text-right">
     <div class="col-xs-12">
-        <h4 id="callback" style="color:#01DF01"></h4>   
+        <h4 id="callback" style="color:#01DF01"><?= $this->Flash->render('addSurplus') ?></h4>   
     </div>
 
 </div>
@@ -58,9 +58,7 @@ echo $this->Form->create($surplus);
 
 <div class="row text-center">
   <div class="col-xs-12">
-     <?= $this->Flash->render('addSurplus') ?>   
-  
-     <?php echo $this->Html->link('Atrás', '/associations', ['class'=>'btn btn-primary']);?>
+     <?php echo $this->Html->link('Atrás', '/surpluses/show_associations/1', ['class'=>'btn btn-primary']);?>
   </div>
 </div>
 

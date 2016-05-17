@@ -51,6 +51,7 @@
                   <ul class="dropdown-menu">
                       <li><?php echo $this->Html->link('Agregar Nuevo Tracto', '/tracts/add');?></li>                  
                       <li><?php echo $this->Html->link('Agregar Montos', '/amounts/add');?></li>
+                      <li><?php echo $this->Html->link('Agregar Superávit', '/surpluses/show_associations/1');?></li>
 
                       <li><?php echo $this->Html->link('Ver Montos Detallados', '/associations/show_associations/5');?></li>
               </ul>

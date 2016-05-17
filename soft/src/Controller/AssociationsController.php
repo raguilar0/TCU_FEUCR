@@ -609,9 +609,11 @@ class AssociationsController extends AppController
 
 	public function getAmounts($association_id = null, $amount_type = null, $box_type = null,$invoice_type = null, $date = null)
 	{
-		$amount = $this->Associations->Amounts->find()
+		if($amount_type != 2)
+		{
+			$amount = $this->Associations->Amounts->find()
 							->hydrate(false)
-							->select(['tract.number','amount','tract.deadline'])
+							->select(['tract.number','amount','tract.deadline', 'date', 'detail'])
 							->andwhere(['association_id'=>$association_id, 'type'=>$amount_type])
 							->join([
 								'table'=>'tracts',
@@ -653,6 +655,21 @@ class AssociationsController extends AppController
 								]);
 
 			$initial_amount = $initial_amount->toArray();
+
+		}
+		else
+		{
+			//TODO: Filtrar para que solo me dé el superávit de cierta fecha
+
+			$amount = $this->Associations->Surpluses->find()
+							->hydrate(false)
+							->select(['amount'])
+							->where(['association_id'=>$association_id]);
+
+
+			$amount = $amount->toArray();	
+		}
+
 
 			
 			$invoices = $this->Associations->Invoices->find()
