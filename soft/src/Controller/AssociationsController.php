@@ -656,6 +656,10 @@ class AssociationsController extends AppController
 
 			$initial_amount = $initial_amount->toArray();
 
+
+			$information['boxes'] = $box;
+			$information['initial_amount'] = $initial_amount;
+
 		}
 		else
 		{
@@ -688,9 +692,9 @@ class AssociationsController extends AppController
 
 
 			$information['amount'] = $amount;
-			$information['boxes'] = $box;
+			
 			$information['invoices'] = $invoices;
-			$information['initial_amount'] = $initial_amount;
+			
 
 			$information = json_encode($information);
 

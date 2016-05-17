@@ -833,7 +833,7 @@ $(document).ready( function ()
 
 function setSurplusValues(json)
 {
-	
+	alert(json);
 	object = JSON.parse(json);
 
 
