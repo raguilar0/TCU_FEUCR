@@ -422,7 +422,7 @@ class AssociationsController extends AppController
 	public function generalInformation($id = null) {
 		$this->viewBuilder()->layout('associations_view'); //Se deja este hasta mientras se haga el de representante
 
-		$id = 1;
+		$id = $this->request->session()->read('Auth.User.association_id');
 		if($id) {
 			$association = $this->Associations->get($id);
 

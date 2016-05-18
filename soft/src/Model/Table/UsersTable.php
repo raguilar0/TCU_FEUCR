@@ -8,6 +8,14 @@ use Cake\Validation\Validator;
 
 class UsersTable extends Table
 {
+    public function initialize(array $config)
+    {
+        $this->addBehavior('Timestamp');
+        $this->belongsTo('Associations');
+        $this->hasMany('Amounts');
+    
+    }
+
 
     public function validationDefault(Validator $validator)
     {
