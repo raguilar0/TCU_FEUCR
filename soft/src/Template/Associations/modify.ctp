@@ -51,7 +51,7 @@
 
 
 
-    echo "<h4>".$this->Form->input('location', ['class' => 'form-control','label'=>'Localización','value'=>$data['location'], 'maxlength'=> '1024'])."</h4>";
+    echo "<h4>".$this->Form->input('location', ['class' => 'form-control','label'=>'Dirección','value'=>$data['location'], 'maxlength'=> '1024'])."</h4>";
 
     echo "<h4>".$this->Form->input('schedule', ['class' => 'form-control','label'=>'Horario','value'=>$data['schedule'], 'maxlength'=>'512'])."</h4>";
 
@@ -71,7 +71,7 @@
     echo "</div>";
 
 
-
+/**
 if(!is_null($data['amounts'])) //En caso de que no se le haya asignado aún un monto, esta información no se despliega
 {
     echo "<div class = 'row'>";
@@ -114,7 +114,7 @@ echo "<div class='collapse' id='form_amounts'>";
 
 
 echo "</div>";
-
+**/
 
 
 
@@ -163,7 +163,7 @@ echo "</div>";
 
         //echo "<h4>".$this->Form->submit('Guardar Sede', ['class' => 'form-control', 'id' => 'sede_id'])."</h4>";
 
-        echo "<div class='row'>";
+        echo "<div class='row text-center'>";
             echo "<div class = 'col-xs-12 col-md-6'>";
                 echo "<h4>".$this->Form->submit('Actualizar', ['class' => 'form-control btn btn-primary', 'id' => 'sede_update_id_btn', 'onclick'=>'modifyHeadquarter()'])."</h4>";
             echo "</div>";
