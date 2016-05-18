@@ -225,10 +225,10 @@ return [
              * the following line and set the port accordingly
              */
             //'port' => 'non_standard_port_number',
+
             'username' => 'sql3114688',
             'password' => '9KUJFT3TWD',
             'database' => 'sql3114688',
-            'port' => '3306',
             'encoding' => 'utf8',
             'timezone' => 'UTC',
             'flags' => [],

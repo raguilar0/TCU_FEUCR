@@ -1,3 +1,13 @@
+CREATE TABLE headquarters
+(
+  id INT(10) UNSIGNED AUTO_INCREMENT,
+  name varchar(100),
+  image_name varchar(100),
+  primary key(id)
+
+);
+
+
 CREATE TABLE associations
 (
   id INT UNSIGNED AUTO_INCREMENT,

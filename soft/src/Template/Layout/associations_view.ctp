@@ -44,7 +44,15 @@
 
               <li>
                 <?php echo $this->Html->link('Información General', '/associations/general_information');?>
-              </li>              
+              </li>            
+               
+              <li>
+                  <?php echo $this->Html->link('Agregar Usuario', '/users/add_user');?>
+              </li>
+
+              <li>
+                  <?php echo $this->Html->link('Perfil', '/users/perfil');?>
+              </li> 
 
           </ul>
           </div>
