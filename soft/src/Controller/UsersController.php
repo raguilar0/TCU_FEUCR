@@ -17,6 +17,7 @@ class UsersController extends AppController
 
      public function index()
      {
+
        $this->viewBuilder()->layout('admin_views');
         $this->set('users', $this->Users->find('all'));
     }
@@ -106,7 +107,7 @@ class UsersController extends AppController
           $association_id = $association_id->toArray();
 
           $this->request->data['association_id'] = $association_id[0]['id'];
-
+/*
           $role = $this->request->data['role'];
 
           debug($role);
@@ -119,7 +120,7 @@ class UsersController extends AppController
           }
 
           debug($this->request->data['role']);
-
+*/
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
               debug($this->request->data);
@@ -165,7 +166,13 @@ class UsersController extends AppController
                 $user = $this->Auth->identify();
                 if ($user) {
                     $this->Auth->setUser($user);
+
+                    if(($this->request->session()->read('Auth.User.role')) == 'admin'){
                     return $this->redirect($this->Auth->redirectUrl("/associations/"));
+                  }
+                  else{
+                    //return $this->redirect($this->Auth->redirectUrl("//"));
+                  }
                 }
                 $this->Flash->error(__('Nombre de usuario o contraseña invalidos, intentelo de nuevo.'));
             }

@@ -13,7 +13,6 @@
   <table class="table read_association">
   <thead>
     <tr>
-      <th>ID</th>
       <th>Nombre de Usuario</th>
       <th>Nombre</th>
       <th>Primer Apellido</th>
@@ -32,6 +31,7 @@
               echo "<td>".$key['last_name_2']."</td>";
 							echo "<td>".$key['role']."</td>";
 							echo "<td>".$this->Form->button('',['type'=>'button' ,'data-toggle'=>'collapse', 'data-target'=>'#modify_users', 'class'=>'glyphicon glyphicon-pencil btn btn-primary collapsed', 'id'=>'modifyUsersBtn'])."</td>";
+							echo "<td>".$this->Form->button('',['type'=>'button' ,'data-toggle'=>'collapse', 'data-target'=>'#modify_users', 'class'=>'btn btn-danger collapsed', 'id'=>'BlockUsersBtn'])."</td>";
              echo "</tr>";
           }
       ?>
