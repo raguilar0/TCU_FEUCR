@@ -1,0 +1,48 @@
+[29-Apr-2016 18:13:56 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ']' in /home/ubuntu/workspace/FEUCR/soft/src/Controller/AmountsController.php on line 51
+[29-Apr-2016 18:13:56 UTC] PHP Stack trace:
+[29-Apr-2016 18:13:56 UTC] PHP   1. {main}() /home/ubuntu/workspace/FEUCR/soft/webroot/index.php:0
+[29-Apr-2016 18:13:56 UTC] PHP   2. Cake\Routing\Dispatcher->dispatch() /home/ubuntu/workspace/FEUCR/soft/webroot/index.php:37
+[29-Apr-2016 18:13:56 UTC] PHP   3. Cake\Routing\Dispatcher->dispatchEvent() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Routing/Dispatcher.php:62
+[29-Apr-2016 18:13:56 UTC] PHP   4. Cake\Event\EventManager->dispatch() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Event/EventDispatcherTrait.php:78
+[29-Apr-2016 18:13:56 UTC] PHP   5. Cake\Event\EventManager->_callListener() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Event/EventManager.php:356
+[29-Apr-2016 18:13:56 UTC] PHP   6. Cake\Routing\DispatcherFilter->handle() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Event/EventManager.php:390
+[29-Apr-2016 18:13:56 UTC] PHP   7. Cake\Routing\Filter\ControllerFactoryFilter->beforeDispatch() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Routing/DispatcherFilter.php:145
+[29-Apr-2016 18:13:56 UTC] PHP   8. Cake\Routing\Filter\ControllerFactoryFilter->_getController() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Routing/Filter/ControllerFactoryFilter.php:51
+[29-Apr-2016 18:13:56 UTC] PHP   9. Cake\Core\App::className() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Routing/Filter/ControllerFactoryFilter.php:91
+[29-Apr-2016 18:13:56 UTC] PHP  10. Cake\Core\App::_classExistsInBase() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Core/App.php:64
+[29-Apr-2016 18:13:56 UTC] PHP  11. class_exists() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Core/App.php:151
+[29-Apr-2016 18:13:56 UTC] PHP  12. spl_autoload_call() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Core/App.php:151
+[29-Apr-2016 18:13:56 UTC] PHP  13. Composer\Autoload\ClassLoader->loadClass() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Core/App.php:151
+[29-Apr-2016 18:13:56 UTC] PHP  14. Composer\Autoload\includeFile() /home/ubuntu/workspace/FEUCR/soft/vendor/composer/ClassLoader.php:301
+[29-Apr-2016 19:53:11 UTC] PHP Fatal error:  Call to a member function toArray() on a non-object in /home/ubuntu/workspace/FEUCR/soft/src/Controller/AssociationsController.php on line 166
+[29-Apr-2016 19:53:11 UTC] PHP Stack trace:
+[29-Apr-2016 19:53:11 UTC] PHP   1. {main}() /home/ubuntu/workspace/FEUCR/soft/webroot/index.php:0
+[29-Apr-2016 19:53:11 UTC] PHP   2. Cake\Routing\Dispatcher->dispatch() /home/ubuntu/workspace/FEUCR/soft/webroot/index.php:37
+[29-Apr-2016 19:53:11 UTC] PHP   3. Cake\Routing\Dispatcher->_invoke() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Routing/Dispatcher.php:87
+[29-Apr-2016 19:53:11 UTC] PHP   4. Cake\Controller\Controller->invokeAction() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Routing/Dispatcher.php:114
+[29-Apr-2016 19:53:11 UTC] PHP   5. call_user_func_array:{/home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Controller/Controller.php:429}() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Controller/Controller.php:429
+[29-Apr-2016 19:53:11 UTC] PHP   6. App\Controller\AssociationsController->add() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Controller/Controller.php:429
+[29-Apr-2016 19:54:58 UTC] PHP Fatal error:  Call to a member function toArray() on a non-object in /home/ubuntu/workspace/FEUCR/soft/src/Controller/AssociationsController.php on line 166
+[29-Apr-2016 19:54:58 UTC] PHP Stack trace:
+[29-Apr-2016 19:54:58 UTC] PHP   1. {main}() /home/ubuntu/workspace/FEUCR/soft/webroot/index.php:0
+[29-Apr-2016 19:54:58 UTC] PHP   2. Cake\Routing\Dispatcher->dispatch() /home/ubuntu/workspace/FEUCR/soft/webroot/index.php:37
+[29-Apr-2016 19:54:58 UTC] PHP   3. Cake\Routing\Dispatcher->_invoke() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Routing/Dispatcher.php:87
+[29-Apr-2016 19:54:58 UTC] PHP   4. Cake\Controller\Controller->invokeAction() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Routing/Dispatcher.php:114
+[29-Apr-2016 19:54:58 UTC] PHP   5. call_user_func_array:{/home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Controller/Controller.php:429}() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Controller/Controller.php:429
+[29-Apr-2016 19:54:58 UTC] PHP   6. App\Controller\AssociationsController->add() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Controller/Controller.php:429
+[29-Apr-2016 19:58:40 UTC] PHP Fatal error:  Call to a member function toArray() on a non-object in /home/ubuntu/workspace/FEUCR/soft/src/Controller/AssociationsController.php on line 166
+[29-Apr-2016 19:58:40 UTC] PHP Stack trace:
+[29-Apr-2016 19:58:40 UTC] PHP   1. {main}() /home/ubuntu/workspace/FEUCR/soft/webroot/index.php:0
+[29-Apr-2016 19:58:40 UTC] PHP   2. Cake\Routing\Dispatcher->dispatch() /home/ubuntu/workspace/FEUCR/soft/webroot/index.php:37
+[29-Apr-2016 19:58:40 UTC] PHP   3. Cake\Routing\Dispatcher->_invoke() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Routing/Dispatcher.php:87
+[29-Apr-2016 19:58:40 UTC] PHP   4. Cake\Controller\Controller->invokeAction() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Routing/Dispatcher.php:114
+[29-Apr-2016 19:58:40 UTC] PHP   5. call_user_func_array:{/home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Controller/Controller.php:429}() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Controller/Controller.php:429
+[29-Apr-2016 19:58:40 UTC] PHP   6. App\Controller\AssociationsController->add() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Controller/Controller.php:429
+[29-Apr-2016 20:03:57 UTC] PHP Fatal error:  Call to a member function toArray() on a non-object in /home/ubuntu/workspace/FEUCR/soft/src/Controller/AssociationsController.php on line 166
+[29-Apr-2016 20:03:57 UTC] PHP Stack trace:
+[29-Apr-2016 20:03:57 UTC] PHP   1. {main}() /home/ubuntu/workspace/FEUCR/soft/webroot/index.php:0
+[29-Apr-2016 20:03:57 UTC] PHP   2. Cake\Routing\Dispatcher->dispatch() /home/ubuntu/workspace/FEUCR/soft/webroot/index.php:37
+[29-Apr-2016 20:03:57 UTC] PHP   3. Cake\Routing\Dispatcher->_invoke() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Routing/Dispatcher.php:87
+[29-Apr-2016 20:03:57 UTC] PHP   4. Cake\Controller\Controller->invokeAction() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Routing/Dispatcher.php:114
+[29-Apr-2016 20:03:57 UTC] PHP   5. call_user_func_array:{/home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Controller/Controller.php:429}() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Controller/Controller.php:429
+[29-Apr-2016 20:03:57 UTC] PHP   6. App\Controller\AssociationsController->add() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Controller/Controller.php:429

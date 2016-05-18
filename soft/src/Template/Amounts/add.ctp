@@ -1,6 +1,6 @@
 <div class="row text-center">
     <div class="col-xs-12">
-        <h1><?php echo $amount['association']['name']. " (".$amount['association']['acronym'].")";?></h1>  
+        <h1 id="association_name"></h1>  
 
 
         <h3><?php
@@ -22,6 +22,53 @@
 
 
 <br>
+<br>
+
+
+<div class="row text-center">
+    <?php
+        if(!empty($amount['date']))
+        {
+            echo "<div class = 'col-xs-12 col-md-5'>";
+        
+            echo "<label><h4><strong>Sedes</strong></h4></label>";
+               echo "<select class='form-control' id= 'headquarter_id' name = 'type' onchange='getAssociations();'>";
+        
+        
+        
+                    foreach ($head as $key => $value) {
+                        echo "<option>".$value['name']."</option>"."<br>";
+                    }
+                    
+                echo "</select>";
+            echo "</div>";
+            
+            
+            
+            echo "<div class = 'col-xs-12 col-md-7'>";
+        
+            echo "<label><h4><strong>Asociaciones</strong></h4></label>";
+               echo "<select class='form-control' name = 'type' id = 'associations' onchange = 'changeAssociation();'>";
+
+                    
+                echo "</select>";
+            echo "</div>"; 
+        }
+            
+        
+    ?>
+    
+    
+    
+</div>
+
+
+<br>
+<br>
+<br>
+<br>
+
+
 
 <?php
 
@@ -54,7 +101,9 @@ if(!empty($amount['date']))
                 echo "</div>";
 
                 echo "<div class = 'col-xs-12 col-md-4'>"; 
-                echo "<h4>".$this->Form->input('date', ['class' => 'form-control', 'label'=>'Fecha'])."</h4>";
+                //echo "<h4>".$this->Form->input('date', ['class' => 'form-control date', 'label'=>'Fecha', 'id'=>'date'])."</h4>";
+                echo "<h4><label for='date'> Fecha</label>"."<br><input name='date' type='date' id= 'date' class='form-control date' required>"."</h4>";
+
                 echo "</div>";                                
 
             echo "</div>";
@@ -92,6 +141,7 @@ if(!empty($amount['date']))
 
 <div class="row text-center">
   <div class="col-xs-12">
-     <?php echo $this->Html->link('Atrás', '/amounts/show_associations', ['class'=>'btn btn-primary']);?>
+     <?php echo $this->Html->link('Atrás', '/associations', ['class'=>'btn btn-primary']);?>
   </div>
 </div>
+

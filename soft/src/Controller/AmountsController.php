@@ -24,43 +24,69 @@ class AmountsController extends AppController
 
 	public function add($id = null)
 	{
-		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
+		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vist
 		
 
+		$this->loadModel('Tracts');
+
+		$date = $this->Tracts->find() //Se trae el ultimo tracto
+						->hydrate(false)
+						->select(['date', 'deadline','id', 'number'])
+						->order(['id'=>'DESC'])
+						->limit(1);
+
+		$date = $date->toArray();
 		
-		if($id)
-		{
-
-
-			$amounts_type = array('Tracto'=> 0, 'Superávit' => 2);
-
-			$this->loadModel('Tracts');
-
-			$date = $this->Tracts->find()
-							->hydrate(false)
-							->select(['date', 'deadline','id'])
-							->order(['id'=>'DESC'])
-							->limit(1);
-
-			$date = $date->toArray();	
-
-			$amount = $this->Amounts->newEntity($this->request->data); //El parámetro es para validar los datos
-
-			$association_name = $this->Amounts->Associations->find()
-								->hydrate(false)
-								->select(['name','acronym'])							
-								->where(['id'=>$id]);
-
-			$association_name = $association_name->toArray();
-
-			$amount['association'] = $association_name[0];
-
-		
-			$response = 0;
-
+		$amounts_type = array('Tracto'=> 0, 'Superávit' => 2);
+		$amount = $this->Amounts->newEntity($this->request->data); //El parámetro es para validar los datos
 
 			if($this->request->is('post'))
 			{
+
+				$little_amount = 0;
+				$big_amount = 0;
+				$type = $amounts_type[$this->request->data['type']];
+				$tract_id = $date[0]['id'];
+				
+
+				if(($date[0]['id'] > 1) && ($date[0]['number'] < 4) && ($type == 0)) //TODO: Agregar acá el ahorro del período anterior
+				{
+					$this->loadModel('Boxes');
+
+					$last_amount = $this->Boxes->find()
+									->hydrate(false)
+									->select(['little_amount', 'big_amount'])
+									->andwhere(['tract_id'=>($date[0]['id'] - 1), 'association_id'=>$id, 'type'=>$amounts_type[$this->request->data['type']]]);
+
+					$last_amount = $last_amount->toArray();
+
+					$total = ($last_amount[0]['little_amount'] + $last_amount[0]['big_amount']);
+
+					if($this->createInitialAmounts($total, $tract_id, $id, $type))
+					{
+
+					}
+
+					//*****************Seteamos los variables con los valores correspondientes ***///////
+
+					$little_amount = $last_amount[0]['little_amount'];
+					$big_amount = $last_amount[0]['big_amount'];
+
+
+				}	
+				
+
+				//*****************Guardamos la caja del período actual ***///////
+
+				if(($type == 0) && $this->createBoxes($little_amount, $big_amount, $tract_id,$id,$type))
+				{
+
+				}
+
+
+
+				$response = 0;
+				
 				$amount['association_id'] = $id;
 				$amount['tract_id'] = $date[0]['id'];
 				$amount['type'] = $amounts_type[$this->request->data['type']];
@@ -77,18 +103,129 @@ class AmountsController extends AppController
 			{
 		
 		
+						
+	/********************* Get Headquarters ****************************************/
+	
+				$query = $this->Amounts->Associations->Headquarters->find() //Se trae solo las sedes que tienen alguna asocicación asociada :p
+						->hydrate(false)
+						->select(['Headquarters.name'])
+						->join([
+							 'table'=>'associations',
+							 'alias'=>'a',
+							 'type' => 'RIGHT',
+							 'conditions'=>'Headquarters.id = a.headquarter_id',
+							])
+						->where(['a.enable'=>1])
+						->group(['Headquarters.name']); //Elimina repetidos
+	
+	
+				$headquarters = $query->toArray();
+	
+	
+	/************************ End Get Headquarters**********************************/
+				
+			
+				
+	
+				
+
+		
 				$amount['amounts_type'] = $amounts_type;
 				
-				$amount['date'] = $date;			
+				$amount['date'] = $date;	
+				
+				$this->set('amount',$amount);
+				$this->set('head',$headquarters);
 			}
-		}
-
-		$this->set('amount',$amount);
+		
 
 	}
 
+	private function createInitialAmounts($amount, $tract_id, $association_id, $type)
+	{
+		$this->loadModel("InitialAmounts");
+
+		$data['amount'] = $amount;
+		$data['tract_id'] = $tract_id;
+		$data['association_id'] = $association_id;
+		$data['type'] = $type;
+
+		$initial_amounts = $this->InitialAmounts->newEntity($data);
+
+		$success = false;
+
+		if($this->InitialAmounts->save($initial_amounts))
+		{
+			$success = true;
+		}
+
+		return $success;
+	}
+
+	private function createBoxes($little_amount, $big_amount, $tract_id, $association_id, $type)
+	{
+		$this->loadModel("Boxes");
+
+		$data['little_amount'] = $little_amount;
+		$data['big_amount'] = $big_amount;
+		$data['tract_id'] = $tract_id;
+		$data['association_id'] = $association_id;
+		$data['type'] = $type;
+
+		$boxes = $this->Boxes->newEntity($data);
+
+		$success = false;
+
+		if($this->Boxes->save($boxes))
+		{
+			$success = true;
+		}
+
+		return $success;
+	}
+
+	public function getAssociations($headquarter_name)
+	{
+
+		if($this->request->is("GET"))
+		{
+			$headquarter_id = $this->Amounts->Associations->Headquarters->find() //Se busca primero el id de esa sede por medio del nombre
+									->hydrate(false)
+									->select(['id'])
+									->where(['name'=>$headquarter_name]);
+									
+			$headquarter_id = $headquarter_id->toArray();
+			
+			
+			$associations = $this->Amounts->Associations->find() //Se obtienen los nombres de las asociaciones con el id recuperado
+							->hydrate(false)
+							->select(['name'])
+							->where(['headquarter_id'=>$headquarter_id[0]['id']]);
+							
+			$associations = $associations->toArray();
+			
+			$associations = json_encode($associations);
+
+			die($associations);
+		}
+
+		
+	}
 
 
+	public function getAssociationId($association_name)
+	{
+			$association_id = $this->Amounts->Associations->find() //Se busca primero el id de esa sede por medio del nombre
+									->hydrate(false)
+									->select(['id'])
+									->where(['name'=>$association_name]);
+									
+			$association_id = $association_id->toArray();
+
+			$association_id = json_encode($association_id);
+
+			die($association_id);
+	}
 
 	public function edit($amount_id)
 	{
@@ -113,7 +250,8 @@ class AmountsController extends AppController
 						 'type' => 'RIGHT',
 						 'conditions'=>'Headquarters.id = a.headquarter_id',
 						])
-					->where(['a.enable'=>1]);
+					->where(['a.enable'=>1])
+					->order(['Headquarters.name']);
 
 
 			$query = $query->toArray();

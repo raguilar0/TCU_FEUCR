@@ -24,6 +24,14 @@ CREATE TABLE associations
 
 );
 
+CREATE TABLE surpluses(
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  amount DOUBLE NOT NULL,
+  date date NOT NULL,
+  detail varchar(2048) NOT NULL,
+  association_id INT UNSIGNED NOT NULL
+);
+
 CREATE TABLE tracts
 (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -39,15 +47,27 @@ CREATE TABLE amounts
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   amount DOUBLE NOT NULL,
   date date NOT NULL,
-  spent DOUBLE NOT NULL DEFAULT 0,
   detail varchar(2048) NOT NULL,
-  type INT(2) NOT NULL DEFAULT 0,
+  type INT(2) NOT NULL DEFAULT 0, --0:tracto, 1:monto generado, 2:superávit
   association_id INT UNSIGNED NOT NULL,
   tract_id INT UNSIGNED NOT NULL,
 
   FOREIGN KEY(association_id) REFERENCES associations(id)
 );
 
+
+
+
+CREATE TABLE initial_amounts
+(
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  amount DOUBLE NOT NULL
+  type INT(2) NOT NULL DEFAULT 0, --0:tracto, 1:monto generado
+  association_id INT UNSIGNED NOT NULL,
+  tract_id INT UNSIGNED NOT NULL,
+
+  FOREIGN KEY(association_id) REFERENCES associations(id)
+);
 
 CREATE TABLE invoices
 (
@@ -58,7 +78,7 @@ CREATE TABLE invoices
   clarifications varchar(2048),
   image_name varchar(256),
   detail varchar(2048),
-  kind INT(1) DEFAULT 0,
+  kind INT(1) DEFAULT 0, --0 = Tracto, 1 = Ingresos generados, 2 = Superavit
   state INT(1) NOT NULL DEFAULT 0,
   date date,
   attendant varchar(100),
@@ -74,12 +94,12 @@ CREATE TABLE invoices
   UNIQUE(image_name)
 );
 
-CREATE TABLE boxes
+CREATE TABLE boxes 
 (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   little_amount DOUBLE NOT NULL DEFAULT 0,
   big_amount DOUBLE NOT NULL DEFAULT 0,
-  type INT UNSIGNED NOT NULL DEFAULT 0,
+  type INT UNSIGNED NOT NULL DEFAULT 0, --0:tracto, 1:monto generado, 2:superávit
   association_id INT UNSIGNED NOT NULL,
   tract_id INT UNSIGNED NOT NULL,
 

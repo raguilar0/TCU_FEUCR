@@ -3,6 +3,9 @@ namespace App\Model\Table;
 
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\I18n\Time;
+use Cake\Event\Event;
+use ArrayObject;
 
 class AmountsTable extends Table
 {
@@ -25,16 +28,27 @@ class AmountsTable extends Table
             ->notEmpty('deadline')
             ->notEmpty('detail', 'Ingrese el detalle del monto')
             ->add('detail', 'validFormat', [
-                                    'rule' => array('custom', '/^[a-zA-Z0-9$%@ \-]*$/'),
+                                    'rule' => array('custom', '/[a-zA-Z0-9$.%@\-]+$/'),
                                     'message' => 'Debe contener solamente letras.'
             ])
             ->add('detail', [
-                'length' => [
-                            'rule' => ['maxLength', 2048],
-                            'message' => 'Debe contener máximo 2048 caracteres.',
-                            ]
+                        'lengthBetween' => ['rule' => ['lengthBetween', 1, 8192],
+                                        'message' => 'Debe contener mínimo 1 y máximo 100 caracteres.',
+                        ]
             ]);
 
         return $validator;
+    }
+
+    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
+    {
+       if (isset($data['date'])) {
+           $data['date'] = new Time($data['date']);
+       }
+
+       if (isset($data['deadline'])) {
+           $data['deadline'] = new Time($data['deadline']);
+       }
+
     }
 }

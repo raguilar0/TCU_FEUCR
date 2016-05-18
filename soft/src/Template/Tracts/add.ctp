@@ -6,7 +6,6 @@
 <br>
 
 <?php
-debug($tract);
 
 	echo $this->Form->create($tract, ['id'=>'submit_add_tract']);
 		echo "<div class='form-group'>";
@@ -22,11 +21,13 @@ debug($tract);
 
 
 	    echo "<div class = 'col-xs-12'>";
-	     echo "<h4>".$this->Form->input('date', ['label'=>'Fecha de Inicio', 'type'=>'date'])."</h4>";
+	     //echo "<h4>".$this->Form->input('date', ['label'=>'Fecha de Inicio', 'type'=>'date', 'value'=>$tract['dates']['date']])."</h4>";
+	     echo "<h4><label for='#date'>Fecha de Inicio</label>"."<br><input name='date' type='date' id = 'date' class='form-control date' required value=".$tract['dates']['date'].">"."</h4>";
 	    echo "</div >";
 
 	    echo "<div class = 'col-xs-12'>";
-	     echo "<h4>".$this->Form->input('deadline', ['class' => 'form-control','label'=>'Fecha Final', 'type'=>'date'])."</h4>";
+	     //echo "<h4>".$this->Form->input('deadline', ['class' => 'form-control','label'=>'Fecha Final', 'type'=>'date', 'value'=>$tract['dates']['deadline']])."</h4>";
+	     echo "<h4><label for='#date'>Fecha de Final</label>"."<br><input name='deadline' type='date' id = 'deadline' class='form-control date' required value=".$tract['dates']['deadline'].">"."</h4>";	    
 	    echo "</div >";						    					    
 
 	    echo "</div >";
@@ -44,10 +45,19 @@ debug($tract);
 
 ?>
 
+<?= $this->Flash->render('addTractSuccess') ?>
 
-<div class="row text-right">
+<div class="row text-left">
     <div class="col-xs-12">
         <h4 id="callback"></h4>   
     </div>
 
+</div>
+
+<br>
+
+<div class="row text-center">
+  <div class="col-xs-12">
+     <?php echo $this->Html->link('Atrás', '/associations/', ['class'=>'btn btn-primary']);?>
+  </div>
 </div>
