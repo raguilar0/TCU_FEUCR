@@ -1,4 +1,4 @@
-h<!-- src/Template/Users/read.ctp -->
+<!-- src/Template/Users/read.ctp -->
 
 <div class="row text-center">
 	<div class="col-xs-12">
@@ -13,6 +13,7 @@ h<!-- src/Template/Users/read.ctp -->
   <table class="table read_association">
   <thead>
     <tr>
+			<th>ID</th>
       <th>Nombre de Usuario</th>
       <th>Nombre</th>
       <th>Primer Apellido</th>
@@ -25,6 +26,7 @@ h<!-- src/Template/Users/read.ctp -->
       <?php
           foreach ($user as $key) {
              echo "<tr>";
+						 echo "<td>".$key['id']."</td>";
               echo "<td>".$key['username']."</td>";
               echo "<td>".$key['name']."</td>";
               echo "<td>".$key['last_name_1']."</td>";

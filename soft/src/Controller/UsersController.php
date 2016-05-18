@@ -1,4 +1,3 @@
-<?php
 // src/Controller/UsersController.php
 
 namespace App\Controller;
@@ -171,7 +170,7 @@ class UsersController extends AppController
                     return $this->redirect($this->Auth->redirectUrl("/associations/"));
                   }
                   else{
-                    //return $this->redirect($this->Auth->redirectUrl("//"));
+                    return $this->redirect($this->Auth->redirectUrl("/users/perfil/"));
                   }
                 }
                 $this->Flash->error(__('Nombre de usuario o contraseña invalidos, intentelo de nuevo.'));
@@ -202,19 +201,19 @@ class UsersController extends AppController
 
 
 
-            if($this->request->is(array('post','put'))) 
+            if($this->request->is(array('post','put')))
             {
                 $response = '0';
 
                 try
                 {
                     $query = $this->Users->query();
-    
+
                     $query->update()
                       ->set(['name'=> $this->request->data['name'],'last_name_1'=>$this->request->data['last_name_1'],'last_name_2'=>$this->request->data['last_name_2']])
                       ->where(['id'=> $id])
-                      ->execute();  
-                      
+                      ->execute();
+
                     $response = '1';
                 }
                 catch(Exception $e)
@@ -229,7 +228,7 @@ class UsersController extends AppController
             {
                 $this->set('data',$user); // set() Pasa la variable association a la vista.
             }
-        }       
+        }
     }
 
     public function addUser()
@@ -243,9 +242,9 @@ class UsersController extends AppController
         if($this->request->is('post'))
         {
 
-            
+
             $response = "0,0"; //Funciona como booleano, para decidir qué mostrar en el ajax.
-            
+
             $this->loadModel('Headquarters'); //Carga el modelo de esta asociación
             $headquarter = $this->Headquarters->find()
                             ->hydrate(false)
@@ -254,7 +253,7 @@ class UsersController extends AppController
 
             $headquarter = $headquarter->toArray();
 
-            $association['headquarter_id'] = $headquarter[0]['id']; //Reemplaza la elección del usuario por el id 
+            $association['headquarter_id'] = $headquarter[0]['id']; //Reemplaza la elección del usuario por el id
 
             if($this->Users->save($user)) //Guarda los date_offset_get()
             {
@@ -280,10 +279,10 @@ class UsersController extends AppController
                 }
             }
 
-            
+
             die($response);
 
-            
+
         }
         else
         {
