@@ -237,7 +237,8 @@ function addAmounts()
     
             if(xhttp.readyState == 4 && xhttp.status == 200)
             {
-               document.getElementById("callback").innerHTML = "Los datos se guardaron exitosamente!";
+
+               document.getElementById("callback").innerHTML = xhttp.responseText;
                setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 9000);
              
             }
@@ -258,11 +259,11 @@ function addAmounts()
         };
         
         
-        var object = JSON.parse(getAssociationId());
+        //var object = JSON.parse(getAssociationId());
         
          //Con esto obtengo la direccion relativa a la computadora en la que estoy
          var path = location.pathname;
-         path = path.substring(0,path.length)+"/"+object[0].id;
+         path = path.substring(0,path.length)+"/"+document.getElementById("associations").value;
         
     
 

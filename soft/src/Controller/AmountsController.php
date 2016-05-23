@@ -22,88 +22,59 @@ class AmountsController extends AppController
 	
 
 
-	public function add($id = null)
+	public function add($association = null)
 	{
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vist
 		
-
 		$this->loadModel('Tracts');
 
-		$date = $this->Tracts->find() //Se trae el ultimo tracto
-						->hydrate(false)
-						->select(['date', 'deadline','id', 'number'])
-						->order(['id'=>'DESC'])
-						->limit(1);
+		$tracts = $this->Tracts->find()
+					->hydrate(false)
+					->select(['date', 'id'])
+					->where(['YEAR(date)'=>date('Y')]); //Queremos los tractos del año actual
+		$tracts = $tracts->toArray();
 
-		$date = $date->toArray();
-		
-		$amounts_type = array('Tracto'=> 0, 'Superávit' => 2);
-		$amount = $this->Amounts->newEntity($this->request->data); //El parámetro es para validar los datos
 
-			if($this->request->is('post'))
-			{
+		if($this->request->is('POST') && $association)
+		{
 
-				$little_amount = 0;
-				$big_amount = 0;
-				$type = $amounts_type[$this->request->data['type']];
-				$tract_id = $date[0]['id'];
-				
+			$data = $this->request->data;
 
-				if(($date[0]['id'] > 1) && ($date[0]['number'] < 4) && ($type == 0)) //TODO: Agregar acá el ahorro del período anterior
+			$date = $data['date'];  //Estos datos son comunes a todos los tractos
+			unset($data['date']);
+
+			$detail = $data['detail'];
+			unset($data['detail']);
+
+			$association_id = $this->getAssociationId($association);
+			$index = 0;
+			$successIndex = 0;
+
+			$values['association_id'] = $association_id;
+			$values['date'] = $date;
+			$values['detail'] = $detail;
+			$values['type'] = 0;
+
+			foreach ($data as $key => $value) { //Se agrega monto por monto al tracto correspondiente
+				$values['amount'] = $value;
+				$values['tract_id'] = $tracts[$index]['id'];
+
+				$entity = $this->Amounts->newEntity($values);
+
+				if($this->Amounts->save($entity))
 				{
-					$this->loadModel('Boxes');
-
-					$last_amount = $this->Boxes->find()
-									->hydrate(false)
-									->select(['little_amount', 'big_amount'])
-									->andwhere(['tract_id'=>($date[0]['id'] - 1), 'association_id'=>$id, 'type'=>$amounts_type[$this->request->data['type']]]);
-
-					$last_amount = $last_amount->toArray();
-
-					$total = ($last_amount[0]['little_amount'] + $last_amount[0]['big_amount']);
-
-					if($this->createInitialAmounts($total, $tract_id, $id, $type))
-					{
-
-					}
-
-					//*****************Seteamos los variables con los valores correspondientes ***///////
-
-					$little_amount = $last_amount[0]['little_amount'];
-					$big_amount = $last_amount[0]['big_amount'];
-
-
-				}	
-				
-
-				//*****************Guardamos la caja del período actual ***///////
-
-				if(($type == 0) && $this->createBoxes($little_amount, $big_amount, $tract_id,$id,$type))
-				{
-
+					++$successIndex;
 				}
 
-
-
-				$response = 0;
-				
-				$amount['association_id'] = $id;
-				$amount['tract_id'] = $date[0]['id'];
-				$amount['type'] = $amounts_type[$this->request->data['type']];
-
-					if($this->Amounts->save($amount)) //Guarda los datos
-					{
-						$response = '1';
-					}
-
-				die($response);
+				++$index;
 			}
 
-			else
-			{
-		
-		
-						
+			die('Se agregaron exitosamente '.$successIndex.' montos');
+
+		}
+		else
+		{
+
 	/********************* Get Headquarters ****************************************/
 	
 				$query = $this->Amounts->Associations->Headquarters->find() //Se trae solo las sedes que tienen alguna asocicación asociada :p
@@ -120,26 +91,14 @@ class AmountsController extends AppController
 	
 	
 				$headquarters = $query->toArray();
-	
-	
-	/************************ End Get Headquarters**********************************/
-				
-			
-				
-	
-				
 
-		
-				$amount['amounts_type'] = $amounts_type;
-				
-				$amount['date'] = $date;	
-				
-				$this->set('amount',$amount);
 				$this->set('head',$headquarters);
-			}
-		
+				$this->set('data', $tracts);
 
+
+		}
 	}
+
 
 	private function createInitialAmounts($amount, $tract_id, $association_id, $type)
 	{
@@ -184,6 +143,31 @@ class AmountsController extends AppController
 		return $success;
 	}
 
+
+	public function createEvent()
+	{
+		if($this->request->is('GET'))
+		{
+
+			$con = $this->Amounts->getConnection();
+
+			$con->execute('SET GLOBAL event_scheduler = ON;');
+
+			$q  = "
+				CREATE EVENT amounts
+				 ON SCHEDULE EVERY 1 MINUTE 
+				 STARTS '2016-05-22 14:50:00' 
+				 DO 
+				 	BEGIN 
+				 		INSERT INTO prueba(data) VALUES ('hola');
+				 	END ;";
+
+			$con->query($q);
+
+		}
+
+	}
+
 	public function getAssociations($headquarter_name)
 	{
 
@@ -222,9 +206,7 @@ class AmountsController extends AppController
 									
 			$association_id = $association_id->toArray();
 
-			$association_id = json_encode($association_id);
-
-			die($association_id);
+			return $association_id;
 	}
 
 	public function edit($amount_id)
