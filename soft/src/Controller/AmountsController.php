@@ -26,14 +26,7 @@ class AmountsController extends AppController
 	{
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vist
 		
-		$this->loadModel('Tracts');
-
-		$tracts = $this->Tracts->find()
-					->hydrate(false)
-					->select(['date', 'id'])
-					->where(['YEAR(date)'=>date('Y')]); //Queremos los tractos del año actual
-		$tracts = $tracts->toArray();
-
+		$tracts = $this->getTracts(date('Y'));		
 
 		if($this->request->is('POST') && $association)
 		{
@@ -75,50 +68,55 @@ class AmountsController extends AppController
 		else
 		{
 
-	/********************* Get Headquarters ****************************************/
-	
-				$query = $this->Amounts->Associations->Headquarters->find() //Se trae solo las sedes que tienen alguna asocicación asociada :p
-						->hydrate(false)
-						->select(['Headquarters.name'])
-						->join([
-							 'table'=>'associations',
-							 'alias'=>'a',
-							 'type' => 'RIGHT',
-							 'conditions'=>'Headquarters.id = a.headquarter_id',
-							])
-						->where(['a.enable'=>1])
-						->group(['Headquarters.name']); //Elimina repetidos
-	
-	
-				$headquarters = $query->toArray();
-
+				$headquarters = $this->getHeadquarters(); //Pide todas las sedes
 				$this->set('head',$headquarters);
 				$this->set('data', $tracts);
-
-
 		}
 	}
 
 
-	private function createInitialAmounts($amount, $tract_id, $association_id, $type)
+	public function createInitialAmounts()
 	{
-		$this->loadModel("InitialAmounts");
+		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
+		$headquarters = $this->getHeadquarters(); //Pide todas las sedes
+		$tracts = $this->getTracts(date('Y'));
+		
+		
+		$this->set('head',$headquarters);
+		$this->set('data', $tracts);
+		
+	}
+	
+	public function getTracts($year)
+	{
+		$this->loadModel('Tracts');
 
-		$data['amount'] = $amount;
-		$data['tract_id'] = $tract_id;
-		$data['association_id'] = $association_id;
-		$data['type'] = $type;
+		$tracts = $this->Tracts->find()
+					->hydrate(false)
+					->where(['YEAR(date)'=>$year]); //Queremos los tractos del año actual
+		$tracts = $tracts->toArray();
+		
+		return $tracts;
+	}
+	
+	private function getHeadquarters()
+	{
+		$query = $this->Amounts->Associations->Headquarters->find() //Se trae solo las sedes que tienen alguna asocicación asociada :p
+		->hydrate(false)
+		->select(['Headquarters.name'])
+		->join([
+			 'table'=>'associations',
+			 'alias'=>'a',
+			 'type' => 'RIGHT',
+			 'conditions'=>'Headquarters.id = a.headquarter_id',
+			])
+		->where(['a.enable'=>1])
+		->group(['Headquarters.name']); //Elimina repetidos
 
-		$initial_amounts = $this->InitialAmounts->newEntity($data);
 
-		$success = false;
-
-		if($this->InitialAmounts->save($initial_amounts))
-		{
-			$success = true;
-		}
-
-		return $success;
+		$headquarters = $query->toArray();
+		
+		return $headquarters;
 	}
 
 	private function createBoxes($little_amount, $big_amount, $tract_id, $association_id, $type)
@@ -144,29 +142,6 @@ class AmountsController extends AppController
 	}
 
 
-	public function createEvent()
-	{
-		if($this->request->is('GET'))
-		{
-
-			$con = $this->Amounts->getConnection();
-
-			$con->execute('SET GLOBAL event_scheduler = ON;');
-
-			$q  = "
-				CREATE EVENT amounts
-				 ON SCHEDULE EVERY 1 MINUTE 
-				 STARTS '2016-05-22 14:50:00' 
-				 DO 
-				 	BEGIN 
-				 		INSERT INTO prueba(data) VALUES ('hola');
-				 	END ;";
-
-			$con->query($q);
-
-		}
-
-	}
 
 /**
  *  Esta funcion devuelve el id del presente tracto 
