@@ -1,10 +1,15 @@
+<div class = "row text-center">
+    <div class = "col-xs-12">
+        <h1>Agrega montos iniciales</h1>
+    </div>
+</div>
+
 <div class="row text-center">
     <div class="col-xs-12">
-        <h1 id="association_name"></h1>  
+        <h2 id="association_name"></h2>  
 
 
         <h3><?php
-
                 if(empty($data[0]))
                 {
                     echo "Debe crear un tracto primero antes de poder asignar montos.";
@@ -69,7 +74,7 @@
 
     if(!empty($data[0]))
     {
-        echo $this->Form->create(null, ['id'=>'submit5']);
+        echo $this->Form->create(null, ['id'=>'submit_add_initial_amount']);
 
             echo "<div class='form-group'>";
 

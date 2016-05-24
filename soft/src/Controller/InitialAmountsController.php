@@ -8,12 +8,25 @@ class InitialAmountsController extends AppController
 	
 
 	
-	public function add()
+	public function add($association_name = null)
 	{
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
+		
+		
 		$headquarters = $this->getHeadquarters(); //Pide todas las sedes
 		$tracts = $this->getTracts(date('Y'));
 		
+		if($this->request->is("POST"))
+		{
+			if($association_name)
+			{
+				//TODO: Crear las cajas y agregar los montos de las cajas anteriores y en la vista filtrar por año
+			}
+		}
+		else
+		{
+			
+		}
 		
 		$this->set('head',$headquarters);
 		$this->set('data', $tracts);

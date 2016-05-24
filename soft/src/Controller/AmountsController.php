@@ -75,17 +75,7 @@ class AmountsController extends AppController
 	}
 
 
-	public function createInitialAmounts()
-	{
-		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
-		$headquarters = $this->getHeadquarters(); //Pide todas las sedes
-		$tracts = $this->getTracts(date('Y'));
-		
-		
-		$this->set('head',$headquarters);
-		$this->set('data', $tracts);
-		
-	}
+
 	
 	public function getTracts($year)
 	{
