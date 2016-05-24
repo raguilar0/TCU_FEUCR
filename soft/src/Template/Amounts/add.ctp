@@ -97,7 +97,7 @@
                         if(!empty($data[0]))
                         {
                           echo "<tr>";
-                            echo "<td>".$this->Form->input('amountTract1', ['class' => 'form-control', 'label'=>'Tracto 1', 'min'=>'0', 'placeholder'=>'Monto a asignar'])."</td>";
+                            echo "<td>".$this->Form->input('amountTract1', ['class' => 'form-control', 'label'=>'Tracto 1', 'min'=>'0', 'placeholder'=>'Monto a asignar', 'required'])."</td>";
                             echo "<td>".$this->Form->input('tract0', ['class' => 'form-control', 'label'=>'Tracto 1','type'=>'text','disabled','value'=>$data[0]['date']])."</td>";
                           echo "</tr>";
                         }
@@ -105,7 +105,7 @@
                         if(!empty($data[1]))
                         {
                           echo "<tr>";
-                            echo "<td>".$this->Form->input('amountTract2', ['class' => 'form-control', 'label'=>'Tracto 2', 'min'=>'0', 'placeholder'=>'Monto a asignar'])."</td>";
+                            echo "<td>".$this->Form->input('amountTract2', ['class' => 'form-control', 'label'=>'Tracto 2', 'min'=>'0', 'placeholder'=>'Monto a asignar', 'required'])."</td>";
                             echo "<td>".$this->Form->input('tract1', ['class' => 'form-control', 'label'=>'Tracto 2','type'=>'text','disabled','value'=>$data[1]['date']])."</td>";
                           echo "</tr>";
                         }
@@ -114,7 +114,7 @@
                         if(!empty($data[2]))
                         {
                           echo "<tr>";
-                            echo "<td>".$this->Form->input('amountTract3', ['class' => 'form-control', 'label'=>'Tracto 3', 'min'=>'0', 'placeholder'=>'Monto a asignar'])."</td>";
+                            echo "<td>".$this->Form->input('amountTract3', ['class' => 'form-control', 'label'=>'Tracto 3', 'min'=>'0', 'placeholder'=>'Monto a asignar', 'required'])."</td>";
                             echo "<td>".$this->Form->input('tract2', ['class' => 'form-control', 'label'=>'Tracto 2','type'=>'text','disabled','value'=>$data[2]['date']])."</td>";
                           echo "</tr>";
                         }
@@ -123,7 +123,7 @@
                       if(!empty($data[3]))
                       {
                           echo "<tr>";
-                            echo "<td>".$this->Form->input('amountTract4', ['class' => 'form-control', 'label'=>'Tracto 4', 'min'=>'0', 'placeholder'=>'Monto a asignar'])."</td>";
+                            echo "<td>".$this->Form->input('amountTract4', ['class' => 'form-control', 'label'=>'Tracto 4', 'min'=>'0', 'placeholder'=>'Monto a asignar', 'required'])."</td>";
                             
                             echo "<td>".$this->Form->input('tract3', ['class' => 'form-control', 'label'=>'Tracto 3','type'=>'text','disabled','value'=>$data[3]['date']])."</td>";
                           echo "</tr>";

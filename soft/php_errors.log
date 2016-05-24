@@ -46,3 +46,19 @@
 [29-Apr-2016 20:03:57 UTC] PHP   4. Cake\Controller\Controller->invokeAction() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Routing/Dispatcher.php:114
 [29-Apr-2016 20:03:57 UTC] PHP   5. call_user_func_array:{/home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Controller/Controller.php:429}() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Controller/Controller.php:429
 [29-Apr-2016 20:03:57 UTC] PHP   6. App\Controller\AssociationsController->add() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Controller/Controller.php:429
+[24-May-2016 17:37:36 UTC] PHP Fatal error:  Call to undefined function 2016-05-24() in /home/ubuntu/workspace/FEUCR/soft/src/Controller/AmountsController.php on line 179
+[24-May-2016 17:37:36 UTC] PHP Stack trace:
+[24-May-2016 17:37:36 UTC] PHP   1. {main}() /home/ubuntu/workspace/FEUCR/soft/webroot/index.php:0
+[24-May-2016 17:37:36 UTC] PHP   2. Cake\Routing\Dispatcher->dispatch() /home/ubuntu/workspace/FEUCR/soft/webroot/index.php:37
+[24-May-2016 17:37:36 UTC] PHP   3. Cake\Routing\Dispatcher->_invoke() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Routing/Dispatcher.php:87
+[24-May-2016 17:37:36 UTC] PHP   4. Cake\Controller\Controller->invokeAction() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Routing/Dispatcher.php:114
+[24-May-2016 17:37:36 UTC] PHP   5. call_user_func_array:{/home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Controller/Controller.php:429}() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Controller/Controller.php:429
+[24-May-2016 17:37:36 UTC] PHP   6. App\Controller\AmountsController->getTractId() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Controller/Controller.php:429
+[24-May-2016 17:38:40 UTC] PHP Fatal error:  Function name must be a string in /home/ubuntu/workspace/FEUCR/soft/src/Controller/AmountsController.php on line 179
+[24-May-2016 17:38:40 UTC] PHP Stack trace:
+[24-May-2016 17:38:40 UTC] PHP   1. {main}() /home/ubuntu/workspace/FEUCR/soft/webroot/index.php:0
+[24-May-2016 17:38:40 UTC] PHP   2. Cake\Routing\Dispatcher->dispatch() /home/ubuntu/workspace/FEUCR/soft/webroot/index.php:37
+[24-May-2016 17:38:40 UTC] PHP   3. Cake\Routing\Dispatcher->_invoke() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Routing/Dispatcher.php:87
+[24-May-2016 17:38:40 UTC] PHP   4. Cake\Controller\Controller->invokeAction() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Routing/Dispatcher.php:114
+[24-May-2016 17:38:40 UTC] PHP   5. call_user_func_array:{/home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Controller/Controller.php:429}() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Controller/Controller.php:429
+[24-May-2016 17:38:40 UTC] PHP   6. App\Controller\AmountsController->getTractId() /home/ubuntu/workspace/FEUCR/soft/vendor/cakephp/cakephp/src/Controller/Controller.php:429

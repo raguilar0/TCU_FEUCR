@@ -168,6 +168,30 @@ class AmountsController extends AppController
 
 	}
 
+/**
+ *  Esta funcion devuelve el id del presente tracto 
+ **/
+	private function getTractId()
+	{
+		$this->loadModel('Tracts');
+		
+		$actualDate = date("Y-m-d");
+		
+		$id = $this->Tracts->find()
+					->hydrate(false)
+					->select(['id'])
+					->where(['YEAR(date)'=>date('Y')])
+					->where(function ($exp) use($actualDate) {
+                        return $exp
+                        	->lte('date',$actualDate)
+                        	->gte('deadline',$actualDate);
+                    });
+        
+        $id = $id->toArray();
+
+		return $id[0]['id'];					
+	}
+
 	public function getAssociations($headquarter_name)
 	{
 
