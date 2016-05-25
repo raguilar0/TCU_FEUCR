@@ -50,7 +50,7 @@ class AmountsController extends AppController
 
 			foreach ($data as $key => $value) { //Se agrega monto por monto al tracto correspondiente
 				$values['amount'] = $value;
-				$values['tract_id'] = $tracts[$index]['id'];
+				$values['tract_id'] = $tracts[$index]['id'];//$this->getTractId($tracts[$index]['date']); //Pide el id del tracto tomando como fecha la fecha de inicio
 
 				$entity = $this->Amounts->newEntity($values);
 
@@ -136,24 +136,22 @@ class AmountsController extends AppController
 /**
  *  Esta funcion devuelve el id del presente tracto 
  **/
-	private function getTractId()
+	private function getTractId($actualDate)
 	{
 		$this->loadModel('Tracts');
 		
-		$actualDate = date("Y-m-d");
 		
 		$id = $this->Tracts->find()
 					->hydrate(false)
 					->select(['id'])
-					->where(['YEAR(date)'=>date('Y')])
 					->where(function ($exp) use($actualDate) {
                         return $exp
-                        	->lte('date',$actualDate)
-                        	->gte('deadline',$actualDate);
+                        	->lte('date',$actualDate) //<= date <= fecha actual
+                        	->gte('deadline',$actualDate); //deadline >= fecha actual
                     });
         
         $id = $id->toArray();
-
+		
 		return $id[0]['id'];					
 	}
 
@@ -195,7 +193,7 @@ class AmountsController extends AppController
 									
 			$association_id = $association_id->toArray();
 
-			return $association_id;
+			return $association_id[0]['id'];
 	}
 
 	public function edit($amount_id)
