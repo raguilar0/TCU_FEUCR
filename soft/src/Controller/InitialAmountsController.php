@@ -42,9 +42,15 @@ class InitialAmountsController extends AppController
 						$first_tract_id = $this->getTractId($this->request->data['first_tract']);
 						$second_tract_id = $this->getTractId($this->request->data['second_tract']);
 						
-						$message = $this->saveBoxes($association_id, $first_tract_id, $second_tract_id, 0); //Creamos ingresos generados
+						$oldBoxTract = $this->getBox($association_id, $first_tract_id, 0); //Queremos la caja vieja del tracto
+						$oldBoxGenerated = $this->getBox($association_id, $first_tract_id, 1); //Queremos la caja vieja de ingresos generados
 						
-						$message .= $this->saveBoxes($association_id, $first_tract_id, $second_tract_id, 1); //Creamos ingresos generados 
+						$message = $this->createBox($oldBoxTract,$association_id, $first_tract_id, $second_tract_id, 0); //Creamos Tractos
+						
+						$message .= "<br>".$this->createBox($oldBoxGenerated,$association_id, $first_tract_id, $second_tract_id, 1); //Creamos ingresos generados 
+						
+						//createInitialAmount($this->request->data, $oldBoxTract, $association_id, $tract_id, 0); //Creamos los montos iniciales de tracto
+						//createInitialAmount($this->request->data, $oldBoxGenerated, $association_id, $tract_id, 1); //Creamos los montos iniciales de Ingresos Generados
 						
 						die($message);
 						
@@ -67,9 +73,39 @@ class InitialAmountsController extends AppController
 		
 	}
 	
-	private function saveBoxes($association_id, $first_tract_id, $second_tract_id, $type)
+	private function createInitialAmount($data, $oldBox, $association_id, $tract_id, $type)
 	{
-		$oldBox = $this->getBox($association_id, $first_tract_id, $type); //Queremos la caja vieja
+		$array['amount'] = ($oldBox[0]['little_amount'] + $oldBox[0]['big_amount']);
+		$array['type'] = $type;
+		$array['date'] = $data['date'];
+		$array['association_id'] = $association_id;
+		$array['tract_id'] = $tract_id;
+		
+		
+		$type_name = ($type == 0 ? "Tracto":"Ingresos Generados");
+		$message = "No se pudo guardar el monto inicial correspondiente a ".$type_name;
+		
+		try
+		{
+			$initial = $this->InitialAmounts->newEntity($array);
+			
+			if($this->InitialAmounts->save($initial))
+			{
+				$message = "Se guardo el monto inicial correspondiente a ".$type_name." con exito";
+			}
+					
+		}
+		catch(Exception $e)
+		{
+			
+		}
+
+		return $message;
+	}
+	
+	private function createBox($oldBox,$association_id, $first_tract_id, $second_tract_id, $type)
+	{
+		
 		
 		$message = "";
 		$type_name = ($type == 0 ? "Tracto":"Ingresos Generados");
@@ -82,12 +118,23 @@ class InitialAmountsController extends AppController
 			$data['association_id'] = $association_id;
 			$data['tract_id'] = $second_tract_id;
 			
-			if($this->createNewBox($data))
+			$this->loadModel('Boxes');
+		
+		
+			try
+			{
+				$box = $this->Boxes->newEntity($data);		
+				
+				if($this->Boxes->save($box))
+				{
+					$message = "Se creo la caja para ".$type_name." exitosamente";
+				}
+			}
+			catch(Exception $e)
 			{
 				
-				
-				$message = "Se creo la caja para ".$type_name." exitosamente";
 			}
+
 			
 		}
 		else
@@ -111,29 +158,7 @@ class InitialAmountsController extends AppController
 		return $box;
 	}
 	
-	private function createNewBox($array)
-	{
-		$this->loadModel('Boxes');
-		
-		$success = false;
-		
-		try
-		{
-			$box = $this->newEntity($array);		
-			
-			if($this->Boxes->save($box))
-			{
-				$success = true;
-			}
-		}
-		catch(Exception $e)
-		{
-			
-		}
-	
-		return $success;	
-		
-	}
+
 	
 	private function getAssociationId($association_name)
 	{
