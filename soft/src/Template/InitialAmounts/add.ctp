@@ -10,7 +10,7 @@
 
 
         <h3><?php
-                if(empty($data[0]))
+                if(empty($data))
                 {
                     echo "Debe crear un tracto primero antes de poder asignar montos.";
                 }
@@ -26,7 +26,7 @@
 
 <div class="row text-center">
     <?php
-        if(!empty($data[0]))
+        if(!empty($data))
         {
             echo "<div class = 'col-xs-12 col-md-5'>";
         
@@ -72,32 +72,41 @@
 <?php
 
 
-    if(!empty($data[0]))
+    if(!empty($data))
     {
         echo $this->Form->create(null, ['id'=>'submit_add_initial_amount']);
-
             echo "<div class='form-group'>";
 
             echo "<div class='row text-center'>";
+            
+                
                 echo "<div class = 'col-xs-12 col-md-6 col-md-offset-3'>";
                  echo "<h4><label for='#date'>Fecha de Asignación</label>"."<br><input name='date' type='date' id = 'date' class='form-control date' required >"."</h4>";
                 echo "</div >";
+                
             echo "</div>";
 
             echo "<br>";
             echo "<br>";
             echo "<br>";
             echo "<br>";
-            
+
             echo "<div class='row'>";
+
                 echo "<div class='col-xs-12 col-md-4'>";
                         echo "<label><h4><strong>Trasferir de: </strong></h4></label>";
-                           echo "<select class='form-control'>";
+                           echo "<select class='form-control'  name = 'first_tract'>";
                     
+                                /**
+                                 *  Imprime las fechas del tracto anterior y las actuales 
+                                 **/
                     
-                    
-                                foreach ($data as $key => $value) {
+                                foreach ($data[0] as $key => $value) {
                                     echo "<option>".$value['date']."</option>"."<br>";
+                                }
+                                
+                                foreach ($data[1] as $key => $value) {
+                                    echo "<option>".$value['date']->format('Y-m-d')."</option>"."<br>";
                                 }
                                 
                             echo "</select>";                    
@@ -109,10 +118,13 @@
                 
                 echo "<div class='col-xs-12 col-md-4'>";
                         echo "<label><h4><strong>Hacia : </strong></h4></label>";
-                           echo "<select class='form-control'>";
+                           echo "<select class='form-control' name = 'second_tract'>";
                     
-                                foreach ($data as $key => $value) {
-                                    echo "<option>".$value['date']."</option>"."<br>";
+                                /**
+                                 *  Imprime solo las fechas de los tractos acutales
+                                 **/ 
+                                foreach ($data[1] as $key => $value) {
+                                    echo "<option>".$value['date']->format('Y-m-d')."</option>"."<br>";
                                 }
                                 
                             echo "</select>";                      

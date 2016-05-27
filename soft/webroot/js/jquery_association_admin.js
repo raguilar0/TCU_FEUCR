@@ -312,7 +312,6 @@ function addAmounts()
         };
         
         
-        //var object = JSON.parse(getAssociationId());
         
          //Con esto obtengo la direccion relativa a la computadora en la que estoy
          var path = location.pathname;
