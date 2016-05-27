@@ -92,7 +92,7 @@ class InitialAmountsController extends AppController
 		}
 		else
 		{
-			$message = '\r\nNo existe una caja de '.$type_name .' que pertenezca al tracto que inicia en: '.$this->request->data['first_tract'];	
+			$message = 'No existe una caja de '.$type_name .' que pertenezca al tracto que inicia en: '.$this->request->data['first_tract'];	
 		}
 		
 		return $message;
