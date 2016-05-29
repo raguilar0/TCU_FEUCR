@@ -243,7 +243,7 @@ function addInitialAmounts()
             {
 
                document.getElementById("callback").innerHTML = xhttp.responseText;
-               setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 9000);
+               setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 25000);
              
             }
             else

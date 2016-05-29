@@ -33,36 +33,20 @@ class AmountsController extends AppController
 
 			$data = $this->request->data;
 
-			$date = $data['date'];  //Estos datos son comunes a todos los tractos
-			unset($data['date']);
-
-			$detail = $data['detail'];
-			unset($data['detail']);
-
 			$association_id = $this->getAssociationId($association);
-			$index = 0;
-			$successIndex = 0;
 
-			$values['association_id'] = $association_id;
-			$values['date'] = $date;
-			$values['detail'] = $detail;
-			$values['type'] = 0;
+			$successAmountsIndex = $this->saveAmounts($data, $association_id, $tracts); //Guardamos los montos
+			$successBoxesTract = $this->saveBoxes($data, $association_id,0,$tracts); //Guardamos las cajas de tracto
+			$successBoxesGenerated = $this->saveBoxes($data, $association_id,1,$tracts); //Guardamos las cajas de ingresos generados
 
-			foreach ($data as $key => $value) { //Se agrega monto por monto al tracto correspondiente
-				$values['amount'] = $value;
-				$values['tract_id'] = $tracts[$index]['id'];//$this->getTractId($tracts[$index]['date']); //Pide el id del tracto tomando como fecha la fecha de inicio
 
-				$entity = $this->Amounts->newEntity($values);
 
-				if($this->Amounts->save($entity))
-				{
-					++$successIndex;
-				}
+			$message = 'Se agregaron exitosamente '.$successAmountsIndex.' montos';
+			$message .= '<br>'.'Se agregaron exitosamente '.$successBoxesTract.' cajas de Tracto';
+			$message .= '<br>'.'Se agregaron exitosamente '.$successBoxesGenerated.' cajas de ingresos generados';
+			die($message);
 
-				++$index;
-			}
 
-			die('Se agregaron exitosamente '.$successIndex.' montos');
 
 		}
 		else
@@ -75,6 +59,89 @@ class AmountsController extends AppController
 	}
 
 
+	private function saveAmounts($data, $association_id, $tracts)
+	{
+
+		$date = $data['date'];  //Estos datos son comunes a todos los tractos
+		unset($data['date']);
+
+		$detail = $data['detail'];
+		unset($data['detail']);
+
+
+		$index = 0;
+		$successIndex = 0;
+
+		$values['association_id'] = $association_id;
+		$values['date'] = $date;
+		$values['detail'] = $detail;
+		$values['type'] = 0;
+
+		foreach ($data as $key => $value) { //Se agrega monto por monto al tracto correspondiente
+			$values['amount'] = $value;
+			$values['tract_id'] = $tracts[$index]['id'];//$this->getTractId($tracts[$index]['date']); //Pide el id del tracto tomando como fecha la fecha de inicio
+
+			$entity = $this->Amounts->newEntity($values);
+
+			try
+			{
+				if($this->Amounts->save($entity))
+				{
+					++$successIndex;
+				}
+			}
+			catch(Exception $e)
+			{
+
+			}
+
+			++$index;
+		}
+
+		return $successIndex;
+	}
+
+
+	private function saveBoxes($data, $association_id, $type, $tracts)
+	{
+		$this->loadModel('Boxes');
+
+		unset($data['date']);
+
+		unset($data['detail']);
+
+
+		$index = 0;
+		$successIndex = 0;
+
+		$values['association_id'] = $association_id;
+		$values['type'] = $type;
+
+		foreach ($data as $key => $value) { //Se agrega monto por monto al tracto correspondiente
+			$values['little_amount'] = 0;
+			$values['big_amount'] = 0;
+			$values['tract_id'] = $tracts[$index]['id'];//$this->getTractId($tracts[$index]['date']); //Pide el id del tracto tomando como fecha la fecha de inicio
+
+			$entity = $this->Boxes->newEntity($values);
+
+			try
+			{
+				if($this->Boxes->save($entity))
+				{
+					++$successIndex;
+				}
+			}
+			catch(Exception $e)
+			{
+
+			}
+
+
+			++$index;
+		}
+
+		return $successIndex;
+	}
 
 	
 	public function getTracts($year)

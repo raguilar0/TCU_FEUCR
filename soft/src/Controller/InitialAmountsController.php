@@ -45,12 +45,12 @@ class InitialAmountsController extends AppController
 						$oldBoxTract = $this->getBox($association_id, $first_tract_id, 0); //Queremos la caja vieja del tracto
 						$oldBoxGenerated = $this->getBox($association_id, $first_tract_id, 1); //Queremos la caja vieja de ingresos generados
 						
-						$message = $this->createBox($oldBoxTract,$association_id, $first_tract_id, $second_tract_id, 0); //Creamos Tractos
+						$message = $this->transferBox($oldBoxTract, $association_id, $second_tract_id, 0); //Creamos Tractos
 						
-						$message .= "<br>".$this->createBox($oldBoxGenerated,$association_id, $first_tract_id, $second_tract_id, 1); //Creamos ingresos generados 
+						$message .= "<br>".$this->transferBox($oldBoxGenerated,$association_id, $second_tract_id, 1); //Creamos ingresos  generados 
 						
-						//createInitialAmount($this->request->data, $oldBoxTract, $association_id, $tract_id, 0); //Creamos los montos iniciales de tracto
-						//createInitialAmount($this->request->data, $oldBoxGenerated, $association_id, $tract_id, 1); //Creamos los montos iniciales de Ingresos Generados
+						$message .= "<br>".$this->createInitialAmount($this->request->data, $oldBoxTract, $association_id, $second_tract_id, 0); //Creamos los montos iniciales de tracto
+						$message .= "<br>".$this->createInitialAmount($this->request->data, $oldBoxGenerated, $association_id, $second_tract_id, 1); //Creamos los montos iniciales de Ingresos Generados
 						
 						die($message);
 						
@@ -75,72 +75,63 @@ class InitialAmountsController extends AppController
 	
 	private function createInitialAmount($data, $oldBox, $association_id, $tract_id, $type)
 	{
-		$array['amount'] = ($oldBox[0]['little_amount'] + $oldBox[0]['big_amount']);
-		$array['type'] = $type;
-		$array['date'] = $data['date'];
-		$array['association_id'] = $association_id;
-		$array['tract_id'] = $tract_id;
-		
-		
 		$type_name = ($type == 0 ? "Tracto":"Ingresos Generados");
-		$message = "No se pudo guardar el monto inicial correspondiente a ".$type_name;
-		
-		try
-		{
-			$initial = $this->InitialAmounts->newEntity($array);
+
+
+			$array['amount'] = ($oldBox[0]['little_amount'] + $oldBox[0]['big_amount']);
+			$array['type'] = $type;
+			$array['date'] = $data['date'];
+			$array['association_id'] = $association_id;
+			$array['tract_id'] = $tract_id;
 			
-			if($this->InitialAmounts->save($initial))
+			
+			try
 			{
-				$message = "Se guardo el monto inicial correspondiente a ".$type_name." con exito";
+				$initial = $this->InitialAmounts->newEntity($array);
+				
+				if($this->InitialAmounts->save($initial))
+				{
+					$message = "Se guardó el monto inicial correspondiente a ".$type_name." con éxito";
+				}
+						
 			}
-					
-		}
-		catch(Exception $e)
-		{
-			
-		}
+			catch(Exception $e)
+			{
+				$message = "No se pudo guardar el monto inicial correspondiente a ".$type_name. " esto debido a un error interno";
+			}
+		
+
 
 		return $message;
 	}
 	
-	private function createBox($oldBox,$association_id, $first_tract_id, $second_tract_id, $type)
+	private function transferBox($oldBox,$association_id, $second_tract_id, $type)
 	{
 		
 		
-		$message = "";
+		
 		$type_name = ($type == 0 ? "Tracto":"Ingresos Generados");
-		
-		if(!empty($oldBox))
+		$message = "Se creó la caja para ".$type_name;
+
+		try
 		{
-			$data['little_amount'] = $oldBox[0]['little_amount'];
-			$data['big_amount'] = $oldBox[0]['big_amount'];
-			$data['type'] = $type; //Tracto
-			$data['association_id'] = $association_id;
-			$data['tract_id'] = $second_tract_id;
-			
 			$this->loadModel('Boxes');
-		
-		
-			try
-			{
-				$box = $this->Boxes->newEntity($data);		
-				
-				if($this->Boxes->save($box))
-				{
-					$message = "Se creo la caja para ".$type_name." exitosamente";
-				}
-			}
-			catch(Exception $e)
-			{
-				
-			}
+
+			$box = $this->Boxes->query();
+			$box->update()
+				->set(['little_amount'=>$oldBox[0]['little_amount'], 'big_amount'=>$oldBox[0]['big_amount']])
+				->andwhere(['association_id'=>$association_id, 'tract_id'=>$second_tract_id, 'type'=>$type])
+				->execute();		
+			
+		}
+		catch(Exception $e)
+		{
+			$message = 'No se pudo crear la caja '.$type_name .' ya que se dio un error inesperado.';
+		}
 
 			
-		}
-		else
-		{
-			$message = 'No existe una caja de '.$type_name .' que pertenezca al tracto que inicia en: '.$this->request->data['first_tract'];	
-		}
+	
+		
 		
 		return $message;
 	}
