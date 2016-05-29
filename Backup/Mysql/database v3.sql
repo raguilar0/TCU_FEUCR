@@ -106,6 +106,17 @@ CREATE TABLE boxes
   FOREIGN KEY(association_id) REFERENCES associations(id)
 );
 
+CREATE TABLE savings
+(
+   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+   date date NOT NULL,
+   amount INT(32) NOT NULL DEFAULT 0,
+   state INT(1) DEFAULT 0,
+   letter LONGBLOB NOT NULL,
+   association_id INT UNSIGNED NOT NULL,
+   FOREIGN KEY(association_id) REFERENCES associations(id)
+);
+
 CREATE TABLE warehouses
 (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
