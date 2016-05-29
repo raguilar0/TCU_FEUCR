@@ -22,7 +22,21 @@
 
 <div class="row text-center">
 	
-	<div class="col-xs-12 col-md-6 col-md-offset-3">
+	<div class="col-xs-12 col-md-6">
+	  <?php
+		echo "<label><h4><strong>Elegí el año</strong></h4></label>";
+   		echo "<select class='form-control' id= 'tract_year_id' name = 'year' onchange='reloadPage(this)'>";
+
+		
+        foreach ($years as $key => $value) {
+            echo "<option>".$value['year']."</option>"."<br>";
+        }
+        
+    	echo "</select>";
+    	?>
+	</div>	
+
+	<div class="col-xs-12 col-md-6">
 	  <?php
 		echo "<label><h4><strong>Elegí el tracto</strong></h4></label>";
    		echo "<select class='form-control' id= 'tracts_id' name = 'type' onchange='getAmounts(0,0,0,this);'>";
@@ -36,7 +50,8 @@
         
     	echo "</select>";
     	?>
-	</div>	
+	</div>		
+
 
 </div>
 
@@ -201,7 +216,23 @@
   	
 <div class="row text-center">
 	
-	<div class="col-xs-12 col-md-6 col-md-offset-3">
+	<div class="col-xs-12 col-md-6">
+	  <?php
+		echo "<label><h4><strong>Elegí el año</strong></h4></label>";
+   		echo "<select class='form-control' id= 'surplus_year_id' name = 'year' onchange='reloadPage(this)'>";
+
+
+		echo "<option>".date('Y')."</option>"."<br>";   		
+        foreach ($years as $key => $value) {
+            echo "<option>".$value['year']."</option>"."<br>";
+        }
+        
+    	echo "</select>";
+    	?>
+	</div>
+
+
+	<div class="col-xs-12 col-md-6">
 	  <?php
 		echo "<label><h4><strong>Elegí el tracto</strong></h4></label>";
    		echo "<select class='form-control' id= 'surplus_id' name = 'type' onchange='getAmounts(2,2,2,this);'>";
@@ -329,8 +360,23 @@
   	
   	
   	<div class="row text-center">
-	
-	<div class="col-xs-12 col-md-6 col-md-offset-3">
+
+	<div class="col-xs-12 col-md-6">
+	  <?php
+		echo "<label><h4><strong>Elegí el año</strong></h4></label>";
+   		echo "<select class='form-control' id= 'tracts_generated_id' name = 'year' onchange='reloadPage(this)'>";
+
+
+		echo "<option>".date('Y')."</option>"."<br>";   		
+        foreach ($years as $key => $value) {
+            echo "<option>".$value['year']."</option>"."<br>";
+        }
+        
+    	echo "</select>";
+    	?>
+	</div>
+
+	<div class="col-xs-12 col-md-6">
 	  <?php
 		echo "<label><h4><strong>Elegí el tracto</strong></h4></label>";
    		echo "<select class='form-control' id= 'generated_id' name = 'type' onchange='getAmounts(1,1,1,this);'>";
@@ -560,11 +606,19 @@ $(document).ready( function ()
     
     	var path = location.pathname;
 
-    	path = path.replace('detailed_information','getAmounts');
+    	path = path.split('/');
 
-    	path = path+"/"+amount_type+"/"+box_type+"/"+invoice_type+"/"+object.value;
+    	var index = getIndex(path, 'detailed_information');
+    	var newPath = "";
 
-        xhttp.open("GET",path,true);
+		for (var i = 0; i  < index; ++i) {
+			newPath += path[i]+"/";
+		}
+    	newPath += 'getAmounts/'+path[(index+1)];
+
+    	newPath += "/"+amount_type+"/"+box_type+"/"+invoice_type+"/"+object.value;
+
+        xhttp.open("GET",newPath,true);
         //xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send();
        
@@ -692,9 +746,9 @@ $(document).ready( function ()
 
 
   function setGeneratedValues(json)
-{
+  {
 
-	alert(json);
+
 	object = JSON.parse(json);
 
 
@@ -796,9 +850,9 @@ $(document).ready( function ()
 
     var date = "";
 
-    if(object.initial_amount > 0)
+    if(object.initial_amount.length > 0)
     {
-        generated_initial_amount = object.amount[0].initial_amount;
+        generated_initial_amount = object.initial_amount[0].amount;
 
     }
 
@@ -833,7 +887,7 @@ $(document).ready( function ()
 
 function setSurplusValues(json)
 {
-	alert(json);
+
 	object = JSON.parse(json);
 
 
@@ -912,10 +966,39 @@ function setSurplusValues(json)
 
 
 
+function reloadPage(element)
+{
+	var hr = window.location.href;
+	var splt = hr.split('/');
+	var path = "";
+	var index = getIndex(splt, 'detailed_information');
+
+	for (var i = 0; i  < (index+2); ++i) {
+		path += splt[i]+"/";
+	}
+
+	path += element.value;
+
+	window.location = path;
+}
 
 
+function getIndex(array,word) {
+	var len = array.length;
+	var index = 0;
+	var out = false;
 
+	for (var i = len - 1; (i >= 0) && !out; i--) {
 
+		if(array[i] == word)
+		{
+			index = i;
+			out = true;
+		}
+	}
+
+	return index;
+}
 
 
 
@@ -940,3 +1023,4 @@ function setSurplusValues(json)
      <?php echo $this->Html->link('Atrás', '/associations/show_associations/5', ['class'=>'btn btn-primary']);?>
   </div>
 </div>
+
