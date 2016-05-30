@@ -11,28 +11,44 @@ class BoxesController extends AppController
 		$this->viewBuilder()->layout('associations_view'); //Carga un layout personalizado para esta vista
 
 		$box = $this->Boxes->find()
-					->select(['amount'])
-					->andwhere(['id'=>1,'association_id'=>1]);
+					->select(['little_amount','big_amount'])
+					->where(['association_id'=>1]);
 
 		$box = $box->toArray();
 
-		$data['little'] = $box;
-
-		$box = $this->Boxes->find()
-					->select(['amount'])
-					->andwhere(['id'=>2,'association_id'=>2]);
-
-		$box = $box->toArray();
-
-		$data['big'] = $box;
 
 		if($this->request->is(array('post','put')))
-		{
-
+		{	
+			if($box != [])
+			{
+				$query = $this->Boxes->query();
+				$query->update()
+					  ->set(['big_amount'=> $this->request->data['big_amount'], 'little_amount'=>$this->request->data['little_amount']])
+					  ->where(['id'=> 1])
+					  ->execute();
+			}
+			else
+			{
+				$this->add($this->request->data);
+			}
 		}
 		else
 		{
-			$this->set('data',$data);
+			$this->set('data',$box);
 		}
+	}
+
+
+
+	private function add($data)
+	{
+		$boxes = $this->Boxes->newEntity($data); 
+		$response = 0;
+		$boxes['association_id'] = 1;
+		if($this->Boxes->save($boxes)) //Guarda los date_offset_get()
+		{
+			$response = 1;
+		}
+
 	}
 }
