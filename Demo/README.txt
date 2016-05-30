@@ -1,1 +1,0 @@
-La carpeta cakephp va adentro de htdocs para ser accesable por el xampp y contiene el directorio app/ que contiene todos los archivos de la aplicacion
