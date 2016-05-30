@@ -7,6 +7,8 @@ use Cake\ORM\TableRegistry;
 class AssociationsController extends AppController
 {
 
+//TODO: Si se agrega una asociación sin que hayan sedes, muestra el mensaje de que se agregó la asociación. Arreglarlo
+
 	public function view($id = null)
 	{
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
@@ -49,7 +51,8 @@ class AssociationsController extends AppController
 						 'type' => 'RIGHT',
 						 'conditions'=>'Headquarters.id = a.headquarter_id',
 						])
-					->where(['a.enable'=>1]);
+					->where(['a.enable'=>1])
+					->order(['Headquarters.name']);
 
 
 			$query = $query->toArray();
@@ -67,11 +70,19 @@ class AssociationsController extends AppController
 					
 					case 4:
 							$query['link'] = 'delete';
-						break;	
+						break;
+
+					case 5:
+							$query['link'] = 'detailed_information';
+						break;							
 			}
 
 			$this->set('data',$query);
 
+		}
+		else
+		{
+			$this->redirect(['action'=>'/']);
 		}
 	}
 
@@ -98,7 +109,7 @@ class AssociationsController extends AppController
 
 			$amounts = $this->Associations->Amounts->find()
 					->hydrate(false)
-					->select(['tract.number','tract.date','tract.deadline','amount','spent'])
+					->select(['tract.number','tract.date','tract.deadline','amount', 'date'])
 					->join([
 						 'table'=>'tracts',
 						 'alias'=>'tract',
@@ -115,6 +126,10 @@ class AssociationsController extends AppController
 			
 			$this->set('data',$association);
 
+		}
+		else
+		{
+			$this->redirect(['action'=>'/']);
 		}
 	}
 
@@ -142,10 +157,11 @@ class AssociationsController extends AppController
 
 			$association['headquarter_id'] = $headquarter[0]['id']; //Reemplaza la elección del usuario por el id 
 
+
+
 			if($this->Associations->save($association)) //Guarda los date_offset_get()
 			{
 				$response = "1,0";
-
 
 
 				$asso_id = $this->Associations->find()
@@ -154,21 +170,25 @@ class AssociationsController extends AppController
 								->order(['id'=>'DESC'])
 								->limit(1);
 
-				$asso_id = $asso_id->toArray();
 
-					$this->loadModel('Tracts');
+					$asso_id = $asso_id->toArray();
 
-					$tract = $this->Tracts->find()
-									->hydrate(false)
-									->select(['id'])
-									->order(['id'=>'DESC'])
-									->limit(1);
+						$this->loadModel('Tracts');
 
-					$tract = $tract->toArray();
+						$tract = $this->Tracts->find()
+										->hydrate(false)
+										->select(['id'])
+										->order(['id'=>'DESC'])
+										->limit(1);
 
-					$this->request->data['association_id'] = $asso_id[0]['id'];
-					$this->request->data['tract_id'] = $tract[0]['id'];
-					$this->request->data['type'] = $amounts_type[$this->request->data['type']];
+						$tract = $tract->toArray();
+						
+						if(!empty($tract))
+						{
+							$this->request->data['association_id'] = $asso_id[0]['id'];
+							$this->request->data['tract_id'] = $tract[0]['id'];
+							$this->request->data['type'] = $amounts_type[$this->request->data['type']];
+						}
 
 						$amounts = $this->Associations->Amounts->newEntity($this->request->data);
 
@@ -373,6 +393,10 @@ class AssociationsController extends AppController
 				$this->set('data',$association); // set() Pasa la variable association a la vista.
 			}
 		}
+		else
+		{
+			$this->redirect(['action'=>'/']);
+		}
 
 
 		
@@ -380,6 +404,7 @@ class AssociationsController extends AppController
 
 	public function delete($id = null)
 	{
+		//TODO: Implementar esto hasta que existan facturas
 		if($id)
 		{
 			try
@@ -433,6 +458,10 @@ class AssociationsController extends AppController
 
 		
 		}
+		else
+		{
+			$this->redirect(['action'=>'/']);
+		}
 
 	}
 	
@@ -482,6 +511,10 @@ class AssociationsController extends AppController
 			{
 				$this->set('data',$association); // set() Pasa la variable association a la vista.
 			}
+		}
+		else
+		{
+			$this->redirect(['action'=>'/']);
 		}		
 	}
 
@@ -519,49 +552,176 @@ class AssociationsController extends AppController
 			
 			return $this->redirect(['action'=>'show_disables']);
 		}
+		else
+		{
+			$this->redirect(['action'=>'/']);
+		}
 	}
 
 	
-	public function detailedInformation($id = null)
+	public function detailedInformation($id = null, $year = null)
 	{
 		$this->viewBuilder()->layout('admin_views');
 		if($id)
 		{
 
-			$amounts = $this->Associations->Amounts->find()
-						->hydrate(false)
-						->select(['amount','max'=>'max(id)','amount_saving', 'date', 'spent', 'deadline'])
-						->where(['association_id'=>$id]);
-			$amounts = $amounts->toArray();
+			$year = ($year ? $year: date('Y')); //Si el año viene nulo, agregamos el actual
 
-			if(is_null($amounts[0]['amount']))
-			{
-				$amounts = [];
-			}
+			$tract_dates = $this->Associations->Amounts->find()
+								->hydrate(false)
+								->select(['tract.date','type','tract.number'])
+								->andwhere(['association_id'=>$id, 'YEAR(tract.date)'=>$year])
+								->join([
+									'table'=>'tracts',
+									'alias'=>'tract',
+									'type'=>'RIGHT',
+									'conditions'=>'Amounts.tract_id = tract.id'
+
+									])
+								//->order(['tract.id'=>'DESC', 'Amounts.id'=>'DESC']);
+								//->order(['type'=>'ASC']);
+								->group(['tract.date']);
+								//->limit(1);
 
 
+			$tract_dates = $tract_dates->toArray();
 
-			$invoices = $this->Associations->Invoices->find()
-						->hydrate(false)
-						->where(['association_id'=>$id]);  //State = 1, aprobada
-			$invoices = $invoices->toArray();
+			$this->loadModel('Tracts'); //Obtenemos todos los años que existen
 
-			$box = $this->Associations->Boxes->find()
-					->hydrate(false)
-					->select(['little_amount','big_amount'])
-					->where(['association_id'=>$id]);
+			$tracts_year = $this->Tracts->find()
+								->hydrate(false)
+								->select(['year'=>'YEAR(date)'])
+								->order(['(year'=>" = '".$year."') DESC, year"]) //NO LO INTENTEN EN SUS CASAS!!! XD
+								->group(['year']);
 
-			$box = $box->toArray();
+			$tracts_year = $tracts_year->toArray();
 
-			$information['amounts'] = $amounts;
-			$information['invoices'] = $invoices;
-			$information['box'] = $box;
 
-			$this->set('data', $information);
+			$association_name = $this->Associations->find()
+								->hydrate(false)
+								->select(['name'])
+								->where(['id'=>$id]);
+
+			$association_name = $association_name->toArray();
+
+
+			$this->set('dates',$tract_dates);
+			$this->set('association_name',$association_name);
+			$this->set('years',$tracts_year);
+
+
 		}
 		else
 		{
-			#TODO:redirigir al /associations
+			$this->redirect(['action'=>'/']);
 		}
 	}
+
+
+
+	public function getAmounts($association_id = null, $amount_type = null, $box_type = null,$invoice_type = null, $date = null)
+	{
+		if($amount_type != 2)
+		{
+			$amount = $this->Associations->Amounts->find()
+							->hydrate(false)
+							->select(['tract.number','amount','tract.deadline', 'date', 'detail'])
+							->andwhere(['association_id'=>$association_id, 'type'=>$amount_type])
+							->join([
+								'table'=>'tracts',
+								'alias'=>'tract',
+								'type'=>'RIGHT',
+								'conditions'=>'Amounts.tract_id = tract.id and tract.date = '."'".$date."'"
+
+								]);
+
+			$amount = $amount->toArray();
+
+
+			$box = $this->Associations->Boxes->find()
+							->hydrate(false)
+							->select(['little_amount','big_amount'])
+							->andwhere(['association_id'=>$association_id, 'type'=>$box_type])
+							->join([
+								'table'=>'tracts',
+								'alias'=>'tract',
+								'type'=>'RIGHT',
+								'conditions'=>'Boxes.tract_id = tract.id and tract.date = '."'".$date."'"
+
+								]);
+
+			$box = $box->toArray();
+
+
+
+			$initial_amount = $this->Associations->InitialAmounts->find()
+							->hydrate(false)
+							->select(['amount'])
+							->andwhere(['association_id'=>$association_id, 'type'=>$amount_type])
+							->join([
+								'table'=>'tracts',
+								'alias'=>'tract',
+								'type'=>'RIGHT',
+								'conditions'=>'InitialAmounts.tract_id = tract.id and tract.date = '."'".$date."'"
+
+								]);
+
+			$initial_amount = $initial_amount->toArray();
+
+
+			$information['boxes'] = $box;
+			$information['initial_amount'] = $initial_amount;
+
+		}
+		else
+		{
+			//TODO: Filtrar para que solo me dé el superávit de cierta fecha
+
+			$amount = $this->Associations->Surpluses->find()
+							->hydrate(false)
+							->select(['amount'])
+							->where(['association_id'=>$association_id]);
+
+
+			$amount = $amount->toArray();	
+		}
+
+
+			
+			$invoices = $this->Associations->Invoices->find()
+							->hydrate(false)
+							->select(['date','number','detail','provider','amount','attendant','clarifications'])
+							->andwhere(['association_id'=>$association_id, 'kind'=>$invoice_type, 'state'=>1])
+							->join([
+								'table'=>'tracts',
+								'alias'=>'tract',
+								'type'=>'RIGHT',
+								'conditions'=>'Invoices.tract_id = tract.id and tract.date = '."'".$date."'"
+
+								]);
+
+			$invoices = $invoices->toArray();
+
+
+			$information['amount'] = $amount;
+			
+			$information['invoices'] = $invoices;
+			
+
+			$information = json_encode($information);
+
+
+			die($information);
+	}
+
+
+
+
+
+
+
+
+
+
+
 }

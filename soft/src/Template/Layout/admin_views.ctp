@@ -1,5 +1,10 @@
+<<<<<<< HEAD
  <!DOCTYPE html>
 <html lang="en">
+=======
+<!DOCTYPE html>
+<html lang="en" >
+>>>>>>> CRUD_Associations
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,6 +22,9 @@
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
     <?php echo $this->Html->meta('favicon.ico','webroot/favicon.ico',array('type' => 'icon'));?>
+    <?=$this->Html->script('jquery2.js') ?>
+
+    <?= $this->Html->css('jquery-ui/jquery-ui.min.css') ?>
 
 </head><!--/head-->
 
@@ -45,10 +53,18 @@
                   <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrar Montos
                   <span class="caret"></span></a>
                   <ul class="dropdown-menu">
+<<<<<<< HEAD
                       <li><?php echo $this->Html->link('Agregar Nuevo Tracto', '/tracts/add');?></li>
                       <li><?php echo $this->Html->link('Agregar Montos', '/amounts/show_associations');?></li>
 
                       <li><?php echo $this->Html->link('Ver Montos Detallados', '/associations/detailed_information');?></li>
+=======
+                      <li><?php echo $this->Html->link('Agregar Nuevo Tracto', '/tracts/add');?></li>                  
+                      <li><?php echo $this->Html->link('Agregar Montos', '/amounts/add');?></li>
+                      <li><?php echo $this->Html->link('Agregar Superávit', '/surpluses/show_associations/1');?></li>
+                      <li><?php echo $this->Html->link('Agregar Montos Iniciales', '/initialAmounts/add');?></li>
+                      <li><?php echo $this->Html->link('Ver Montos Detallados', '/associations/show_associations/5');?></li>
+>>>>>>> CRUD_Associations
               </ul>
             </li>
 
@@ -83,9 +99,11 @@
     </div>
 
 
-     <?=$this->Html->script('jquery2.js') ?>
      <?=$this->Html->script('bootstrap.min.js') ?>
      <?=$this->Html->script('jquery_association_admin.js') ?>
+
+      <?=$this->Html->script('modernizr/modernizr-custom.js') ?>
+     <?=$this->Html->script('jquery-ui/jquery-ui.min.js') ?>
 
 </body>
 </html>

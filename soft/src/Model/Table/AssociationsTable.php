@@ -14,6 +14,8 @@ class AssociationsTable extends Table
         $this->hasMany('Amounts');
         $this->hasMany('Boxes');
         $this->hasMany('Invoices');
+        $this->hasMany('InitialAmounts');        
+        $this->hasMany('Surpluses');  
     
     }
 
@@ -27,12 +29,12 @@ class AssociationsTable extends Table
             ])
             ->requirePresence('name')
             ->add('name', 'validFormat', [
-                        'rule' => array('custom', '/^[A-Za-z0-9]+$/'),
+                        'rule' => array('custom', '/[A-Za-z0-9]([A-Za-z0-9]| )+/'),
                         'message' => 'Solo letras y números.'
             ])
             ->notEmpty('location')
             ->add('location', 'validFormat', [
-                        'rule' => array('custom', '/^[A-Za-z0-9\-,]+$/'),
+                        'rule' => array('custom', '/[A-Za-z0-9]+$/'),
                         'message' => 'Solo letras y números.'
             ])
             ->notEmpty('headquarters')

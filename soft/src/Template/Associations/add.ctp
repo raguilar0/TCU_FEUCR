@@ -73,15 +73,17 @@
 
     echo "<div class = 'row'>";
 
-        echo "<div class = 'col-xs-12 text-center col-md-1'>";
+        
 
         if(!empty($association['tract']))
         {
+            echo "<div class = 'col-xs-12 text-center col-md-1'>";
                     echo $this->Form->button('Asociar Montos',['type'=>'button' ,'data-toggle'=>'collapse', 'data-target'=>'#form_amounts', 'class'=>'btn btn-success', 'id'=>'addAmountsBtn']);
         }
         else
         {
-            echo "<h5 style='color:green;'>Para obtener una mayor funcionalidad, agregá un tracto primero.</h5>";
+            echo "<div class = 'col-xs-12'>";
+            echo "<h5 style='color:green;text-align:center;'>Para obtener una mayor funcionalidad, agregá un tracto primero.</h5>";
         }
                 
         echo "</div>";
@@ -129,7 +131,8 @@ if(!empty($association['tract']))
                 echo "</div>";
 
                 echo "<div class = 'col-xs-12 col-md-4'>"; 
-                echo "<h4>".$this->Form->input('date', ['class' => 'form-control', 'label'=>'Fecha', 'type'=>'date'])."</h4>";
+                //echo "<h4>".$this->Form->input('date', ['class' => 'form-control', 'label'=>'Fecha', 'type'=>'date'])."</h4>";
+                echo "<h4><label for='#date'>Fecha</label>"."<br><input name='date' type='date' id = 'date' class='form-control date'>"."</h4>";
                 echo "</div>";                                
 
             echo "</div>";
