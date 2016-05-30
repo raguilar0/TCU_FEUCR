@@ -1,10 +1,5 @@
-<<<<<<< HEAD
  <!DOCTYPE html>
 <html lang="en">
-=======
-<!DOCTYPE html>
-<html lang="en" >
->>>>>>> CRUD_Associations
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -53,18 +48,11 @@
                   <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrar Montos
                   <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-<<<<<<< HEAD
-                      <li><?php echo $this->Html->link('Agregar Nuevo Tracto', '/tracts/add');?></li>
-                      <li><?php echo $this->Html->link('Agregar Montos', '/amounts/show_associations');?></li>
-
-                      <li><?php echo $this->Html->link('Ver Montos Detallados', '/associations/detailed_information');?></li>
-=======
                       <li><?php echo $this->Html->link('Agregar Nuevo Tracto', '/tracts/add');?></li>                  
                       <li><?php echo $this->Html->link('Agregar Montos', '/amounts/add');?></li>
                       <li><?php echo $this->Html->link('Agregar Superávit', '/surpluses/show_associations/1');?></li>
                       <li><?php echo $this->Html->link('Agregar Montos Iniciales', '/initialAmounts/add');?></li>
                       <li><?php echo $this->Html->link('Ver Montos Detallados', '/associations/show_associations/5');?></li>
->>>>>>> CRUD_Associations
               </ul>
             </li>
 
