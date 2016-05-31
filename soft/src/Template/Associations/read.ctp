@@ -67,36 +67,36 @@
 
 <div class="row text-center">
     <div class="col-xs-12">
-      <h2>Montos</h2>
+      <h2>Montos de Tracto</h2>
     </div>
 
 </div>
 
+<br>
+
 <div class="table-responsive">
-  <table class="table read_association">
+  <table class="table tables">
   <thead>
     <tr>
+      <th>#</th>
       <th>Cantidad Asignada</th>
-      <th>Monto de Ahorro</th>
+      <th>Fecha de Asignación</th>      
       <th>Fecha de Inicio del Tracto</th>
-      <th>Fecha de Fin del Tracto</th>
-      <th>Total en Gastos</th>              
-      <th>Saldo</th>   
+      <th>Fecha de Fin del Tracto</th>             
     </tr>
   </thead>
   <tbody>
 
 
       <?php
+
           foreach ($data['amounts'] as $key => $value) {
              echo "<tr>";
-
+              echo "<td>".$value['tract']['number']."</td>";
               echo "<td>".$value['amount']."</td>";
-              echo "<td>".$value['amount_saving']."</td>";
-              echo "<td>".$value['date']."</td>";
-              echo "<td>".$value['deadline']."</td>";
-              echo "<td>".$value['spent']."</td>";                        
-              echo "<td>".(($value['amount']+$value['amount_saving'])-$value['spent'])."</td>";   
+              echo "<td>".$value['date']."</td>";              
+              echo "<td>".$value['tract']['date']."</td>";
+              echo "<td>".$value['tract']['deadline']."</td>";                      
              echo "</tr>";
           }
       ?>

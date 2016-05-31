@@ -8,7 +8,7 @@
 
 <?php
 
-	echo $this->Form->create($data, ['id'=>'submit2']);
+	echo $this->Form->create($data, ['id'=>'submit2', 'enctype'=>'multipart/form-data']);
 	echo "<div class='form-group'>";
 
 
@@ -29,12 +29,12 @@
     echo "<div class = 'col-xs-12 col-md-4'>";
 
     echo "<label for='sel1' id = 'tipos_label'>Tipo</label>";
-       echo "<select class='form-control' name = 'kind' >";
+       echo "<select class='form-control' name = 'kind'>";
 
             $kind = $data['invoices_type'];
 
             foreach ($kind as $key => $value) {
-                echo "<option>".$value."</option>"."<br>";
+                echo "<option>".$key."</option>"."<br>";
             }
             
         echo "</select>";
@@ -46,11 +46,15 @@
 
     echo "<div class = 'row'>";
 
-	    echo "<div class = 'col-xs-12 col-md-6'>";
+	    echo "<div class = 'col-xs-12 col-md-4'>";
+	     echo "<h4>".$this->Form->input('attendant', ['class' => 'form-control','label'=>'Responsable', 'maxlength'=> '100', 'placeholder'=>'Ejemplo: Andrey Pérez'])."</h4>";
+	    echo "</div >";	
+
+	    echo "<div class = 'col-xs-12 col-md-4'>";
 	     echo "<h4>".$this->Form->input('provider', ['class' => 'form-control','label'=>'Proveedor', 'maxlength'=> '100', 'placeholder'=>'Ejemplo: PriceSmart'])."</h4>";
 	    echo "</div >";	      
 
-	    echo "<div class = 'col-xs-12 col-md-6'>";
+	    echo "<div class = 'col-xs-12 col-md-4'>";
         	echo "<h4>".$this->Form->input('date', ['class' => 'form-control', 'label'=>'Fecha', 'type'=> 'date', 'id'=>'date_input'])."</h4>";
 	    echo "</div >";    
     
@@ -72,11 +76,27 @@
 
 
 
-    echo "<div class = 'row'>";
+    echo "<div class = 'row text-left'>";
+
+        echo "<div class = 'col-xs-12'>";    echo "<h4>".$this->Form->input('file',['type'=>'file', 'required','label'=>'Imagen de la Factura'])."</h4>";
+        echo "</div>";
+
+    echo  "</div>";
+
+    echo  "<div class='row text-center'>";
         echo "<div class = 'col-xs-12'>";    echo "<h4>".$this->Form->submit('Guardar Factura', ['class' => 'form-control', 'id' => 'asso_id'])."</h4>";
         echo "</div>";
+
     echo  "</div>";
 
     echo $this->Form->end();
 
 ?>
+
+<br>
+
+<div class="row text-right">
+	<div class="col-xs-12">
+		<p id="callback" style="font-size:20px"></p>
+	</div>
+</div>

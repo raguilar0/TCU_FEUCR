@@ -27,6 +27,16 @@ $('#submit5').submit(function(e){
     addAmounts();
 });
 
+$('#submit_add_initial_amount').submit(function(e){
+   e.preventDefault();
+    addInitialAmounts();
+});
+
+$("#submit_add_tract").submit(function(e){
+  e.preventDefault();
+  addTract();
+});
+
 
 //Esta función sirve para agregar una asociación 
 function addAssociation()
@@ -93,41 +103,15 @@ function modifyAssociation()
     function(data, status)
     {
 
-        var array_data = data.split(',');
-
-        if(array_data[0] == '1' && array_data[1] == '1')
+        if(data == '1')
         {
             $("#callback").text("¡Los datos se guardaron con éxito!");
             $("#callback").css("color","#01DF01");
         }
         else
         {
-            if(array_data[0] == '0' && array_data[1] == '0')
-            {
-                $("#callback").text("Lo sentimos. Algo ocurrió y ningún dato pudo guardarse. Verifique los datos y si el problema persiste contacte al administrador.");
-                $("#callback").css("color","red");
-            }
-            else
-            {
-                if(array_data[0] == '0' && array_data[1] == '1')
-                {
-                    $("#callback").text("Se guardó la información de los montos, pero no así la de asociaciones. Es probable que este nombre de asociación o de la sigla ya exista y por lo tanto no puede agregarse.");
-                    $("#callback").css("color","#FF8000");
-                }
-                else
-                {
-                    if(!$("#addAmountsBtn").length)
-                    {
-                        $("#callback").text("¡Los datos se guardaron con éxito!");
-                        $("#callback").css("color","#01DF01");
-                    }
-                    else
-                    {
-                        $("#callback").text("Se guardó la información de la Asociación, pero no así la de los montos. Revise que los datos suministrados son correctos.");
-                        $("#callback").css("color","red");                        
-                    }
-                }
-            }
+            $("#callback").text("Es probable que este nombre de asociación o de la sigla ya exista y por lo tanto no puede agregarse.");
+            $("#callback").css("color","red");
         }
               
 
@@ -246,29 +230,184 @@ function modifyHeadquarter()
 
 }
 
+function addInitialAmounts()
+{
+//TODO: Agregar el id al url, para guardar el monto en la asociación correspondiente
+ var xhttp = new XMLHttpRequest();
+    
+    
+        xhttp.onreadystatechange = function()
+        {
+    
+            if(xhttp.readyState == 4 && xhttp.status == 200)
+            {
+
+               document.getElementById("callback").innerHTML = xhttp.responseText;
+               setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 25000);
+             
+            }
+            else
+            {
+                if( xhttp.status == 404)
+                {
+    
+                   document.getElementById("callback").innerHTML = "Error: Se envió un nombre de sede que no coincide con nuestros registros.";
+                   document.getElementById("callback").style.color = "red";
+                   setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 9000);
+               
+                } 
+    
+                
+            }          
+               
+        };
+        
+        
+
+        
+         //Con esto obtengo la direccion relativa a la computadora en la que estoy
+         var path = location.pathname;
+         path = path.substring(0,path.length)+"/"+document.getElementById("associations").value;
+        
+        
+        xhttp.open("POST", path,true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send($("#submit_add_initial_amount").serialize());
+       
+
+}
+
+
 
 function addAmounts()
 {
-    $.post($("#submit5").attr("action"),$("#submit5").serialize(), 
-    function(data, status)
-    {   
-
-
-        if(data == '1')
+//TODO: Agregar el id al url, para guardar el monto en la asociación correspondiente
+ var xhttp = new XMLHttpRequest();
+    
+    
+        xhttp.onreadystatechange = function()
         {
-            $("#callback").text("¡Los datos se guardaron con éxito!");
-            $("#callback").css("color","#01DF01");
+    
+            if(xhttp.readyState == 4 && xhttp.status == 200)
+            {
+
+               document.getElementById("callback").innerHTML = xhttp.responseText;
+               setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 9000);
+             
+            }
+            else
+            {
+                if( xhttp.status == 404)
+                {
+    
+                   document.getElementById("callback").innerHTML = "Error: Se envió un nombre de sede que no coincide con nuestros registros.";
+                   document.getElementById("callback").style.color = "red";
+                   setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 9000);
+               
+                } 
+    
+                
+            }          
+               
+        };
+        
+        
+        
+         //Con esto obtengo la direccion relativa a la computadora en la que estoy
+         var path = location.pathname;
+         path = path.substring(0,path.length)+"/"+document.getElementById("associations").value;
+        
+    
+
+        
+        
+        
+        xhttp.open("POST", path,true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send($("#submit5").serialize());
+       
+
+}
+
+function getAssociationId()
+{
+    var xhttp = new XMLHttpRequest();
+    var respo;
+    
+        xhttp.onreadystatechange = function()
+        {
+    
+            if(xhttp.readyState == 4 && xhttp.status == 200)
+            {
+                respo = xhttp.responseText;
+             
+            }
+            else
+            {
+                if( xhttp.status == 404)
+                {
+    
+                   document.getElementById("callback").innerHTML = "Error: Se envió un nombre de sede que no coincide con nuestros registros.";
+                   document.getElementById("callback").style.color = "red";
+                   setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 9000);
+               
+                } 
+    
+                
+            }          
+               
+        };
+        
+        var path = location.pathname; //Con esto obtengo la direccion relativa a la computadora en la que estoy
+        path = path.substring(0,path.length-4)+"/getAssociationId/"+document.getElementById("associations").value;
+
+        //path = path.replace("add","getAssociationId/"+document.getElementById("associations").value);
+        xhttp.open("GET", path,false);
+        //xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send();  
+        
+        return respo;
+}
+
+
+
+
+function addTract()
+{
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function()
+    {
+
+        if(xhttp.readyState == 4 && xhttp.status == 200)
+        {
+
+            document.getElementById("callback").innerHTML = "¡Los datos se guardaron con éxito!";
+            document.getElementById("callback").style.color = "#01DF01";
+
+            setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 3000);
+         
         }
         else
         {
-             
-            $("#callback").text("Lo sentimos. Ocurrió un error inesperado, intente más tarde. Si el problema persiste, consulte al administrador.");
-            $("#callback").css("color","red");
+            if( xhttp.status == 404)
+            {
+
+               document.getElementById("callback").innerHTML = "Ocurrió un error al guardar los datos. Puede deberse a lo siguiente: <br> <ul><li>Introdujo un valor en el campo de Número de Tracto fuera de [1,4]</li><li>Introdujo una fecha de inicio y de final que ya existe en la base de datos</li></ul>";
+               document.getElementById("callback").style.color = "red";
+               setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 9000);
+           
+            } 
+
             
+        }          
+           
+    };
 
-        }               
-
-    });
+    xhttp.open("POST", document.getElementById("submit_add_tract").action,true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send($("#submit_add_tract").serialize());
+   
 }
 
 
@@ -310,3 +449,75 @@ function confirmAction()
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
 });
+
+
+$(document).ready( function(){
+    if(!Modernizr.inputtypes.date)
+    {           
+        $('#date').datepicker();            
+        $('#deadline').datepicker();  
+    }        
+});
+
+
+//El siguiente script es para cargar las sedes y asociaciones que partenencen en esa sede. Esto en un dropdown
+
+
+$(document).ready( function ()
+    {
+        getAssociations();
+    });
+
+    function getAssociations()
+    {
+        var xhttp = new XMLHttpRequest();
+    
+        xhttp.onreadystatechange = function()
+        {
+    
+            if(xhttp.readyState == 4 && xhttp.status == 200)
+            {
+    
+                var html = "";
+                var obj = JSON.parse(xhttp.responseText);
+
+                for(var key in obj)
+                {
+                    html += "<option>"+obj[key].name+"</option>";
+                }
+                
+                
+                document.getElementById("associations").innerHTML = html;
+                
+                changeAssociation();
+                
+            }
+            else
+            {
+                if( xhttp.status == 404)
+                {
+    
+                   document.getElementById("callback").innerHTML = "Error: Se envió un nombre de sede que no coincide con nuestros registros.";
+                   document.getElementById("callback").style.color = "red";
+                   setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 9000);
+               
+                } 
+    
+                
+            }          
+               
+        };
+    
+        xhttp.open("GET", "/FEUCR/soft/amounts/getAssociations/"+document.getElementById("headquarter_id").value,true);
+        //xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send();
+       
+    }
+    
+
+    function changeAssociation()
+    {
+        document.getElementById("association_name").innerHTML = document.getElementById("associations").value;
+    }
+    
+    

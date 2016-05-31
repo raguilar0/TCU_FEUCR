@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -6,11 +6,10 @@
    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>-->
 
 
-   
-    <title>Contraloría FEUCR</title>
-    <?= $this->Html->css('bootstrap.min.css') ?> 
 
-  
+    <title>Contraloría FEUCR</title>
+    <?= $this->Html->css('bootstrap.min.css') ?>
+
     <?= $this->Html->css('admin_views.css') ?>
 
 
@@ -18,6 +17,9 @@
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
     <?php echo $this->Html->meta('favicon.ico','webroot/favicon.ico',array('type' => 'icon'));?>
+    <?=$this->Html->script('jquery2.js') ?>
+
+    <?= $this->Html->css('jquery-ui/jquery-ui.min.css') ?>
 
 </head><!--/head-->
 
@@ -46,8 +48,16 @@
                   <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrar Montos
                   <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                      <li><?php echo $this->Html->link('Agregar Montos', '/amounts/show_associations');?></li>
+                      <li><?php echo $this->Html->link('Agregar Nuevo Tracto', '/tracts/add');?></li>                  
+                      <li><?php echo $this->Html->link('Agregar Montos', '/amounts/add');?></li>
+                      <li><?php echo $this->Html->link('Agregar Superávit', '/surpluses/show_associations/1');?></li>
+                      <li><?php echo $this->Html->link('Agregar Montos Iniciales', '/initialAmounts/add');?></li>
+                      <li><?php echo $this->Html->link('Ver Montos Detallados', '/associations/show_associations/5');?></li>
               </ul>
+            </li>
+
+            <li class="active">
+              <?php echo $this->Html->link('Administración de Usuarios', '/users/');?>
             </li>
 
             <li>
@@ -57,24 +67,31 @@
             <li>
               <?php echo $this->Html->link('Bitácora', '/associations/');?>
             </li>
+
+            <li class="active">
+              <?php echo $this->Html->link('Salir', '/users/logout');?>
+            </li>
+
         </ul>
       </div>
+
   </div>
 </nav>
 
 
     <div class="container body">
-        
-        <?= $this->fetch('content') ?>  
-        
-        
+
+        <?= $this->fetch('content') ?>
+
+
     </div>
 
 
-     <?=$this->Html->script('jquery2.js') ?>
      <?=$this->Html->script('bootstrap.min.js') ?>
      <?=$this->Html->script('jquery_association_admin.js') ?>
-     <?=$this->Html->script('jquery_associations.js') ?>
+
+      <?=$this->Html->script('modernizr/modernizr-custom.js') ?>
+     <?=$this->Html->script('jquery-ui/jquery-ui.min.js') ?>
 
 </body>
 </html>

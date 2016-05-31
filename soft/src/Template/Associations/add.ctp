@@ -8,7 +8,6 @@
 <br>
 
 <?php
-
 	echo $this->Form->create($association, ['id'=>'submit1']);
 	echo "<div class='form-group'>";
 
@@ -40,9 +39,12 @@
 
     echo "</div >";    
 
+
     echo "<div class = 'col-xs-6 col-md-4'>";
       echo $this->Form->button('',['type'=>'button' ,'data-toggle'=>'collapse', 'data-target'=>'#form_headquarter', 'class'=>'glyphicon glyphicon-plus btn btn-success', 'id'=>'addHeadquartersBtn']);
-    echo "</div >";
+    echo "</div >";    
+
+
 
 
     echo "</div>";
@@ -59,7 +61,7 @@
 
     //echo "<h4>".$this->Form->input('headquarters', ['class' => 'form-control','label'=>'Sede', 'maxlength'=> '100'])."</h4>";
 
-    echo "<h4>".$this->Form->input('location', ['class' => 'form-control','label'=>'Localización', 'maxlength'=> '1024', 'placeholder'=>'Ejemplo: San Pedro, San José, Costa Rica'])."</h4>";
+    echo "<h4>".$this->Form->input('location', ['class' => 'form-control','label'=>'Dirección', 'maxlength'=> '1024', 'placeholder'=>'Ejemplo: San Pedro, San José, Costa Rica'])."</h4>";
 
     echo "<h4>".$this->Form->input('schedule', ['class' => 'form-control','label'=>'Horario', 'maxlength'=> '512', 'placeholder'=>'Ejemplo: 7:00 am - 10:00 pm'])."</h4>";
     
@@ -71,16 +73,32 @@
 
     echo "<div class = 'row'>";
 
-        echo "<div class = 'col-xs-12 text-center col-md-1'>";
-            echo $this->Form->button('Asociar Montos',['type'=>'button' ,'data-toggle'=>'collapse', 'data-target'=>'#form_amounts', 'class'=>'btn btn-success', 'id'=>'addAmountsBtn']);
+        
+
+        if(!empty($association['tract']))
+        {
+            echo "<div class = 'col-xs-12 text-center col-md-1'>";
+                    echo $this->Form->button('Asociar Montos',['type'=>'button' ,'data-toggle'=>'collapse', 'data-target'=>'#form_amounts', 'class'=>'btn btn-success', 'id'=>'addAmountsBtn']);
+        }
+        else
+        {
+            echo "<div class = 'col-xs-12'>";
+            echo "<h5 style='color:green;text-align:center;'>Para obtener una mayor funcionalidad, agregá un tracto primero.</h5>";
+        }
+                
         echo "</div>";
-    echo "</div>";
+
+
+    echo "</div>";    
 
 
 
 
 
-echo "<div class='collapse' id='form_amounts'>";
+
+if(!empty($association['tract']))
+{
+   echo "<div class='collapse' id='form_amounts'>";
 
    echo " <br><br>";
 
@@ -91,18 +109,45 @@ echo "<div class='collapse' id='form_amounts'>";
 
         echo "<div class='form-group'>";
 
-        echo "<h4>".$this->Form->input('amount', ['class' => 'form-control','label'=>'Monto','type'=>'number','min'=> '0', 'placeholder'=>'Cantidad a Asignar'])."</h4>";
+            echo "<div class='row text-center'>";
 
-        echo "<h4>".$this->Form->input('amount_saving', ['class' => 'form-control','label'=>'Monto de Ahorro','type'=>'number','min'=> '0', 'placeholder'=>'Monto a Asignar'])."</h4>";
+                echo "<div class = 'col-xs-12 col-md-4'>"; 
+                echo "<h4>".$this->Form->input('amount', ['class' => 'form-control', 'label'=>'Monto', 'min'=>'0', 'placeholder'=>'Monto a asignar'])."</h4>";
+                echo "</div>";
 
-        echo "<h4>".$this->Form->input('date', ['class' => 'form-control', 'label'=>'Fecha de Inicio de Tracto', 'type'=> 'date', 'id'=>'date_input', 'value'=>$association['date']['date']])."</h4>";
+                echo "<div class = 'col-xs-12 col-md-4'>";
 
-        echo "<h4>".$this->Form->input('deadline', ['class' => 'form-control', 'label'=>'Fecha de Cierre de Tracto', 'type'=> 'date', 'id'=>'date_input', 'value'=>$association['date']['deadline']])."</h4>";        
+                echo "<label for='sel1' id = 'tipos_label'><h4>Tipo</h4></label>";
+                   echo "<select class='form-control' name = 'type'>";
 
+
+                        $kind = $association['amounts_type'];
+
+                        foreach ($kind as $key => $value) {
+                            echo "<option>".$key."</option>"."<br>";
+                        }
+                        
+                    echo "</select>";
+                echo "</div>";
+
+                echo "<div class = 'col-xs-12 col-md-4'>"; 
+                //echo "<h4>".$this->Form->input('date', ['class' => 'form-control', 'label'=>'Fecha', 'type'=>'date'])."</h4>";
+                echo "<h4><label for='#date'>Fecha</label>"."<br><input name='date' type='date' id = 'date' class='form-control date'>"."</h4>";
+                echo "</div>";                                
+
+            echo "</div>";
+
+            echo "<div class='row text-center'>";
+                echo "<div class='col-xs-12'>";
+                    echo "<h4>Detalle</h4>";
+                    echo "<h4>".$this->Form->textarea('detail', ['class' => 'form-control','placeholder'=>'Detalle del monto'])."</h4>";
+                echo "</div>";
+            echo "</div>";      
 
         echo "</div>";
+    echo "</div>"; 
+}
 
-echo "</div>";
 
 
 

@@ -44,7 +44,15 @@
 
               <li>
                 <?php echo $this->Html->link('Información General', '/associations/general_information');?>
-              </li>              
+              </li>            
+               
+              <li>
+                  <?php echo $this->Html->link('Agregar Usuario', '/users/add_user');?>
+              </li>
+
+              <li>
+                  <?php echo $this->Html->link('Perfil', '/users/perfil');?>
+              </li> 
 
           </ul>
           </div>
@@ -62,7 +70,6 @@
 
      <?=$this->Html->script('jquery2.js') ?>
      <?=$this->Html->script('bootstrap.min.js') ?>
-     <?=$this->Html->script('jquery_association_admin.js') ?>
      <?=$this->Html->script('jquery_associations.js') ?>
 
 </body>

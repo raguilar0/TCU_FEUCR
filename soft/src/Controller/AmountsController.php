@@ -22,84 +22,246 @@ class AmountsController extends AppController
 	
 
 
-	public function add($id = null)
+	public function add($association = null)
 	{
-		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
+		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vist
 		
-		
-		if($id)
+		$tracts = $this->getTracts(date('Y'));		
+
+		if($this->request->is('POST') && $association)
 		{
-			$amount = $this->Amounts->newEntity($this->request->data); //El parámetro es para validar los datos
 
-			$association_name = $this->Amounts->Associations->find()
-								->hydrate(false)
-								->select(['name','acronym'])							
-								->where(['id'=>$id]);
+			$data = $this->request->data;
 
-			$association_name = $association_name->toArray();
+			$association_id = $this->getAssociationId($association);
 
-			$amount['association'] = $association_name[0];
+			$successAmountsIndex = $this->saveAmounts($data, $association_id, $tracts); //Guardamos los montos
+			$successBoxesTract = $this->saveBoxes($data, $association_id,0,$tracts); //Guardamos las cajas de tracto
+			$successBoxesGenerated = $this->saveBoxes($data, $association_id,1,$tracts); //Guardamos las cajas de ingresos generados
 
 
 
-		
-			$response = 0;
+			$message = 'Se agregaron exitosamente '.$successAmountsIndex.' montos';
+			$message .= '<br>'.'Se agregaron exitosamente '.$successBoxesTract.' cajas de Tracto';
+			$message .= '<br>'.'Se agregaron exitosamente '.$successBoxesGenerated.' cajas de ingresos generados';
+			die($message);
 
 
-			if($this->request->is('post'))
-			{
-				$amount['association_id'] = $id;
 
-					if($this->Amounts->save($amount)) //Guarda los datos
-					{
-						$response = '1';
-					}
-
-				die($response);
-			}
-
-			else
-			{
-				/**
-					El siguiente código que asocia un date a $association
-					corrige el hecho de que una persona tenga que poner la fecha de inicio de tracto cada vez. Existen dos casos:
-		
-					1) La primera vez: La primera vez no existen montos asociados a ninguna asociación, por lo que se toma la fecha actual.
-		
-					2) Una vez que existan montos asociados: Cuando ya hay montos asociados, se toma como fecha de tracto actual al último monto asociado
-				**/
-		
-				$date = $this->Amounts->find()
-								->hydrate(false)
-								->select(['date', 'deadline'])
-								->order(['id'=>'DESC'])
-								->limit(1);
-		
-				$date = $date->toArray();
-		
-		
-		
-		
-		
-				if(!isset($date[0]))
-				{
-					$date['date'] = $date['deadline'] = date('Y-m-d');
-				}
-				else
-				{
-					$date = $date[0];
-				}
-		
-				unset($date[0]);
-				
-				$amount['date'] = $date;			
-			}
 		}
+		else
+		{
 
-		$this->set('amount',$amount);
-
+				$headquarters = $this->getHeadquarters(); //Pide todas las sedes
+				$this->set('head',$headquarters);
+				$this->set('data', $tracts);
+		}
 	}
 
+
+	private function saveAmounts($data, $association_id, $tracts)
+	{
+
+		$date = $data['date'];  //Estos datos son comunes a todos los tractos
+		unset($data['date']);
+
+		$detail = $data['detail'];
+		unset($data['detail']);
+
+
+		$index = 0;
+		$successIndex = 0;
+
+		$values['association_id'] = $association_id;
+		$values['date'] = $date;
+		$values['detail'] = $detail;
+		$values['type'] = 0;
+
+		foreach ($data as $key => $value) { //Se agrega monto por monto al tracto correspondiente
+			$values['amount'] = $value;
+			$values['tract_id'] = $tracts[$index]['id'];//$this->getTractId($tracts[$index]['date']); //Pide el id del tracto tomando como fecha la fecha de inicio
+
+			$entity = $this->Amounts->newEntity($values);
+
+			try
+			{
+				if($this->Amounts->save($entity))
+				{
+					++$successIndex;
+				}
+			}
+			catch(Exception $e)
+			{
+
+			}
+
+			++$index;
+		}
+
+		return $successIndex;
+	}
+
+
+	private function saveBoxes($data, $association_id, $type, $tracts)
+	{
+		$this->loadModel('Boxes');
+
+		unset($data['date']);
+
+		unset($data['detail']);
+
+
+		$index = 0;
+		$successIndex = 0;
+
+		$values['association_id'] = $association_id;
+		$values['type'] = $type;
+
+		foreach ($data as $key => $value) { //Se agrega monto por monto al tracto correspondiente
+			$values['little_amount'] = 0;
+			$values['big_amount'] = 0;
+			$values['tract_id'] = $tracts[$index]['id'];//$this->getTractId($tracts[$index]['date']); //Pide el id del tracto tomando como fecha la fecha de inicio
+
+			$entity = $this->Boxes->newEntity($values);
+
+			try
+			{
+				if($this->Boxes->save($entity))
+				{
+					++$successIndex;
+				}
+			}
+			catch(Exception $e)
+			{
+
+			}
+
+
+			++$index;
+		}
+
+		return $successIndex;
+	}
+
+	
+	public function getTracts($year)
+	{
+		$this->loadModel('Tracts');
+
+		$tracts = $this->Tracts->find()
+					->hydrate(false)
+					->where(['YEAR(date)'=>$year]); //Queremos los tractos del año actual
+		$tracts = $tracts->toArray();
+		
+		return $tracts;
+	}
+	
+	private function getHeadquarters()
+	{
+		$query = $this->Amounts->Associations->Headquarters->find() //Se trae solo las sedes que tienen alguna asocicación asociada :p
+		->hydrate(false)
+		->select(['Headquarters.name'])
+		->join([
+			 'table'=>'associations',
+			 'alias'=>'a',
+			 'type' => 'RIGHT',
+			 'conditions'=>'Headquarters.id = a.headquarter_id',
+			])
+		->where(['a.enable'=>1])
+		->group(['Headquarters.name']); //Elimina repetidos
+
+
+		$headquarters = $query->toArray();
+		
+		return $headquarters;
+	}
+
+	private function createBoxes($little_amount, $big_amount, $tract_id, $association_id, $type)
+	{
+		$this->loadModel("Boxes");
+
+		$data['little_amount'] = $little_amount;
+		$data['big_amount'] = $big_amount;
+		$data['tract_id'] = $tract_id;
+		$data['association_id'] = $association_id;
+		$data['type'] = $type;
+
+		$boxes = $this->Boxes->newEntity($data);
+
+		$success = false;
+
+		if($this->Boxes->save($boxes))
+		{
+			$success = true;
+		}
+
+		return $success;
+	}
+
+
+
+/**
+ *  Esta funcion devuelve el id del presente tracto 
+ **/
+	private function getTractId($actualDate)
+	{
+		$this->loadModel('Tracts');
+		
+		
+		$id = $this->Tracts->find()
+					->hydrate(false)
+					->select(['id'])
+					->where(function ($exp) use($actualDate) {
+                        return $exp
+                        	->lte('date',$actualDate) //<= date <= fecha actual
+                        	->gte('deadline',$actualDate); //deadline >= fecha actual
+                    });
+        
+        $id = $id->toArray();
+		
+		return $id[0]['id'];					
+	}
+
+	public function getAssociations($headquarter_name)
+	{
+
+		if($this->request->is("GET"))
+		{
+			$headquarter_id = $this->Amounts->Associations->Headquarters->find() //Se busca primero el id de esa sede por medio del nombre
+									->hydrate(false)
+									->select(['id'])
+									->where(['name'=>$headquarter_name]);
+									
+			$headquarter_id = $headquarter_id->toArray();
+			
+			
+			$associations = $this->Amounts->Associations->find() //Se obtienen los nombres de las asociaciones con el id recuperado
+							->hydrate(false)
+							->select(['name'])
+							->where(['headquarter_id'=>$headquarter_id[0]['id']]);
+							
+			$associations = $associations->toArray();
+			
+			$associations = json_encode($associations);
+
+			die($associations);
+		}
+
+		
+	}
+
+
+	public function getAssociationId($association_name)
+	{
+			$association_id = $this->Amounts->Associations->find() //Se busca primero el id de esa sede por medio del nombre
+									->hydrate(false)
+									->select(['id'])
+									->where(['name'=>$association_name]);
+									
+			$association_id = $association_id->toArray();
+
+			return $association_id[0]['id'];
+	}
 
 	public function edit($amount_id)
 	{
@@ -124,7 +286,8 @@ class AmountsController extends AppController
 						 'type' => 'RIGHT',
 						 'conditions'=>'Headquarters.id = a.headquarter_id',
 						])
-					->where(['a.enable'=>1]);
+					->where(['a.enable'=>1])
+					->order(['Headquarters.name']);
 
 
 			$query = $query->toArray();
