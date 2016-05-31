@@ -677,10 +677,11 @@ class AssociationsController extends AppController
 		{
 			//TODO: Filtrar para que solo me dé el superávit de cierta fecha
 
+
 			$amount = $this->Associations->Surpluses->find()
 							->hydrate(false)
 							->select(['amount'])
-							->where(['association_id'=>$association_id]);
+							->andwhere(['association_id'=>$association_id, 'YEAR(date)'=>$date]);
 
 
 			$amount = $amount->toArray();	
