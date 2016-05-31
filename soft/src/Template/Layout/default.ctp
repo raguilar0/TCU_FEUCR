@@ -10,6 +10,7 @@
     <?= $this->Html->css('prettyPhoto.css') ?>
     <?= $this->Html->css('main.css') ?>
 
+
     <?php echo $this->Html->meta('favicon.ico','webroot/favicon.ico',array('type' => 'icon'));?>
 
 
@@ -30,8 +31,63 @@
 </head><!--/head-->
 
 <body data-spy="scroll" data-target="#navbar" data-offset="0">
+    <header id="header" role="banner">
+        <div class="container">
+            <div id="navbar" class="navbar navbar-default">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index.html"></a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><?php echo $this->Html->link('', ['controller'=>'Pages', 'action'=>'home'],['class'=>'glyphicon glyphicon-home'])?></li>
+                        <li><a href="#asociaciones">Asociaciones</a></li>
+                        <li><a href="#acerca-de">Acerca de</a></li>
+                        <li><a href="#contacto">Contáctanos</a></li>
 
-     <?= $this->fetch('content') ?>
+                        <li><?php
+                            if(!is_null($this->request->session()->read('Auth.User')) )
+                            {
+                                if(($this->request->session()->read('Auth.User.role') == 'admin'))
+                                {
+                                    echo $this->Html->link('Administrar',['controller'=>'associations', 'action'=>'index']);
+                                }
+                                else
+                                {
+                                    echo $this->Html->link('Administrar',['controller'=>'associations', 'action'=>'index_associations']);
+                                }
+
+                            }
+                            ?>
+                        </li>
+
+                        <li><?php echo $this->Html->link('Login',['controller'=>'users', 'action'=>'login'])?></li>
+
+                        <li><?php
+                                if(!is_null($this->request->session()->read('Auth.User')))
+                                  {
+
+                                    echo $this->Html->link('Logout',['controller'=>'users', 'action'=>'logout']);
+                                  }
+                                 ?>
+                        </li>
+
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header><!--/#header-->
+
+
+         <?= $this->fetch('content') ?>
+
+
 
      <?=$this->Html->script('jquery.js') ?>
      <?=$this->Html->script('bootstrap.min.js') ?>

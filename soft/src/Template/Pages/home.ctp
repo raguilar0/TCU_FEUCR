@@ -1,29 +1,5 @@
 
-    <header id="header" role="banner">
-        <div class="container">
-            <div id="navbar" class="navbar navbar-default">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="index.html"></a>
-                </div>
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="#main-slider"><i class="glyphicon glyphicon-home"></i></a></li>
-                        <li><a href="#asociaciones">Asociaciones</a></li>
-                        <li><a href="#future-1">Futuro</a></li>
-                        <li><a href="#future-2">Futuro</a></li>
-                        <li><a href="#acerca-de">Acerca de</a></li>
-                        <li><a href="#contacto">Contáctanos</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </header><!--/#header-->
+
 
     <section id="main-slider" class="carousel">
         <div class="carousel-inner">

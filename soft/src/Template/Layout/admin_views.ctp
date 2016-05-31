@@ -38,7 +38,7 @@
           </button>
 
 
-          <a class="navbar-brand" href="#">FEUCR</a>
+            <?php echo $this->Html->link('Home', ['controller'=>'Pages', 'action'=>'home'],['class'=>'navbar-brand'])?>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

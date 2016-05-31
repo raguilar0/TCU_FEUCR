@@ -3,6 +3,21 @@ body {
   background: #e5e5e5;
   color: #999;
 }
+
+.body
+{
+  background-color: white;
+  padding-bottom: 1%;
+  border-radius: 15px;
+
+}
+
+#submit_btn
+{
+  width: 20%;
+  margin: auto;
+}
+
 h1,
 h2,
 h3,
