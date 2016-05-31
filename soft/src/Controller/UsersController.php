@@ -168,10 +168,11 @@ class UsersController extends AppController
                     $this->Auth->setUser($user);
 
                     if(($this->request->session()->read('Auth.User.role')) == 'admin'){
-                    return $this->redirect($this->Auth->redirectUrl("/associations/"));
+                    return $this->redirect($this->Auth->redirectUrl());
                   }
                   else{
-                    //return $this->redirect($this->Auth->redirectUrl("//"));
+                      debug($this->request->session()->read('Auth.User.role'));
+                    //return $this->redirect($this->Auth->redirectUrl());
                   }
                 }
                 $this->Flash->error(__('Nombre de usuario o contraseña invalidos, intentelo de nuevo.'));
