@@ -27,6 +27,11 @@ $('#submit5').submit(function(e){
     addAmounts();
 });
 
+$('#submit_add_initial_amount').submit(function(e){
+   e.preventDefault();
+    addInitialAmounts();
+});
+
 $("#submit_add_tract").submit(function(e){
   e.preventDefault();
   addTract();
@@ -225,6 +230,54 @@ function modifyHeadquarter()
 
 }
 
+function addInitialAmounts()
+{
+//TODO: Agregar el id al url, para guardar el monto en la asociación correspondiente
+ var xhttp = new XMLHttpRequest();
+    
+    
+        xhttp.onreadystatechange = function()
+        {
+    
+            if(xhttp.readyState == 4 && xhttp.status == 200)
+            {
+
+               document.getElementById("callback").innerHTML = xhttp.responseText;
+               setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 25000);
+             
+            }
+            else
+            {
+                if( xhttp.status == 404)
+                {
+    
+                   document.getElementById("callback").innerHTML = "Error: Se envió un nombre de sede que no coincide con nuestros registros.";
+                   document.getElementById("callback").style.color = "red";
+                   setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 9000);
+               
+                } 
+    
+                
+            }          
+               
+        };
+        
+        
+
+        
+         //Con esto obtengo la direccion relativa a la computadora en la que estoy
+         var path = location.pathname;
+         path = path.substring(0,path.length)+"/"+document.getElementById("associations").value;
+        
+        
+        xhttp.open("POST", path,true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send($("#submit_add_initial_amount").serialize());
+       
+
+}
+
+
 
 function addAmounts()
 {
@@ -237,7 +290,8 @@ function addAmounts()
     
             if(xhttp.readyState == 4 && xhttp.status == 200)
             {
-               document.getElementById("callback").innerHTML = "Los datos se guardaron exitosamente!";
+
+               document.getElementById("callback").innerHTML = xhttp.responseText;
                setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 9000);
              
             }
@@ -258,11 +312,10 @@ function addAmounts()
         };
         
         
-        var object = JSON.parse(getAssociationId());
         
          //Con esto obtengo la direccion relativa a la computadora en la que estoy
          var path = location.pathname;
-         path = path.substring(0,path.length)+"/"+object[0].id;
+         path = path.substring(0,path.length)+"/"+document.getElementById("associations").value;
         
     
 
@@ -274,31 +327,6 @@ function addAmounts()
         xhttp.send($("#submit5").serialize());
        
 
-
-
-    /**
-    $.post($("#submit5").attr("action"),$("#submit5").serialize(), 
-    function(data, status)
-    {   
-
-
-        if(data == '1')
-        {
-            $("#callback").text("¡Los datos se guardaron con éxito!");
-            $("#callback").css("color","#01DF01");
-        }
-        else
-        {
-             
-            $("#callback").text("Lo sentimos. Ocurrió un error inesperado, intente más tarde. Si el problema persiste, consulte al administrador.");
-            $("#callback").css("color","red");
-            setTimeout(function(){location.reload();},1000);
-
-        }               
-
-    });
-
-    **/
 }
 
 function getAssociationId()

@@ -46,25 +46,29 @@ class AppController extends Controller
         $this->loadComponent('Flash');
     }
     */
+    
+
+
+
     public function initialize()
     {
-        $this->loadComponent('Flash');
-        $this->loadComponent('Auth', [
-            'loginRedirect' => [
-                'controller' => 'associations',
-                'action' => 'index'
-            ],
-            'logoutRedirect' => [
-                'controller' => 'users',
-                'action' => 'logout',
-                'home'
-            ]
-        ]);
-    }
+        
+        parent::initialize();
 
+        $this->loadComponent('RequestHandler');
+        $this->loadComponent('Flash');
+        $this->loadComponent('Auth', ['loginRedirect' => ['controller' => 'Pages',
+                                                         'action' => 'home'
+                                                        ],
+                                     'logoutRedirect' => ['controller' => 'Pages',
+                                                          'action' => 'home'
+                                                         ]
+                                    ]);
+    }
+    
     public function beforeFilter(Event $event)
         {
-            $this->Auth->allow(['index', 'view', 'display']);
+            $this->Auth->allow(['display']);
         }
 
     /**

@@ -559,18 +559,18 @@ class AssociationsController extends AppController
 	}
 
 	
-	public function detailedInformation($id = null)
+	public function detailedInformation($id = null, $year = null)
 	{
 		$this->viewBuilder()->layout('admin_views');
 		if($id)
 		{
 
-
+			$year = ($year ? $year: date('Y')); //Si el año viene nulo, agregamos el actual
 
 			$tract_dates = $this->Associations->Amounts->find()
 								->hydrate(false)
 								->select(['tract.date','type','tract.number'])
-								->where(['association_id'=>$id])
+								->andwhere(['association_id'=>$id, 'YEAR(tract.date)'=>$year])
 								->join([
 									'table'=>'tracts',
 									'alias'=>'tract',
@@ -583,7 +583,18 @@ class AssociationsController extends AppController
 								->group(['tract.date']);
 								//->limit(1);
 
+
 			$tract_dates = $tract_dates->toArray();
+
+			$this->loadModel('Tracts'); //Obtenemos todos los años que existen
+
+			$tracts_year = $this->Tracts->find()
+								->hydrate(false)
+								->select(['year'=>'YEAR(date)'])
+								->order(['(year'=>" = '".$year."') DESC, year"]) //NO LO INTENTEN EN SUS CASAS!!! XD
+								->group(['year']);
+
+			$tracts_year = $tracts_year->toArray();
 
 
 			$association_name = $this->Associations->find()
@@ -596,6 +607,7 @@ class AssociationsController extends AppController
 
 			$this->set('dates',$tract_dates);
 			$this->set('association_name',$association_name);
+			$this->set('years',$tracts_year);
 
 
 		}

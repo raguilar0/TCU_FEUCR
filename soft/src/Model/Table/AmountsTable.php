@@ -6,6 +6,7 @@ use Cake\Validation\Validator;
 use Cake\I18n\Time;
 use Cake\Event\Event;
 use ArrayObject;
+use Cake\Datasource\ConnectionManager;
 
 class AmountsTable extends Table
 {
@@ -49,6 +50,17 @@ class AmountsTable extends Table
        if (isset($data['deadline'])) {
            $data['deadline'] = new Time($data['deadline']);
        }
+
+    }
+
+    public function getConnection()
+    {
+       // $dsn = 'mysql://sql3114688:9KUJFT3TWD@sql3.freemysqlhosting.net/sql3114688';
+        //ConnectionManager::config('event', ['url' => $dsn]);
+
+        $connection = ConnectionManager::get('default');
+
+        return $connection;
 
     }
 }

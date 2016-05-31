@@ -11,7 +11,7 @@ class UsersController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow('add', 'logout');
+       // $this->Auth->allow('add', 'logout');
     }
 
      public function index()
@@ -90,6 +90,7 @@ class UsersController extends AppController
 
     public function add()
     {
+
         $user = $this->Users->newEntity();
         $this->loadModel('Associations');
 
@@ -158,22 +159,32 @@ class UsersController extends AppController
 
     public function login()
         {
-          $this->viewBuilder()->layout('admin_views');
+          //$this->viewBuilder()->layout('default');
         //  $user = $this->Users->find();
         //  $this->set('user', $user);
-            if ($this->request->is('post')) {
-                $user = $this->Auth->identify();
-                if ($user) {
-                    $this->Auth->setUser($user);
 
-                    if(($this->request->session()->read('Auth.User.role')) == 'admin'){
-                    return $this->redirect($this->Auth->redirectUrl("/associations/"));
-                  }
-                  else{
-                    return $this->redirect($this->Auth->redirectUrl("/users/perfil/"));
-                  }
+            if(!$this->Auth->user())
+            {
+                if ($this->request->is('post')) {
+                    $user = $this->Auth->identify();
+                    if ($user) {
+                        $this->Auth->setUser($user);
+
+                        if(($this->request->session()->read('Auth.User.role')) == 'admin'){
+                            return $this->redirect($this->Auth->redirectUrl());
+                        }
+                        else{
+                            debug($this->request->session()->read('Auth.User.role'));
+                            //return $this->redirect($this->Auth->redirectUrl());
+                        }
+                    }
+                    $this->Flash->error(__('Nombre de usuario o contraseña invalidos, intentelo de nuevo.'));
+
                 }
-                $this->Flash->error(__('Nombre de usuario o contraseña invalidos, intentelo de nuevo.'));
+            }
+            else
+            {
+                return $this->redirect(['controller'=>'Pages', 'action'=>'home']);
             }
 
         }

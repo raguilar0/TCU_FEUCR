@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,7 +38,7 @@
           </button>
 
 
-          <a class="navbar-brand" href="#">FEUCR</a>
+            <?php echo $this->Html->link('Home', ['controller'=>'Pages', 'action'=>'home'],['class'=>'navbar-brand'])?>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -48,10 +48,10 @@
                   <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administrar Montos
                   <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-
-                      <li><?php echo $this->Html->link('Agregar Nuevo Tracto', '/tracts/add');?></li>
+                      <li><?php echo $this->Html->link('Agregar Nuevo Tracto', '/tracts/add');?></li>                  
                       <li><?php echo $this->Html->link('Agregar Montos', '/amounts/add');?></li>
                       <li><?php echo $this->Html->link('Agregar Superávit', '/surpluses/show_associations/1');?></li>
+                      <li><?php echo $this->Html->link('Agregar Montos Iniciales', '/initialAmounts/add');?></li>
                       <li><?php echo $this->Html->link('Ver Montos Detallados', '/associations/show_associations/5');?></li>
               </ul>
             </li>

@@ -13,8 +13,7 @@ class UsersTable extends Table
         $this->addBehavior('Timestamp');
         $this->belongsTo('Associations');
         $this->hasMany('Amounts');
-      
-
+    
     }
 
     public function validationDefault(Validator $validator)

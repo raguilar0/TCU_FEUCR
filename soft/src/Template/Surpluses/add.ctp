@@ -1,4 +1,9 @@
 
+<div class="row text-center">
+    <div class="col-xs-12">
+        <h1>¡Agregá el superávit!</h1>
+    </div>
+</div>
 
 
 
@@ -13,6 +18,7 @@ echo $this->Form->create($surplus);
 
             echo "<div class = 'col-xs-12 col-md-6'>"; 
             echo "<h4>".$this->Form->input('amount', ['class' => 'form-control', 'label'=>'Monto', 'min'=>'0', 'placeholder'=>'Monto a asignar'])."</h4>";
+
             echo "</div>";
 
 
