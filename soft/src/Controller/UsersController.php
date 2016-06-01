@@ -1,7 +1,7 @@
 // src/Controller/UsersController.php
-
 namespace App\Controller;
 
+<?php
 use App\Controller\AppController;
 use Cake\Event\Event;
 
@@ -343,11 +343,8 @@ class UsersController extends AppController
 
         }
 
-            $this->set('user',$user); // set() Pasa la variable association a la vista.*/
-        }
+            $this->set('user',$user); // set() Pasa la variable association a la vista.
+*/
+      }
     }
-
-
 }
-
-?>
