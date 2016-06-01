@@ -1,4 +1,4 @@
-<!-- src/Template/Users/read.ctp -->
+<!-- src/Template/Users/modify.ctp -->
 
 <div class="row text-center">
 	<div class="col-xs-12">
