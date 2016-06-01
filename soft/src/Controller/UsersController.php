@@ -1,7 +1,8 @@
+<?php
 // src/Controller/UsersController.php
+
 namespace App\Controller;
 
-<?php
 use App\Controller\AppController;
 use Cake\Event\Event;
 
@@ -11,7 +12,7 @@ class UsersController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-       // $this->Auth->allow('add', 'logout');
+        $this->Auth->allow('add', 'logout');
     }
 
      public function index()
@@ -79,7 +80,7 @@ class UsersController extends AppController
     public function read($id)
     {
       $role = $this->request->session()->read('Auth.User.role');
-      debug($this->request->session()->read('Auth.User.role'));
+    //  debug($this->request->session()->read('Auth.User.role'));
 
         $this->viewBuilder()->layout('admin_views');
         $user = $this->Users->find()
@@ -90,7 +91,6 @@ class UsersController extends AppController
 
     public function add()
     {
-
         $user = $this->Users->newEntity();
         $this->loadModel('Associations');
 
@@ -107,10 +107,10 @@ class UsersController extends AppController
           $association_id = $association_id->toArray();
 
           $this->request->data['association_id'] = $association_id[0]['id'];
-/*
+
           $role = $this->request->data['role'];
 
-          debug($role);
+        //  debug($role);
 
           if($this->request->data['role'] == 'Administrador'){
               $this->request->data['role'] = 'admin';
@@ -119,15 +119,18 @@ class UsersController extends AppController
               $this->request->data['role'] = 'rep';
           }
 
-          debug($this->request->data['role']);
-*/
+        //  debug($this->request->data);
+
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
-              debug($this->request->data);
-                $this->Flash->success(__('El usuario ha sido agregado.'));
-                return $this->redirect(['action' => 'add']);
+            //  debug($this->request->data);
+                $this->Flash->success('El usuario ha sido agregado', ['key' => 'success']);
+                //return $this->redirect(['action' => 'add']);
             }
-            $this->Flash->error(__('Error al agregar usuario.'));
+
+          //  debug($user->errors());
+
+            $this->Flash->error(__('Error al agregar usuario.', ['key'=>'error']));
         }
 
         $association = $this->Associations->find();
@@ -137,18 +140,16 @@ class UsersController extends AppController
         $this->set('user', $user);
     }
 
-    public function modify($id)
+    public function modify($id = null)
     {
       $this->viewBuilder()->layout('admin_views');
       if($id){
 
         $user = $this->Users->find()
                             ->where(['association_id'=>$id]);
+        //$user= $user->toArray();
         $this->set('user',$user);
       }
-
-
-
 
     }
 
@@ -162,29 +163,21 @@ class UsersController extends AppController
           //$this->viewBuilder()->layout('default');
         //  $user = $this->Users->find();
         //  $this->set('user', $user);
+            if ($this->request->is('post')) {
+                $user = $this->Auth->identify();
+                if ($user) {
+                    $this->Auth->setUser($user);
 
-            if(!$this->Auth->user())
-            {
-                if ($this->request->is('post')) {
-                    $user = $this->Auth->identify();
-                    if ($user) {
-                        $this->Auth->setUser($user);
-
-                        if(($this->request->session()->read('Auth.User.role')) == 'admin'){
-                            return $this->redirect($this->Auth->redirectUrl());
-                        }
-                        else{
-                            debug($this->request->session()->read('Auth.User.role'));
-                            //return $this->redirect($this->Auth->redirectUrl());
-                        }
+                    if(($this->request->session()->read('Auth.User.role')) == 'admin'){
+                    return $this->redirect($this->Auth->redirectUrl("/associations/"));
                     }
-                    $this->Flash->error(__('Nombre de usuario o contraseña invalidos, intentelo de nuevo.'));
+                    else{
+                      return $this->redirect($this->Auth->redirectUrl("/associations/index_associations/"));
+                    }
 
+                  //  return $this->redirect($this->Auth->redirectUrl("/associations/"));
                 }
-            }
-            else
-            {
-                return $this->redirect(['controller'=>'Pages', 'action'=>'home']);
+                $this->Flash->error(__('Nombre de usuario o contraseña invalidos, intentelo de nuevo.'));
             }
 
         }
@@ -343,8 +336,11 @@ class UsersController extends AppController
 
         }
 
-            $this->set('user',$user); // set() Pasa la variable association a la vista.
-*/
-      }
+            $this->set('user',$user); // set() Pasa la variable association a la vista.*/
+        }
     }
+
+
 }
+
+?>

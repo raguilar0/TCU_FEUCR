@@ -1,4 +1,4 @@
-<!-- src/Template/Users/modify.ctp -->
+<!-- src/Template/Users/read.ctp -->
 
 <div class="row text-center">
 	<div class="col-xs-12">
@@ -13,7 +13,6 @@
   <table class="table read_association">
   <thead>
     <tr>
-			<th>ID</th>
       <th>Nombre de Usuario</th>
       <th>Nombre</th>
       <th>Primer Apellido</th>
@@ -24,16 +23,18 @@
   <tbody>
 
       <?php
+			debug($user);
           foreach ($user as $key) {
-             echo "<tr>";
-						 echo "<td>".$key['id']."</td>";
+              echo "<tr>";
               echo "<td>".$key['username']."</td>";
               echo "<td>".$key['name']."</td>";
               echo "<td>".$key['last_name_1']."</td>";
               echo "<td>".$key['last_name_2']."</td>";
+							//echo "<td>".$key['mail']."</td>";
 							echo "<td>".$key['role']."</td>";
-							echo "<td>".$this->Form->button('',['type'=>'button' ,'data-toggle'=>'collapse', 'data-target'=>'#modify_users', 'class'=>'glyphicon glyphicon-pencil btn btn-primary collapsed', 'id'=>'modifyUsersBtn'])."</td>";
-							echo "<td>".$this->Form->button('',['type'=>'button' ,'data-toggle'=>'collapse', 'data-target'=>'#modify_users', 'class'=>'btn btn-danger collapsed', 'id'=>'BlockUsersBtn'])."</td>";
+							//echo "<td>".$this->Form->button('',['type'=>'button' ,'data-toggle'=>'collapse', 'data-target'=>'#modify_users', 'class'=>'glyphicon glyphicon-pencil btn btn-primary collapsed', 'id'=>'modifyUsersBtn', 'onclick'=>'mostrar('.$key['id'].')'])."</td>";
+							echo "<td>".$this->Html->link('','/modify_user/'.$key['id'], ['class'=>'glyphicon glyphicon-pencil btn btn-primary'])."</td>";
+							echo "<td>".$this->Form->button('',['type'=>'button', 'class'=>'btn btn-danger collapsed', 'id'=>'BlockUsersBtn'])."</td>";
              echo "</tr>";
           }
       ?>
@@ -66,3 +67,11 @@
      <?php echo $this->Html->link('Atrás', '/users/', ['class'=>'btn btn-primary']);?>
   </div>
 </div>
+
+
+<script>
+	function mostrar(id)
+	{
+		alert(id);
+	}
+</script>
