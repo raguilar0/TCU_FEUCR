@@ -6,11 +6,11 @@
    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>-->
 
 
-   
-    <title>Contraloría FEUCR</title>
-    <?= $this->Html->css('bootstrap.min.css') ?> 
 
-  
+    <title>Contraloría FEUCR</title>
+    <?= $this->Html->css('bootstrap.min.css') ?>
+
+
     <?= $this->Html->css('association_views.css') ?>
 
 
@@ -37,22 +37,26 @@
 
               <?php echo $this->Html->link('Página Principal', '/', ['class'=>'navbar-brand']);?>
           </div>
-          
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">          
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
               <li class="active"><?php echo $this->Html->link('Administrar Asociación', '/associations/index_associations', ['id'=>'active-navbar']);?></li>
 
               <li>
                 <?php echo $this->Html->link('Información General', '/associations/general_information');?>
-              </li>            
-               
+              </li>
+
               <li>
                   <?php echo $this->Html->link('Agregar Usuario', '/users/add_user');?>
               </li>
 
               <li>
                   <?php echo $this->Html->link('Perfil', '/users/perfil');?>
-              </li> 
+              </li>
+
+              <li>
+                <?php echo $this->Html->link('Salir', '/users/logout');?>
+              </li>
 
           </ul>
           </div>
@@ -61,10 +65,10 @@
 
 
     <div class="container body">
-        
-        <?= $this->fetch('content') ?>  
-        
-        
+
+        <?= $this->fetch('content') ?>
+
+
     </div>
 
 

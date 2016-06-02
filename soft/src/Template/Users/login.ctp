@@ -1,11 +1,21 @@
 <!-- File: src/Template/Users/login.ctp -->
 
-<div class="container">
+<div class="container body">
+
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
   <?= $this->Flash->render('auth') ?>
   <?= $this->Form->create() ?>
 
-  <div class='row text-center'>
-    <div class='col-xs-12 col-md-4' id=form_login>
+  <div class='row'>
+    <div class='col-xs-12 col-md-6 col-md-offset-3' id=form_login>
       <fieldset>
       <legend><?= __('Por favor digite su usuario y contraseña') ?></legend>
       <h4><?= $this->Form->input('username', ['class' => 'form-control','label'=>'Nombre de usuario']) ?></h4>

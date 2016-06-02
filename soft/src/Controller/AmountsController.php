@@ -5,100 +5,114 @@ use App\Controller\AppController;
 
 class AmountsController extends AppController
 {
-	
+
 	public function index()
 	{
-		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
+		if(($this->request->session()->read('Auth.User.role')) != 'admin'){
+			return $this->redirect($this->Auth->redirectUrl());
+		}
+		else{
+			$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
 
-		$amount = $this->Amounts->find()
-						->hydrate(false);
-		
-				
-		$amount = $amount->toArray();
-		
-		$this->set('amount',$amount); // set() Pasa la variable amount a la vista.
-	
+			$amount = $this->Amounts->find()
+							->hydrate(false);
+
+
+			$amount = $amount->toArray();
+
+			$this->set('amount',$amount); // set() Pasa la variable amount a la vista.
+		}
 	}
-	
+
 
 
 	public function add($association = null)
 	{
-		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vist
-		
-		$tracts = $this->getTracts(date('Y'));		
-
-		if($this->request->is('POST') && $association)
-		{
-
-			$data = $this->request->data;
-
-			$association_id = $this->getAssociationId($association);
-
-			$successAmountsIndex = $this->saveAmounts($data, $association_id, $tracts); //Guardamos los montos
-			$successBoxesTract = $this->saveBoxes($data, $association_id,0,$tracts); //Guardamos las cajas de tracto
-			$successBoxesGenerated = $this->saveBoxes($data, $association_id,1,$tracts); //Guardamos las cajas de ingresos generados
-
-
-
-			$message = 'Se agregaron exitosamente '.$successAmountsIndex.' montos';
-			$message .= '<br>'.'Se agregaron exitosamente '.$successBoxesTract.' cajas de Tracto';
-			$message .= '<br>'.'Se agregaron exitosamente '.$successBoxesGenerated.' cajas de ingresos generados';
-			die($message);
-
-
-
+		if(($this->request->session()->read('Auth.User.role')) != 'admin'){
+			return $this->redirect($this->Auth->redirectUrl());
 		}
-		else
-		{
+		else{
+			$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vist
 
-				$headquarters = $this->getHeadquarters(); //Pide todas las sedes
-				$this->set('head',$headquarters);
-				$this->set('data', $tracts);
+			$tracts = $this->getTracts(date('Y'));
+
+			if($this->request->is('POST') && $association)
+			{
+
+				$data = $this->request->data;
+
+				$association_id = $this->getAssociationId($association);
+
+				$successAmountsIndex = $this->saveAmounts($data, $association_id, $tracts); //Guardamos los montos
+				$successBoxesTract = $this->saveBoxes($data, $association_id,0,$tracts); //Guardamos las cajas de tracto
+				$successBoxesGenerated = $this->saveBoxes($data, $association_id,1,$tracts); //Guardamos las cajas de ingresos generados
+
+
+
+				$message = 'Se agregaron exitosamente '.$successAmountsIndex.' montos';
+				$message .= '<br>'.'Se agregaron exitosamente '.$successBoxesTract.' cajas de Tracto';
+				$message .= '<br>'.'Se agregaron exitosamente '.$successBoxesGenerated.' cajas de ingresos generados';
+				die($message);
+
+
+
+			}
+			else
+			{
+
+					$headquarters = $this->getHeadquarters(); //Pide todas las sedes
+					$this->set('head',$headquarters);
+					$this->set('data', $tracts);
+			}
 		}
 	}
 
 
 	private function saveAmounts($data, $association_id, $tracts)
 	{
-
-		$date = $data['date'];  //Estos datos son comunes a todos los tractos
-		unset($data['date']);
-
-		$detail = $data['detail'];
-		unset($data['detail']);
-
-
-		$index = 0;
-		$successIndex = 0;
-
-		$values['association_id'] = $association_id;
-		$values['date'] = $date;
-		$values['detail'] = $detail;
-		$values['type'] = 0;
-
-		foreach ($data as $key => $value) { //Se agrega monto por monto al tracto correspondiente
-			$values['amount'] = $value;
-			$values['tract_id'] = $tracts[$index]['id'];//$this->getTractId($tracts[$index]['date']); //Pide el id del tracto tomando como fecha la fecha de inicio
-
-			$entity = $this->Amounts->newEntity($values);
-
-			try
-			{
-				if($this->Amounts->save($entity))
-				{
-					++$successIndex;
-				}
-			}
-			catch(Exception $e)
-			{
-
-			}
-
-			++$index;
+		if(($this->request->session()->read('Auth.User.role')) != 'admin'){
+			return $this->redirect($this->Auth->redirectUrl());
 		}
+		else{
 
-		return $successIndex;
+			$date = $data['date'];  //Estos datos son comunes a todos los tractos
+			unset($data['date']);
+
+			$detail = $data['detail'];
+			unset($data['detail']);
+
+
+			$index = 0;
+			$successIndex = 0;
+
+			$values['association_id'] = $association_id;
+			$values['date'] = $date;
+			$values['detail'] = $detail;
+			$values['type'] = 0;
+
+			foreach ($data as $key => $value) { //Se agrega monto por monto al tracto correspondiente
+				$values['amount'] = $value;
+				$values['tract_id'] = $tracts[$index]['id'];//$this->getTractId($tracts[$index]['date']); //Pide el id del tracto tomando como fecha la fecha de inicio
+
+				$entity = $this->Amounts->newEntity($values);
+
+				try
+				{
+					if($this->Amounts->save($entity))
+					{
+						++$successIndex;
+					}
+				}
+				catch(Exception $e)
+				{
+
+				}
+
+				++$index;
+			}
+
+			return $successIndex;
+		}
 	}
 
 
@@ -143,7 +157,7 @@ class AmountsController extends AppController
 		return $successIndex;
 	}
 
-	
+
 	public function getTracts($year)
 	{
 		$this->loadModel('Tracts');
@@ -152,10 +166,10 @@ class AmountsController extends AppController
 					->hydrate(false)
 					->where(['YEAR(date)'=>$year]); //Queremos los tractos del año actual
 		$tracts = $tracts->toArray();
-		
+
 		return $tracts;
 	}
-	
+
 	private function getHeadquarters()
 	{
 		$query = $this->Amounts->Associations->Headquarters->find() //Se trae solo las sedes que tienen alguna asocicación asociada :p
@@ -172,7 +186,7 @@ class AmountsController extends AppController
 
 
 		$headquarters = $query->toArray();
-		
+
 		return $headquarters;
 	}
 
@@ -201,13 +215,13 @@ class AmountsController extends AppController
 
 
 /**
- *  Esta funcion devuelve el id del presente tracto 
+ *  Esta funcion devuelve el id del presente tracto
  **/
 	private function getTractId($actualDate)
 	{
 		$this->loadModel('Tracts');
-		
-		
+
+
 		$id = $this->Tracts->find()
 					->hydrate(false)
 					->select(['id'])
@@ -216,10 +230,10 @@ class AmountsController extends AppController
                         	->lte('date',$actualDate) //<= date <= fecha actual
                         	->gte('deadline',$actualDate); //deadline >= fecha actual
                     });
-        
+
         $id = $id->toArray();
-		
-		return $id[0]['id'];					
+
+		return $id[0]['id'];
 	}
 
 	public function getAssociations($headquarter_name)
@@ -231,23 +245,23 @@ class AmountsController extends AppController
 									->hydrate(false)
 									->select(['id'])
 									->where(['name'=>$headquarter_name]);
-									
+
 			$headquarter_id = $headquarter_id->toArray();
-			
-			
+
+
 			$associations = $this->Amounts->Associations->find() //Se obtienen los nombres de las asociaciones con el id recuperado
 							->hydrate(false)
 							->select(['name'])
 							->where(['headquarter_id'=>$headquarter_id[0]['id']]);
-							
+
 			$associations = $associations->toArray();
-			
+
 			$associations = json_encode($associations);
 
 			die($associations);
 		}
 
-		
+
 	}
 
 
@@ -257,7 +271,7 @@ class AmountsController extends AppController
 									->hydrate(false)
 									->select(['id'])
 									->where(['name'=>$association_name]);
-									
+
 			$association_id = $association_id->toArray();
 
 			return $association_id[0]['id'];
@@ -266,7 +280,7 @@ class AmountsController extends AppController
 	public function edit($amount_id)
 	{
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
-		
+
 		$this->set('id',$amount_id); // set() Pasa la variable id a la vista.
 	}
 
@@ -274,7 +288,7 @@ class AmountsController extends AppController
 	{
 
 		$this->viewBuilder()->layout('admin_views');
-			
+
 			$this->loadModel('Headquarters');
 
 			$query = $this->Headquarters->find()
@@ -292,10 +306,10 @@ class AmountsController extends AppController
 
 			$query = $query->toArray();
 
-		
+
 
 		$this->set('data',$query);
-		
-		
+
+
 	}
 }
