@@ -118,6 +118,7 @@ class AmountsController extends AppController
 
 	private function saveBoxes($data, $association_id, $type, $tracts)
 	{
+
 		$this->loadModel('Boxes');
 
 		unset($data['date']);
@@ -286,30 +287,29 @@ class AmountsController extends AppController
 
 	public function showAssociations()
 	{
+		if(($this->request->session()->read('Auth.User.role')) != 'admin'){
+			return $this->redirect($this->Auth->redirectUrl());
+		}
+		else{
+			$this->viewBuilder()->layout('admin_views');
 
-		$this->viewBuilder()->layout('admin_views');
+				$this->loadModel('Headquarters');
 
-			$this->loadModel('Headquarters');
+				$query = $this->Headquarters->find()
+						->hydrate(false)
+						->select(['a.name','a.id','name'])
+						->join([
+							 'table'=>'associations',
+							 'alias'=>'a',
+							 'type' => 'RIGHT',
+							 'conditions'=>'Headquarters.id = a.headquarter_id',
+							])
+						->where(['a.enable'=>1])
+						->order(['Headquarters.name']);
+				$query = $query->toArray();
+			$this->set('data',$query);
 
-			$query = $this->Headquarters->find()
-					->hydrate(false)
-					->select(['a.name','a.id','name'])
-					->join([
-						 'table'=>'associations',
-						 'alias'=>'a',
-						 'type' => 'RIGHT',
-						 'conditions'=>'Headquarters.id = a.headquarter_id',
-						])
-					->where(['a.enable'=>1])
-					->order(['Headquarters.name']);
-
-
-			$query = $query->toArray();
-
-
-
-		$this->set('data',$query);
-
-
+		}
 	}
+	
 }

@@ -162,10 +162,10 @@ class UsersController extends AppController
 
         $association = $this->Associations->find();
 
-        $this->set('role', $role);
-        $this->set('association', $association);
-        $this->set('user', $user);
       }
+      $this->set('role', $role);
+      $this->set('association', $association);
+      $this->set('user', $user);
     }
 
     public function modify($id = null)
@@ -200,6 +200,7 @@ class UsersController extends AppController
           //$this->viewBuilder()->layout('default');
         //  $user = $this->Users->find();
         //  $this->set('user', $user);
+        if(!$this->Auth->user()){
             if ($this->request->is('post')) {
                 $user = $this->Auth->identify();
                 if ($user) {
@@ -211,11 +212,13 @@ class UsersController extends AppController
                     else{
                       return $this->redirect($this->Auth->redirectUrl("/associations/index_associations/"));
                     }
-
-                  //  return $this->redirect($this->Auth->redirectUrl("/associations/"));
                 }
                 $this->Flash->error(__('Nombre de usuario o contraseña invalidos, intentelo de nuevo.'));
             }
+          }
+          else{
+            return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+          }
 
         }
 
