@@ -13,7 +13,6 @@
   <table class="table read_association">
   <thead>
     <tr>
-      <th>ID</th>
       <th>Nombre de Usuario</th>
       <th>Nombre</th>
       <th>Primer Apellido</th>

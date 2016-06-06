@@ -4,7 +4,7 @@
 <?php
 
 $this->layout('admin_views');
-echo $this->Form->create();
+echo $this->Form->create($user);
 
 echo "<div class='form-group' id=form_login>";
   echo "<div class = 'row'>";
@@ -28,16 +28,20 @@ echo "<div class='form-group' id=form_login>";
       echo "</div>";
     echo "</div>";
 
-
+    echo"<br>";
+    echo"<br>";
+    echo"<br>";
     echo "<div class = 'col-xs-6 col-md-4'>";
+    echo "<div class='form-group'>";
     echo "<label for='sel1' id = 'role_label'><h4>Rol:</h4></label>";
        echo "<select class='form-control' name = 'role'>";
             $kind = $role;
-
+            //debug($role);
             foreach ($kind as $key => $value) {
                 echo "<option>".$key."</option>"."<br>";
             }
         echo "</select>";
+      echo"</div>";
     echo "</div>";
 
 
@@ -54,11 +58,18 @@ echo "</div>";
 echo $this->Form->end();
 
 ?>
-<?= $this->Flash->render(success) ?>
 
 <div class="row text-right">
     <div class="col-xs-12">
-        <h4 id="callback" style="color:#01DF01"><?= $this->Flash->render('success') ?></h4>
+        <h4 id="callback" style="color:#01DF01">
+          <?= $this->Flash->render('success') ?></h4>
+    </div>
+</div>
+
+<div class="row text-right">
+    <div class="col-xs-12">
+        <h4 id="callback" style="color:#FF0000">
+          <?= $this->Flash->render('error') ?></h4>
     </div>
 </div>
 

@@ -118,10 +118,8 @@ class UsersController extends AppController
   			return $this->redirect($this->Auth->redirectUrl());
   		}
       else{
-        $user = $this->Users->newEntity();
+        $user = $this->Users->newEntity($this->request->data); //El parámetro es para validar los datos
         $this->loadModel('Associations');
-
-        $role = array('Administrador'=> 0, 'Representante' => 1);
 
         if ($this->request->is('post')) {
 
@@ -137,7 +135,7 @@ class UsersController extends AppController
 
           $role = $this->request->data['role'];
 
-        //  debug($role);
+          //debug($role);
 
           if($this->request->data['role'] == 'Administrador'){
               $this->request->data['role'] = 'admin';
@@ -148,24 +146,27 @@ class UsersController extends AppController
 
         //  debug($this->request->data);
 
-            $user = $this->Users->patchEntity($user, $this->request->data);
+            $user = $this->Users->newEntity($this->request->data);
             if ($this->Users->save($user)) {
             //  debug($this->request->data);
                 $this->Flash->success('El usuario ha sido agregado', ['key' => 'success']);
                 //return $this->redirect(['action' => 'add']);
             }
+            else{
+              $this->Flash->error(__('Error al agregar usuario.', ['key'=>'error']));
+            }
 
-          //  debug($user->errors());
-
-            $this->Flash->error(__('Error al agregar usuario.', ['key'=>'error']));
         }
 
+      //  debug($user->errors());
+        $role = array('Administrador'=> 0, 'Representante' => 1);
         $association = $this->Associations->find();
+        $this->set('role', $role);
+        $this->set('association', $association);
+        $this->set('user', $user);
 
       }
-      $this->set('role', $role);
-      $this->set('association', $association);
-      $this->set('user', $user);
+
     }
 
     public function modify($id = null)
@@ -175,14 +176,58 @@ class UsersController extends AppController
   		}
       else{
         $this->viewBuilder()->layout('admin_views');
-        if($id){
 
+        if($id){
+          //$user = $this->Users->get($id);
           $user = $this->Users->find()
                               ->where(['association_id'=>$id]);
-          //$user= $user->toArray();
+          $user= $user->toArray();
+          //debug($user);
+
           $this->set('user',$user);
         }
       }
+    }
+
+    public function modifyUser($id = null) {
+      if(($this->request->session()->read('Auth.User.role')) != 'admin'){
+  			return $this->redirect($this->Auth->redirectUrl());
+  		}
+      else{
+        $this->viewBuilder()->layout('admin_views');
+
+        if($id){
+          $user = $this->Users->get($id);
+
+          if($this->request->is(array('post','put'))) {
+            $response = "0"; //Funciona como booleano para decirle al ajax qué desplegar
+            $blocked = (isset($this->request->data['state']) ? 1 : 0); //Verifica si se checó el checkbox de bloqueado
+
+            $query = $this->Users->query();
+
+            $query->update()
+                  ->set(['username'=>$this->request->data['username'], 'name'=>$this->request->data['name'], 'last_name_1'=>$this->request->data['last_name_1'], 'last_name_2'=>$this->request->data['last_name_2'], 'state'=>$blocked])
+                  ->where(['id'=>$id])
+                  ->execute();
+
+            if($this->Users->save($user)) {
+              $response = "1";
+            }
+            //$validator = $this->Users->newEntity($this->request->data);
+
+            die($response);
+
+          }
+          else {
+  					$this->set('data',$user); // set() Pasa la variable user a la vista.
+  				}
+  			}
+  			else {
+  				$this->redirect(['action'=>'/']);
+  			}
+
+        }
+        $this->set('data', $user);
     }
 
     public function delete()

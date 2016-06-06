@@ -97,14 +97,14 @@ table
 
 #sede_update_id_btn
 {
-    
+
   width: 150px;
   color: white;
 }
 
 #sede_delete_id_btn
 {
-  
+
   width: 150px;
   color: white;
 }
@@ -116,7 +116,7 @@ table
 
 #date
 {
-  margin-top: 10px; 
+  margin-top: 10px;
 }
 
 /**
@@ -128,6 +128,9 @@ table
   .navbar-inverse
   {
     overflow: hidden;
-  }  
+  }
 }
 
+.message error{
+  color: #FF0000;
+}
