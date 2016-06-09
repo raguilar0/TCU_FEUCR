@@ -102,7 +102,7 @@
                                  **/
                     
                                 foreach ($data[0] as $key => $value) {
-                                    echo "<option>".$value['date']."</option>"."<br>";
+                                    echo "<option>".$value['date']->format('Y-m-d')."</option>"."<br>";
                                 }
                                 
                                 foreach ($data[1] as $key => $value) {

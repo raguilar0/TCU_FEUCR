@@ -1,7 +1,7 @@
 <ul class="nav nav-tabs">
   <li class="active"><a data-toggle="tab" href="#tract" onclick="getAmounts(0,0,0, document.getElementById('tracts_id'));">Montos de Tracto</a></li>
   <li><a data-toggle="tab" href="#generated" onclick="getAmounts(1,1,1,document.getElementById('generated_id'));">Ingresos Generados</a></li>
-  <li><a data-toggle="tab" href="#surplus" onclick="getAmounts(2,2,2,document.getElementById('surplus_id'));">Superávit</a></li>
+  <li><a data-toggle="tab" href="#surplus" onclick="getAmounts(2,2,2,document.getElementById('surplus_year_id'));">Superávit</a></li>
 </ul>
 
 
@@ -216,13 +216,12 @@
   	
 <div class="row text-center">
 	
-	<div class="col-xs-12 col-md-6">
+	<div class="col-xs-12 col-md-6 col-md-offset-3">
 	  <?php
 		echo "<label><h4><strong>Elegí el año</strong></h4></label>";
-   		echo "<select class='form-control' id= 'surplus_year_id' name = 'year' onchange='reloadPage(this)'>";
+   		echo "<select class='form-control' id= 'surplus_year_id' name = 'year' onchange='getAmounts(2,2,2,this);'>";
 
-
-		echo "<option>".date('Y')."</option>"."<br>";   		
+  		
         foreach ($years as $key => $value) {
             echo "<option>".$value['year']."</option>"."<br>";
         }
@@ -232,21 +231,6 @@
 	</div>
 
 
-	<div class="col-xs-12 col-md-6">
-	  <?php
-		echo "<label><h4><strong>Elegí el tracto</strong></h4></label>";
-   		echo "<select class='form-control' id= 'surplus_id' name = 'type' onchange='getAmounts(2,2,2,this);'>";
-
-
-
-        foreach ($dates as $key => $value) {
-        	echo $key;
-            echo "<option>".$value['tract']['date']."</option>"."<br>";
-        }
-        
-    	echo "</select>";
-    	?>
-	</div>	
 
 </div>
   	
@@ -367,7 +351,6 @@
    		echo "<select class='form-control' id= 'tracts_generated_id' name = 'year' onchange='reloadPage(this)'>";
 
 
-		echo "<option>".date('Y')."</option>"."<br>";   		
         foreach ($years as $key => $value) {
             echo "<option>".$value['year']."</option>"."<br>";
         }
@@ -932,16 +915,22 @@ function setSurplusValues(json)
 
 	var surplus_amount = 0;
 	var surplus_final_balance = 0;
-	var date = "";
-
-	if(object.amount.length > 0)
+	var date = "No hay montos de superavit para el año "+document.getElementById("surplus_year_id").value+"<br><br>";
+	var length = object.amount.length;
+	
+	if(length > 0)
 	{
-		 surplus_amount = object.amount[0].amount;
+		
+		for(var i = 0; i < length; ++i)
+		{
+			surplus_amount += object.amount[i].amount;	
+		}
+		 
 		 
 
 		 surplus_final_balance = (surplus_amount - invoices_total);
 
-		 date = "Periodo del tracto: <br><br>"+document.getElementById("tracts_id").value + " - " +object.amount[0].tract.deadline+"<br><br>";			
+		date = "Superavit del año: "+document.getElementById("surplus_year_id").value +"<br><br>";			
 	}
 
 	amount_classes = document.getElementsByClassName("surplus_amount");
