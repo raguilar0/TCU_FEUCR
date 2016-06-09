@@ -35,4 +35,46 @@ class SavingsController extends AppController
 		
 		$this->set('saving', $saving);
 	}
+
+	public function showAssociations($id = null)
+	{
+		if($id)
+		{
+			$this->viewBuilder()->layout('associations_view');
+
+
+			$query = $this->Savings->Associations->Headquarters->find()
+				->hydrate(false)
+				->select(['a.name','a.id','name'])
+				->join([
+					'table'=>'associations',
+					'alias'=>'a',
+					'type' => 'RIGHT',
+					'conditions'=>'Headquarters.id = a.headquarter_id',
+				])
+				->where(['a.enable'=>1])
+				->order(['Headquarters.name']);
+
+
+			$query = $query->toArray();
+
+
+
+			switch ($id) {
+				case 1:
+					$query['link'] = 'add';
+					break;
+
+			}
+
+			$this->set('data',$query);
+
+		}
+		else
+		{
+			$this->redirect(['action'=>'/']);
+		}
+	}
+
+
 }
