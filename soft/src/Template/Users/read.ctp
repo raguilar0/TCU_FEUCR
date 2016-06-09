@@ -17,6 +17,8 @@
       <th>Nombre</th>
       <th>Primer Apellido</th>
       <th>Segundo Apellido</th>
+			<th>Rol</th>
+			<th>Estado</th>
     </tr>
   </thead>
   <tbody>
@@ -28,7 +30,18 @@
               echo "<td>".$key['name']."</td>";
               echo "<td>".$key['last_name_1']."</td>";
               echo "<td>".$key['last_name_2']."</td>";
-							//echo "<td>".$this->Form->button('',['type'=>'button' ,'data-toggle'=>'collapse', 'data-target'=>'#modify_users', 'class'=>'glyphicon glyphicon-pencil btn btn-primary collapsed', 'id'=>'modifyUsersBtn'])."</td>";
+							if($key['role']=='admin'){
+								echo"<td>".'Administrador'."</td>";
+							}
+							if($key['role']=='rep'){
+								echo"<td>".'Representante'."</td>";
+							}
+							if($key['state']==0){
+								echo"<td>".'Activo'."</td>";
+							}
+							if($key['state']==1){
+								echo"<td>".'Bloqueado'."</td>";
+							}
              echo "</tr>";
           }
       ?>

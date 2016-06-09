@@ -1,6 +1,4 @@
 <!-- src/Template/Users/add.ctp -->
-
-
 <?php
 
 $this->layout('admin_views');
@@ -36,7 +34,7 @@ echo "<div class='form-group' id=form_login>";
     echo "<label for='sel1' id = 'role_label'><h4>Rol:</h4></label>";
        echo "<select class='form-control' name = 'role'>";
             $kind = $role;
-            //debug($role);
+            debug($role);
             foreach ($kind as $key => $value) {
                 echo "<option>".$key."</option>"."<br>";
             }

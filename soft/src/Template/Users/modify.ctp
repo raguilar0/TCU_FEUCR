@@ -32,13 +32,19 @@
               echo "<td>".$key['last_name_1']."</td>";
               echo "<td>".$key['last_name_2']."</td>";
 							//echo "<td>".$key['mail']."</td>";
-							echo "<td>".$key['role']."</td>";
+							if($key['role'] == 'admin') {
+								echo "<td> Administrador </td>";
+							}
+							if($key['role'] == 'rep'){
+									echo "<td> Representante </td>";
+							}
 							if($key['state'] == 0) {
 								echo "<td> Activo </td>";
 							}
-							else {
-								echo "<td> Bloqueado </td>";
+							if($key['state'] == 1){
+									echo "<td> Bloqueado </td>";
 							}
+
 							echo "<td>".$this->Html->link('','/users/modify_user/'.$key['id'], ['class'=>'glyphicon glyphicon-pencil btn btn-primary'])."</td>";
 
           }

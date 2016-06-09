@@ -34,17 +34,17 @@ class UsersTable extends Table
                           'message' => 'Debe contener únicamente letras.'
               ])
               ->notEmpty('last_name_1')
-              ->add('name', 'validFormat', [
+              ->add('last_name_1', 'validFormat', [
                           'rule' => array('custom', '/^[A-Za-z]+$/'),
                           'message' => 'Debe contener únicamente letras.'
               ])
               ->notEmpty('last_name_2')
-              ->add('name', 'validFormat', [
+              ->add('last_name_2', 'validFormat', [
                           'rule' => array('custom', '/^[A-Za-z]+$/'),
                           'message' => 'Debe contener únicamente letras.'
               ])
               ->requirePresence('role') ;
-              
+
 
 
 

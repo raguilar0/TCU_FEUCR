@@ -196,37 +196,64 @@ class UsersController extends AppController
       else{
         $this->viewBuilder()->layout('admin_views');
 
+
         if($id){
           $user = $this->Users->get($id);
 
+        //  debug($user->errors());
+
           if($this->request->is(array('post','put'))) {
-            $response = "0"; //Funciona como booleano para decirle al ajax qué desplegar
+            //debug($this->request->data);
+            //$response = "0"; //Funciona como booleano para decirle al ajax qué desplegar
             $blocked = (isset($this->request->data['state']) ? 1 : 0); //Verifica si se checó el checkbox de bloqueado
 
-            $query = $this->Users->query();
 
-            $query->update()
-                  ->set(['username'=>$this->request->data['username'], 'name'=>$this->request->data['name'], 'last_name_1'=>$this->request->data['last_name_1'], 'last_name_2'=>$this->request->data['last_name_2'], 'state'=>$blocked])
-                  ->where(['id'=>$id])
-                  ->execute();
 
-            if($this->Users->save($user)) {
-              $response = "1";
+            $user = $this->Users->newEntity($this->request->data);
+
+            if($this->request->data['role'] == 'Administrador'){
+                $this->request->data['role'] = 'admin';
             }
-            //$validator = $this->Users->newEntity($this->request->data);
+            if($this->request->data['role'] == 'Representante'){
+                $this->request->data['role'] = 'rep';
+            }
 
-            die($response);
+            //debug($this->request->data);
+            if(!$user->errors()) {
 
+              $query = $this->Users->query();
+              //debug($blocked);
+              $query->update()
+                    ->set(['username'=>$this->request->data['username'], 'name'=>$this->request->data['name'],
+                          'last_name_1'=>$this->request->data['last_name_1'], 'last_name_2'=>$this->request->data['last_name_2'],
+                          'role'=>$this->request->data['role'], 'state'=>$blocked])
+                    ->where(['id'=>$id])
+                    ->execute();
+
+/*
+              $user->username = $this->request->data['username'];
+              $user->name = $this->request->data['name'];
+              $user->last_name_1 = $this->request->data['last_name_1'];
+              $user->last_name_2 = $this->request->data['last_name_2'];
+              $user->role = $this->request->data['role'];
+              $user->state = $this->request->data['state'];
+*/
+              $this->Flash->success(__('Usuario modificado correctamente.', ['key'=>'success']));
+            }
+            else{
+                $this->Flash->error(__('Error al modificar usuario.', ['key'=>'error']));
+            }
           }
-          else {
-  					$this->set('data',$user); // set() Pasa la variable user a la vista.
-  				}
+
   			}
   			else {
   				$this->redirect(['action'=>'/']);
   			}
 
         }
+        $role = $user->role;
+        //debug($role);
+        $this->set('role', $role);
         $this->set('data', $user);
     }
 
