@@ -22,8 +22,12 @@ class SavingsController extends AppController
 				
 				if($this->Savings->save($saving))
 				{
-					
-				}					
+					 $this->Flash->success('Su solicitud está en trámite', ['key' => 'message']);	
+				}	
+				else
+				{
+					 $this->Flash->success('Ocurrió un error inesperado. Intente más tarde o contacte al administrador', ['key' => 'message']);
+				}
 			}
 			else
 			{

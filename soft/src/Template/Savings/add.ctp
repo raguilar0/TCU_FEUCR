@@ -50,7 +50,7 @@ echo $this->Form->create($saving);
 
 <div class="row text-right">
     <div class="col-xs-12">
-        <h4 id="callback" style="color:#01DF01"><?= $this->Flash->render('addSurplus') ?></h4>   
+        <h4 id="callback" style="color:#01DF01"><?= $this->Flash->render('message') ?></h4>   
     </div>
 
 </div>
