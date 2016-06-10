@@ -41,6 +41,19 @@ class AmountsTable extends Table
         return $validator;
     }
 
+    public function validationUpdate(Validator $validator)
+    {
+        $validator
+            ->requirePresence('amount')
+            ->notEmpty('amount')
+            ->add('amount', 'validFormat', [
+                'rule' => array('custom', '/^[0-9,.\-]+$/'),
+                'message' => 'Debe ser mayormente para números.'
+            ]);
+        
+        return $validator;
+    }
+
     public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
     {
        if (isset($data['date'])) {

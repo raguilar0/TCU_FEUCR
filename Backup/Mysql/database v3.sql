@@ -61,7 +61,7 @@ CREATE TABLE amounts
 CREATE TABLE initial_amounts
 (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  amount DOUBLE NOT NULL
+  amount DOUBLE NOT NULL,
   type INT(2) NOT NULL DEFAULT 0, --0:tracto, 1:monto generado
   association_id INT UNSIGNED NOT NULL,
   tract_id INT UNSIGNED NOT NULL,
@@ -109,7 +109,7 @@ CREATE TABLE boxes
 CREATE TABLE savings
 (
    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-   date date NOT NULL,
+   date TIMESTAMP DEFAULT TIMESTAMP ,
    amount INT(32) NOT NULL DEFAULT 0,
    state INT(1) DEFAULT 0,
    letter LONGBLOB NOT NULL,

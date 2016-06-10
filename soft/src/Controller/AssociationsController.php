@@ -681,101 +681,97 @@ class AssociationsController extends AppController
 
 	public function getAmounts($association_id = null, $amount_type = null, $box_type = null,$invoice_type = null, $date = null)
 	{
-		if(($this->request->session()->read('Auth.User.role')) != 'admin'){
-			return $this->redirect($this->Auth->redirectUrl());
+		if($amount_type != 2)
+		{
+			$amount = $this->Associations->Amounts->find()
+							->hydrate(false)
+							->select(['tract.number','amount','tract.deadline', 'date', 'detail'])
+							->andwhere(['association_id'=>$association_id, 'type'=>$amount_type])
+							->join([
+								'table'=>'tracts',
+								'alias'=>'tract',
+								'type'=>'RIGHT',
+								'conditions'=>'Amounts.tract_id = tract.id and tract.date = '."'".$date."'"
+
+								]);
+
+			$amount = $amount->toArray();
+
+
+			$box = $this->Associations->Boxes->find()
+							->hydrate(false)
+							->select(['little_amount','big_amount'])
+							->andwhere(['association_id'=>$association_id, 'type'=>$box_type])
+							->join([
+								'table'=>'tracts',
+								'alias'=>'tract',
+								'type'=>'RIGHT',
+								'conditions'=>'Boxes.tract_id = tract.id and tract.date = '."'".$date."'"
+
+								]);
+
+			$box = $box->toArray();
+
+
+
+			$initial_amount = $this->Associations->InitialAmounts->find()
+							->hydrate(false)
+							->select(['amount'])
+							->andwhere(['association_id'=>$association_id, 'type'=>$amount_type])
+							->join([
+								'table'=>'tracts',
+								'alias'=>'tract',
+								'type'=>'RIGHT',
+								'conditions'=>'InitialAmounts.tract_id = tract.id and tract.date = '."'".$date."'"
+
+								]);
+
+			$initial_amount = $initial_amount->toArray();
+
+
+			$information['boxes'] = $box;
+			$information['initial_amount'] = $initial_amount;
+
 		}
-		else{
-			if($amount_type != 2)
-			{
-				$amount = $this->Associations->Amounts->find()
-								->hydrate(false)
-								->select(['tract.number','amount','tract.deadline', 'date', 'detail'])
-								->andwhere(['association_id'=>$association_id, 'type'=>$amount_type])
-								->join([
-									'table'=>'tracts',
-									'alias'=>'tract',
-									'type'=>'RIGHT',
-									'conditions'=>'Amounts.tract_id = tract.id and tract.date = '."'".$date."'"
-
-									]);
-
-				$amount = $amount->toArray();
+		else
+		{
+			//TODO: Filtrar para que solo me dé el superávit de cierta fecha
 
 
-				$box = $this->Associations->Boxes->find()
-								->hydrate(false)
-								->select(['little_amount','big_amount'])
-								->andwhere(['association_id'=>$association_id, 'type'=>$box_type])
-								->join([
-									'table'=>'tracts',
-									'alias'=>'tract',
-									'type'=>'RIGHT',
-									'conditions'=>'Boxes.tract_id = tract.id and tract.date = '."'".$date."'"
-
-									]);
-
-				$box = $box->toArray();
+			$amount = $this->Associations->Surpluses->find()
+							->hydrate(false)
+							->select(['amount'])
+							->andwhere(['association_id'=>$association_id, 'YEAR(date)'=>$date]);
 
 
-
-				$initial_amount = $this->Associations->InitialAmounts->find()
-								->hydrate(false)
-								->select(['amount'])
-								->andwhere(['association_id'=>$association_id, 'type'=>$amount_type])
-								->join([
-									'table'=>'tracts',
-									'alias'=>'tract',
-									'type'=>'RIGHT',
-									'conditions'=>'InitialAmounts.tract_id = tract.id and tract.date = '."'".$date."'"
-
-									]);
-
-				$initial_amount = $initial_amount->toArray();
+			$amount = $amount->toArray();	
+		}
 
 
-				$information['boxes'] = $box;
-				$information['initial_amount'] = $initial_amount;
+			
+			$invoices = $this->Associations->Invoices->find()
+							->hydrate(false)
+							->select(['date','number','detail','provider','amount','attendant','clarifications'])
+							->andwhere(['association_id'=>$association_id, 'kind'=>$invoice_type, 'state'=>1])
+							->join([
+								'table'=>'tracts',
+								'alias'=>'tract',
+								'type'=>'RIGHT',
+								'conditions'=>'Invoices.tract_id = tract.id and tract.date = '."'".$date."'"
 
-			}
-			else
-			{
-				//TODO: Filtrar para que solo me dé el superávit de cierta fecha
+								]);
 
-				$amount = $this->Associations->Surpluses->find()
-								->hydrate(false)
-								->select(['amount'])
-								->where(['association_id'=>$association_id]);
-
-
-				$amount = $amount->toArray();
-			}
+			$invoices = $invoices->toArray();
 
 
+			$information['amount'] = $amount;
+			
+			$information['invoices'] = $invoices;
+			
 
-				$invoices = $this->Associations->Invoices->find()
-								->hydrate(false)
-								->select(['date','number','detail','provider','amount','attendant','clarifications'])
-								->andwhere(['association_id'=>$association_id, 'kind'=>$invoice_type, 'state'=>1])
-								->join([
-									'table'=>'tracts',
-									'alias'=>'tract',
-									'type'=>'RIGHT',
-									'conditions'=>'Invoices.tract_id = tract.id and tract.date = '."'".$date."'"
-
-									]);
-
-				$invoices = $invoices->toArray();
+			$information = json_encode($information);
 
 
-				$information['amount'] = $amount;
-
-				$information['invoices'] = $invoices;
-
-
-				$information = json_encode($information);
-
-
-				die($information);
-			}
+			die($information);
 	}
 }
