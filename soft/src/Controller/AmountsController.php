@@ -263,39 +263,122 @@ class AmountsController extends AppController
 			return $association_id[0]['id'];
 	}
 
-	public function edit($amount_id)
+	public function edit($id)
 	{
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
-		
-		$this->set('id',$amount_id); // set() Pasa la variable id a la vista.
+
+
+		$query = $this->getModifyInformation($id, date('Y')); //Pide la información de los montos
+
+		//$entity = $this->Amounts->newEntity($query, ['validate'=>'update']);
+
+		if($id)
+		{
+			if($this->request->is(array('post','put')))
+			{
+
+				$update = $this->Amounts->query();
+				$data = $this->request->data;
+				$message = "Se modificaron los montos de los siguientes tractos: ";
+
+				foreach ($query as $key=>$value)
+				{
+					$name = 'tract_'.$value['tract']['number']; //name de la vista
+
+					$foo['amount'] = $data[$name];
+					$entity = $this->Amounts->newEntity($foo, ['validate'=>'update']);
+
+
+					if(!$entity->errors())
+					{
+						$update->update()
+							->set(['amount'=>$data[$name]])
+							->where(['id'=>$value['id']])
+							->execute();
+						$message .= " ".$value['tract']['number'].",";
+					}
+
+
+
+				}
+				$this->Flash->success($message, ['key' => 'message']);
+				$query = $this->getModifyInformation($id, date('Y'));//Pide la información de los montos
+
+			}
+		}
+
+
+		$this->set('data',$query); // set() Pasa la variable id a la vista.
 	}
 
-	public function showAssociations()
+	private function getModifyInformation($id, $year)
+	{
+		$this->loadModel('Tracts');
+
+		$query = $this->Amounts->find()
+			->select(['id','amount', 'tract.date', 'tract.deadline', 'tract.number'])
+			->hydrate(false)
+			->join([
+				'table'=>'tracts',
+				'alias'=>'tract',
+				'type'=>'LEFT',
+				'conditions'=>'Amounts.tract_id = tract.id'
+			])
+			->andwhere(['association_id'=>$id, 'YEAR(tract.date)'=>$year]);
+		$query = $query->toArray();
+
+		return $query;
+	}
+
+	public function showAssociations($id = null)
 	{
 
-		$this->viewBuilder()->layout('admin_views');
-			
+		if($id)
+		{
+			$this->viewBuilder()->layout('admin_views');
+
 			$this->loadModel('Headquarters');
 
 			$query = $this->Headquarters->find()
-					->hydrate(false)
-					->select(['a.name','a.id','name'])
-					->join([
-						 'table'=>'associations',
-						 'alias'=>'a',
-						 'type' => 'RIGHT',
-						 'conditions'=>'Headquarters.id = a.headquarter_id',
-						])
-					->where(['a.enable'=>1])
-					->order(['Headquarters.name']);
-
+				->hydrate(false)
+				->select(['a.name','a.id','name'])
+				->join([
+					'table'=>'associations',
+					'alias'=>'a',
+					'type' => 'RIGHT',
+					'conditions'=>'Headquarters.id = a.headquarter_id',
+				])
+				->where(['a.enable'=>1])
+				->order(['Headquarters.name']);
 
 			$query = $query->toArray();
 
-		
+			switch ($id) {
+				case 1:
+					$query['link'] = 'edit';
+					break;
 
-		$this->set('data',$query);
+			}
+
+
+
+
+
+
+
+
+			$this->set('data',$query);
+		}
+		else
+		{
+			$this->redirect(['controller'=>'associations','action'=>'/']);
+		}
+
+
 		
 		
 	}
+
+
+
 }

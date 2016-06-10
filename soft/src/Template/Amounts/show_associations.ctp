@@ -16,6 +16,9 @@
 	$last = "";
 	$div = "";
 
+	$link = $data['link'];
+	unset($data['link']);
+
 	foreach ($data as $key) {
 
 		if(($counter % 12) == 0)
@@ -50,7 +53,7 @@
 
 
 		echo "<h4>";
-		echo $this->Html->link($key['a']['name'], '/amounts/add/'.$key['a']['id'], ['onclick'=>'confirmAction()', 'id'=>'associations']);
+		echo $this->Html->link($key['a']['name'], '/amounts/'.$link.'/'.$key['a']['id'], ['onclick'=>'confirmAction()', 'id'=>'associations']);
 		echo "</h4>";
 
 				
