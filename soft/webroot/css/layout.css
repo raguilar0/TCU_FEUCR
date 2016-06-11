@@ -1,0 +1,18 @@
+
+.navbar-ex1-collapse ul li a
+{
+    text-decoration: none;
+    color:white;
+}
+
+ul
+{
+    list-style-type: none;
+}
+
+.date select
+{
+    border-radius: 10px;
+    height: 35px;
+    margin-left: 5px;
+}

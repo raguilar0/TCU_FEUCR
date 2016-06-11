@@ -172,4 +172,3 @@
      <?php echo $this->Html->link('Atrás', '/associations', ['class'=>'btn btn-primary']);?>
   </div>
 </div>
-
