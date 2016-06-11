@@ -2,25 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d1ba4688-7503-435a-a4df-9c7c0f62ac90" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/soft/src/Template/Associations/read.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Associations/view.ctp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Controller/AssociationsController.php" afterPath="$PROJECT_DIR$/soft/src/Controller/AssociationsController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Controller/TractsController.php" afterPath="$PROJECT_DIR$/soft/src/Controller/TractsController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Model/Table/SavingsTable.php" afterPath="$PROJECT_DIR$/soft/src/Model/Table/SavingsTable.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Model/Table/SurplusesTable.php" afterPath="$PROJECT_DIR$/soft/src/Model/Table/SurplusesTable.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Model/Table/TractsTable.php" afterPath="$PROJECT_DIR$/soft/src/Model/Table/TractsTable.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Layout/admin_views.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Layout/admin_views.ctp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Savings/add.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Savings/add.ctp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Savings/edit.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Savings/edit.ctp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Savings/index.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Savings/index.ctp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Savings/view.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Savings/view.ctp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Surpluses/add.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Surpluses/add.ctp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Surpluses/edit.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Surpluses/edit.ctp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Surpluses/index.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Surpluses/index.ctp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Surpluses/view.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Surpluses/view.ctp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Tracts/add.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Tracts/add.ctp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Tracts/edit.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Tracts/edit.ctp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Tracts/index.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Tracts/index.ctp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Tracts/view.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Tracts/view.ctp" />
     </list>
     <ignored path="FEUCR.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -52,7 +34,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AssociationsController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="AssociationsController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/soft/src/Controller/AssociationsController.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="220">
@@ -62,11 +44,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="add.ctp" pinned="false" current-in-tab="false">
+      <file leaf-file-name="add.ctp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/soft/src/Template/Savings/add.ctp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="462">
-              <caret line="21" column="83" selection-start-line="21" selection-start-column="83" selection-end-line="21" selection-end-column="83" />
+            <state relative-caret-position="286">
+              <caret line="13" column="101" selection-start-line="13" selection-start-column="101" selection-end-line="13" selection-end-column="101" />
               <folding />
             </state>
           </provider>
@@ -140,8 +122,8 @@
         <option value="$PROJECT_DIR$/soft/src/Template/Savings/view.ctp" />
         <option value="$PROJECT_DIR$/soft/src/Template/Savings/index.ctp" />
         <option value="$PROJECT_DIR$/soft/src/Template/Savings/edit.ctp" />
-        <option value="$PROJECT_DIR$/soft/src/Template/Savings/add.ctp" />
         <option value="$PROJECT_DIR$/soft/src/Controller/AssociationsController.php" />
+        <option value="$PROJECT_DIR$/soft/src/Template/Savings/add.ctp" />
       </list>
     </option>
   </component>
@@ -536,18 +518,18 @@
       <workItem from="1465517270876" duration="16165000" />
       <workItem from="1465620003155" duration="57000" />
       <workItem from="1465621485954" duration="5231000" />
-      <workItem from="1465626755886" duration="8338000" />
+      <workItem from="1465626755886" duration="9085000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33996000" />
+    <option name="totallyTimeSpent" value="34743000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15572916" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15572916" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977587" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -974,18 +956,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/soft/src/Template/Savings/add.ctp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="21" column="83" selection-start-line="21" selection-start-column="83" selection-end-line="21" selection-end-column="83" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/soft/src/Controller/AssociationsController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
           <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/src/Template/Savings/add.ctp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="13" column="101" selection-start-line="13" selection-start-column="101" selection-end-line="13" selection-end-column="101" />
           <folding />
         </state>
       </provider>
