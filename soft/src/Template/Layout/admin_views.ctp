@@ -200,6 +200,10 @@
     <?=$this->Html->script('jquery-ui/jquery-ui.min.js') ?>
 
 
+    <?=$this->Html->script('jspdf.min.js') ?>
+    <?=$this->Html->script('html2canvas.js') ?>
+
+
 </body>
 
 </html>

@@ -16,7 +16,7 @@
 </div>
 
 
-<div id="content">
+
 	<div class="tab-content">
 		<div id="tract" class="tab-pane fade in active">
 
@@ -59,19 +59,22 @@
 
 			<br>
 			<br>
-			<div class="row text-center">
-				<div class="col-xs-12">
-					<h3><strong>Facturas</strong></h3>
-				</div>
-			</div>
+			<br>
 
-			<div class="table-responsive">
+
+
+
+
+			<h2><strong>Facturas</strong></h2>
+
+			<div class="table-responsive text-center">
+
 				<table class="table table-hover">
 					<thead>
 					<tr>
 						<th>#</th>
 						<th>Fecha</th>
-						<th>Número de Factura</th>
+						<th># Factura</th>
 						<th>Detalle</th>
 						<th>Proveedor</th>
 						<th>Monto</th>
@@ -103,9 +106,12 @@
 			<div class="row">
 
 				<div class="col-xs-12 col-md-6 text-center">
-					<h3>Cuadro de Ingresos</h3>
 
 					<table class="table table-striped">
+						<tr>
+							<th><p style="font-size: larger;text-decoration:underline;">Cuadro de ingresos</p></th>
+							<td> </td>
+						</tr>
 						<tr>
 							<th>Monto de Tracto</th>
 							<td id="tract_amount"></td>
@@ -125,9 +131,13 @@
 				</div>
 
 				<div class="col-xs-12 col-md-6 text-center">
-					<h3>Cajas</h3>
+
 
 					<table class="table table-striped">
+						<tr>
+							<th><p style="font-size: larger;text-decoration:underline;">Cajas</p></th>
+							<td> </td>
+						</tr>
 						<tr>
 							<th>Caja Fuerte</th>
 							<td id="big_amount_tract"></td>
@@ -152,9 +162,13 @@
 
 			<div class="row">
 				<div class="col-xs-12 text-center">
-					<h3>Estado General del Tracto</h3>
+
 
 					<table class="table table-striped">
+						<tr>
+							<th><p style="font-size: larger;text-decoration:underline;">Estado general del Tracto</p></th>
+							<td> </td>
+						</tr>
 						<tr>
 							<th>Saldo inicial de cajas</th>
 							<td id="tract_initial_amount"></td>
@@ -198,12 +212,22 @@
 				</div>
 			</div>
 
+			
 
 
+			<br>
+			<div class="row text-left">
+				<div class="col-xs-12">
+					<button onclick="generatePDF('Informe de montos de Tracto', '#tract');" class="btn btn-success">Informe</button>
+				</div>
 
-
+			</div>
+			<br>
+			<br>
 
 		</div>
+
+
 
 
 
@@ -241,11 +265,10 @@
 
 			<br>
 			<br>
-			<div class="row text-center">
-				<div class="col-xs-12">
-					<h3><strong>Facturas</strong></h3>
-				</div>
-			</div>
+
+			<h2><strong>Facturas</strong></h2>
+
+
 
 			<div class="table-responsive">
 				<table class="table table-hover">
@@ -286,9 +309,12 @@
 			<div class="row">
 
 				<div class="col-xs-12 text-center">
-					<h3>Cuadro de Ingresos</h3>
 
 					<table class="table table-striped">
+						<tr>
+							<th><p style="font-size: larger;text-decoration:underline;">Cuadro de ingresos</p></th>
+							<td> </td>
+						</tr>
 						<tr>
 							<th>Monto de Superávit</th>
 							<td class="surplus_amount"></td>
@@ -310,10 +336,12 @@
 
 			<div class="row">
 				<div class="col-xs-12 text-center">
-					<h3>Estado General</h3>
 
 					<table class="table table-striped">
-
+						<tr>
+							<th><p style="font-size: larger;text-decoration:underline;">Estado General</p></th>
+							<td> </td>
+						</tr>
 						<tr>
 							<th>Monto Asignado</th>
 							<td class = "surplus_amount" ></td>
@@ -334,7 +362,15 @@
 				</div>
 			</div>
 
+			<br>
+			<div class="row text-left">
+				<div class="col-xs-12">
+					<button onclick="generatePDF('Informe de montos de Superávit', '#surplus');" class="btn btn-success">Informe</button>
+				</div>
 
+			</div>
+			<br>
+			<br>
 
 		</div>
 
@@ -384,19 +420,18 @@
 
 			<br>
 			<br>
-			<div class="row text-center">
-				<div class="col-xs-12">
-					<h3><strong>Facturas</strong></h3>
-				</div>
-			</div>
+
+			<h2><strong>Facturas</strong></h2>
+
 
 			<div class="table-responsive">
 				<table class="table table-hover">
 					<thead>
+
 					<tr>
 						<th>#</th>
 						<th>Fecha</th>
-						<th>Número de Factura</th>
+						<th># Factura</th>
 						<th>Detalle</th>
 						<th>Proveedor</th>
 						<th>Monto</th>
@@ -426,9 +461,8 @@
 
 
 			<div class="row">
-
+<h4><strong style="text-decoration: underline;;">Cuadro de ingresos</strong></h4>
 				<div class="col-xs-12 col-md-6 text-center">
-					<h3>Cuadro de Ingresos</h3>
 
 					<div class="table-responsive">
 						<table class="table table-hover">
@@ -456,9 +490,12 @@
 
 
 				<div class="col-xs-12 col-md-6 text-center">
-					<h3>Cajas</h3>
 
 					<table class="table table-striped">
+						<tr>
+							<th><p style="font-size: larger;text-decoration:underline;">Cajas</p></th>
+							<td> </td>
+						</tr>
 						<tr>
 							<th>Caja Fuerte</th>
 							<td id="generated_big_amount"></td>
@@ -483,9 +520,13 @@
 
 			<div class="row">
 				<div class="col-xs-12 text-center">
-					<h3>Estado General del Tracto</h3>
+
 
 					<table class="table table-striped">
+						<tr>
+							<th><p style="font-size: larger;text-decoration:underline;">Estado general del Tracto</p></th>
+							<td> </td>
+						</tr>
 						<tr>
 							<th>Saldo inicial de cajas</th>
 							<td id="generated_initial_amount"></td>
@@ -528,9 +569,15 @@
 
 
 
+			<br>
+			<div class="row text-left">
+				<div class="col-xs-12">
+					<button onclick="generatePDF('Informe de montos de Ingresos Generados', '#generated');" class="btn btn-success">Informe</button>
+				</div>
 
-
-
+			</div>
+			<br>
+			<br>
 
 
 
@@ -540,7 +587,7 @@
 
 		</div>
 	</div>
-</div>
+
 
 
 
@@ -993,7 +1040,50 @@ function getIndex(array,word) {
 
 
 
+function generatePDF(title, id) {
+	var pdf = new jsPDF('landscape', 'pt', 'tabloid');
+	pdf.setFontType("bold");
+	pdf.text(500,40,title);
 
+	// source can be HTML-formatted string, or a reference
+	// to an actual DOM element from which the text will be scraped.
+	source = $(id)[0];
+
+	// we support special element handlers. Register them with jQuery-style
+	// ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
+	// There is no support for any other type of selectors
+	// (class, of compound) at this time.
+	/**
+	specialElementHandlers = {
+		// element with id of "bypass" - jQuery style selector
+		'#bypassme': function (element, renderer) {
+			// true = "handled elsewhere, bypass text extraction"
+			return true
+		}
+	};
+	 **/
+	margins = {
+		top: 10,
+		bottom: 10,
+		left: 150,
+		width: 3500
+	};
+	// all coords and widths are in jsPDF instance's declared units
+	// 'inches' in this case
+	pdf.fromHTML(
+		source, // HTML string or DOM elem ref.
+		margins.left, // x coord
+		margins.top, { // y coord
+			'width': margins.width // max width of content on PDF
+			//'elementHandlers': specialElementHandlers
+		},
+
+		function (dispose) {
+			// dispose: object with X, Y of the last line add to the PDF
+			//          this allow the insertion of new lines after html
+			pdf.save('Test.pdf');
+		}, margins);
+}
 
 
 
@@ -1007,7 +1097,7 @@ function getIndex(array,word) {
 
 
 
-<br>
+
 
 <div class="row text-center">
   <div class="col-xs-12">
@@ -1015,51 +1105,10 @@ function getIndex(array,word) {
   </div>
 </div>
 
-<script>
-	function genPDF()
-	{
-		/**
-		html2canvas(
-			document.body, {
-				onrendered: function (canvas) {
-					var img = canvas.toDataURL("image/png");
-					var doc = new jsPDF();
-					doc.addImage(img, 'JPEG', 1, 1);
-					doc.save('test.pdf');
-				}
-			}
 
-		);
-		 **/
 
-		var pdf = new jsPDF('p','pt', 'letter');
-		source = document.getElementById("content")[0];
-		specialElementHandlers = {
-			'#bypassme': function (element, renderer) {
-				return true;
-			}
-		}
 
-		margins = {
-			top:50,
-			left:60,
-			width:545
-		};
 
-		pdf.fromHTML(
-			source,
-			margins.left,
-			margins.top,
-			{
-				'width': margins.width,
-				'elementHandlers':specialElementHandlers
-			},
-			function (dispose) {
-				pdf.save('test.pdf');
-			}
-		)
 
-	}
-</script>
 
-<button onclick="genPDF();">pdf</button>
+
