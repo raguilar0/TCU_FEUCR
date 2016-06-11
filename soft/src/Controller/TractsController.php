@@ -79,6 +79,7 @@ class TractsController extends AppController
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
+            debug($this->request->data);
             $tract = $this->Tracts->patchEntity($tract, $this->request->data);
             if ($this->Tracts->save($tract)) {
                 $this->Flash->success(__('The tract has been saved.'));

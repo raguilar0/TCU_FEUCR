@@ -1,22 +1,24 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Savings'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Associations'), ['controller' => 'Associations', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Association'), ['controller' => 'Associations', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="savings form large-9 medium-8 columns content">
-    <?= $this->Form->create($saving) ?>
-    <fieldset>
-        <legend><?= __('Add Saving') ?></legend>
-        <?php
-            echo $this->Form->input('amount');
-            echo $this->Form->input('state');
-            echo $this->Form->input('date');
-            echo $this->Form->input('association_id', ['options' => $associations]);
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+
+<div class="row text-center">
+    <div class="col-xs-12">
+        <h1>¡Agregá un nuevo monto de ahorro!</h1>
+    </div>
+
 </div>
+<br>
+<br>
+
+    <?= $this->Form->create($saving) ?>
+        <div class="form-group">
+            <?php
+            echo $this->Form->input('amount', ['label'=>'Monto a asignar', 'class'=>'form-control']);
+            echo $this->Form->input('state', ['label'=>'Estado', 'class'=>'form-control']);
+            echo $this->Form->input('date', ['label'=>'Fecha de asignación', 'class'=>'form-control', 'type'=>'text']);
+            echo $this->Form->input('association_id', ['options' => $associations, 'class'=>'form-control']);
+            ?>
+        </div>
+
+<br>
+    <?= $this->Form->button(__('Guardar'), ['class'=>'form-control', 'id'=>'asso_id']) ?>
+    <?= $this->Form->end() ?>
+

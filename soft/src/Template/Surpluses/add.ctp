@@ -1,22 +1,25 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Surpluses'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Associations'), ['controller' => 'Associations', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Association'), ['controller' => 'Associations', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="surpluses form large-9 medium-8 columns content">
-    <?= $this->Form->create($surplus) ?>
-    <fieldset>
-        <legend><?= __('Add Surplus') ?></legend>
-        <?php
-            echo $this->Form->input('amount');
-            echo $this->Form->input('date');
-            echo $this->Form->input('detail');
-            echo $this->Form->input('association_id', ['options' => $associations]);
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+<div class="row text-center">
+    <div class="col-xs-12">
+        <h1>¡Agregá un nuevo superávit!</h1>
+    </div>
+
 </div>
+<br>
+<br>
+
+    <?= $this->Form->create($surplus) ?>
+
+    <div class="form-group">
+        <?php
+        echo $this->Form->input('amount', ['class'=>'form-control', 'label'=>'Monto a asignar']);
+        echo $this->Form->input('date', ['type'=>'text', 'class'=>'form-control', 'label'=>'Fecha de asignación del monto']);
+        echo $this->Form->input('detail', ['type'=>'textarea','class'=>'form-control', 'label'=>'Detalles']);
+        echo "<br>";
+        echo $this->Form->input('association_id', ['options' => $associations, 'class'=>'form-control', 'label'=>'Asociación correspondiente']);
+        ?>
+    </div>
+    <br>
+
+    <?= $this->Form->button(__('Guardar'), ['class'=>'form-control', 'id'=>'asso_id']) ?>
+    <?= $this->Form->end() ?>
+

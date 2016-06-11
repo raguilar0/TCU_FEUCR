@@ -29,7 +29,7 @@
     <?=$this->Html->script('jquery2.js') ?>
 
     <?= $this->Html->css('jquery-ui/jquery-ui.min.css') ?>
-    <?=$this->Html->script('jquery_association_admin.js') ?>
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -100,8 +100,8 @@
                     </li>
 
                     <li>
-                        <a  data-toggle="collapse" data-target="#tracts_id">Fechas de Tracto</a>
-                        <div id="tracts_id" class="collapse">
+                        <a  data-toggle="collapse" data-target="#tract_id">Fechas de Tracto</a>
+                        <div id="tract_id" class="collapse">
                             <ul>
                                 <li><?php echo $this->Html->link('Nuevo Tracto',['controller'=>'Tracts','action'=>'add']);?></li><br>
                                 <li><?php echo $this->Html->link('Administrar Tractos',['controller'=>'Tracts','action'=>'index']);?></li><br>
@@ -144,7 +144,7 @@
                             </ul>
                         </div>
                     </li>
-                    
+
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -166,11 +166,12 @@
     <!-- /#wrapper -->
 
     <!-- jQuery -->
-    <?=$this->Html->script('jquery.js') ?>
-    <?=$this->Html->script('jquery_association_admin.js') ?>
     <!-- Bootstrap Core JavaScript -->
 
     <?=$this->Html->script('bootstrap.min.js') ?>
+    <?=$this->Html->script('jquery.js') ?>
+    <?=$this->Html->script('jquery_association_admin.js') ?>
+
 
     <!-- Morris Charts JavaScript -->
 

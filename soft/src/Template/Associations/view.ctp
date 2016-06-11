@@ -1,30 +1,118 @@
-<h1>¡Acá podés <b>Ver</b> la Asociación!</h1>
+<div class="row text-center">
+    <div class="col-xs-12">
+        <h1> <?php echo $data['name'].' ('.$data['acronym'].')';?> </h1>
+    </div>
+</div>
 
-<?php
+<div class="row">
+    <div class="col-xs-12 col-md-4">
+        <h3><b>UbicaciÃ³n</b></h3>
+    </div>
 
-	echo "<div class='form-group'>";
+    <div class="col-xs-12 col-md-8">
+        <h3><?php echo $data['location'];?> </h3>
+    </div>
 
-    echo "<h4>".$this->Form->input('name', ['class' => 'form-control','label'=>'Nombre de la Asociación', 'value'=>$data['name'], 'maxlength'=> '256'])."</h4>";
+</div>
 
-    echo "<h4>".$this->Form->input('acronym', ['class' => 'form-control', 'label'=>'Sigla', 'value'=>$data['acronym'], 'maxlength'=> '256'])."</h4>";
+<hr>
 
-    echo "<h4>".$this->Form->input('headquarter', ['class' => 'form-control','label'=>'Sede', 'maxlength'=> '100', 'value'=>$data['headquarter_id']])."</h4>";
+<div class="row">
+    <div class="col-xs-12 col-md-4">
+        <h3><b>Horario</b></h3>
+    </div>
 
-    echo "<h4>".$this->Form->input('location', ['class' => 'form-control','label'=>'Localización','value'=>$data['location'], 'maxlength'=> '1024'])."</h4>";
+    <div class="col-xs-12 col-md-8">
+          <h3><?php echo $data['schedule'];?> </h3>
+        
+    </div>   
 
-    echo "<h4>".$this->Form->input('schedule', ['class' => 'form-control','label'=>'Horario','value'=>$data['schedule'], 'maxlength'=>'512'])."</h4>";
+</div>
+
+<hr>
+
+<div class="row">
+    <div class="col-xs-12 col-md-4">
+        <h3><b>Tarjeta Autorizada</b></h3>
+    </div>
+
+    <div class="col-xs-12 col-md-8">
+          <h3><?php echo ($data['authorized_card'] == 1 ? 'Autorizada':'Sin AutorizaciÃ³n');?> </h3>
+        
+    </div>
+
+</div>
+
+<hr>
+
+
+<div class="row">
+    <div class="col-xs-12 col-md-4">
+        <h3><b>Sede</b></h3>
+    </div>
+
+    <div class="col-xs-12 col-md-8">
+          <h3><?php echo $data['headquarter'];?> </h3>
+        
+    </div>  
+
+</div>
+
+<hr>
+
+
+<br>
+<br>
+
+
+<div class="row text-center">
+    <div class="col-xs-12">
+      <h2>Montos de Tracto</h2>
+    </div>
+
+</div>
+
+<br>
+
+<div class="table-responsive">
+  <table class="table tables">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Cantidad Asignada</th>
+      <th>Fecha de AsignaciÃ³n</th>      
+      <th>Fecha de Inicio del Tracto</th>
+      <th>Fecha de Fin del Tracto</th>             
+    </tr>
+  </thead>
+  <tbody>
+
+
+      <?php
+
+          foreach ($data['amounts'] as $key => $value) {
+             echo "<tr>";
+              echo "<td>".$value['tract']['number']."</td>";
+              echo "<td>".$value['amount']."</td>";
+              echo "<td>".$value['date']."</td>";              
+              echo "<td>".$value['tract']['date']."</td>";
+              echo "<td>".$value['tract']['deadline']."</td>";                      
+             echo "</tr>";
+          }
+      ?>
 
 
 
-    echo "</div>";
-	
-?>
 
+  </tbody>
+</table>
+</div>
 
+<br>
+<br>
 
-<div class="row text-right">
-	<div class="col-xs-12">
-		<h4 id="callback" style="color:#01DF01"></h4>	
-	</div>
-
+<div class="row text-center">
+  <div class="col-xs-12">
+     <?php echo $this->Html->link('AtrÃ¡s', '/associations/show_associations/1', ['class'=>'btn btn-primary']);?>
+  </div>
 </div>
