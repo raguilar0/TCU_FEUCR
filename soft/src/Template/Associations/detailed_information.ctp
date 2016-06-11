@@ -8,7 +8,7 @@
 <div class = "row text-center">
 	<div class = "col-xs-12">
 		<?php 
-			echo "<h1>".$association_name[0]['name']."</h1>";
+			echo "<h1 id='association_name'>".$association_name[0]['name']."</h1>";
 		?>
 		
 		<h2 id = "tract_date"></h2>
@@ -212,13 +212,13 @@
 				</div>
 			</div>
 
-			
+
 
 
 			<br>
 			<div class="row text-left">
 				<div class="col-xs-12">
-					<button onclick="generatePDF('Informe de montos de Tracto', '#tract');" class="btn btn-success">Informe</button>
+					<button onclick="generatePDF('Informe de montos de Tracto', '#tract', document.getElementById('tract_date'));" class="btn btn-success">Informe</button>
 				</div>
 
 			</div>
@@ -365,7 +365,7 @@
 			<br>
 			<div class="row text-left">
 				<div class="col-xs-12">
-					<button onclick="generatePDF('Informe de montos de Superávit', '#surplus');" class="btn btn-success">Informe</button>
+					<button onclick="generatePDF('Informe de montos de Superávit', '#surplus', document.getElementById('tract_date'));" class="btn btn-success">Informe</button>
 				</div>
 
 			</div>
@@ -572,7 +572,7 @@
 			<br>
 			<div class="row text-left">
 				<div class="col-xs-12">
-					<button onclick="generatePDF('Informe de montos de Ingresos Generados', '#generated');" class="btn btn-success">Informe</button>
+					<button onclick="generatePDF('Informe de montos de Ingresos Generados', '#generated', document.getElementById('tract_date'));" class="btn btn-success">Informe</button>
 				</div>
 
 			</div>
@@ -979,7 +979,7 @@ function setSurplusValues(json)
 
 		 surplus_final_balance = (surplus_amount - invoices_total);
 
-		date = "Superavit del año: "+document.getElementById("surplus_year_id").value +"<br><br>";			
+		date = "Superávit del año: "+document.getElementById("surplus_year_id").value +"<br><br>";			
 	}
 
 	amount_classes = document.getElementsByClassName("surplus_amount");
@@ -1040,10 +1040,32 @@ function getIndex(array,word) {
 
 
 
-function generatePDF(title, id) {
+function generatePDF(title, id, date) {
 	var pdf = new jsPDF('landscape', 'pt', 'tabloid');
 	pdf.setFontType("bold");
-	pdf.text(500,40,title);
+
+	pdf.setFontSize(16);
+	var header = document.getElementById("association_name");
+	date = date.innerHTML;
+	date = date.split(":");
+
+	var label = date[0];
+	date = date[1].replace(/<br>/g, "");
+	header = header.innerHTML;
+	var initialPosition = 380;
+	var titlePosition = getPosition(header.length, title.length);
+	var labelPosition = getPosition(title.length, label.length);
+	var datePosition = getPosition(label.length, date.length);
+
+	labelPosition = initialPosition + titlePosition + labelPosition;
+	datePosition = initialPosition + titlePosition + labelPosition + datePosition;
+
+	pdf.text(initialPosition, 40, header);
+
+	pdf.text((initialPosition + titlePosition),70,title);
+	
+	pdf.text(labelPosition,100, label);
+	pdf.text(datePosition,140,date);
 
 	// source can be HTML-formatted string, or a reference
 	// to an actual DOM element from which the text will be scraped.
@@ -1063,7 +1085,7 @@ function generatePDF(title, id) {
 	};
 	 **/
 	margins = {
-		top: 10,
+		top: 100,
 		bottom: 10,
 		left: 150,
 		width: 3500
@@ -1085,6 +1107,13 @@ function generatePDF(title, id) {
 		}, margins);
 }
 
+	function getPosition(lengthFirst, lengthSecond) {
+		var total = lengthFirst - lengthSecond;
+
+		total = (total / 2);
+
+		return total;
+	}
 
 
 
