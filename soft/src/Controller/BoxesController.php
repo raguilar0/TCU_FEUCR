@@ -12,35 +12,36 @@ class BoxesController extends AppController
 			return $this->redirect($this->Auth->redirectUrl());
 		}
 		else{
+			$id = $this->request->session()->read('Auth.User.association_id');
 			$this->viewBuilder()->layout('associations_view'); //Carga un layout personalizado para esta vista
-
+			$actualDate = date("Y-m-d");
+			$tract_id = $this->getTractId($actualDate) ;
 			$box = $this->Boxes->find()
 						->select(['little_amount','big_amount'])
-						->where(['association_id'=>1]);
+						->andwhere(['association_id'=>$id, 'type'=> 1, 'tract_id' =>$tract_id]);
 
 			$box = $box->toArray();
 
-
-			if($this->request->is(array('post','put')))
-			{
-				if($box != [])
-				{
+			if($this->request->is(array('post','put'))){
+				if($box != []){
 					$query = $this->Boxes->query();
 					$query->update()
 						  ->set(['big_amount'=> $this->request->data['big_amount'], 'little_amount'=>$this->request->data['little_amount']])
-						  ->where(['id'=> 1])
+						  ->andwhere(['association_id'=> $id,'tract_id'=> $tract_id])
 						  ->execute();
-				}
-				else
-				{
-					$this->add($this->request->data);
+
+
+					$box = $this->Boxes->find()
+						->select(['little_amount','big_amount'])
+						->andwhere(['association_id'=>$id, 'type'=> 1, 'tract_id' =>$tract_id]);
+
+					$box = $box->toArray();
 				}
 			}
-			else
-			{
-				$this->set('data',$box);
-			}
+
+			$this->set('data',$box);
 		}
+		
 	}
 
 
@@ -53,11 +54,36 @@ class BoxesController extends AppController
 		else{
 			$boxes = $this->Boxes->newEntity($data);
 			$response = 0;
-			$boxes['association_id'] = 1;
+			$id = $this->request->session()->read('Auth.User.association_id');
+			$boxes['association_id'] = $id;
 			if($this->Boxes->save($boxes)) //Guarda los date_offset_get()
 			{
 				$response = 1;
 			}
 		}
 	}
+
+
+	private function getTractId($actualDate){
+		
+		$this->loadModel('Tracts');
+
+		//$actualDate = date("Y-m-d");
+
+		$id = $this->Tracts->find()
+					->hydrate(false)
+					->select(['id'])
+					->where(function ($exp) use($actualDate) {
+                        return $exp
+                        	->lte('date',$actualDate)
+                        	->gte('deadline',$actualDate);
+                    });
+
+        $id = $id->toArray();
+
+		return $id[0]['id'];
+		
+	}
+
+
 }

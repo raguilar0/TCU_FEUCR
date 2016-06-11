@@ -41,11 +41,16 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
               <li class="active"><?php echo $this->Html->link('Administrar Asociación', '/associations/index_associations', ['id'=>'active-navbar']);?></li>
-
+              
+              <li>
+                <?php echo $this->Html->link('Solicitar Monto de Ahorro', '/savings/show_associations/1');?>
+              </li>
+              
               <li>
                 <?php echo $this->Html->link('Información General', '/associations/general_information');?>
               </li>
-
+              
+              
               <li>
                   <?php echo $this->Html->link('Agregar Usuario', '/users/add_user');?>
               </li>
