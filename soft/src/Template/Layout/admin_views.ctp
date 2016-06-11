@@ -100,12 +100,12 @@
                     </li>
 
                     <li>
-                        <a  data-toggle="collapse" data-target="#tracts_id">Montos</a>
+                        <a  data-toggle="collapse" data-target="#tracts_id">Fechas de Tracto</a>
                         <div id="tracts_id" class="collapse">
                             <ul>
                                 <li><?php echo $this->Html->link('Nuevo Tracto',['controller'=>'Tracts','action'=>'add']);?></li><br>
-                                <li><?php echo $this->Html->link('',['controller'=>'Associations','action'=>'show_associations/5']);?></li><br>
-                                <li><?php echo $this->Html->link('Editar Montos',['controller'=>'Amounts','action'=>'show_associations/1']);?></li><br>
+                                <li><?php echo $this->Html->link('Administrar Tractos',['controller'=>'Tracts','action'=>'index']);?></li><br>
+
 
                             </ul>
                         </div>
@@ -113,7 +113,7 @@
 
 
                     <li>
-                        <a  data-toggle="collapse" data-target="#amounts_id">Montos</a>
+                        <a  data-toggle="collapse" data-target="#amounts_id">Montos de Tracto</a>
                         <div id="amounts_id" class="collapse">
                             <ul>
                                 <li><?php echo $this->Html->link('Nuevo Monto',['controller'=>'Amounts','action'=>'add']);?></li><br>
@@ -124,45 +124,27 @@
                         </div>
                     </li>
                     <li>
-                        <a  data-toggle="collapse" data-target="#categories_id">Tipos de Platillos</a>
-                        <div id="categories_id" class="collapse">
+                        <a  data-toggle="collapse" data-target="#surplus_id">Montos de Superávit</a>
+                        <div id="surplus_id" class="collapse">
                             <ul>
-                                <li><?php echo $this->Html->link('Nuevo Tipo',['controller'=>'Categories','action'=>'add']);?></li><br>
-                                <li><?php echo $this->Html->link('Administrar Tipos',['controller'=>'Categories','action'=>'index']);?></li><br>
+                                <li><?php echo $this->Html->link('Nuevo Monto',['controller'=>'Surpluses','action'=>'add']);?></li><br>
+                                <li><?php echo $this->Html->link('Administrar Montos',['controller'=>'Surpluses','action'=>'index']);?></li><br>
+
                             </ul>
                         </div>
                     </li>
 
                     <li>
-                        <a  data-toggle="collapse" data-target="#headquarters_id">Menús</a>
-                        <div id="headquarters_id" class="collapse">
+                        <a  data-toggle="collapse" data-target="#saving_id">Montos de Ahorro</a>
+                        <div id="saving_id" class="collapse">
                             <ul>
-                                <li><?php echo $this->Html->link('Nuevo Menú',['controller'=>'MenusDishesCategories','action'=>'add']);?></li><br>
-                                <li><?php echo $this->Html->link('Administrar Menús',['controller'=>'MenusDishesCategories','action'=>'index']);?></li><br>
+                                <li><?php echo $this->Html->link('Nuevo Monto',['controller'=>'Savings','action'=>'add']);?></li><br>
+                                <li><?php echo $this->Html->link('Administrar Montos',['controller'=>'Savings','action'=>'index']);?></li><br>
+
                             </ul>
                         </div>
                     </li>
-
-                    <li>
-                        <a  data-toggle="collapse" data-target="#restaurants_id">Sodas</a>
-                        <div id="restaurants_id" class="collapse">
-
-                            <ul>
-                                <li><?php echo $this->Html->link('Nueva Soda',['controller'=>'Restaurants','action'=>'add']);?></li><br>
-                                <li><?php echo $this->Html->link('Administrar Sodas',['controller'=>'Restaurants','action'=>'index']);?></li><br>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li>
-                        <a  data-toggle="collapse" data-target="#headquarters_id">Sedes</a>
-                        <div id="headquarters_id" class="collapse">
-                            <ul>
-                                <li><?php echo $this->Html->link('Nueva Sede',['controller'=>'Headquarters','action'=>'add']);?></li><br>
-                                <li><?php echo $this->Html->link('Administrar Sedes',['controller'=>'Headquarters','action'=>'index']);?></li><br>
-                            </ul>
-                        </div>
-                    </li>
+                    
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

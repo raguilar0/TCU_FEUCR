@@ -1,59 +1,53 @@
-<div class="row text-center">
-	<div class="col-xs-12"><h1>Opciones de Administración</h1></div>
-</div>
-
-<br>
-
-<div class="row text-center">
-	<div class="col-xs-12 col-md-4">
-		<?php echo $this->Form->Button('Agregar Nuevo Tracto',['class'=>'btn btn-primary', 'data-toggle'=>'collapse', 'data-target'=>'#add_tract'])?>
-
-			<div id="add_tract" class="collapse">
-				<?php
-					echo $this->Form->create(null, ['id'=>'submit_add_tract']);
-						echo "<div class='form-group'>";
-
-
-
-
-					    echo "<div class = 'row'>";
-
-					    echo "<div class = 'col-xs-12'>";
-					     echo "<h4>".$this->Form->input('number', ['class' => 'form-control','label'=>'Número de Tracto', 'placeholder'=>'Posibles valores: 1,2,3,4', 'type'=>'number'])."</h4>";
-					    echo "</div >";
-
-
-					    echo "<div class = 'col-xs-12'>";
-					     echo "<h4>".$this->Form->input('date', ['label'=>'Fecha de Inicio', 'type'=>'date'])."</h4>";
-					    echo "</div >";
-
-					    echo "<div class = 'col-xs-12'>";
-					     echo "<h4>".$this->Form->input('deadline', ['class' => 'form-control','label'=>'Fecha Final', 'type'=>'date'])."</h4>";
-					    echo "</div >";						    					    
-
-					    echo "</div >";
-
-
-					    echo "<div class = 'row'>";
-					        echo "<div class = 'col-xs-12'>";    echo "<h4>".$this->Form->submit('Guardar Asociación', ['class' => 'form-control', 'id' => 'asso_id'])."</h4>";
-					        echo "</div>";
-					    echo "</div>";
-
-					    echo "</div >";
-
-					echo $this->Form->end();
-
-
-				?>
-			</div>
-
-	</div>
-
-	<div class="col-xs-12 col-md-4">
-		<?php echo $this->Html->link('Agregar Montos','',['class'=>'btn btn-primary'])?>
-	</div>
-
-	<div class="col-xs-12 col-md-4">
-		<?php echo $this->Html->link('Ver Información Detallada','',['class'=>'btn btn-primary'])?>
-	</div>		
+<nav class="large-3 medium-4 columns" id="actions-sidebar">
+    <ul class="side-nav">
+        <li class="heading"><?= __('Actions') ?></li>
+        <li><?= $this->Html->link(__('New Tract'), ['action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Amounts'), ['controller' => 'Amounts', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Amount'), ['controller' => 'Amounts', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Boxes'), ['controller' => 'Boxes', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Box'), ['controller' => 'Boxes', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Initial Amounts'), ['controller' => 'InitialAmounts', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Initial Amount'), ['controller' => 'InitialAmounts', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Invoices'), ['controller' => 'Invoices', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Invoice'), ['controller' => 'Invoices', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Warehouses'), ['controller' => 'Warehouses', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Warehouse'), ['controller' => 'Warehouses', 'action' => 'add']) ?></li>
+    </ul>
+</nav>
+<div class="tracts index large-9 medium-8 columns content">
+    <h3><?= __('Tracts') ?></h3>
+    <table cellpadding="0" cellspacing="0">
+        <thead>
+            <tr>
+                <th><?= $this->Paginator->sort('id') ?></th>
+                <th><?= $this->Paginator->sort('number') ?></th>
+                <th><?= $this->Paginator->sort('date') ?></th>
+                <th><?= $this->Paginator->sort('deadline') ?></th>
+                <th class="actions"><?= __('Actions') ?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($tracts as $tract): ?>
+            <tr>
+                <td><?= $this->Number->format($tract->id) ?></td>
+                <td><?= $this->Number->format($tract->number) ?></td>
+                <td><?= h($tract->date) ?></td>
+                <td><?= h($tract->deadline) ?></td>
+                <td class="actions">
+                    <?= $this->Html->link(__('View'), ['action' => 'view', $tract->id]) ?>
+                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $tract->id]) ?>
+                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $tract->id], ['confirm' => __('Are you sure you want to delete # {0}?', $tract->id)]) ?>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <div class="paginator">
+        <ul class="pagination">
+            <?= $this->Paginator->prev('< ' . __('previous')) ?>
+            <?= $this->Paginator->numbers() ?>
+            <?= $this->Paginator->next(__('next') . ' >') ?>
+        </ul>
+        <p><?= $this->Paginator->counter() ?></p>
+    </div>
 </div>

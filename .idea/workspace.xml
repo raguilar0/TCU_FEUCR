@@ -2,9 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d1ba4688-7503-435a-a4df-9c7c0f62ac90" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Amounts/add.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Amounts/add.ctp" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/soft/src/Template/Savings/show_associations.ctp" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Controller/SavingsController.php" afterPath="$PROJECT_DIR$/soft/src/Controller/SavingsController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Controller/TractsController.php" afterPath="$PROJECT_DIR$/soft/src/Controller/TractsController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Model/Table/SavingsTable.php" afterPath="$PROJECT_DIR$/soft/src/Model/Table/SavingsTable.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Model/Table/TractsTable.php" afterPath="$PROJECT_DIR$/soft/src/Model/Table/TractsTable.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Layout/admin_views.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Layout/admin_views.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Savings/add.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Savings/add.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Tracts/add.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Tracts/add.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Tracts/index.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Tracts/index.ctp" />
     </list>
     <ignored path="FEUCR.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,51 +32,25 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="detailed_information.ctp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/soft/src/Template/Associations/detailed_information.ctp">
+      <file leaf-file-name="admin_views.ctp" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/soft/src/Template/Layout/admin_views.ctp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="22880">
-              <caret line="1040" column="0" selection-start-line="1040" selection-start-column="0" selection-end-line="1040" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="484">
+              <caret line="146" column="20" selection-start-line="146" selection-start-column="20" selection-end-line="146" selection-end-column="20" />
+              <folding>
+                <marker date="1465628655033" expanded="true" signature="6413:6480" ph="..." />
+                <marker date="1465628655033" expanded="true" signature="7123:7201" ph="..." />
+                <marker date="1465628655033" expanded="true" signature="7166:7201" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AssociationsController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/soft/src/Controller/AssociationsController.php">
+      <file leaf-file-name="SavingsController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/soft/src/Controller/SavingsController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1936">
-              <caret line="89" column="24" selection-start-line="89" selection-start-column="20" selection-end-line="89" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="jquery_association_admin.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/soft/webroot/js/jquery_association_admin.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="9966">
-              <caret line="453" column="0" selection-start-line="453" selection-start-column="0" selection-end-line="459" selection-end-column="3" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="add.ctp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/soft/src/Template/Amounts/add.ctp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3828">
-              <caret line="174" column="0" selection-start-line="174" selection-start-column="0" selection-end-line="174" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="admin_views_old_old.ctp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/soft/src/Template/Layout/admin_views_old_old.ctp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="726">
-              <caret line="33" column="67" selection-start-line="33" selection-start-column="64" selection-end-line="33" selection-end-column="67" />
+            <state relative-caret-position="490">
+              <caret line="108" column="52" selection-start-line="108" selection-start-column="52" selection-end-line="108" selection-end-column="52" />
               <folding />
             </state>
           </provider>
@@ -79,48 +59,8 @@
       <file leaf-file-name="AmountsController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/soft/src/Controller/AmountsController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7304">
-              <caret line="332" column="24" selection-start-line="332" selection-start-column="20" selection-end-line="332" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SurplusesController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/soft/src/Controller/SurplusesController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3432">
-              <caret line="156" column="5" selection-start-line="156" selection-start-column="5" selection-end-line="156" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="InitialAmountsTable.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/soft/src/Model/Table/InitialAmountsTable.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="InitialAmountsController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/soft/src/Controller/InitialAmountsController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2266">
-              <caret line="103" column="48" selection-start-line="103" selection-start-column="48" selection-end-line="103" selection-end-column="48" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="admin_views.ctp" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/soft/src/Template/Layout/admin_views.ctp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="550">
-              <caret line="106" column="31" selection-start-line="106" selection-start-column="31" selection-end-line="106" selection-end-column="31" />
+            <state relative-caret-position="132">
+              <caret line="337" column="0" selection-start-line="337" selection-start-column="0" selection-end-line="337" selection-end-column="56" />
               <folding />
             </state>
           </provider>
@@ -136,7 +76,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/soft/src/Template/Savings/show_associations.ctp" />
-        <option value="$PROJECT_DIR$/soft/src/Controller/SavingsController.php" />
         <option value="$PROJECT_DIR$/Backup/Mysql/database v3.sql" />
         <option value="$PROJECT_DIR$/soft/config/app.php" />
         <option value="$PROJECT_DIR$/soft/src/Template/Amounts/show_associations.ctp" />
@@ -148,6 +87,8 @@
         <option value="$PROJECT_DIR$/soft/src/Controller/SurplusesController.php" />
         <option value="$PROJECT_DIR$/soft/webroot/js/jquery_association_admin.js" />
         <option value="$PROJECT_DIR$/soft/src/Template/Amounts/add.ctp" />
+        <option value="$PROJECT_DIR$/soft/src/Controller/TractsController.php" />
+        <option value="$PROJECT_DIR$/soft/src/Controller/SavingsController.php" />
         <option value="$PROJECT_DIR$/soft/src/Template/Layout/admin_views.ctp" />
       </list>
     </option>
@@ -195,7 +136,78 @@
       <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
-        <subPane />
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="soft" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="soft" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="soft" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Controller" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
       </pane>
     </panes>
   </component>
@@ -257,18 +269,18 @@
       <workItem from="1465517270876" duration="16165000" />
       <workItem from="1465620003155" duration="57000" />
       <workItem from="1465621485954" duration="5231000" />
-      <workItem from="1465626755886" duration="513000" />
+      <workItem from="1465626755886" duration="1900000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26171000" />
+    <option name="totallyTimeSpent" value="27558000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="953" y="0" width="974" height="1047" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31210855" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31210855" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977587" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -286,25 +298,6 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
-    <layout-to-restore>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977587" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31210855" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-    </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -398,7 +391,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <marker date="1465628655033" expanded="true" signature="6413:6480" ph="..." />
+            <marker date="1465628655033" expanded="true" signature="7123:7201" ph="..." />
+            <marker date="1465628655033" expanded="true" signature="7166:7201" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -414,7 +411,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1914">
           <caret line="87" column="45" selection-start-line="87" selection-start-column="45" selection-end-line="87" selection-end-column="45" />
-          <folding />
+          <folding>
+            <marker date="1465628655033" expanded="true" signature="6413:6480" ph="..." />
+            <marker date="1465628655033" expanded="true" signature="7123:7201" ph="..." />
+            <marker date="1465628655033" expanded="true" signature="7166:7201" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -430,7 +431,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1914">
           <caret line="87" column="45" selection-start-line="87" selection-start-column="45" selection-end-line="87" selection-end-column="45" />
-          <folding />
+          <folding>
+            <marker date="1465628655033" expanded="true" signature="6413:6480" ph="..." />
+            <marker date="1465628655033" expanded="true" signature="7123:7201" ph="..." />
+            <marker date="1465628655033" expanded="true" signature="7166:7201" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -504,13 +509,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/soft/src/Controller/SavingsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="816">
-          <caret line="42" column="59" selection-start-line="42" selection-start-column="59" selection-end-line="42" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/soft/src/Template/Amounts/show_associations.ctp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="550">
@@ -561,38 +559,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/soft/src/Controller/SurplusesController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3432">
-          <caret line="156" column="5" selection-start-line="156" selection-start-column="5" selection-end-line="156" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/soft/src/Model/Table/InitialAmountsTable.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/soft/src/Controller/InitialAmountsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2266">
-          <caret line="103" column="48" selection-start-line="103" selection-start-column="48" selection-end-line="103" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/soft/src/Controller/AmountsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7304">
-          <caret line="332" column="24" selection-start-line="332" selection-start-column="20" selection-end-line="332" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/soft/webroot/js/jquery2.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -614,34 +580,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/soft/src/Template/Layout/admin_views_old_old.ctp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="726">
-          <caret line="33" column="67" selection-start-line="33" selection-start-column="64" selection-end-line="33" selection-end-column="67" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/soft/webroot/js/jquery_associations.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="359">
           <caret line="107" column="67" selection-start-line="107" selection-start-column="66" selection-end-line="107" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/soft/webroot/js/jquery_association_admin.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9966">
-          <caret line="453" column="0" selection-start-line="453" selection-start-column="0" selection-end-line="459" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/soft/src/Controller/AssociationsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1936">
-          <caret line="89" column="24" selection-start-line="89" selection-start-column="20" selection-end-line="89" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -653,11 +595,87 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/soft/src/Template/Layout/admin_views_old_old.ctp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22">
+          <caret line="33" column="67" selection-start-line="33" selection-start-column="64" selection-end-line="33" selection-end-column="67" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/webroot/js/jquery_association_admin.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="271">
+          <caret line="453" column="0" selection-start-line="453" selection-start-column="0" selection-end-line="459" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/src/Controller/AssociationsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="415">
+          <caret line="89" column="24" selection-start-line="89" selection-start-column="20" selection-end-line="89" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/src/Controller/SurplusesController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="86">
+          <caret line="122" column="11" selection-start-line="122" selection-start-column="11" selection-end-line="122" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/src/Controller/TractsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="512">
+          <caret line="102" column="52" selection-start-line="102" selection-start-column="52" selection-end-line="102" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/src/Model/Table/InitialAmountsTable.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/src/Controller/InitialAmountsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="403">
+          <caret line="103" column="48" selection-start-line="103" selection-start-column="48" selection-end-line="103" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/src/Controller/AmountsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="337" column="0" selection-start-line="337" selection-start-column="0" selection-end-line="337" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/src/Controller/SavingsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="490">
+          <caret line="108" column="52" selection-start-line="108" selection-start-column="52" selection-end-line="108" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/soft/src/Template/Layout/admin_views.ctp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="550">
-          <caret line="106" column="31" selection-start-line="106" selection-start-column="31" selection-end-line="106" selection-end-column="31" />
-          <folding />
+        <state relative-caret-position="484">
+          <caret line="146" column="20" selection-start-line="146" selection-start-column="20" selection-end-line="146" selection-end-column="20" />
+          <folding>
+            <marker date="1465628655033" expanded="true" signature="6413:6480" ph="..." />
+            <marker date="1465628655033" expanded="true" signature="7123:7201" ph="..." />
+            <marker date="1465628655033" expanded="true" signature="7166:7201" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -1,6 +1,12 @@
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
+        <li><?= $this->Form->postLink(
+                __('Delete'),
+                ['action' => 'delete', $tract->id],
+                ['confirm' => __('Are you sure you want to delete # {0}?', $tract->id)]
+            )
+        ?></li>
         <li><?= $this->Html->link(__('List Tracts'), ['action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('List Amounts'), ['controller' => 'Amounts', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Amount'), ['controller' => 'Amounts', 'action' => 'add']) ?></li>
@@ -17,7 +23,7 @@
 <div class="tracts form large-9 medium-8 columns content">
     <?= $this->Form->create($tract) ?>
     <fieldset>
-        <legend><?= __('Add Tract') ?></legend>
+        <legend><?= __('Edit Tract') ?></legend>
         <?php
             echo $this->Form->input('number');
             echo $this->Form->input('date');
