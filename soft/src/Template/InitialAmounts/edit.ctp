@@ -1,6 +1,12 @@
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
+        <li><?= $this->Form->postLink(
+                __('Delete'),
+                ['action' => 'delete', $initialAmount->id],
+                ['confirm' => __('Are you sure you want to delete # {0}?', $initialAmount->id)]
+            )
+        ?></li>
         <li><?= $this->Html->link(__('List Initial Amounts'), ['action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('List Associations'), ['controller' => 'Associations', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Association'), ['controller' => 'Associations', 'action' => 'add']) ?></li>
@@ -11,7 +17,7 @@
 <div class="initialAmounts form large-9 medium-8 columns content">
     <?= $this->Form->create($initialAmount) ?>
     <fieldset>
-        <legend><?= __('Add Initial Amount') ?></legend>
+        <legend><?= __('Edit Initial Amount') ?></legend>
         <?php
             echo $this->Form->input('amount');
             echo $this->Form->input('type');

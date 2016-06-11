@@ -16,530 +16,532 @@
 </div>
 
 
+<div id="content">
+	<div class="tab-content">
+		<div id="tract" class="tab-pane fade in active">
 
-<div class="tab-content">
-  <div id="tract" class="tab-pane fade in active">
-
-<div class="row text-center">
-	
-	<div class="col-xs-12 col-md-6">
-	  <?php
-		echo "<label><h4><strong>Elegí el año</strong></h4></label>";
-   		echo "<select class='form-control' id= 'tract_year_id' name = 'year' onchange='reloadPage(this)'>";
-
-		
-        foreach ($years as $key => $value) {
-            echo "<option>".$value['year']."</option>"."<br>";
-        }
-        
-    	echo "</select>";
-    	?>
-	</div>	
-
-	<div class="col-xs-12 col-md-6">
-	  <?php
-		echo "<label><h4><strong>Elegí el tracto</strong></h4></label>";
-   		echo "<select class='form-control' id= 'tracts_id' name = 'type' onchange='getAmounts(0,0,0,this);'>";
-
-
-
-        foreach ($dates as $key => $value) {
-        	echo $key;
-            echo "<option>".$value['tract']['date']."</option>"."<br>";
-        }
-        
-    	echo "</select>";
-    	?>
-	</div>		
-
-
-</div>
-
-
-
-<br>
-<br>
-<div class="row text-center">
-	<div class="col-xs-12">
-		<h3><strong>Facturas</strong></h3>
-	</div>
-</div>
-
-<div class="table-responsive">
-	<table class="table table-hover">
-		<thead>
-			<tr>
-				<th>#</th>
-				<th>Fecha</th>
-				<th>Número de Factura</th>
-				<th>Detalle</th>
-				<th>Proveedor</th>
-				<th>Monto</th>
-				<th>Encargado</th>
-				<th>Aclaraciones</th>
-			</tr>
-		</thead>
-
-		<tbody id="tract_invoices">
-
-		</tbody>
-	</table>	
-</div>
-
-<div class="row">
-	<div class="col-xs-12" id="tract_invoices_total">
-		
-	</div>
-</div>
-
-<br>
-<hr>
-
-<br>
-<br>
-
-
-
-<div class="row">
-
-	<div class="col-xs-12 col-md-6 text-center">
-		<h3>Cuadro de Ingresos</h3>
-
-		<table class="table table-striped">
-			<tr>
-				<th>Monto de Tracto</th>
-				<td id="tract_amount"></td>
-			</tr>
+			<div class="row text-center">
 
-			<tr>
-				<th>Monto de Ahorro</th>
-				<td><?php //echo $monto_ahorro?></td>
-			</tr>
+				<div class="col-xs-12 col-md-6">
+					<?php
+					echo "<label><h4><strong>Elegí el año</strong></h4></label>";
+					echo "<select class='form-control' id= 'tract_year_id' name = 'year' onchange='reloadPage(this)'>";
 
-			<tr>
-				<th>Total</th>
-				<td class = "tract_saving_total" ></td>
-			</tr>
-									
-		</table>
-	</div>
 
-	<div class="col-xs-12 col-md-6 text-center">
-		<h3>Cajas</h3>
+					foreach ($years as $key => $value) {
+						echo "<option>".$value['year']."</option>"."<br>";
+					}
 
-		<table class="table table-striped">
-			<tr>
-				<th>Caja Fuerte</th>
-				<td id="big_amount_tract"></td>
-			</tr>
+					echo "</select>";
+					?>
+				</div>
 
-			<tr>
-				<th>Caja Chica</th>
-				<td id="little_amount_tract"></td>
-			</tr>
+				<div class="col-xs-12 col-md-6">
+					<?php
+					echo "<label><h4><strong>Elegí el tracto</strong></h4></label>";
+					echo "<select class='form-control' id= 'tracts_id' name = 'type' onchange='getAmounts(0,0,0,this);'>";
 
-			<tr>
-				<th>Total</th>
-				<td class="boxes_total_tract"></td>
-			</tr>
-									
-		</table>		
-	</div>
-
-</div>
-
-<br>
-
-<div class="row">
-	<div class="col-xs-12 text-center">
-		<h3>Estado General del Tracto</h3>
-
-		<table class="table table-striped">
-			<tr>
-				<th>Saldo inicial de cajas</th>
-				<td id="tract_initial_amount"></td>
-			</tr>
-
-			<tr>
-				<th>Ahorro del período anterior</th>
-				<td><?php //echo $monto_ahorro ?></td>
-			</tr>
-
-			<tr>
-				<th>Ingresos del período</th>
-				<td class = "tract_saving_total" ></td>
-			</tr>
-				
-			<tr>
-				<th><u>Total de ingresos</u></th>
-				<td id = "total_income"></td>
-			</tr>
-
-			<tr>
-				<th>Total de gastos</th>
-				<td id="total_spent"></td>
-			</tr>
-
-			<tr>
-				<th><u>Saldo final</u></th>
-				<td id="tract_final_balance"></td>
-			</tr>
-
-			<tr>
-				<th>Total de cajas</th>
-				<td class="boxes_total_tract"></td>
-			</tr>
-
-			<tr>
-				<th><u>Cuenta</u></th>
-				<td id = "tract_count"></td>
-			</tr>												
-		</table>			
-	</div>	
-</div>
-
-
-
-
-
-
-  </div>
-
-
-
-  <!--************************************************ Superavit ********************** -->
 
-
-
-
-  <div id="surplus" class="tab-pane fade">
-  	
-<div class="row text-center">
-	
-	<div class="col-xs-12 col-md-6 col-md-offset-3">
-	  <?php
-		echo "<label><h4><strong>Elegí el año</strong></h4></label>";
-   		echo "<select class='form-control' id= 'surplus_year_id' name = 'year' onchange='getAmounts(2,2,2,this);'>";
 
-  		
-        foreach ($years as $key => $value) {
-            echo "<option>".$value['year']."</option>"."<br>";
-        }
-        
-    	echo "</select>";
-    	?>
-	</div>
-
-
-
-</div>
-  	
-  	
-  	
-  	
-  	
-  	
-<br>
-<br>
-<div class="row text-center">
-	<div class="col-xs-12">
-		<h3><strong>Facturas</strong></h3>
-	</div>
-</div>
-
-<div class="table-responsive">
-	<table class="table table-hover">
-		<thead>
-			<tr>
-				<th>#</th>
-				<th>Fecha</th>
-				<th>Número de Factura</th>
-				<th>Detalle</th>
-				<th>Proveedor</th>
-				<th>Monto</th>
-				<th>Encargado</th>
-				<th>Aclaraciones</th>
-			</tr>
-		</thead>
-
-		<tbody id="surplus_invoices">
-
-			
-		</tbody>
-	</table>	
-</div>
-
-<div class="row">
-	<div class="col-xs-12" id="surplus_total_invoices">
-		
-	</div>
-</div>
-
-<br>
-<hr>
-
-<br>
-<br>
-
-
-
-<div class="row">
-
-	<div class="col-xs-12 text-center">
-		<h3>Cuadro de Ingresos</h3>
-
-		<table class="table table-striped">
-			<tr>
-				<th>Monto de Superávit</th>
-				<td class="surplus_amount"></td>
-			</tr>
-
-
-			<tr>
-				<th>Total</th>
-				<td class = "surplus_amount" ></td>
-			</tr>
-									
-		</table>
-	</div>
-
-
-</div>
-
-<br>
-
-<div class="row">
-	<div class="col-xs-12 text-center">
-		<h3>Estado General</h3>
-
-		<table class="table table-striped">
-
-			<tr>
-				<th>Monto Asignado</th>
-				<td class = "surplus_amount" ></td>
-			</tr>
-				
-
-			<tr>
-				<th>Total de gastos</th>
-				<td id="surplus_total_spent"></td>
-			</tr>
-
-			<tr>
-				<th><u>Saldo final</u></th>
-				<td id="surplus_final_balance"></td>
-			</tr>
-
-		</table>			
-	</div>	
-</div>
-  	
-  	
-
-</div>
-  
-  
-  <!--************************************************ INGRESOS GENERADOS ********************** -->
-  <div id="generated" class="tab-pane fade">
-  	
-  	
-  	<div class="row text-center">
-
-	<div class="col-xs-12 col-md-6">
-	  <?php
-		echo "<label><h4><strong>Elegí el año</strong></h4></label>";
-   		echo "<select class='form-control' id= 'tracts_generated_id' name = 'year' onchange='reloadPage(this)'>";
-
-
-        foreach ($years as $key => $value) {
-            echo "<option>".$value['year']."</option>"."<br>";
-        }
-        
-    	echo "</select>";
-    	?>
-	</div>
-
-	<div class="col-xs-12 col-md-6">
-	  <?php
-		echo "<label><h4><strong>Elegí el tracto</strong></h4></label>";
-   		echo "<select class='form-control' id= 'generated_id' name = 'type' onchange='getAmounts(1,1,1,this);'>";
-
-
-
-        foreach ($dates as $key => $value) {
-        	echo $key;
-            echo "<option>".$value['tract']['date']."</option>"."<br>";
-        }
-        
-    	echo "</select>";
-    	?>
-	</div>	
-
-</div>
-  	
-  	
-  	
-  	
-  	
-  	
-<br>
-<br>
-<div class="row text-center">
-	<div class="col-xs-12">
-		<h3><strong>Facturas</strong></h3>
-	</div>
-</div>
-
-<div class="table-responsive">
-	<table class="table table-hover">
-		<thead>
-			<tr>
-				<th>#</th>
-				<th>Fecha</th>
-				<th>Número de Factura</th>
-				<th>Detalle</th>
-				<th>Proveedor</th>
-				<th>Monto</th>
-				<th>Encargado</th>
-				<th>Aclaraciones</th>
-			</tr>
-		</thead>
-
-		<tbody id="generated_invoices">
-
-		</tbody>
-	</table>	
-</div>
-
-<div class="row">
-	<div class="col-xs-12" id="generated_invoices_total">
-
-	</div>
-</div>
-
-<br>
-<hr>
-
-<br>
-<br>
-
-
-
-<div class="row">
-
-	<div class="col-xs-12 col-md-6 text-center">
-		<h3>Cuadro de Ingresos</h3>
-
-		<div class="table-responsive">
-			<table class="table table-hover">
-				<thead>
+					foreach ($dates as $key => $value) {
+						echo $key;
+						echo "<option>".$value['tract']['date']."</option>"."<br>";
+					}
+
+					echo "</select>";
+					?>
+				</div>
+
+
+			</div>
+
+
+
+			<br>
+			<br>
+			<div class="row text-center">
+				<div class="col-xs-12">
+					<h3><strong>Facturas</strong></h3>
+				</div>
+			</div>
+
+			<div class="table-responsive">
+				<table class="table table-hover">
+					<thead>
 					<tr>
 						<th>#</th>
 						<th>Fecha</th>
+						<th>Número de Factura</th>
 						<th>Detalle</th>
+						<th>Proveedor</th>
 						<th>Monto</th>
+						<th>Encargado</th>
+						<th>Aclaraciones</th>
 					</tr>
-				</thead>
+					</thead>
 
-				<tbody id="generated_incomes">
+					<tbody id="tract_invoices">
 
-				</tbody>
-			</table>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-12" id="tract_invoices_total">
+
+				</div>
+			</div>
+
+			<br>
+			<hr>
+
+			<br>
+			<br>
+
+
+
+			<div class="row">
+
+				<div class="col-xs-12 col-md-6 text-center">
+					<h3>Cuadro de Ingresos</h3>
+
+					<table class="table table-striped">
+						<tr>
+							<th>Monto de Tracto</th>
+							<td id="tract_amount"></td>
+						</tr>
+
+						<tr>
+							<th>Monto de Ahorro</th>
+							<td><?php //echo $monto_ahorro?></td>
+						</tr>
+
+						<tr>
+							<th>Total</th>
+							<td class = "tract_saving_total" ></td>
+						</tr>
+
+					</table>
+				</div>
+
+				<div class="col-xs-12 col-md-6 text-center">
+					<h3>Cajas</h3>
+
+					<table class="table table-striped">
+						<tr>
+							<th>Caja Fuerte</th>
+							<td id="big_amount_tract"></td>
+						</tr>
+
+						<tr>
+							<th>Caja Chica</th>
+							<td id="little_amount_tract"></td>
+						</tr>
+
+						<tr>
+							<th>Total</th>
+							<td class="boxes_total_tract"></td>
+						</tr>
+
+					</table>
+				</div>
+
+			</div>
+
+			<br>
+
+			<div class="row">
+				<div class="col-xs-12 text-center">
+					<h3>Estado General del Tracto</h3>
+
+					<table class="table table-striped">
+						<tr>
+							<th>Saldo inicial de cajas</th>
+							<td id="tract_initial_amount"></td>
+						</tr>
+
+						<tr>
+							<th>Ahorro del período anterior</th>
+							<td><?php //echo $monto_ahorro ?></td>
+						</tr>
+
+						<tr>
+							<th>Ingresos del período</th>
+							<td class = "tract_saving_total" ></td>
+						</tr>
+
+						<tr>
+							<th><u>Total de ingresos</u></th>
+							<td id = "total_income"></td>
+						</tr>
+
+						<tr>
+							<th>Total de gastos</th>
+							<td id="total_spent"></td>
+						</tr>
+
+						<tr>
+							<th><u>Saldo final</u></th>
+							<td id="tract_final_balance"></td>
+						</tr>
+
+						<tr>
+							<th>Total de cajas</th>
+							<td class="boxes_total_tract"></td>
+						</tr>
+
+						<tr>
+							<th><u>Cuenta</u></th>
+							<td id = "tract_count"></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+
+
+
+
+
 
 		</div>
-		
-		<div class="generated_amount">
-			
+
+
+
+		<!--************************************************ Superavit ********************** -->
+
+
+
+
+		<div id="surplus" class="tab-pane fade">
+
+			<div class="row text-center">
+
+				<div class="col-xs-12 col-md-6 col-md-offset-3">
+					<?php
+					echo "<label><h4><strong>Elegí el año</strong></h4></label>";
+					echo "<select class='form-control' id= 'surplus_year_id' name = 'year' onchange='getAmounts(2,2,2,this);'>";
+
+
+					foreach ($years as $key => $value) {
+						echo "<option>".$value['year']."</option>"."<br>";
+					}
+
+					echo "</select>";
+					?>
+				</div>
+
+
+
+			</div>
+
+
+
+
+
+
+			<br>
+			<br>
+			<div class="row text-center">
+				<div class="col-xs-12">
+					<h3><strong>Facturas</strong></h3>
+				</div>
+			</div>
+
+			<div class="table-responsive">
+				<table class="table table-hover">
+					<thead>
+					<tr>
+						<th>#</th>
+						<th>Fecha</th>
+						<th>Número de Factura</th>
+						<th>Detalle</th>
+						<th>Proveedor</th>
+						<th>Monto</th>
+						<th>Encargado</th>
+						<th>Aclaraciones</th>
+					</tr>
+					</thead>
+
+					<tbody id="surplus_invoices">
+
+
+					</tbody>
+				</table>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-12" id="surplus_total_invoices">
+
+				</div>
+			</div>
+
+			<br>
+			<hr>
+
+			<br>
+			<br>
+
+
+
+			<div class="row">
+
+				<div class="col-xs-12 text-center">
+					<h3>Cuadro de Ingresos</h3>
+
+					<table class="table table-striped">
+						<tr>
+							<th>Monto de Superávit</th>
+							<td class="surplus_amount"></td>
+						</tr>
+
+
+						<tr>
+							<th>Total</th>
+							<td class = "surplus_amount" ></td>
+						</tr>
+
+					</table>
+				</div>
+
+
+			</div>
+
+			<br>
+
+			<div class="row">
+				<div class="col-xs-12 text-center">
+					<h3>Estado General</h3>
+
+					<table class="table table-striped">
+
+						<tr>
+							<th>Monto Asignado</th>
+							<td class = "surplus_amount" ></td>
+						</tr>
+
+
+						<tr>
+							<th>Total de gastos</th>
+							<td id="surplus_total_spent"></td>
+						</tr>
+
+						<tr>
+							<th><u>Saldo final</u></th>
+							<td id="surplus_final_balance"></td>
+						</tr>
+
+					</table>
+				</div>
+			</div>
+
+
+
 		</div>
 
+
+		<!--************************************************ INGRESOS GENERADOS ********************** -->
+		<div id="generated" class="tab-pane fade">
+
+
+			<div class="row text-center">
+
+				<div class="col-xs-12 col-md-6">
+					<?php
+					echo "<label><h4><strong>Elegí el año</strong></h4></label>";
+					echo "<select class='form-control' id= 'tracts_generated_id' name = 'year' onchange='reloadPage(this)'>";
+
+
+					foreach ($years as $key => $value) {
+						echo "<option>".$value['year']."</option>"."<br>";
+					}
+
+					echo "</select>";
+					?>
+				</div>
+
+				<div class="col-xs-12 col-md-6">
+					<?php
+					echo "<label><h4><strong>Elegí el tracto</strong></h4></label>";
+					echo "<select class='form-control' id= 'generated_id' name = 'type' onchange='getAmounts(1,1,1,this);'>";
+
+
+
+					foreach ($dates as $key => $value) {
+						echo $key;
+						echo "<option>".$value['tract']['date']."</option>"."<br>";
+					}
+
+					echo "</select>";
+					?>
+				</div>
+
+			</div>
+
+
+
+
+
+
+			<br>
+			<br>
+			<div class="row text-center">
+				<div class="col-xs-12">
+					<h3><strong>Facturas</strong></h3>
+				</div>
+			</div>
+
+			<div class="table-responsive">
+				<table class="table table-hover">
+					<thead>
+					<tr>
+						<th>#</th>
+						<th>Fecha</th>
+						<th>Número de Factura</th>
+						<th>Detalle</th>
+						<th>Proveedor</th>
+						<th>Monto</th>
+						<th>Encargado</th>
+						<th>Aclaraciones</th>
+					</tr>
+					</thead>
+
+					<tbody id="generated_invoices">
+
+					</tbody>
+				</table>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-12" id="generated_invoices_total">
+
+				</div>
+			</div>
+
+			<br>
+			<hr>
+
+			<br>
+			<br>
+
+
+
+			<div class="row">
+
+				<div class="col-xs-12 col-md-6 text-center">
+					<h3>Cuadro de Ingresos</h3>
+
+					<div class="table-responsive">
+						<table class="table table-hover">
+							<thead>
+							<tr>
+								<th>#</th>
+								<th>Fecha</th>
+								<th>Detalle</th>
+								<th>Monto</th>
+							</tr>
+							</thead>
+
+							<tbody id="generated_incomes">
+
+							</tbody>
+						</table>
+
+					</div>
+
+					<div class="generated_amount">
+
+					</div>
+
+				</div>
+
+
+				<div class="col-xs-12 col-md-6 text-center">
+					<h3>Cajas</h3>
+
+					<table class="table table-striped">
+						<tr>
+							<th>Caja Fuerte</th>
+							<td id="generated_big_amount"></td>
+						</tr>
+
+						<tr>
+							<th>Caja Chica</th>
+							<td id="generated_little_amount"></td>
+						</tr>
+
+						<tr>
+							<th>Total</th>
+							<td class="generated_total_boxes"></td>
+						</tr>
+
+					</table>
+				</div>
+
+			</div>
+
+			<br>
+
+			<div class="row">
+				<div class="col-xs-12 text-center">
+					<h3>Estado General del Tracto</h3>
+
+					<table class="table table-striped">
+						<tr>
+							<th>Saldo inicial de cajas</th>
+							<td id="generated_initial_amount"></td>
+						</tr>
+
+
+						<tr>
+							<th>Ingresos del período</th>
+							<td class="generated_amount"></td>
+						</tr>
+
+						<tr>
+							<th><u>Total de ingresos</u></th>
+							<td id = "generated_total_income"></td>
+						</tr>
+
+						<tr>
+							<th>Total de gastos</th>
+							<td id="generated_total_spent"></td>
+						</tr>
+
+						<tr>
+							<th><u>Saldo final</u></th>
+							<td id="generated_final_balance"></td>
+						</tr>
+
+						<tr>
+							<th>Total de cajas</th>
+							<td class="generated_total_boxes"></td>
+						</tr>
+
+						<tr>
+							<th><u>Cuenta de ahorro</u></th>
+							<td id="generated_saving_count"></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		</div>
 	</div>
-
-
-	<div class="col-xs-12 col-md-6 text-center">
-		<h3>Cajas</h3>
-
-		<table class="table table-striped">
-			<tr>
-				<th>Caja Fuerte</th>
-				<td id="generated_big_amount"></td>
-			</tr>
-
-			<tr>
-				<th>Caja Chica</th>
-				<td id="generated_little_amount"></td>
-			</tr>
-
-			<tr>
-				<th>Total</th>
-				<td class="generated_total_boxes"></td>
-			</tr>
-									
-		</table>		
-	</div>
-
 </div>
 
-<br>
-
-<div class="row">
-	<div class="col-xs-12 text-center">
-		<h3>Estado General del Tracto</h3>
-
-		<table class="table table-striped">
-			<tr>
-				<th>Saldo inicial de cajas</th>
-				<td id="generated_initial_amount"></td>
-			</tr>
-
-
-			<tr>
-				<th>Ingresos del período</th>
-				<td class="generated_amount"></td>
-			</tr>
-				
-			<tr>
-				<th><u>Total de ingresos</u></th>
-				<td id = "generated_total_income"></td>
-			</tr>
-
-			<tr>
-				<th>Total de gastos</th>
-				<td id="generated_total_spent"></td>
-			</tr>
-
-			<tr>
-				<th><u>Saldo final</u></th>
-				<td id="generated_final_balance"></td>
-			</tr>
-
-			<tr>
-				<th>Total de cajas</th>
-				<td class="generated_total_boxes"></td>
-			</tr>
-
-			<tr>
-				<th><u>Cuenta de ahorro</u></th>
-				<td id="generated_saving_count"></td>
-			</tr>												
-		</table>			
-	</div>	
-</div>
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  	
-  </div>
-</div>
 
 
 
@@ -1013,3 +1015,51 @@ function getIndex(array,word) {
   </div>
 </div>
 
+<script>
+	function genPDF()
+	{
+		/**
+		html2canvas(
+			document.body, {
+				onrendered: function (canvas) {
+					var img = canvas.toDataURL("image/png");
+					var doc = new jsPDF();
+					doc.addImage(img, 'JPEG', 1, 1);
+					doc.save('test.pdf');
+				}
+			}
+
+		);
+		 **/
+
+		var pdf = new jsPDF('p','pt', 'letter');
+		source = document.getElementById("content")[0];
+		specialElementHandlers = {
+			'#bypassme': function (element, renderer) {
+				return true;
+			}
+		}
+
+		margins = {
+			top:50,
+			left:60,
+			width:545
+		};
+
+		pdf.fromHTML(
+			source,
+			margins.left,
+			margins.top,
+			{
+				'width': margins.width,
+				'elementHandlers':specialElementHandlers
+			},
+			function (dispose) {
+				pdf.save('test.pdf');
+			}
+		)
+
+	}
+</script>
+
+<button onclick="genPDF();">pdf</button>
