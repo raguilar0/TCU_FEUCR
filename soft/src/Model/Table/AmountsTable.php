@@ -34,7 +34,7 @@ class AmountsTable extends Table
             ])
             ->add('detail', [
                         'lengthBetween' => ['rule' => ['lengthBetween', 1, 8192],
-                                        'message' => 'Debe contener mínimo 1 y máximo 100 caracteres.',
+                                        'message' => 'Debe contener mínimo 1 y máximo 8192 caracteres.',
                         ]
             ]);
 

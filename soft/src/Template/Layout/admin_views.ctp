@@ -24,7 +24,7 @@
     <!-- Custom Fonts -->
     <?= $this->Html->css('css/font-awesome.min.css') ?>
 
-    <?= $this->Html->css('admin_views.css') ?>
+
 
     <?=$this->Html->script('jquery2.js') ?>
 
@@ -145,6 +145,19 @@
                         </div>
                     </li>
 
+                    <li>
+                        <a  data-toggle="collapse" data-target="#user_id">Usuarios</a>
+                        <div id="user_id" class="collapse">
+                            <ul>
+                                <li><a href="#">Agregar Usuarios</a></li><br>
+                                <li><a href="#">Ver Usuarios</a></li><br>
+                                <li><a href="#">Editar Usuarios</a></li><br>
+                                <li><a href="#">Borrar Usuarios</a></li><br>
+
+                            </ul>
+                        </div>
+                    </li>
+
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -152,7 +165,7 @@
 
         <div id="page-wrapper">
 
-            <div class="container-fluid">
+            <div class="container">
 
                 <?= $this->fetch('content') ?>
 

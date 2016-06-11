@@ -68,7 +68,11 @@ class TractsTable extends Table
         $validator
             ->integer('number')
             ->requirePresence('number', 'create')
-            ->notEmpty('number');
+            ->notEmpty('number')
+            ->add('number', 'validFormat', [
+                'rule' => array('custom', '/^[1-4]$/'),
+                'message' => 'Solo números entre 1 y 4'
+            ]);
 
         $validator
             ->date('date')
