@@ -9,25 +9,7 @@ class AssociationsController extends AppController
 
 //TODO: Si se agrega una asociación sin que hayan sedes, muestra el mensaje de que se agregó la asociación. Arreglarlo
 
-	public function view($id = null)
-	{
-		if(($this->request->session()->read('Auth.User.role')) != 'admin'){
-			return $this->redirect($this->Auth->redirectUrl());
-		}
-		else{
-			$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
-			if($id)
-			{
-				$association = $this->Associations->get($id);
-				$this->set('data',$association); // set() Pasa la variable association a la vista.
-			}
-			else
-			{
-				// Redirige de vuelta al index
-				return $this->redirect(['action'=>'index']);
-			}
-		}
-	}
+
 
 	public function index()
 	{
@@ -107,7 +89,7 @@ class AssociationsController extends AppController
 	}
 
 
-	public function read($id = null)
+	public function view($id = null)
 	{
 		if(($this->request->session()->read('Auth.User.role')) != 'admin'){
 			return $this->redirect($this->Auth->redirectUrl());

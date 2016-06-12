@@ -2,92 +2,160 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-use Cake\ORM\TableRegistry;
 
+/**
+ * Surpluses Controller
+ *
+ * @property \App\Model\Table\SurplusesTable $Surpluses
+ */
 class SurplusesController extends AppController
 {
 
+    /**
+     * Index method
+     *
+     * @return \Cake\Network\Response|null
+     */
+    public function index()
+    {
+        $this->viewBuilder()->layout('admin_views');
+        $this->paginate = [
+            'contain' => ['Associations']
+        ];
+        $surpluses = $this->paginate($this->Surpluses);
 
-	public function add($id = null)
-	{
-		if(($this->request->session()->read('Auth.User.role')) != 'admin'){
-			return $this->redirect($this->Auth->redirectUrl());
-		}
-		else{
-			$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
+        $this->set(compact('surpluses'));
+        $this->set('_serialize', ['surpluses']);
+    }
 
-			$surplus = $this->Surpluses->newEntity($this->request->data);
+    /**
+     * View method
+     *
+     * @param string|null $id Surplus id.
+     * @return \Cake\Network\Response|null
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function view($id = null)
+    {
+        $this->viewBuilder()->layout('admin_views');
+        $surplus = $this->Surpluses->get($id, [
+            'contain' => ['Associations']
+        ]);
 
-			if($this->request->is("POST"))
-			{
-				if($id)
-				{
-					//$surplus = $this->Surpluses->patchEntity($surplus, $this->request->data);
-					try
-	                {
-	                	$surplus['association_id'] = $id;
+        $this->set('surplus', $surplus);
+        $this->set('_serialize', ['surplus']);
+    }
 
-	                    if ($this->Surpluses->save($surplus))
-	                    {
-	                        $this->Flash->success('Se agregó el monto exitosamente', ['key' => 'addSurplus']);
-	                        return $this->redirect(['controller' => 'Surpluses','action' => 'add/'.$id]);
-	                    }
-	                }
-	                catch(Exception $ex)
-	                {
-	                    $this->Flash->error(__('No se ha podido procesar su solicitud'), ['key' => 'addSurplus']);
-	                }
-				}
-			}
+    /**
+     * Add method
+     *
+     * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
+     */
+    public function add()
+    {
+        $this->viewBuilder()->layout('admin_views');
+        $surplus = $this->Surpluses->newEntity();
+        if ($this->request->is('post')) {
+            $surplus = $this->Surpluses->patchEntity($surplus, $this->request->data);
+            if ($this->Surpluses->save($surplus)) {
+                $this->Flash->success(__('The surplus has been saved.'));
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error(__('The surplus could not be saved. Please, try again.'));
+            }
+        }
+        $associations = $this->Surpluses->Associations->find('list', ['limit' => 200]);
+        $this->set(compact('surplus', 'associations'));
+        $this->set('_serialize', ['surplus']);
+    }
 
-			$this->set('surplus',$surplus);
-		}
-	}
+    /**
+     * Edit method
+     *
+     * @param string|null $id Surplus id.
+     * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Network\Exception\NotFoundException When record not found.
+     */
+    public function edit($id = null)
+    {
+        $this->viewBuilder()->layout('admin_views');
+        $surplus = $this->Surpluses->get($id, [
+            'contain' => []
+        ]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $surplus = $this->Surpluses->patchEntity($surplus, $this->request->data);
+            if ($this->Surpluses->save($surplus)) {
+                $this->Flash->success(__('The surplus has been saved.'));
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error(__('The surplus could not be saved. Please, try again.'));
+            }
+        }
+        $associations = $this->Surpluses->Associations->find('list', ['limit' => 200]);
+        $this->set(compact('surplus', 'associations'));
+        $this->set('_serialize', ['surplus']);
+    }
+
+    /**
+     * Delete method
+     *
+     * @param string|null $id Surplus id.
+     * @return \Cake\Network\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function delete($id = null)
+    {
+        $this->viewBuilder()->layout('admin_views');
+        $this->request->allowMethod(['post', 'delete']);
+        $surplus = $this->Surpluses->get($id);
+        if ($this->Surpluses->delete($surplus)) {
+            $this->Flash->success(__('The surplus has been deleted.'));
+        } else {
+            $this->Flash->error(__('The surplus could not be deleted. Please, try again.'));
+        }
+        return $this->redirect(['action' => 'index']);
+    }
+
+    public function showAssociations($id = null)
+    {
+        if($id)
+        {
+            $this->viewBuilder()->layout('admin_views');
 
 
-	public function showAssociations($id = null)
-	{
-		if(($this->request->session()->read('Auth.User.role')) != 'admin'){
-			return $this->redirect($this->Auth->redirectUrl());
-		}
-		else{
-			if($id)
-			{
-				$this->viewBuilder()->layout('admin_views');
+            $query = $this->Surpluses->Associations->Headquarters->find()
+                ->hydrate(false)
+                ->select(['a.name','a.id','name'])
+                ->join([
+                    'table'=>'associations',
+                    'alias'=>'a',
+                    'type' => 'RIGHT',
+                    'conditions'=>'Headquarters.id = a.headquarter_id',
+                ])
+                ->where(['a.enable'=>1])
+                ->order(['Headquarters.name']);
 
 
-				$query = $this->Surpluses->Associations->Headquarters->find()
-						->hydrate(false)
-						->select(['a.name','a.id','name'])
-						->join([
-							 'table'=>'associations',
-							 'alias'=>'a',
-							 'type' => 'RIGHT',
-							 'conditions'=>'Headquarters.id = a.headquarter_id',
-							])
-						->where(['a.enable'=>1])
-						->order(['Headquarters.name']);
-
-
-				$query = $query->toArray();
+            $query = $query->toArray();
 
 
 
-				switch ($id) {
-						case 1:
-								$query['link'] = 'add';
-							break;
+            switch ($id) {
+                case 1:
+                    $query['link'] = 'add';
+                    break;
 
-				}
+            }
 
-				$this->set('data',$query);
+            $this->set('data',$query);
 
-			}
-			else
-			{
-				$this->redirect(['action'=>'/']);
-			}
-		}
-	}
+        }
+        else
+        {
+            $this->redirect(['action'=>'/']);
+        }
+    }
+
+
 
 }

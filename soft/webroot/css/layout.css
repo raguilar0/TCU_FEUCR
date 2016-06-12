@@ -1,0 +1,155 @@
+
+.navbar-ex1-collapse ul li a
+{
+    text-decoration: none;
+    color:white;
+}
+
+ul
+{
+    list-style-type: none;
+}
+
+.date select
+{
+    border-radius: 10px;
+    height: 35px;
+    margin-left: 5px;
+}
+
+
+.error-message
+{
+    color:red;
+}
+
+
+
+
+.body
+{
+    background-color: white;
+    padding-bottom: 1%;
+    border-radius: 15px;
+
+}
+
+h1{
+    margin-bottom: 40px;
+}
+
+#addHeadquartersBtn
+{
+    width: 50px;
+    height: 35px;
+    margin-top: 30px;
+    text-align: center;
+}
+
+#addAmountsBtn
+{
+    width: 145px;
+    height:35px;
+    margin:35px 0px 20px 0;
+    text-align: center;
+    font-weight: bold;
+}
+
+#btn_amount_id
+{
+    width: 145px;
+}
+
+
+
+
+#asso_admin_btn
+{
+    width: 180px;
+    height:40px;
+    font-size: 17px;
+    text-align: center;
+    margin-top: 25px;
+}
+
+table
+{
+    font-size: 17px;
+}
+
+#sedes_label
+{
+    font-weight: bold;
+    font-size: 19px;
+}
+
+.colSedes
+{
+    margin-bottom: 25px;
+}
+
+.colSedes button
+{
+    padding-bottom:10px;
+    font-size:17px;
+}
+
+.colSedes .glyphicon-trash
+{
+    color: red;
+}
+
+
+#sede_id
+{
+    margin:auto;
+    width: 150px;
+    background-color: #0080FF;
+    color: white;
+}
+
+#asso_id
+{
+    margin:auto;
+    width: 150px;
+    background-color: #0080FF;
+    color: white;
+}
+
+
+#sede_update_id_btn
+{
+
+    width: 150px;
+    color: white;
+}
+
+#sede_delete_id_btn
+{
+
+    width: 150px;
+    color: white;
+}
+
+#callback
+{
+    margin-top: 5%;
+}
+
+#date
+{
+    margin-top: 10px;
+}
+
+/**
+  El siguiente media query sirve para eliminar el scroll horizontal
+  que salía al ver la página con vista de móvil
+**/
+@media only screen and (max-width: 765px)
+{
+    .navbar-inverse
+    {
+        overflow: hidden;
+    }
+}
+

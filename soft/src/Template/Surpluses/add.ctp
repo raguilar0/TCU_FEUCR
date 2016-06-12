@@ -1,70 +1,25 @@
-
 <div class="row text-center">
     <div class="col-xs-12">
-        <h1>¡Agregá el superávit!</h1>
-    </div>
-</div>
-
-
-
-<?php
-
-
-
-echo $this->Form->create($surplus);
-    echo "<div class='form-group'>";
-
-        echo "<div class='row text-center'>";
-
-            echo "<div class = 'col-xs-12 col-md-6'>"; 
-            echo "<h4>".$this->Form->input('amount', ['class' => 'form-control', 'label'=>'Monto', 'min'=>'0', 'placeholder'=>'Monto a asignar'])."</h4>";
-
-            echo "</div>";
-
-
-
-            echo "<div class = 'col-xs-12 col-md-6'>"; 
-
-            echo "<h4><label for='date'> Fecha</label>"."<br><input name='date' type='date' id= 'date' class='form-control date' required>"."</h4>";
-
-            echo "</div>";                                
-
-        echo "</div>";
-
-        echo "<div class='row text-center'>";
-            echo "<div class='col-xs-12'>";
-                echo "<h4>Detalle</h4>";
-                echo "<h4>".$this->Form->textarea('detail', ['class' => 'form-control'])."</h4>";
-            echo "</div>";
-        echo "</div>";
-
-
-        echo "<div class='row text-center'>";
-            echo "<div class = 'col-xs-12'>";               
-                echo "<h4>".$this->Form->submit('Guardar Monto', ['class' => 'form-control btn btn-primary', 'id' => 'asso_id'])."</h4>";
-            echo "</div>";
-        echo "</div>";
-
-        echo "</div>";
-
-    echo $this->Form->end();
-
-?>
-
-
-<div class="row text-right">
-    <div class="col-xs-12">
-        <h4 id="callback" style="color:#01DF01"><?= $this->Flash->render('addSurplus') ?></h4>   
+        <h1>¡Agregá un nuevo superávit!</h1>
     </div>
 
 </div>
+<br>
+<br>
 
+    <?= $this->Form->create($surplus) ?>
 
+    <div class="form-group">
+        <?php
+        echo $this->Form->input('amount', ['class'=>'form-control', 'label'=>'Monto a asignar']);
+        echo $this->Form->input('date', ['type'=>'text', 'class'=>'form-control', 'label'=>'Fecha de asignación del monto']);
+        echo $this->Form->input('detail', ['type'=>'textarea','class'=>'form-control', 'label'=>'Detalles']);
+        echo "<br>";
+        echo $this->Form->input('association_id', ['options' => $associations, 'class'=>'form-control', 'label'=>'Asociación correspondiente']);
+        ?>
+    </div>
+    <br>
 
-
-<div class="row text-center">
-  <div class="col-xs-12">
-     <?php echo $this->Html->link('Atrás', '/surpluses/show_associations/1', ['class'=>'btn btn-primary']);?>
-  </div>
-</div>
+    <?= $this->Form->button(__('Guardar'), ['class'=>'form-control', 'id'=>'asso_id']) ?>
+    <?= $this->Form->end() ?>
 

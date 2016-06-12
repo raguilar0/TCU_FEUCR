@@ -1,52 +1,98 @@
 <?php
 namespace App\Model\Table;
 
+use App\Model\Entity\Saving;
+use Cake\ORM\Query;
+use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use Cake\I18n\Time;
 use Cake\Event\Event;
 use ArrayObject;
 
-
+/**
+ * Savings Model
+ *
+ * @property \Cake\ORM\Association\BelongsTo $Associations
+ */
 class SavingsTable extends Table
 {
+
+    /**
+     * Initialize method
+     *
+     * @param array $config The configuration for the Table.
+     * @return void
+     */
     public function initialize(array $config)
     {
-        $this->addBehavior('Timestamp');
-        $this->belongsTo('Associations');
+        parent::initialize($config);
+
+        $this->table('savings');
+        $this->displayField('id');
+        $this->primaryKey('id');
+
+        $this->belongsTo('Associations', [
+            'foreignKey' => 'association_id',
+            'joinType' => 'INNER'
+        ]);
     }
 
+    /**
+     * Default validation rules.
+     *
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
+     */
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->notEmpty('amount')
-            ->add('amount', 'validFormat', [
-                            'rule' => array('custom', '/^[0-9]+$/'),
-                            'message' => 'Solo numeros'
-            ])
-            ->requirePresence('amount')
+            ->integer('id')
+            ->allowEmpty('id', 'create');
 
-            ->notEmpty('letter')
-            ->add('letter', 'validFormat', [
-                        'rule' => array('custom', '/[A-Za-z0-9]+$/'),
-                        'message' => 'Solo letras y números.'
-            ])
-            ->add('id', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+        $validator
+            ->integer('amount')
+            ->requirePresence('amount', 'create')
+            ->notEmpty('amount');
+
+        $validator
+            ->integer('state')
+            ->allowEmpty('state');
+
+        $validator
+            ->requirePresence('letter', 'create')
+            ->notEmpty('letter');
+
+        $validator
+            ->requirePresence('date', 'create')
+            ->notEmpty('date');
 
         return $validator;
     }
 
-    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
     {
-       if (isset($data['date'])) {
-           $data['date'] = new Time($data['date']);
-       }
-
-       if (isset($data['deadline'])) {
-           $data['deadline'] = new Time($data['deadline']);
-       }
-
+        $rules->add($rules->existsIn(['association_id'], 'Associations'));
+        return $rules;
     }
 
+    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
+    {
+        if (isset($data['date'])) {
+            $data['date'] = new Time($data['date']);
+        }
+
+        if (isset($data['deadline'])) {
+            $data['deadline'] = new Time($data['deadline']);
+        }
+
+    }
 
 }
