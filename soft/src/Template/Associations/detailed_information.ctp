@@ -1054,15 +1054,16 @@ function generatePDF(title, id, date) {
 	header = header.innerHTML;
 	var initialPosition = 380;
 	var titlePosition = getPosition(header.length, title.length);
+	titlePosition = titlePosition + initialPosition + 80;
 	var labelPosition = getPosition(title.length, label.length);
 	var datePosition = getPosition(label.length, date.length);
 
-	labelPosition = initialPosition + titlePosition + labelPosition;
-	datePosition = initialPosition + titlePosition + labelPosition + datePosition;
+	labelPosition = titlePosition + labelPosition + 40;
+	datePosition = labelPosition + datePosition;
 
 	pdf.text(initialPosition, 40, header);
 
-	pdf.text((initialPosition + titlePosition),70,title);
+	pdf.text( titlePosition,70,title);
 	
 	pdf.text(labelPosition,100, label);
 	pdf.text(datePosition,140,date);
@@ -1110,7 +1111,7 @@ function generatePDF(title, id, date) {
 	function getPosition(lengthFirst, lengthSecond) {
 		var total = lengthFirst - lengthSecond;
 
-		total = (total / 2);
+
 
 		return total;
 	}
