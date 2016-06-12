@@ -18,15 +18,16 @@ echo "<br>";
 				echo "<h4>".$this->Form->input('name', ['class' => 'form-control', 'label'=>'Nombre', 'value'=>$data['name'], 'maxlength'=> '20'])."</h4>";
 		    echo "<h4>".$this->Form->input('last_name_1', ['class' => 'form-control','label'=>'Primer Apellido','value'=>$data['last_name_1'], 'maxlength'=> '20'])."</h4>";
 				echo "<h4>".$this->Form->input('last_name_2', ['class' => 'form-control','label'=>'Segundo Apellido','value'=>$data['last_name_2'], 'maxlength'=> '20'])."</h4>";
-		    echo "<label for='sel1' id = 'role_label'><h4>Rol:</h4></label>";
-        if($role == 'Administrador'){
+		    echo "<label for='sel1' id = 'role_label'><h4>Rol</h4></label>";
+        debug($role);
+        if($role == 'admin'){
           echo "<select class='form-control' name = 'role'>";
              echo "<option>Administrador</option>";
              echo "<option>Representante</option>";
            echo "</select>";
         }
 
-        if($role == 'Representante'){
+        if($role == 'rep'){
           echo "<select class='form-control' name = 'role'>";
              echo "<option>Representante</option>";
              echo "<option>Administrador</option>";
