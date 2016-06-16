@@ -144,9 +144,10 @@ class UsersController extends AppController
               $this->request->data['role'] = 'rep';
           }
 
-         debug($this->request->data);
+         debug($user);
 
-            //$user = $this->Users->newEntity($this->request->data);
+            $user = $this->Users->newEntity($this->request->data);
+
             if ($this->Users->save($user)) {
             //  debug($this->request->data);
                 $this->Flash->success('El usuario ha sido agregado', ['key' => 'success']);
@@ -155,6 +156,7 @@ class UsersController extends AppController
             else{
               $this->Flash->error(__('Error al agregar usuario.', ['key'=>'error']));
             }
+
 
         }
 
