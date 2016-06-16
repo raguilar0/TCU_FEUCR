@@ -11,24 +11,29 @@ class BoxesTable extends Table
     {
         $this->addBehavior('Timestamp');
         $this->belongsTo('Associations');
-    
+
     }
 
-/**
+
     public function validationDefault(Validator $validator)
     {
-        $validator      
-            ->requirePresence('number')
-            ->requirePresence('amount')
-            ->requirePresence('clarifications')
-            ->requirePresence('detail')
-            ->requirePresence('kind')
-            ->requirePresence('attendant');
+        $validator
+            ->notEmpty('little_amount')
+            ->add('little_amount', 'validFormat', [
+                        'rule' => array('custom', '/[0-9]+$/'),
+                        'message' => 'Solo números.'
+            ])
+            ->notEmpty('big_amount')
+            ->add('big_amount', 'validFormat', [
+                        'rule' => array('custom', '/[0-9]+$/'),
+                        'message' => 'Solo números.'
+            ]);
+
 
 
         return $validator;
     }
-**/
-	
-	
+
+
+
 }

@@ -25,8 +25,8 @@ class UsersTable extends Table
                 'message'=> 'Debe contener únicamente números o letras'])
               ->notEmpty('password', 'Contraseña requerida')
               ->add('password', 'validFormat',[
-                'rule'=>array('custom', '/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/'),
-                'message' => 'Password debe tener al menos 8 caracteres, una letra, un número y un caracter especial'
+                'rule'=>array('custom', '/^(?=.*\d).{4,8}$/'),
+                'message' => 'Password debe tener entre 4 y 8 caracteres y al menos un número'
               ])
               ->notEmpty('name', 'Nombre requerido')
               ->add('name', 'validFormat', [

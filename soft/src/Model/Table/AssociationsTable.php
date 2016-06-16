@@ -14,9 +14,9 @@ class AssociationsTable extends Table
         $this->hasMany('Amounts');
         $this->hasMany('Boxes');
         $this->hasMany('Invoices');
-        $this->hasMany('InitialAmounts');        
-        $this->hasMany('Surpluses');  
-    
+        $this->hasMany('InitialAmounts');
+        $this->hasMany('Surpluses');
+
     }
 
     public function validationDefault(Validator $validator)
@@ -40,12 +40,19 @@ class AssociationsTable extends Table
             ->notEmpty('headquarters')
             ->add('name', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'])
             ->add('acronym', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'])
-            ->add('id', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->add('id', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'
+            ])
+            ->notEmpty('schedule')
+            ->add('schedule', 'validFormat', [
+                        'rule' => array('custom', '/[A-Za-z0-9\:\-]+$/'),
+                        'message' => 'Solo letras y números.'
+            ]);
+
 
 
         return $validator;
     }
-	
-	
-	
+
+
+
 }

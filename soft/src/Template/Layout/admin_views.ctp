@@ -63,7 +63,7 @@
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
 
-
+<!-- TODO: Desplegar nombre de usuario-->
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
                     <ul class="dropdown-menu">
@@ -149,7 +149,7 @@
                         <a  data-toggle="collapse" data-target="#user_id">Usuarios</a>
                         <div id="user_id" class="collapse">
                             <ul>
-                                <li><a href="#">Agregar Usuarios</a></li><br>
+                                <li><?php echo $this->Html->link('Agregar Usuarios',['controller'=>'Users','action'=>'add']);?></li><br>
                                 <li><a href="#">Ver Usuarios</a></li><br>
                                 <li><a href="#">Editar Usuarios</a></li><br>
                                 <li><a href="#">Borrar Usuarios</a></li><br>
