@@ -43,17 +43,15 @@ class InvoicesController extends AppController
 
 						if($this->Invoices->save($invoice)) //
 						{
-							$response = '1';
+							$this->Flash->success('La factura ha sido agregado', ['key' => 'success']);
+
 						}
 
-						die($response);
+						$this->Flash->error('Error al agregar la factura', ['key' => 'error']);
 					}
 				}
 			}
-			else
-			{
-				$this->set('data',$invoice);
-			}
+				$this->set('data',$invoice);//
 		}
 	}
 }

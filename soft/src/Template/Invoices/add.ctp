@@ -7,8 +7,8 @@
 <br>
 
 <?php
-
-	echo $this->Form->create($data, ['id'=>'submit2', 'enctype'=>'multipart/form-data']);
+	//debug($data);
+	echo $this->Form->create($data, ['enctype'=>'multipart/form-data']);
 	echo "<div class='form-group'>";
 
 
@@ -36,11 +36,11 @@
             foreach ($kind as $key => $value) {
                 echo "<option>".$key."</option>"."<br>";
             }
-            
+
         echo "</select>";
     echo "</div>";
-  
-	echo "</div >";    
+
+	echo "</div >";
 
 
 
@@ -48,18 +48,18 @@
 
 	    echo "<div class = 'col-xs-12 col-md-4'>";
 	     echo "<h4>".$this->Form->input('attendant', ['class' => 'form-control','label'=>'Responsable', 'maxlength'=> '100', 'placeholder'=>'Ejemplo: Andrey Pérez'])."</h4>";
-	    echo "</div >";	
+	    echo "</div >";
 
 	    echo "<div class = 'col-xs-12 col-md-4'>";
 	     echo "<h4>".$this->Form->input('provider', ['class' => 'form-control','label'=>'Proveedor', 'maxlength'=> '100', 'placeholder'=>'Ejemplo: PriceSmart'])."</h4>";
-	    echo "</div >";	      
+	    echo "</div >";
 
 	    echo "<div class = 'col-xs-12 col-md-4'>";
         	echo "<h4>".$this->Form->input('date', ['class' => 'form-control', 'label'=>'Fecha', 'type'=> 'date', 'id'=>'date_input'])."</h4>";
-	    echo "</div >";    
-    
+	    echo "</div >";
 
-	echo "</div >";  
+
+	echo "</div >";
 
 
    echo "<div class = 'row'>";
@@ -72,7 +72,7 @@
 	     echo "<h4>".$this->Form->input('clarifications', ['class' => 'form-control','label'=>'Aclaraciones', 'maxlength'=> '1024', 'type'=>'textarea'])."</h4>";
 	    echo "</div >";
 
-	echo "</div >";  
+	echo "</div >";
 
 
 
@@ -94,6 +94,21 @@
 ?>
 
 <br>
+
+<div class="row text-right">
+    <div class="col-xs-12">
+        <h4 id="callback" style="color:#01DF01">
+          <?= $this->Flash->render('success') ?></h4>
+    </div>
+</div>
+
+<div class="row text-right">
+    <div class="col-xs-12">
+        <h4 id="callback" style="color:#FF0000">
+          <?= $this->Flash->render('error') ?></h4>
+    </div>
+</div>
+
 
 <div class="row text-right">
 	<div class="col-xs-12">

@@ -46,13 +46,13 @@ class AppController extends Controller
         $this->loadComponent('Flash');
     }
     */
-    
+
 
 
 
     public function initialize()
     {
-        
+
         parent::initialize();
 
         $this->loadComponent('RequestHandler');
@@ -65,11 +65,19 @@ class AppController extends Controller
                                                          ]
                                     ]);
     }
-    
-    public function beforeFilter(Event $event)
-        {
-            $this->Auth->allow(['display']);
-        }
+
+    public function beforeFilter(Event $event) {
+            //$this->Auth->allow(['display']);
+            {
+        if(($this->Auth->user('role')=='admin')&&($this->Auth->user('state')== 0)){
+         $this->Auth->allow('admin_view','admin_controls');//put your all admin actions separated by comma
+
+         }
+         else {
+           $this->Auth->allow('home');//put your all non-admin actions separated by comma
+         }
+      }
+    }
 
     /**
      * Before render callback.
