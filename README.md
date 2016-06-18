@@ -1,4 +1,4 @@
-# Trabajo Comunal Universitario (TCU)
+# Trabajo Comunal Universitario  (TCU)
 
 ## Plataforma de Facturación y Contabilidad de la FEUCR
 
