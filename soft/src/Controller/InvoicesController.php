@@ -43,12 +43,20 @@ class InvoicesController extends AppController
 
 						if($this->Invoices->save($invoice)) //
 						{
-							$response = '1';
+							$this->Flash->Success('Factura Agregada', ['key' => 'success']);
 						}
-
-						die($response);
+						else{
+							$this->Flash->error('Error al agregar factura.', ['key' => 'error']);
+						}
+					}
+					else{
+							$this->Flash->error('Error al subir archivo.', ['key' => 'error']);
 					}
 				}
+				else{
+					$this->Flash->error('Adjunte archivo.', ['key' => 'error']);
+				}
+
 			}
 			else
 			{
@@ -56,4 +64,5 @@ class InvoicesController extends AppController
 			}
 		}
 	}
+	
 }

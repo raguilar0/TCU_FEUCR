@@ -65,20 +65,10 @@
 
 
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <?php echo $this->request->session()->read('Auth.User.name')." ".$this->request->session()->read('Auth.User.last_name_1'); ?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                        <li><?php echo $this->Html->link('Perfil',['controller'=>'Users','action'=>'perfil']);?></li><br>
+                            <li><?php echo $this->Html->link('Cerrar Sesión',['controller'=>'Users','action'=>'logout']);?></li><br>
                         </li>
                     </ul>
                 </li>
@@ -149,10 +139,9 @@
                         <a  data-toggle="collapse" data-target="#user_id">Usuarios</a>
                         <div id="user_id" class="collapse">
                             <ul>
-                                <li><a href="#">Agregar Usuarios</a></li><br>
-                                <li><a href="#">Ver Usuarios</a></li><br>
-                                <li><a href="#">Editar Usuarios</a></li><br>
-                                <li><a href="#">Borrar Usuarios</a></li><br>
+                                <li><?php echo $this->Html->link('Agregar Usuarios', '/users/add/');?></li><br>
+                                <li><?php echo $this->Html->link('Ver Ususarios','/users/show_associations/1');?></li><br>
+                                <li><?php echo $this->Html->link('Editar Usuarios','/users/show_associations/3');?></li><br>
 
                             </ul>
                         </div>

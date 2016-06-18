@@ -88,7 +88,6 @@ class UsersController extends AppController
     							$query['link'] = 'delete';
     						break;
     			}
-
     			$this->set('data',$query);
 
     		}
@@ -269,23 +268,25 @@ class UsersController extends AppController
 
     public function login()
         {
-          //$this->viewBuilder()->layout('default');
-        //  $user = $this->Users->find();
-        //  $this->set('user', $user);
+
         if(!$this->Auth->user()){
             if ($this->request->is('post')) {
+
                 $user = $this->Auth->identify();
                 if ($user) {
-                    $this->Auth->setUser($user);
-
-                    if(($this->request->session()->read('Auth.User.role')) == 'admin'){
-                    return $this->redirect($this->Auth->redirectUrl());
+                  debug($this->request->session()->read('Auth.User.state'));
+                    if($this->request->session()->read('Auth.User.state') == 0){
+                      $this->Auth->setUser($user);
+                      return $this->redirect($this->Auth->redirectUrl());
                     }
                     else{
-                      return $this->redirect($this->Auth->redirectUrl("/associations/index_associations/"));
+                      $this->Flash->error('Usuario Bloqueado', ['key' => 'error']);
                     }
                 }
-                $this->Flash->error(__('Nombre de usuario o contraseña invalidos, intentelo de nuevo.'));
+                else{
+                  $this->Flash->error('Usuario o contraseña inválidos. Intente nuevamente.', ['key' => 'error']);
+
+                }
             }
           }
           else{
