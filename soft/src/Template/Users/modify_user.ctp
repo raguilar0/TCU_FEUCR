@@ -9,7 +9,7 @@ echo "<br>";
 echo "<br>";
 echo "<br>";
 
-	echo $this->Form->create($data, ['id'=>'submit98']);
+	echo $this->Form->create($data);
 	echo "<div class='form-group'>";
     echo "<div class = 'row'>";
     	echo "<div class = 'col-xs-12 col-md-6'>";

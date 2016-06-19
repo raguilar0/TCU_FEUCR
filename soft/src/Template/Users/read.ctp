@@ -1,29 +1,30 @@
 <!-- src/Template/Users/read.ctp -->
+<?php
+echo "<div class = 'row text-center'>";
+    echo "<div class='col-xs-12'>";
+    echo"<h1>".'Consulta de usuarios de la '.$association[0]['name']."</h1>";
+    echo"</div>";
+echo "</div>";
 
-<div class="row text-center">
-	<div class="col-xs-12">
-		<h1>Consulta de Usuarios</h1>
-	</div>
-</div>
-<br>
-<br>
+echo "<br>";
+echo "<br>";
+echo "<br>";
 
 
-<div class="table-responsive">
-  <table class="table read_association">
-  <thead>
-    <tr>
-      <th>Nombre de Usuario</th>
-      <th>Nombre</th>
-      <th>Primer Apellido</th>
-      <th>Segundo Apellido</th>
-			<th>Rol</th>
-			<th>Estado</th>
-    </tr>
-  </thead>
-  <tbody>
+echo "<div class='table-responsive'>";
+	echo  "<table class='table read_association'>";
+	echo  "<thead>";
+  	echo  "<tr>";
+	  echo  "<th>Nombre de Usuario</th>";
+		echo  "<th>Nombre</th>";
+		echo  "<th>Primer Apellido</th>";
+		echo  "<th>Segundo Apellido</th>";
+		echo  "<th>Rol</th>";
+		echo  "<th>Estado</th>";
+  	echo  "</tr>";
+  echo "</thead>";
+  echo "<tbody>";
 
-      <?php
           foreach ($data as $key) {
              echo "<tr>";
               echo "<td>".$key['username']."</td>";
@@ -44,14 +45,14 @@
 							}
              echo "</tr>";
           }
-      ?>
-  </tbody>
-</table>
-</div>
+
+echo  "</tbody>";
+echo "</table>";
+echo "</div>";
 
 
-<div class="row text-center">
-  <div class="col-xs-12">
-     <?php echo $this->Html->link('Atrás', '/users/', ['class'=>'btn btn-primary']);?>
-  </div>
-</div>
+echo "<div class='row text-center'>";
+echo  "<div class='col-xs-12'>";
+echo $this->Html->link('Atrás', '/users/', ['class'=>'btn btn-primary']);
+echo  "</div>";
+echo  "</div>";

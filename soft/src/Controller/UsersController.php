@@ -100,14 +100,36 @@ class UsersController extends AppController
   			return $this->redirect($this->Auth->redirectUrl());
   		}
       else{
-        $role = $this->request->session()->read('Auth.User.role');
-      //  debug($this->request->session()->read('Auth.User.role'));
 
-          $this->viewBuilder()->layout('admin_views');
-          $user = $this->Users->find()
-          ->where(['association_id'=>$id]);
-          $this->set('data',$user);
+        if($id){
+          $this->loadModel('Associations');
+          $association =
+          $this->Associations->find()
+                              ->hydrate(false)
+                              ->select(['name'])
+                              ->where(['id'=>$id]);
+
+          $association = $association->toArray();
+          //debug($association);
+
+
+          $role = $this->request->session()->read('Auth.User.role');
+        //  debug($this->request->session()->read('Auth.User.role'));
+
+            $this->viewBuilder()->layout('admin_views');
+            $user = $this->Users->find()
+                                ->where(['association_id'=>$id]);
+            $user = $user->toArray();
+            $this->set('association', $association);
+            $this->set('data',$user);
+
+
         }
+        else {
+  				$this->redirect(['action'=>'/']);
+  			}
+        $this->set('asocia',$association);
+      }
     }
 
 
@@ -177,19 +199,31 @@ class UsersController extends AppController
         $this->viewBuilder()->layout('admin_views');
 
         if($id){
+
+          $this->loadModel('Associations');
+          $association =
+          $this->Associations->find()
+                              ->hydrate(false)
+                              ->select(['name'])
+                              ->where(['id'=>$id]);
+
+          $association = $association->toArray();
+
           //$user = $this->Users->get($id);
           $user = $this->Users->find()
                               ->where(['association_id'=>$id]);
           $user= $user->toArray();
           //debug($user);
 
-          $this->set('user',$user);
+          $this->set('association',$association);
+          $this->set('data',$user);
         }
       }
     }
 
     public function modifyUser($id = null) {
-      if(($this->request->session()->read('Auth.User.role')) != 'admin'){
+      $role = $this->request->session()->read('Auth.User.role');
+      if($role != 'admin'){
   			return $this->redirect($this->Auth->redirectUrl());
   		}
       else{
@@ -198,6 +232,13 @@ class UsersController extends AppController
 
         if($id){
           $user = $this->Users->get($id);
+
+          if($this->request->data['role'] == 'Administrador'){
+              $this->request->data['role'] = 'admin';
+          }
+          if($this->request->data['role'] == 'Representante'){
+              $this->request->data['role'] = 'rep';
+          }
 
         //  debug($user->errors());
 
@@ -210,14 +251,8 @@ class UsersController extends AppController
 
             $user = $this->Users->newEntity($this->request->data);
 
-            if($this->request->data['role'] == 'Administrador'){
-                $this->request->data['role'] = 'admin';
-            }
-            if($this->request->data['role'] == 'Representante'){
-                $this->request->data['role'] = 'rep';
-            }
-
             //debug($this->request->data);
+            //debug($user->errors());
             if(!$user->errors()) {
 
               $query = $this->Users->query();
@@ -348,6 +383,7 @@ class UsersController extends AppController
         }
     }
 
+/*
     public function addUser()
     {
       if(($this->request->session()->read('Auth.User.role')) != 'rep'){
@@ -424,6 +460,7 @@ class UsersController extends AppController
         }
       }
     }
+    */
 }
 
 ?>

@@ -27,9 +27,6 @@ class InvoicesController extends AppController
 			{
 				$this->loadComponent('Upload');
 
-
-				$response = '0';
-
 				$file = $invoice['file'];
 				unset($invoice['file']); //Quitamos los datos del archivo
 
@@ -37,11 +34,12 @@ class InvoicesController extends AppController
 				{
 					if($this->Upload->save($file))
 					{
-						$invoice['image_name'] = $file['name'];
+						//$invoice['image_name'] = $file['name'];
+						$invoice['image_name'] = $invoice['number'];
 						$invoice['association_id'] = 1;
 						$invoice['kind'] = $invoices_type[$this->request->data['kind']];
 
-						if($this->Invoices->save($invoice)) //
+						if($this->Invoices->save($invoice))
 						{
 							$this->Flash->Success('Factura Agregada', ['key' => 'success']);
 						}
@@ -58,11 +56,9 @@ class InvoicesController extends AppController
 				}
 
 			}
-			else
-			{
-				$this->set('data',$invoice);
-			}
+
+			$this->set('data',$invoice);
 		}
 	}
-	
+
 }

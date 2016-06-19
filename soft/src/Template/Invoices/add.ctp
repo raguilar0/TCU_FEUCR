@@ -10,10 +10,6 @@
 
 	echo $this->Form->create($data, ['enctype'=>'multipart/form-data']);
 	echo "<div class='form-group'>";
-
-
-
-
     echo "<div class = 'row'>";
 
 	    echo "<div class = 'col-xs-12 col-md-4'>";
@@ -94,6 +90,20 @@
 ?>
 
 <br>
+
+<div class="row text-right">
+    <div class="col-xs-12">
+        <h4 id="callback" style="color:#01DF01">
+          <?= $this->Flash->render('success') ?></h4>
+    </div>
+</div>
+
+<div class="row text-right">
+    <div class="col-xs-12">
+        <h4 id="callback" style="color:#FF0000">
+          <?= $this->Flash->render('error') ?></h4>
+    </div>
+</div>
 
 <div class="row text-right">
 	<div class="col-xs-12">
