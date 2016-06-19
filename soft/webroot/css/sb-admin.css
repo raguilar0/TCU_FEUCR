@@ -145,14 +145,14 @@ ul.alert-dropdown {
     padding: 0;
 }
 
-.navbar .collapse ul li .collapse ul li a {
+.navbar .collapse ul li div ul li a {
     display: block;
     padding: 10px 10px 5px 38px;
     text-decoration: none;
     color: #999;
 }
 
-.navbar .collapse ul li .collapse ul li a:hover {
+.navbar .collapse ul li div ul li a:hover {
     color: #fff;
 }
 
