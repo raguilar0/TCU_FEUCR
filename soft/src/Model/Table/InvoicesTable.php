@@ -4,6 +4,9 @@ namespace App\Model\Table;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\I18n\Time;
+use Cake\Event\Event;
+use ArrayObject;
 
 class InvoicesTable extends Table
 {
@@ -52,11 +55,28 @@ class InvoicesTable extends Table
                         'rule' => array('custom', '/^[A-Za-z]+$/'),
                         'message' => 'Formato inválido'
             ])
+            ->requirePresence('legal_certificate')
+            ->add('legal_certificate', 'validFormat', [
+                        'rule' => array('custom', '/[0-9\-]+$/'),
+                        'message' => 'Formato inválido.'
+            ])
 
             ;
 
 
         return $validator;
+    }
+
+    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
+    {
+        if (isset($data['date'])) {
+            $data['date'] = new Time($data['date']);
+        }
+
+        if (isset($data['deadline'])) {
+            $data['deadline'] = new Time($data['deadline']);
+        }
+
     }
 
 
