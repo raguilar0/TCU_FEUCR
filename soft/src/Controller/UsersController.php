@@ -135,58 +135,61 @@ class UsersController extends AppController
 
     public function add()
     {
-      if(($this->request->session()->read('Auth.User.role')) != 'admin'){
-  			return $this->redirect($this->Auth->redirectUrl());
-  		}
-      else{
         $user = $this->Users->newEntity($this->request->data); //El parámetro es para validar los datos
         $this->loadModel('Associations');
 
-        if ($this->request->is('post')) {
+        //if ($this->request->is('post')) {
 
-          $association_id =
-          $this->Users->Associations->find()
-                                    ->hydrate(false)
-                                    ->select(['id'])
-                                    ->where(['name'=>$this->request->data['association_id']]);
+          //debug($this->request->session()->read('Auth.User.role'));
 
-          $association_id = $association_id->toArray();
+          if(($this->request->session()->read('Auth.User.role')) == 'admin'){
 
-          $this->request->data['association_id'] = $association_id[0]['id'];
+            //Recupera la asociación
+            $association_id =
+            $this->Users->Associations->find()
+                                      ->hydrate(false)
+                                      ->select(['id'])
+                                      ->where(['name'=>$this->request->data['association_id']]);
 
-          $role = $this->request->data['role'];
+            $association_id = $association_id->toArray();
 
-          //debug($role);
+            $this->request->data['association_id'] = $association_id[0]['id'];
 
-          if($this->request->data['role'] == 'Administrador'){
-              $this->request->data['role'] = 'admin';
-          }
-          if($this->request->data['role'] == 'Representante'){
-              $this->request->data['role'] = 'rep';
-          }
-
-        //  debug($this->request->data);
-
-            $user = $this->Users->newEntity($this->request->data);
-            if ($this->Users->save($user)) {
-            //  debug($this->request->data);
-                $this->Flash->success('El usuario ha sido agregado', ['key' => 'success']);
-                //return $this->redirect(['action' => 'add']);
+            if($this->request->data['role'] == 'Administrador'){
+                $this->request->data['role'] = 'admin';
             }
-            else{
-              $this->Flash->error(__('Error al agregar usuario.', ['key'=>'error']));
+            if($this->request->data['role'] == 'Representante'){
+                $this->request->data['role'] = 'rep';
             }
 
+            $role = $this->request->data['role'];
         }
 
-      //  debug($user->errors());
-        $role = array('Administrador'=> 0, 'Representante' => 1);
+        if(($this->request->session()->read('Auth.User.role')) == 'rep'){
+
+          $association_id = $this->request->session()->read('Auth.User.association_id');
+          $role = 'rep';
+        }
+
+
+        $user = $this->Users->newEntity($this->request->data);
+        if ($this->Users->save($user)) {
+            $this->Flash->success('El usuario ha sido agregado', ['key' => 'success']);
+            //return $this->redirect(['action' => 'add']);
+        }
+        else{
+          $this->Flash->error(__('Error al agregar usuario.', ['key'=>'error']));
+        }
+
+      //}
+        //debug($association_id);
+        //debug($role);
+        //$role = array('Administrador'=> 0, 'Representante' => 1);
         $association = $this->Associations->find();
         $this->set('role', $role);
         $this->set('association', $association);
         $this->set('user', $user);
 
-      }
 
     }
 
@@ -336,7 +339,7 @@ class UsersController extends AppController
         }
 
         public function perfil($id = null) {
-        $this->viewBuilder()->layout('associations_view'); //Se deja este hasta mientras se haga el de representante
+        $this->viewBuilder()->layout('admin_views'); //Se deja este hasta mientras se haga el de representante
 
         $id =  $this->request->session()->read('Auth.User.id');; // Lo que me dijo Slon
         if($id) {

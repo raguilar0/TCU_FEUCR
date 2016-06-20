@@ -18,11 +18,16 @@ class UsersTable extends Table
 
     public function validationDefault(Validator $validator)
     {
+/*
+->notEmpty('username', 'Nombre de usuario requerido')
+->add('username', 'validFormat',[
+  'rule'=>array('custom','/^[A-Za-z0-9\-\_]+$/'),
+  'message'=> 'Debe contener únicamente números o letras'])
+*/
+
        $validator
-              ->notEmpty('username', 'Nombre de usuario requerido')
-              ->add('username', 'validFormat',[
-                'rule'=>array('custom','/^[A-Za-z0-9\-\_]+$/'),
-                'message'=> 'Debe contener únicamente números o letras'])
+
+
               ->notEmpty('password', 'Contraseña requerida')
               ->add('password', 'validFormat',[
                 'rule'=>array('custom', '/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/'),

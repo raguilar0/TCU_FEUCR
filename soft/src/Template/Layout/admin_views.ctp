@@ -73,82 +73,130 @@
                     </ul>
                 </li>
             </ul>
+
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav side-nav">
+            <?php
+              if(($this->request->session()->read('Auth.User.role')) == 'admin'){ ?>
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <ul class="nav navbar-nav side-nav">
+                        <li class="active">
+                            <a  data-toggle="collapse" data-target="#association_id">Asociaciones</a>
+                            <div id="association_id" class="collapse">
+                                <ul>
+                                    <li><?php echo $this->Html->link('Nueva Asociación',['controller'=>'Associations','action'=>'add']);?></li><br>
+                                    <li><?php echo $this->Html->link('Ver Asociación',['controller'=>'Associations','action'=>'show_associations/1']);?></li><br>
+                                    <li><?php echo $this->Html->link('Editar Asociación',['controller'=>'Associations','action'=>'show_associations/3']);?></li><br>
+                                    <li><?php echo $this->Html->link('Borrar Asociación',['controller'=>'Associations','action'=>'show_associations/4']);?></li><br>
+
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="active">
+                            <a  data-toggle="collapse" data-target="#tract_id">Fechas de Tracto</a>
+                            <div id="tract_id" class="collapse">
+                                <ul>
+                                    <li><?php echo $this->Html->link('Nuevo Tracto',['controller'=>'Tracts','action'=>'add']);?></li><br>
+                                    <li><?php echo $this->Html->link('Administrar Tractos',['controller'=>'Tracts','action'=>'index']);?></li><br>
+
+
+                                </ul>
+                            </div>
+                        </li>
+
+
+                        <li class="active">
+                            <a  data-toggle="collapse" data-target="#amounts_id">Montos de Tracto</a>
+                            <div id="amounts_id" class="collapse">
+                                <ul>
+                                    <li><?php echo $this->Html->link('Nuevo Monto',['controller'=>'Amounts','action'=>'add']);?></li><br>
+                                    <li><?php echo $this->Html->link('Ver Montos Detallados',['controller'=>'Associations','action'=>'show_associations/5']);?></li><br>
+                                    <li><?php echo $this->Html->link('Editar Montos',['controller'=>'Amounts','action'=>'show_associations/1']);?></li><br>
+
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="active">
+                            <a  data-toggle="collapse" data-target="#surplus_id">Montos de Superávit</a>
+                            <div id="surplus_id" class="collapse">
+                                <ul>
+                                    <li><?php echo $this->Html->link('Nuevo Monto',['controller'=>'Surpluses','action'=>'add']);?></li><br>
+                                    <li><?php echo $this->Html->link('Administrar Montos',['controller'=>'Surpluses','action'=>'index']);?></li><br>
+
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="active">
+                            <a  data-toggle="collapse" data-target="#saving_id">Montos de Ahorro</a>
+                            <div id="saving_id" class="collapse">
+                                <ul>
+                                    <li><?php echo $this->Html->link('Nuevo Monto',['controller'=>'Savings','action'=>'add']);?></li><br>
+                                    <li><?php echo $this->Html->link('Administrar Montos',['controller'=>'Savings','action'=>'index']);?></li><br>
+
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="active">
+                            <a  data-toggle="collapse" data-target="#user_id">Usuarios</a>
+                            <div id="user_id" class="collapse">
+                                <ul>
+                                    <li><?php echo $this->Html->link('Agregar Usuarios', '/users/add/');?></li><br>
+                                    <li><?php echo $this->Html->link('Ver Ususarios','/users/read');?></li><br>
+                                    <li><?php echo $this->Html->link('Editar Usuarios','/users/modify');?></li><br>
+
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            <?php
+            }
+            if($this->request->session()->read('Auth.User.role') == 'rep'){ ?>
+
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+                  <ul class="nav navbar-nav side-nav">
                     <li class="active">
-                        <a  data-toggle="collapse" data-target="#association_id">Asociaciones</a>
-                        <div id="association_id" class="collapse">
+                        <a  data-toggle="collapse" data-target="#association_admin">Administrar Asociación</a>
+                        <div id="association_admin" class="collapse">
                             <ul>
-                                <li><?php echo $this->Html->link('Nueva Asociación',['controller'=>'Associations','action'=>'add']);?></li><br>
-                                <li><?php echo $this->Html->link('Ver Asociación',['controller'=>'Associations','action'=>'show_associations/1']);?></li><br>
-                                <li><?php echo $this->Html->link('Editar Asociación',['controller'=>'Associations','action'=>'show_associations/3']);?></li><br>
-                                <li><?php echo $this->Html->link('Borrar Asociación',['controller'=>'Associations','action'=>'show_associations/4']);?></li><br>
-
+                              <li class="active"><?php echo $this->Html->link('Agregar Nueva Factura', '/invoices/add', ['id'=>'active-navbar']);?></li><br>
+                              <li class="active"><?php echo $this->Html->link('Actualizar Cajas', '/boxes/modify', ['id'=>'active-navbar']);?></li><br>
                             </ul>
                         </div>
                     </li>
 
-                    <li>
-                        <a  data-toggle="collapse" data-target="#tract_id">Fechas de Tracto</a>
-                        <div id="tract_id" class="collapse">
-                            <ul>
-                                <li><?php echo $this->Html->link('Nuevo Tracto',['controller'=>'Tracts','action'=>'add']);?></li><br>
-                                <li><?php echo $this->Html->link('Administrar Tractos',['controller'=>'Tracts','action'=>'index']);?></li><br>
-
-
-                            </ul>
-                        </div>
+                    <li class="active">
+                        <?php echo $this->Html->link('Solicitar Monto de Ahorro', '/savings/show_associations/1');?>
                     </li>
 
-
-                    <li>
-                        <a  data-toggle="collapse" data-target="#amounts_id">Montos de Tracto</a>
-                        <div id="amounts_id" class="collapse">
-                            <ul>
-                                <li><?php echo $this->Html->link('Nuevo Monto',['controller'=>'Amounts','action'=>'add']);?></li><br>
-                                <li><?php echo $this->Html->link('Ver Montos Detallados',['controller'=>'Associations','action'=>'show_associations/5']);?></li><br>
-                                <li><?php echo $this->Html->link('Editar Montos',['controller'=>'Amounts','action'=>'show_associations/1']);?></li><br>
-
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <a  data-toggle="collapse" data-target="#surplus_id">Montos de Superávit</a>
-                        <div id="surplus_id" class="collapse">
-                            <ul>
-                                <li><?php echo $this->Html->link('Nuevo Monto',['controller'=>'Surpluses','action'=>'add']);?></li><br>
-                                <li><?php echo $this->Html->link('Administrar Montos',['controller'=>'Surpluses','action'=>'index']);?></li><br>
-
-                            </ul>
-                        </div>
+                    <li class="active">
+                      <?php echo $this->Html->link('Información General', '/associations/general_information/');?>
                     </li>
 
-                    <li>
-                        <a  data-toggle="collapse" data-target="#saving_id">Montos de Ahorro</a>
-                        <div id="saving_id" class="collapse">
-                            <ul>
-                                <li><?php echo $this->Html->link('Nuevo Monto',['controller'=>'Savings','action'=>'add']);?></li><br>
-                                <li><?php echo $this->Html->link('Administrar Montos',['controller'=>'Savings','action'=>'index']);?></li><br>
-
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li>
+                    <li class="active">
                         <a  data-toggle="collapse" data-target="#user_id">Usuarios</a>
                         <div id="user_id" class="collapse">
                             <ul>
                                 <li><?php echo $this->Html->link('Agregar Usuarios', '/users/add/');?></li><br>
-                                <li><?php echo $this->Html->link('Ver Ususarios','/users/show_associations/1');?></li><br>
-                                <li><?php echo $this->Html->link('Editar Usuarios','/users/show_associations/3');?></li><br>
+                                <li><?php echo $this->Html->link('Ver Ususarios','/users/read');?></li><br>
+                                <li><?php echo $this->Html->link('Editar Usuarios','/users/modify');?></li><br>
 
                             </ul>
                         </div>
                     </li>
 
-                </ul>
-            </div>
+                  </ul>
+              </div>
+
+            <?php
+            }
+              ?>
+
+
             <!-- /.navbar-collapse -->
         </nav>
 

@@ -28,7 +28,7 @@ class AssociationsController extends AppController
 			return $this->redirect($this->Auth->redirectUrl());
 		}
 		else{
-			$this->viewBuilder()->layout('associations_view'); //Carga un layout personalizado para esta vista
+			$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
 		}
 	}
 
@@ -493,7 +493,7 @@ class AssociationsController extends AppController
 		}
 		else{
 
-			$this->viewBuilder()->layout('associations_view'); //Se deja este hasta mientras se haga el de representante
+			$this->viewBuilder()->layout('admin_views'); //Se deja este hasta mientras se haga el de representante
 
 			$id = $this->request->session()->read('Auth.User.association_id');
 			if($id) {
@@ -726,11 +726,11 @@ class AssociationsController extends AppController
 							->andwhere(['association_id'=>$association_id, 'YEAR(date)'=>$date]);
 
 
-			$amount = $amount->toArray();	
+			$amount = $amount->toArray();
 		}
 
 
-			
+
 			$invoices = $this->Associations->Invoices->find()
 							->hydrate(false)
 							->select(['date','number','detail','provider','amount','attendant','clarifications'])
@@ -747,9 +747,9 @@ class AssociationsController extends AppController
 
 
 			$information['amount'] = $amount;
-			
+
 			$information['invoices'] = $invoices;
-			
+
 
 			$information = json_encode($information);
 

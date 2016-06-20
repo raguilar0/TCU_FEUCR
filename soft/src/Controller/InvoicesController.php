@@ -13,7 +13,7 @@ class InvoicesController extends AppController
 		}
 		else {
 
-			$this->viewBuilder()->layout('associations_view'); //Carga un layout personalizado para esta vista
+			$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
 
 			$invoice = $this->Invoices->newEntity($this->request->data); //El parámetro es para validar los datos
 

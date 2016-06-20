@@ -13,9 +13,11 @@ class BoxesController extends AppController
 		}
 		else{
 			$id = $this->request->session()->read('Auth.User.association_id');
-			$this->viewBuilder()->layout('associations_view'); //Carga un layout personalizado para esta vista
+			$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
+
 			$actualDate = date("Y-m-d");
 			$tract_id = $this->getTractId($actualDate) ;
+
 			$box = $this->Boxes->find()
 						->select(['little_amount','big_amount'])
 						->andwhere(['association_id'=>$id, 'type'=> 1, 'tract_id' =>$tract_id]);
@@ -23,7 +25,9 @@ class BoxesController extends AppController
 			$box = $box->toArray();
 
 			if($this->request->is(array('post','put'))){
+
 				if($box != []){
+					$box = $this->Boxes->newEntity($this->request->data);
 					$query = $this->Boxes->query();
 					$query->update()
 						  ->set(['big_amount'=> $this->request->data['big_amount'], 'little_amount'=>$this->request->data['little_amount']])
@@ -41,7 +45,7 @@ class BoxesController extends AppController
 
 			$this->set('data',$box);
 		}
-		
+
 	}
 
 
@@ -65,7 +69,7 @@ class BoxesController extends AppController
 
 
 	private function getTractId($actualDate){
-		
+
 		$this->loadModel('Tracts');
 
 		//$actualDate = date("Y-m-d");
@@ -82,7 +86,7 @@ class BoxesController extends AppController
         $id = $id->toArray();
 
 		return $id[0]['id'];
-		
+
 	}
 
 

@@ -11,13 +11,13 @@
 	$big = 0;
 	$little = 0;
 	if($data != [])
-	{	
+	{
 		$big = $data[0]['big_amount'];
 		$little = $data[0]['little_amount'];
 	}
 
 
-	echo $this->Form->create(null, ['id'=>'submit3']);
+	echo $this->Form->create($data, []);
 	echo "<div class='form-group'>";
 
 
@@ -35,12 +35,9 @@
 	    echo "</div >";
 
     echo "</div>";
-  
-	echo "</div >";    
 
+	echo "</div >";
 
-
-   
 
     echo "<div class = 'row'>";
         echo "<div class = 'col-xs-12'>";    echo "<h4>".$this->Form->submit('Actualizar Cajas', ['class' => 'form-control', 'id' => 'asso_id'])."</h4>";

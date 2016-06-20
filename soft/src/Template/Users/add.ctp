@@ -15,32 +15,41 @@ echo "<div class='form-group' id=form_login>";
       echo "<h4>".$this->Form->input('last_name_1', ['class' => 'form-control','label'=>'Primer Apellido'])."</h4>";
       echo "<h4>".$this->Form->input('last_name_2', ['class' => 'form-control','label'=>'Segundo Apellido'])."</h4>";
 
-      echo "<div class = 'col-xs-6 col-md-4'>";
-      echo "<div class='form-group'>";
-      echo "<label for='sel1' id = 'asociaciones_label'>Asociación:</label>";
-         echo "<select class='form-control' name = 'association_id' >";
-              foreach ($association as $key => $value) {
-                  echo "<option>".$value['name']."</option>"."<br>";
-              }
-          echo "</select>";
-      echo "</div>";
-    echo "</div>";
+      if(($this->request->session()->read('Auth.User.role')) == 'admin'){
+        echo "<div class = 'col-xs-6 col-md-4'>";
+          echo "<div class='form-group'>";
+          echo "<label for='sel1' id = 'asociaciones_label'>Asociación:</label>";
+            echo "<select class='form-control' name = 'association_id' >";
+                foreach ($association as $key => $value) {
+                    echo "<option>".$value['name']."</option>"."<br>";
+                }
+            echo "</select>";
+          echo "</div>";
+        echo "</div>";
 
-    echo"<br>";
-    echo"<br>";
-    echo"<br>";
-    echo "<div class = 'col-xs-6 col-md-4'>";
-    echo "<div class='form-group'>";
-    echo "<label for='sel1' id = 'role_label'><h4>Rol:</h4></label>";
-       echo "<select class='form-control' name = 'role'>";
-            $kind = $role;
-            debug($role);
-            foreach ($kind as $key => $value) {
-                echo "<option>".$key."</option>"."<br>";
-            }
-        echo "</select>";
-      echo"</div>";
-    echo "</div>";
+        echo"<br>";
+        echo"<br>";
+        echo"<br>";
+
+        echo "<div class = 'col-xs-6 col-md-4'>";
+        echo "<div class='form-group'>";
+        echo "<label for='sel1' id = 'role_label'><h4>Rol:</h4></label>";
+           echo "<select class='form-control' name = 'role'>";
+                $kind = $role;
+                //debug($role);
+                foreach ($kind as $key => $value) {
+                    echo "<option>".$key."</option>"."<br>";
+                }
+            echo "</select>";
+          echo"</div>";
+        echo "</div>";
+
+      }
+    //  debug($user);
+      if(($this->request->session()->read('Auth.User.role')) == 'rep'){
+        $this->request->data['association_id'] = $this->request->session()->read('Auth.User.association_id');
+        $this->request->data['role'] = 'rep';
+      }
 
 
   echo "</div>";
