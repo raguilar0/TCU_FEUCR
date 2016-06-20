@@ -130,7 +130,7 @@ class InvoicesController extends AppController
 			if(($this->request->session()->read('Auth.User.role')) == 'rep'){
 				return $this->redirect($this->Auth->redirectUrl("/invoices/modify/"));
 			}else{
-				return $this->redirect($this->Auth->redirectUrl("/invoices/admin-modify/"));
+				return $this->redirect($this->Auth->redirectUrl("/invoices/admin-invoices/"));
 			}
 			
 		}
@@ -151,7 +151,7 @@ class InvoicesController extends AppController
 
 	        $this->set(compact('invoices'));
 	        $this->set('_serialize', ['invoices']);
-        			}
+        	}
 	}
 
 }
