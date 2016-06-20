@@ -28,7 +28,6 @@ class InvoicesController extends AppController
 				$this->loadComponent('Upload');
 
 
-				$response = '0';
 
 				$file = $invoice['file'];
 				unset($invoice['file']); //Quitamos los datos del archivo
@@ -37,21 +36,51 @@ class InvoicesController extends AppController
 				{
 					if($this->Upload->save($file))
 					{
-						$invoice['image_name'] = $file['name'];
-						$invoice['association_id'] = 1;
+						$date = date_create();
+						
+						$invoice['image_name'] = $file['name']."_".date_timestamp_get($date);
+						$invoice['association_id'] = 1; //TODO: cambiar este dato a un dato real
 						$invoice['kind'] = $invoices_type[$this->request->data['kind']];
+						$invoice['tract_id'] = $this->getTractId(date("Y-m-d"));
 
 						if($this->Invoices->save($invoice)) //
 						{
 							$this->Flash->success('La factura ha sido agregado', ['key' => 'success']);
 
 						}
+						else {
+							$this->Flash->error('Error al agregar la factura', ['key' => 'error']);
+						}
 
-						$this->Flash->error('Error al agregar la factura', ['key' => 'error']);
+						
 					}
 				}
 			}
 				$this->set('data',$invoice);//
 		}
 	}
+	
+	
+	/**
+	*  Esta funcion devuelve el id del presente tracto
+	**/
+	private function getTractId($actualDate)
+	{
+		$this->loadModel('Tracts');
+
+
+		$id = $this->Tracts->find()
+					->hydrate(false)
+					->select(['id'])
+					->where(function ($exp) use($actualDate) {
+                        return $exp
+                        	->lte('date',$actualDate) //<= date <= fecha actual
+                        	->gte('deadline',$actualDate); //deadline >= fecha actual
+                    });
+
+        $id = $id->toArray();
+
+		return $id[0]['id'];
+	}
+
 }

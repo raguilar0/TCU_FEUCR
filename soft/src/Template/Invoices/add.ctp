@@ -55,7 +55,7 @@
 	    echo "</div >";
 
 	    echo "<div class = 'col-xs-12 col-md-4'>";
-        	echo "<h4>".$this->Form->input('date', ['class' => 'form-control', 'label'=>'Fecha', 'type'=> 'date', 'id'=>'date_input'])."</h4>";
+        	echo "<h4>".$this->Form->input('date', ['class' => 'form-control', 'label'=>'Fecha', 'type'=> 'text', 'id'=>'date'])."</h4>";
 	    echo "</div >";
 
 
@@ -115,3 +115,4 @@
 		<p id="callback" style="font-size:20px"></p>
 	</div>
 </div>
+
