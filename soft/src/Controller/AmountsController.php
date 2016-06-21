@@ -291,8 +291,6 @@ class AmountsController extends AppController
 		{
 			if($this->request->is(array('post','put')))
 			{
-
-				$update = $this->Amounts->query();
 				$data = $this->request->data;
 				$message = "Se modificaron los montos de los siguientes tractos: ";
 
@@ -301,11 +299,13 @@ class AmountsController extends AppController
 					$name = 'tract_'.$value['tract']['number']; //name de la vista
 
 					$foo['amount'] = $data[$name];
+
 					$entity = $this->Amounts->newEntity($foo, ['validate'=>'update']);
 
 
 					if(!$entity->errors())
 					{
+						$update = $this->Amounts->query();
 						$update->update()
 							->set(['amount'=>$data[$name]])
 							->where(['id'=>$value['id']])
