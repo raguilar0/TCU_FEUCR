@@ -238,35 +238,32 @@ class UsersController extends AppController
     }
 
     public function modifyUser($id = null) {
-
         $this->viewBuilder()->layout('admin_views');
-
+        $user = $this->Users->newEntity($this->request->data);
 
         if($id){
           $user = $this->Users->get($id);
           $role =  $user->role;
 
           //if($this->request->is(array('post','put'))) {
-          $user = $this->Users->newEntity($this->request->data);
           debug($user);
 
+          $blocked = (isset($$user['state']) ? 1 : 0); //Verifica si se checó el checkbox de bloqueado
 
-          $blocked = (isset($this->request->data['state']) ? 1 : 0); //Verifica si se checó el checkbox de bloqueado
-
-          if($this->request->data['role'] == 'Administrador'){$this->request->data['role'] = 'admin';}
-          if($this->request->data['role'] == 'Representante'){$this->request->data['role'] = 'rep';}
+          //if($user['role'] == 'Administrador'){$user['role'] = 'admin';}
+          //if($user['role'] == 'Representante'){$user['role'] = 'rep';}
 
 
           //debug($user->errors());
           if(!$user->errors()) {
             $query = $this->Users->query();
             $query->update()
-                  ->set(['username'=>$this->request->data['username'], 'name'=>$this->request->data['name'],
-                        'last_name_1'=>$this->request->data['last_name_1'], 'last_name_2'=>$this->request->data['last_name_2'],
-                        'role'=>$this->request->data['role'], 'state'=>$blocked])
+                  ->set(['username'=>$user['username'], 'name'=>$user['name'],
+                        'last_name_1'=>$user['last_name_1'], 'last_name_2'=>$user['last_name_2'],
+                        'role'=>$user['role'], 'state'=>$blocked])
                   ->where(['id'=>$id])
                   ->execute();
-                  $user = $this->Users->get($id);
+                  //$user = $this->Users->get($id);
                   $role =  $user->role;
             $this->Flash->success(__('Usuario modificado correctamente.', ['key'=>'success']));
           }

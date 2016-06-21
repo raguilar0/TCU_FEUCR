@@ -183,7 +183,7 @@
                             <ul>
                                 <li><?php echo $this->Html->link('Agregar Usuarios', '/users/add/');?></li><br>
                                 <li><?php echo $this->Html->link('Ver Ususarios','/users/read/');?></li><br>
-                                <li><?php //echo $this->Html->link('Editar Usuarios','/users/modify/');?></li><br>
+                                <li><?php echo $this->Html->link('Editar Usuarios','/users/modify/');?></li><br>
 
                             </ul>
                         </div>
