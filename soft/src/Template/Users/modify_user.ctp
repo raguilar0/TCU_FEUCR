@@ -1,7 +1,7 @@
 <?php
 echo "<div class = 'row text-center'>";
     echo "<div class='col-xs-12'>";
-        echo"<h1>".'Modificar la información de '.$data['name']."</h1>";
+        echo"<h1>".'Modificar la información de '.$user['name']."</h1>";
     echo"</div>";
 echo "</div>";
 
@@ -9,30 +9,35 @@ echo "<br>";
 echo "<br>";
 echo "<br>";
 
-	echo $this->Form->create($data);
+	echo $this->Form->create($user);
 	echo "<div class='form-group'>";
     echo "<div class = 'row'>";
     	echo "<div class = 'col-xs-12 col-md-6'>";
-      //debug($data);
-    		echo "<h4>".$this->Form->input('username', ['class' => 'form-control','label'=>'Nombre de Usuario', 'value'=>$data['username'], 'maxlength'=> '10'])."</h4>";
-				echo "<h4>".$this->Form->input('name', ['class' => 'form-control', 'label'=>'Nombre', 'value'=>$data['name'], 'maxlength'=> '20'])."</h4>";
-		    echo "<h4>".$this->Form->input('last_name_1', ['class' => 'form-control','label'=>'Primer Apellido','value'=>$data['last_name_1'], 'maxlength'=> '20'])."</h4>";
-				echo "<h4>".$this->Form->input('last_name_2', ['class' => 'form-control','label'=>'Segundo Apellido','value'=>$data['last_name_2'], 'maxlength'=> '20'])."</h4>";
-		    echo "<label for='sel1' id = 'role_label'><h4>Rol</h4></label>";
-        //debug($role);
-        if($role == 'admin'){
-          echo "<select class='form-control' name = 'role'>";
-             echo "<option>Administrador</option>";
-             echo "<option>Representante</option>";
-           echo "</select>";
+      //debug($user);
+    		echo "<h4>".$this->Form->input('username', ['class' => 'form-control','label'=>'Nombre de Usuario', 'value'=>$user['username'], 'maxlength'=> '10'])."</h4>";
+				echo "<h4>".$this->Form->input('name', ['class' => 'form-control', 'label'=>'Nombre', 'value'=>$user['name'], 'maxlength'=> '20'])."</h4>";
+		    echo "<h4>".$this->Form->input('last_name_1', ['class' => 'form-control','label'=>'Primer Apellido','value'=>$user['last_name_1'], 'maxlength'=> '20'])."</h4>";
+				echo "<h4>".$this->Form->input('last_name_2', ['class' => 'form-control','label'=>'Segundo Apellido','value'=>$user['last_name_2'], 'maxlength'=> '20'])."</h4>";
+
+
+        if($this->request->session()->read('Auth.User.role') == 'admin') {
+          echo "<label for='sel1' id = 'role_label'><h4>Rol</h4></label>";
+          //debug($role);
+          if($role == 'admin'){
+            echo "<select class='form-control' name = 'role'>";
+               echo "<option>Administrador</option>";
+               echo "<option>Representante</option>";
+             echo "</select>";
+          }
+
+          if($role == 'rep'){
+            echo "<select class='form-control' name = 'role'>";
+               echo "<option>Representante</option>";
+               echo "<option>Administrador</option>";
+             echo "</select>";
+          }
         }
 
-        if($role == 'rep'){
-          echo "<select class='form-control' name = 'role'>";
-             echo "<option>Representante</option>";
-             echo "<option>Administrador</option>";
-           echo "</select>";
-        }
 
 		    echo "<h4>".$this->Form->label('Users.blocked','Usuario Bloqueado ');
     	echo "</div>";
@@ -40,7 +45,7 @@ echo "<br>";
 
 
 
-    if($data['state'] == false) {
+    if($user['state'] == false) {
     	echo $this->Form->checkbox('state', ['hiddenField' => false, 'class'=>'checkbox-inline'])."</h4>";
     }
     else {

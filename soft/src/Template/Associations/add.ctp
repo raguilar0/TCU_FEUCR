@@ -31,18 +31,18 @@
             foreach ($headquarter as $key => $value) {
                 echo "<option>".$value['name']."</option>"."<br>";
             }
-            
+
         echo "</select>";
     echo "</div>";
 
 
 
-    echo "</div >";    
+    echo "</div >";
 
 
     echo "<div class = 'col-xs-6 col-md-4'>";
       echo $this->Form->button('',['type'=>'button' ,'data-toggle'=>'collapse', 'data-target'=>'#form_headquarter', 'class'=>'glyphicon glyphicon-plus btn btn-success', 'id'=>'addHeadquartersBtn']);
-    echo "</div >";    
+    echo "</div >";
 
 
 
@@ -56,7 +56,7 @@
 
     echo "<h4>".$this->Form->input('acronym', ['class' => 'form-control', 'label'=>'Sigla', 'maxlength'=> '256', 'placeholder'=>'Ejemplo: AEMA'])."</h4>";
 
-   
+
 
 
     //echo "<h4>".$this->Form->input('headquarters', ['class' => 'form-control','label'=>'Sede', 'maxlength'=> '100'])."</h4>";
@@ -64,7 +64,7 @@
     echo "<h4>".$this->Form->input('location', ['class' => 'form-control','label'=>'Dirección', 'maxlength'=> '1024', 'placeholder'=>'Ejemplo: San Pedro, San José, Costa Rica'])."</h4>";
 
     echo "<h4>".$this->Form->input('schedule', ['class' => 'form-control','label'=>'Horario', 'maxlength'=> '512', 'placeholder'=>'Ejemplo: 7:00 am - 10:00 pm'])."</h4>";
-    
+
 
     echo "<h4>".$this->Form->label('Associations.authorized_card','Tarjeta Autorizada ');
     echo "  ";
@@ -73,7 +73,7 @@
 
     echo "<div class = 'row'>";
 
-        
+
 
         if(!empty($association['tract']))
         {
@@ -85,11 +85,11 @@
             echo "<div class = 'col-xs-12'>";
             echo "<h5 style='color:green;text-align:center;'>Para obtener una mayor funcionalidad, agregá un tracto primero.</h5>";
         }
-                
+
         echo "</div>";
 
 
-    echo "</div>";    
+    echo "</div>";
 
 
 
@@ -103,7 +103,7 @@ if(!empty($association['tract']))
    echo " <br><br>";
 
    echo " <h3 style='text-align: center;'> ¡Asociá la información de los <b> montos</b>!</h3><br><br>";
-    
+
 
 
 
@@ -111,7 +111,7 @@ if(!empty($association['tract']))
 
             echo "<div class='row text-center'>";
 
-                echo "<div class = 'col-xs-12 col-md-4'>"; 
+                echo "<div class = 'col-xs-12 col-md-4'>";
                 echo "<h4>".$this->Form->input('amount', ['class' => 'form-control', 'label'=>'Monto', 'min'=>'0', 'placeholder'=>'Monto a asignar'])."</h4>";
                 echo "</div>";
 
@@ -126,14 +126,14 @@ if(!empty($association['tract']))
                         foreach ($kind as $key => $value) {
                             echo "<option>".$key."</option>"."<br>";
                         }
-                        
+
                     echo "</select>";
                 echo "</div>";
 
-                echo "<div class = 'col-xs-12 col-md-4'>"; 
+                echo "<div class = 'col-xs-12 col-md-4'>";
                 //echo "<h4>".$this->Form->input('date', ['class' => 'form-control', 'label'=>'Fecha', 'type'=>'date'])."</h4>";
                 echo "<h4><label for='#date'>Fecha</label>"."<br><input name='date' type='date' id = 'date' class='form-control date'>"."</h4>";
-                echo "</div>";                                
+                echo "</div>";
 
             echo "</div>";
 
@@ -142,10 +142,10 @@ if(!empty($association['tract']))
                     echo "<h4>Detalle</h4>";
                     echo "<h4>".$this->Form->textarea('detail', ['class' => 'form-control','placeholder'=>'Detalle del monto'])."</h4>";
                 echo "</div>";
-            echo "</div>";      
+            echo "</div>";
 
         echo "</div>";
-    echo "</div>"; 
+    echo "</div>";
 }
 
 
@@ -178,7 +178,7 @@ if(!empty($association['tract']))
     <br><br>
 
     <h3 style="text-align: center;"> ¡Agregá una nueva <b>Sede</b>!</h3><br><br>
-    
+
     <?php
 
         echo $this->Form->create(null,['url' => ['controller'=>'headquarters', 'action' =>'add'], 'id'=>'submit2']);
@@ -197,7 +197,7 @@ if(!empty($association['tract']))
 
 
 
-    ?>  
+    ?>
 
 </div>
 
@@ -206,7 +206,7 @@ if(!empty($association['tract']))
 
 <div class="row text-right">
     <div class="col-xs-12">
-        <h4 id="callback" style="color:#01DF01"></h4>   
+        <h4 id="callback" style="color:#01DF01"></h4>
     </div>
 
 </div>
@@ -218,4 +218,3 @@ if(!empty($association['tract']))
      <?php echo $this->Html->link('Atrás', '/associations/', ['class'=>'btn btn-primary']);?>
   </div>
 </div>
-

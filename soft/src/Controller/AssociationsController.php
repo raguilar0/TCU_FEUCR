@@ -13,12 +13,11 @@ class AssociationsController extends AppController
 
 	public function index()
 	{
-		if(($this->request->session()->read('Auth.User.role')) != 'admin'){
-			return $this->redirect($this->Auth->redirectUrl());
-		}
-		else{
-			$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
-		}
+		$this->viewBuilder()->layout('admin_views');
+		$name 	= $this->request->session()->read('Auth.User.name');
+		$this->set('name',$name);
+
+
 	}
 
 
@@ -62,7 +61,7 @@ class AssociationsController extends AppController
 
 				switch ($id) {
 						case 1:
-								$query['link'] = 'read';
+								$query['link'] = 'view';
 							break;
 
 						case 3:

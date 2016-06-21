@@ -94,42 +94,51 @@ class UsersController extends AppController
       }
   	}
 
-    public function read($id)
+    public function read($id = null)
     {
-      if(($this->request->session()->read('Auth.User.role')) != 'admin'){
-  			return $this->redirect($this->Auth->redirectUrl());
-  		}
-      else{
+      $this->viewBuilder()->layout('admin_views');
 
         if($id){
+
+          if($this->request->session()->read('Auth.User.role') == 'admin')  {
+            $this->loadModel('Associations');
+            $association =
+            $this->Associations->find()
+                                ->hydrate(false)
+                                ->select(['name'])
+                                ->where(['id'=>$id]);
+
+            $association = $association->toArray();
+            //debug($association);
+
+
+            $user = $this->Users->find()
+                                ->where(['association_id'=>$id]);
+            $user = $user->toArray();
+          }
+
+        }
+
+        if(($this->request->session()->read('Auth.User.role')) == 'rep'){
+
           $this->loadModel('Associations');
+          $association_id = $this->request->session()->read('Auth.User.association_id');
           $association =
           $this->Associations->find()
                               ->hydrate(false)
                               ->select(['name'])
-                              ->where(['id'=>$id]);
+                              ->where(['id'=>$association_id]);
 
           $association = $association->toArray();
-          //debug($association);
 
-
-          $role = $this->request->session()->read('Auth.User.role');
-        //  debug($this->request->session()->read('Auth.User.role'));
-
-            $this->viewBuilder()->layout('admin_views');
-            $user = $this->Users->find()
-                                ->where(['association_id'=>$id]);
-            $user = $user->toArray();
-            $this->set('association', $association);
-            $this->set('data',$user);
-
-
+          $user = $this->Users->find()
+                              ->where(['association_id'=>$association_id]);
+          $user = $user->toArray();
         }
-        else {
-  				$this->redirect(['action'=>'/']);
-  			}
-        $this->set('asocia',$association);
-      }
+
+        $this->set('association', $association);
+        $this->set('data',$user);
+
     }
 
 
@@ -182,103 +191,95 @@ class UsersController extends AppController
 
     public function modify($id = null)
     {
-      if(($this->request->session()->read('Auth.User.role')) != 'admin'){
-  			return $this->redirect($this->Auth->redirectUrl());
-  		}
-      else{
-        $this->viewBuilder()->layout('admin_views');
+      $this->viewBuilder()->layout('admin_views');
 
         if($id){
 
+          if(($this->request->session()->read('Auth.User.role')) == 'admin'){
+
+            $this->loadModel('Associations');
+            $association =
+            $this->Associations->find()
+                                ->hydrate(false)
+                                ->select(['name'])
+                                ->where(['id'=>$id]);
+
+            $association = $association->toArray();
+
+            //$user = $this->Users->get($id);
+            $user = $this->Users->find()
+                                ->where(['association_id'=>$id]);
+            $user= $user->toArray();
+
+          }
+
+        }
+
+        if(($this->request->session()->read('Auth.User.role')) == 'rep'){
+
           $this->loadModel('Associations');
+          $association_id = $this->request->session()->read('Auth.User.association_id');
           $association =
           $this->Associations->find()
                               ->hydrate(false)
                               ->select(['name'])
-                              ->where(['id'=>$id]);
+                              ->where(['id'=>$association_id]);
 
           $association = $association->toArray();
 
-          //$user = $this->Users->get($id);
           $user = $this->Users->find()
-                              ->where(['association_id'=>$id]);
-          $user= $user->toArray();
-          //debug($user);
-
-          $this->set('association',$association);
-          $this->set('data',$user);
+                              ->where(['association_id'=>$association_id]);
+          $user = $user->toArray();
         }
-      }
+
+        $this->set('association',$association);
+        $this->set('data',$user);
+
     }
 
     public function modifyUser($id = null) {
-      $role = $this->request->session()->read('Auth.User.role');
-      if($role != 'admin'){
-  			return $this->redirect($this->Auth->redirectUrl());
-  		}
-      else{
+
         $this->viewBuilder()->layout('admin_views');
 
 
         if($id){
           $user = $this->Users->get($id);
+          $role =  $user->role;
 
-          if($this->request->data['role'] == 'Administrador'){
-              $this->request->data['role'] = 'admin';
+          //if($this->request->is(array('post','put'))) {
+          $user = $this->Users->newEntity($this->request->data);
+          debug($user);
+
+
+          $blocked = (isset($this->request->data['state']) ? 1 : 0); //Verifica si se checó el checkbox de bloqueado
+
+          if($this->request->data['role'] == 'Administrador'){$this->request->data['role'] = 'admin';}
+          if($this->request->data['role'] == 'Representante'){$this->request->data['role'] = 'rep';}
+
+
+          //debug($user->errors());
+          if(!$user->errors()) {
+            $query = $this->Users->query();
+            $query->update()
+                  ->set(['username'=>$this->request->data['username'], 'name'=>$this->request->data['name'],
+                        'last_name_1'=>$this->request->data['last_name_1'], 'last_name_2'=>$this->request->data['last_name_2'],
+                        'role'=>$this->request->data['role'], 'state'=>$blocked])
+                  ->where(['id'=>$id])
+                  ->execute();
+                  $user = $this->Users->get($id);
+                  $role =  $user->role;
+            $this->Flash->success(__('Usuario modificado correctamente.', ['key'=>'success']));
           }
-          if($this->request->data['role'] == 'Representante'){
-              $this->request->data['role'] = 'rep';
+          else{
+              $this->Flash->error(__('Error al modificar usuario.', ['key'=>'error']));
           }
+        //}
 
-        //  debug($user->errors());
-
-          if($this->request->is(array('post','put'))) {
-            //debug($this->request->data);
-            //$response = "0"; //Funciona como booleano para decirle al ajax qué desplegar
-            $blocked = (isset($this->request->data['state']) ? 1 : 0); //Verifica si se checó el checkbox de bloqueado
+			}
 
 
-
-            $user = $this->Users->newEntity($this->request->data);
-
-            //debug($this->request->data);
-            //debug($user->errors());
-            if(!$user->errors()) {
-
-              $query = $this->Users->query();
-              //debug($blocked);
-              $query->update()
-                    ->set(['username'=>$this->request->data['username'], 'name'=>$this->request->data['name'],
-                          'last_name_1'=>$this->request->data['last_name_1'], 'last_name_2'=>$this->request->data['last_name_2'],
-                          'role'=>$this->request->data['role'], 'state'=>$blocked])
-                    ->where(['id'=>$id])
-                    ->execute();
-
-/*
-              $user->username = $this->request->data['username'];
-              $user->name = $this->request->data['name'];
-              $user->last_name_1 = $this->request->data['last_name_1'];
-              $user->last_name_2 = $this->request->data['last_name_2'];
-              $user->role = $this->request->data['role'];
-              $user->state = $this->request->data['state'];
-*/
-              $this->Flash->success(__('Usuario modificado correctamente.', ['key'=>'success']));
-            }
-            else{
-                $this->Flash->error(__('Error al modificar usuario.', ['key'=>'error']));
-            }
-          }
-
-  			}
-  			else {
-  				$this->redirect(['action'=>'/']);
-  			}
-
-        }
-        $role = $user->role;
-        //debug($role);
-        $this->set('role', $role);
-        $this->set('data', $user);
+      $this->set('role', $role);
+      $this->set('user', $user);
     }
 
     public function delete()

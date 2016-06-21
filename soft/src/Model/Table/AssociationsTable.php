@@ -14,9 +14,9 @@ class AssociationsTable extends Table
         $this->hasMany('Amounts');
         $this->hasMany('Boxes');
         $this->hasMany('Invoices');
-        $this->hasMany('InitialAmounts');        
-        $this->hasMany('Surpluses');  
-    
+        $this->hasMany('InitialAmounts');
+        $this->hasMany('Surpluses');
+
     }
 
     public function validationDefault(Validator $validator)
@@ -27,14 +27,14 @@ class AssociationsTable extends Table
                             'rule' => array('custom', '/^[A-Za-z0-9\-]+$/'),
                             'message' => 'Números o letras'
             ])
-            ->requirePresence('name')
+            ->notEmpty('name')
             ->add('name', 'validFormat', [
                         'rule' => array('custom', '/[A-Za-z0-9]([A-Za-z0-9]| )+/'),
                         'message' => 'Solo letras y números.'
             ])
             ->notEmpty('location')
             ->add('location', 'validFormat', [
-                        'rule' => array('custom', '/[A-Za-z0-9]+$/'),
+                        'rule' => array('custom', '/[A-Za-z0-9\.\-\#\,]+$/'),
                         'message' => 'Solo letras y números.'
             ])
             ->notEmpty('headquarters')
@@ -45,7 +45,7 @@ class AssociationsTable extends Table
 
         return $validator;
     }
-	
-	
-	
+
+
+
 }

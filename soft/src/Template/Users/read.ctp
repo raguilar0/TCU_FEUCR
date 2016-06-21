@@ -24,7 +24,7 @@ echo "<div class='table-responsive'>";
   	echo  "</tr>";
   echo "</thead>";
   echo "<tbody>";
-
+        
           foreach ($data as $key) {
              echo "<tr>";
               echo "<td>".$key['username']."</td>";

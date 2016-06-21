@@ -15,42 +15,41 @@ class InvoicesTable extends Table
     public function validationDefault(Validator $validator)
     {
       $validator
-          ->requirePresence('number')
+          ->notEmpty('number')
           ->add('number', 'validFormat', [
                       'rule' => array('custom', '/[0-9]+$/'),
                       'message' => 'Formato inválido. Solo números.'
           ])
-          ->requirePresence('amount')
+          ->notEmpty('amount')
           ->add('amount', 'validFormat', [
                       'rule' => array('custom', '/^[0-9]+$/'),
                       'message' => 'Formato inválido. Solo números.'
           ])
-          ->requirePresence('clarifications')
           ->add('clarifications', 'validFormat', [
                       'rule' => array('custom', '/^[A-Za-z0-9\.\,\-\:]+$/'),
                       'message' => 'Formato inválido'
           ])
-          ->requirePresence('detail')
+          ->notEmpty('detail')
           ->add('detail', 'validFormat', [
-                      'rule' => array('custom', '/^[A-Za-z0-9\.\,\-\:]+$/'),
+                      'rule' => array('custom', '/^[A-Za-z0-9" "\,\.\-\:]+$/'),
                       'message' => 'Formato inválido'
           ])
-          ->requirePresence('kind')
+          ->notEmpty('kind')
           ->add('kind', 'validFormat', [
                       'rule' => array('custom', '/^[A-Za-z0-9]+$/'),
                       'message' => 'Formato inválido'
           ])
-          ->requirePresence('attendant')
+          ->notEmpty('attendant')
           ->add('attendant', 'validFormat', [
                       'rule' => array('custom', '/^[A-Za-z]+$/'),
                       'message' => 'Formato inválido'
           ])
-          ->requirePresence('provider')
+          ->notEmpty('provider')
           ->add('provider', 'validFormat', [
                       'rule' => array('custom', '/^[A-Za-z]+$/'),
                       'message' => 'Formato inválido'
           ])
-          ->requirePresence('legal_certificate')
+          ->notEmpty('legal_certificate')
           ->add('legal_certificate', 'validFormat', [
                       'rule' => array('custom', '/^[0-9\-]+$/'),
                       'message' => 'Formato inválido'
