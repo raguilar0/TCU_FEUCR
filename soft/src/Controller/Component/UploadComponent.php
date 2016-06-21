@@ -25,17 +25,20 @@ class UploadComponent extends Component
 				$dir = WWW_ROOT.'img'.DS.'invoices';
 
 				$allowed = array('png','jpg','jpeg');
-				$extention = substr(strrchr($filename, '.'), 1);
+				$extention = explode('.', $filename);//substr(strrchr($filename, '.'), 1);
+				
+				$date = date_create();
+				$id = date_timestamp_get($date);
 
 
-
-				if(in_array(strtolower($extention), $allowed))
+				if(in_array(strtolower($extention[1]), $allowed))
 				{
 					if(is_uploaded_file($file_temp_name))
 					{
+						$filename = $extention[0]."_".$id.".".$extention[1];
 						move_uploaded_file($file_temp_name, $dir.DS.$filename);
 
-						$saved = true;
+						$saved = $filename;
 					}
 				}
 			}

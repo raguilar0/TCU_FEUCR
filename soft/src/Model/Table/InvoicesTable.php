@@ -22,7 +22,7 @@ class InvoicesTable extends Table
         $validator
             ->requirePresence('number')
             ->add('number', 'validFormat', [
-                        'rule' => array('custom', '/[0-9]+$/'),
+                        'rule' => array('custom', '/[A-Za-z0-9]+$/'),
                         'message' => 'Formato inválido. Solo números.'
             ])
             ->requirePresence('amount')
@@ -55,6 +55,11 @@ class InvoicesTable extends Table
                         'rule' => array('custom', '/^[A-Za-z]+$/'),
                         'message' => 'Formato inválido'
             ])
+            ->requirePresence('legal_certificate')
+            ->add('legal_certificate', 'validFormat', [
+                        'rule' => array('custom', '/[0-9\-]+$/'),
+                        'message' => 'Formato inválido.'
+            ])
 
             ;
 
@@ -71,6 +76,7 @@ class InvoicesTable extends Table
         if (isset($data['deadline'])) {
             $data['deadline'] = new Time($data['deadline']);
         }
+
 
     }
 
