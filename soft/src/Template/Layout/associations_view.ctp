@@ -18,6 +18,9 @@
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
     <?php echo $this->Html->meta('favicon.ico','webroot/favicon.ico',array('type' => 'icon'));?>
+    
+    <?=$this->Html->script('jquery2.js') ?>
+    <?= $this->Html->css('jquery-ui/jquery-ui.min.css') ?>
 
 </head><!--/head-->
 
@@ -77,7 +80,8 @@
     </div>
 
 
-     <?=$this->Html->script('jquery2.js') ?>
+    <?=$this->Html->script('modernizr/modernizr-custom.js') ?>
+    <?=$this->Html->script('jquery-ui/jquery-ui.min.js') ?>
      <?=$this->Html->script('bootstrap.min.js') ?>
      <?=$this->Html->script('jquery_associations.js') ?>
 

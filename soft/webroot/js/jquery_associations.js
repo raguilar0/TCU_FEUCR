@@ -125,3 +125,11 @@ function modifyBoxes()
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send($("#submit3").serialize());    
 }
+
+$(document).ready( function(){
+    if(!Modernizr.inputtypes.date)
+    {           
+        $('#date').datepicker();            
+        $('#deadline').datepicker();  
+    }        
+});
