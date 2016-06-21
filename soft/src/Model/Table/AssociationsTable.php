@@ -40,7 +40,14 @@ class AssociationsTable extends Table
             ->notEmpty('headquarters')
             ->add('name', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'])
             ->add('acronym', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'])
-            ->add('id', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->add('id', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'
+            ])
+            ->notEmpty('schedule')
+            ->add('schedule', 'validFormat', [
+                        'rule' => array('custom', '/[A-Za-z0-9\:\-]+$/'),
+                        'message' => 'Solo letras y números.'
+            ]);
+
 
 
         return $validator;

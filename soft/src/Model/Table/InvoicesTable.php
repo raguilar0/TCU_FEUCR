@@ -10,6 +10,9 @@ class InvoicesTable extends Table
     public function initialize(array $config)
     {
         $this->addBehavior('Timestamp');
+        $this->belongsTo('Associations');
+
+
     }
 
     public function validationDefault(Validator $validator)
@@ -55,7 +58,6 @@ class InvoicesTable extends Table
                       'message' => 'Formato inválido'
           ])
           ;
-
 
       return $validator;
     }

@@ -158,6 +158,7 @@ class UsersController extends AppController
                     $this->request->data['role'] = 'rep';
                 }
 
+
                 $role = $this->request->data['role'];
             }
             elseif(($this->request->session()->read('Auth.User.role')) == 'rep')
@@ -167,6 +168,7 @@ class UsersController extends AppController
             }
 
             $user = $this->Users->newEntity($this->request->data);
+
             if ($this->Users->save($user)) {
                 $this->Flash->success('El usuario ha sido agregado', ['key' => 'success']);
                 //return $this->redirect(['action' => 'add']);
@@ -174,6 +176,7 @@ class UsersController extends AppController
             else{
                 $this->Flash->error(__('Error al agregar usuario.', ['key'=>'error']));
             }
+
         }
 
         //debug($association_id);

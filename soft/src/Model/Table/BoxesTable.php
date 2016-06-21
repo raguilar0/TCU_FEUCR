@@ -10,11 +10,15 @@ class BoxesTable extends Table
     public function initialize(array $config)
     {
         $this->addBehavior('Timestamp');
+
+        $this->belongsTo('Associations');
+
     }
 
 
     public function validationDefault(Validator $validator)
     {
+
       $validator
 
           ->requirePresence('id')

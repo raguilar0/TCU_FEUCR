@@ -63,7 +63,7 @@
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
 
-
+<!-- TODO: Desplegar nombre de usuario-->
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <?php echo $this->request->session()->read('Auth.User.name')." ".$this->request->session()->read('Auth.User.last_name_1'); ?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
@@ -184,6 +184,7 @@
                                 <li><?php echo $this->Html->link('Agregar Usuarios', '/users/add/');?></li><br>
                                 <li><?php echo $this->Html->link('Ver Ususarios','/users/read/');?></li><br>
                                 <li><?php echo $this->Html->link('Editar Usuarios','/users/modify/');?></li><br>
+
 
                             </ul>
                         </div>
