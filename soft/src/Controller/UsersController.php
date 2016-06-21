@@ -135,60 +135,47 @@ class UsersController extends AppController
 
     public function add()
     {
-        $user = $this->Users->newEntity($this->request->data); //El parámetro es para validar los datos
-        $this->loadModel('Associations');
+        $this->viewBuilder()->layout('admin_views');
+        $user = $this->Users->newEntity($this->request->data); //El parámetro es
 
-        //if ($this->request->is('post')) {
+        if($this->request->is('post'))
+        {
+            if(($this->request->session()->read('Auth.User.role')) == 'admin'){
 
-          //debug($this->request->session()->read('Auth.User.role'));
+                if($this->request->data['role'] == 'Administrador'){
+                    $this->request->data['role'] = 'admin';
+                }
+                elseif ($this->request->data['role'] == 'Representante'){
+                    $this->request->data['role'] = 'rep';
+                }
 
-          if(($this->request->session()->read('Auth.User.role')) == 'admin'){
-
-            //Recupera la asociación
-            $association_id =
-            $this->Users->Associations->find()
-                                      ->hydrate(false)
-                                      ->select(['id'])
-                                      ->where(['name'=>$this->request->data['association_id']]);
-
-            $association_id = $association_id->toArray();
-
-            $this->request->data['association_id'] = $association_id[0]['id'];
-
-            if($this->request->data['role'] == 'Administrador'){
-                $this->request->data['role'] = 'admin';
+                $role = $this->request->data['role'];
             }
-            if($this->request->data['role'] == 'Representante'){
+            elseif(($this->request->session()->read('Auth.User.role')) == 'rep')
+            {
+                $this->request->data['association_id'] = $this->request->session()->read('Auth.User.association_id');
                 $this->request->data['role'] = 'rep';
             }
 
-            $role = $this->request->data['role'];
+            $user = $this->Users->newEntity($this->request->data);
+            if ($this->Users->save($user)) {
+                $this->Flash->success('El usuario ha sido agregado', ['key' => 'success']);
+                //return $this->redirect(['action' => 'add']);
+            }
+            else{
+                $this->Flash->error(__('Error al agregar usuario.', ['key'=>'error']));
+            }
         }
 
-        if(($this->request->session()->read('Auth.User.role')) == 'rep'){
-
-          $association_id = $this->request->session()->read('Auth.User.association_id');
-          $role = 'rep';
-        }
-
-
-        $user = $this->Users->newEntity($this->request->data);
-        if ($this->Users->save($user)) {
-            $this->Flash->success('El usuario ha sido agregado', ['key' => 'success']);
-            //return $this->redirect(['action' => 'add']);
-        }
-        else{
-          $this->Flash->error(__('Error al agregar usuario.', ['key'=>'error']));
-        }
-
-      //}
         //debug($association_id);
         //debug($role);
-        //$role = array('Administrador'=> 0, 'Representante' => 1);
-        $association = $this->Associations->find();
+        $role = array('Administrador'=> 0, 'Representante' => 1);
+
         $this->set('role', $role);
-        $this->set('association', $association);
+        $this->set('association', $this->Users->Associations->find('list'));
         $this->set('user', $user);
+
+
 
 
     }

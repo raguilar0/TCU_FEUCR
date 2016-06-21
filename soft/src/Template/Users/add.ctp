@@ -1,70 +1,63 @@
 <!-- src/Template/Users/add.ctp -->
-<?php
+<div class = 'row text-center'>
+    <div class='col-xs-12'>
+        <h1>¡<b>Agregá</b> un usuario !</h1>
+    </div>
+</div>
 
-$this->layout('admin_views');
-echo $this->Form->create($user);
+<br>
+<br>
 
-echo "<div class='form-group' id=form_login>";
-  echo "<div class = 'row'>";
-    echo "<div class = 'col-xs-12 col-md-4'>";
-      echo "<h4> Agregar Usuario </h4>";
-      echo "<hr />";
-      echo "<h4>".$this->Form->input('username', ['class' => 'form-control','label'=>'Nombre de usuario'])."</h4>";
-      echo "<h4>".$this->Form->input('password', ['class' => 'form-control','label'=>'Contraseña'])."</h4>";
-      echo "<h4>".$this->Form->input('name', ['class' => 'form-control','label'=>'Nombre'])."</h4>";
-      echo "<h4>".$this->Form->input('last_name_1', ['class' => 'form-control','label'=>'Primer Apellido'])."</h4>";
-      echo "<h4>".$this->Form->input('last_name_2', ['class' => 'form-control','label'=>'Segundo Apellido'])."</h4>";
 
-      if(($this->request->session()->read('Auth.User.role')) == 'admin'){
-        echo "<div class = 'col-xs-6 col-md-4'>";
-          echo "<div class='form-group'>";
-          echo "<label for='sel1' id = 'asociaciones_label'>Asociación:</label>";
-            echo "<select class='form-control' name = 'association_id' >";
-                foreach ($association as $key => $value) {
-                    echo "<option>".$value['name']."</option>"."<br>";
-                }
-            echo "</select>";
-          echo "</div>";
-        echo "</div>";
 
-        echo"<br>";
-        echo"<br>";
-        echo"<br>";
+<?= $this->Form->create($user); ?>
 
-        echo "<div class = 'col-xs-6 col-md-4'>";
-        echo "<div class='form-group'>";
+<div class="form-group">
+    <?= "<h4>".$this->Form->input('username', ['class' => 'form-control','label'=>'Nombre de usuario'])."</h4>"; ?>
+    <?= "<h4>".$this->Form->input('password', ['class' => 'form-control','label'=>'Contraseña'])."</h4>"; ?>
+    <?= "<h4>".$this->Form->input('name', ['class' => 'form-control','label'=>'Nombre'])."</h4>"; ?>
+    <?= "<h4>".$this->Form->input('last_name_1', ['class' => 'form-control','label'=>'Primer Apellido'])."</h4>"; ?>
+    <?= "<h4>".$this->Form->input('last_name_2', ['class' => 'form-control','label'=>'Segundo Apellido'])."</h4>"; ?>
+
+    <?php if(($this->request->session()->read('Auth.User.role')) == 'admin'){
+
+        echo $this->Form->input('association_id', ['options' => $association, 'class'=>'form-control', 'label'=>'Asociación correspondiente']);
+
         echo "<label for='sel1' id = 'role_label'><h4>Rol:</h4></label>";
-           echo "<select class='form-control' name = 'role'>";
-                $kind = $role;
-                //debug($role);
-                foreach ($kind as $key => $value) {
-                    echo "<option>".$key."</option>"."<br>";
-                }
-            echo "</select>";
-          echo"</div>";
-        echo "</div>";
-
-      }
-    //  debug($user);
-      if(($this->request->session()->read('Auth.User.role')) == 'rep'){
-        $this->request->data['association_id'] = $this->request->session()->read('Auth.User.association_id');
-        $this->request->data['role'] = 'rep';
-      }
+        echo "<select class='form-control' name = 'role'>";
+        $kind = $role;
+        //debug($role);
+        foreach ($kind as $key => $value) {
+            echo "<option>".$key."</option>"."<br>";
+        }
+        echo "</select>";
 
 
-  echo "</div>";
-echo "</div>";
+     }
 
-  echo "<div class = 'row'>";
-      echo "<div class = 'col-xs-12'>";
-         echo "<h4>".$this->Form->submit('Agregar', ['class' => 'form-control', 'id' => 'addUsr'])."</h4>";
-      echo "</div>";
-  echo "</div>";
+    ?>
+
+    <br>
+    <br>
+    <div class="row">
+        <div class="text-center">
+            <?= "<h4>".$this->Form->submit('Agregar', ['class' => 'form-control btn btn-primary', 'id' => 'asso_id'])."</h4>"; ?>
+        </div>
+    </div>
+
+    <?= $this->Form->end(); ?>
 
 
-echo $this->Form->end();
 
-?>
+</div>
+
+
+
+
+
+
+
+
 
 <div class="row text-right">
     <div class="col-xs-12">
