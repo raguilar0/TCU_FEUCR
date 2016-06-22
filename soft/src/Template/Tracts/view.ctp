@@ -29,10 +29,10 @@
 </div>
 
 
-    <div class="related">
-        <h4><?= __('Related Amounts') ?></h4>
+    <div class="table-responsive">
+        <h4>Montos Relacionados</h4>
         <?php if (!empty($tract->amounts)): ?>
-        <table cellpadding="0" cellspacing="0">
+        <table class="table">
             <tr>
                 <th><?= __('Id') ?></th>
                 <th><?= __('Amount') ?></th>
@@ -53,9 +53,9 @@
                 <td><?= h($amounts->association_id) ?></td>
                 <td><?= h($amounts->tract_id) ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('View'), ['controller' => 'Amounts', 'action' => 'view', $amounts->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['controller' => 'Amounts', 'action' => 'edit', $amounts->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Amounts', 'action' => 'delete', $amounts->id], ['confirm' => __('Are you sure you want to delete # {0}?', $amounts->id)]) ?>
+                    <?= $this->Html->link(__('Ver'), ['controller' => 'Amounts', 'action' => 'view', $amounts->id]) ?>
+                    <?= $this->Html->link(__('Editar'), ['controller' => 'Amounts', 'action' => 'edit', $amounts->id]) ?>
+                    <?= $this->Form->postLink(__('Borrar'), ['controller' => 'Amounts', 'action' => 'delete', $amounts->id], ['confirm' => __('Seguro de que desea borrar el monto # {0}?', $amounts->id)]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -63,10 +63,10 @@
         <?php endif; ?>
     </div>
 
-    <div class="related">
-        <h4><?= __('Related Initial Amounts') ?></h4>
+    <div class="table-responsive">
+        <h4>Montos iniciales relacionados</h4>
         <?php if (!empty($tract->initial_amounts)): ?>
-        <table cellpadding="0" cellspacing="0">
+        <table class="table">
             <tr>
                 <th><?= __('Id') ?></th>
                 <th><?= __('Amount') ?></th>
@@ -85,9 +85,9 @@
                 <td><?= h($initialAmounts->association_id) ?></td>
                 <td><?= h($initialAmounts->tract_id) ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('View'), ['controller' => 'InitialAmounts', 'action' => 'view', $initialAmounts->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['controller' => 'InitialAmounts', 'action' => 'edit', $initialAmounts->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'InitialAmounts', 'action' => 'delete', $initialAmounts->id], ['confirm' => __('Are you sure you want to delete # {0}?', $initialAmounts->id)]) ?>
+                    <?= $this->Html->link(__('Ver'), ['controller' => 'InitialAmounts', 'action' => 'view', $initialAmounts->id]) ?>
+                    <?= $this->Html->link(__('Editar'), ['controller' => 'InitialAmounts', 'action' => 'edit', $initialAmounts->id]) ?>
+                    <?= $this->Form->postLink(__('Borrar'), ['controller' => 'InitialAmounts', 'action' => 'delete', $initialAmounts->id], ['confirm' => __('Seguro de que desea borrar el monto inicial # {0}?', $initialAmounts->id)]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>

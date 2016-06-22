@@ -64,11 +64,7 @@ class InitialAmountsTable extends Table
             ->integer('type')
             ->requirePresence('type', 'create')
             ->notEmpty('type');
-
-        $validator
-            ->date('date')
-            ->requirePresence('date', 'create')
-            ->notEmpty('date');
+        
 
         return $validator;
     }

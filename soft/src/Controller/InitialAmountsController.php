@@ -183,8 +183,8 @@ class InitialAmountsController extends AppController
 
                     $message .= "<br>".$this->transferBox($oldBoxGenerated,$association_id, $second_tract_id, 1); //Creamos ingresos  generados
 
-                    $message .= "<br>".$this->createInitialAmount($this->request->data, $oldBoxTract, $association_id, $second_tract_id, 0); //Creamos los montos iniciales de tracto
-                    $message .= "<br>".$this->createInitialAmount($this->request->data, $oldBoxGenerated, $association_id, $second_tract_id, 1); //Creamos los montos iniciales de Ingresos Generados
+                    $message .= "<br>".$this->createInitialAmount( $oldBoxTract, $association_id, $second_tract_id, 0); //Creamos los montos iniciales de tracto
+                    $message .= "<br>".$this->createInitialAmount( $oldBoxGenerated, $association_id, $second_tract_id, 1); //Creamos los montos iniciales de Ingresos Generados
 
                     die($message);
 
@@ -207,14 +207,13 @@ class InitialAmountsController extends AppController
 
     }
 
-    private function createInitialAmount($data, $oldBox, $association_id, $tract_id, $type)
+    private function createInitialAmount( $oldBox, $association_id, $tract_id, $type)
     {
         $type_name = ($type == 0 ? "Tracto":"Ingresos Generados");
 
 
         $array['amount'] = ($oldBox[0]['little_amount'] + $oldBox[0]['big_amount']);
         $array['type'] = $type;
-        $array['date'] = $data['date'];
         $array['association_id'] = $association_id;
         $array['tract_id'] = $tract_id;
 

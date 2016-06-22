@@ -105,7 +105,7 @@ class AmountsController extends AppController
 
 	public function add($association = null)
 	{
-		if(($this->request->session()->read('Auth.User.role')) != 'rep'){
+		if(($this->request->session()->read('Auth.User.role')) != 'admin'){
 			return $this->redirect($this->Auth->redirectUrl());
 		}
 		else{
@@ -130,7 +130,7 @@ class AmountsController extends AppController
 				$message = 'Se agregaron exitosamente '.$successAmountsIndex.' montos';
 				$message .= '<br>'.'Se agregaron exitosamente '.$successBoxesTract.' cajas de Tracto';
 				$message .= '<br>'.'Se agregaron exitosamente '.$successBoxesGenerated.' cajas de ingresos generados';
-				debug($message);
+
 				die($message);
 
 
@@ -154,8 +154,6 @@ class AmountsController extends AppController
 		}
 		else{
 
-			$date = $data['date'];  //Estos datos son comunes a todos los tractos
-			unset($data['date']);
 
 			$detail = $data['detail'];
 			unset($data['detail']);
@@ -165,7 +163,6 @@ class AmountsController extends AppController
 			$successIndex = 0;
 
 			$values['association_id'] = $association_id;
-			$values['date'] = $date;
 			$values['detail'] = $detail;
 			$values['type'] = 0;
 

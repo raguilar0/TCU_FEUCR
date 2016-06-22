@@ -76,18 +76,7 @@
     {
         echo $this->Form->create(null, ['id'=>'submit_add_initial_amount']);
             echo "<div class='form-group'>";
-
-            echo "<div class='row text-center'>";
-            
-                
-                echo "<div class = 'col-xs-12 col-md-6 col-md-offset-3'>";
-                 echo "<h4><label for='#date'>Fecha de Asignación</label>"."<br><input name='date' type='date' id = 'date' class='form-control date' required >"."</h4>";
-                echo "</div >";
-                
-            echo "</div>";
-
-            echo "<br>";
-            echo "<br>";
+        
             echo "<br>";
             echo "<br>";
 

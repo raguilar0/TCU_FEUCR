@@ -180,6 +180,8 @@
 
                 <?= $this->fetch('content') ?>
 
+                <?= $this->Flash->render() ?>
+
             </div>
             <!-- /.container-fluid -->
 

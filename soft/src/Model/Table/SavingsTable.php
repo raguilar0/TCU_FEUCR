@@ -63,9 +63,6 @@ class SavingsTable extends Table
             ->requirePresence('letter', 'create')
             ->notEmpty('letter');
 
-        $validator
-            ->requirePresence('date', 'create')
-            ->notEmpty('date');
 
         return $validator;
     }

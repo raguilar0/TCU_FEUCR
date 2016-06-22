@@ -54,11 +54,7 @@ class SurplusesTable extends Table
             ->numeric('amount')
             ->requirePresence('amount', 'create')
             ->notEmpty('amount');
-
-        $validator
-            ->date('date')
-            ->requirePresence('date', 'create')
-            ->notEmpty('date');
+        
 
         $validator
             ->requirePresence('detail', 'create')
