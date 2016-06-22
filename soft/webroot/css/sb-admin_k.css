@@ -8,7 +8,7 @@
 
 body {
     margin-top: 100px;
-    background-color: #fff;
+    background-color: white;
 }
 
 @media(min-width:768px) {
@@ -128,31 +128,29 @@ ul.alert-dropdown {
         padding-bottom: 40px;
     }
 
-    .navbar .collapse ul li {
+    .side-nav>li>a {
         width: 225px;
     }
 
-    .navbar .collapse  ul li a:hover,
-    .navbar .collapse  ul li a:focus {
+    .side-nav li a:hover,
+    .side-nav li a:focus {
         outline: none;
         background-color: #000 !important;
     }
-
-
 }
 
-.navbar .collapse ul {
+.side-nav>li>ul {
     padding: 0;
 }
 
-.navbar .collapse ul li div ul li a {
+.side-nav>li>ul>li>a {
     display: block;
-    padding: 10px 10px 5px 38px;
+    padding: 10px 15px 10px 38px;
     text-decoration: none;
     color: #999;
 }
 
-.navbar .collapse ul li div ul li a:hover {
+.side-nav>li>ul>li>a:hover {
     color: #fff;
 }
 

@@ -6,6 +6,9 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\I18n\Time;
+use Cake\Event\Event;
+use ArrayObject;
 
 /**
  * InitialAmounts Model
@@ -82,5 +85,17 @@ class InitialAmountsTable extends Table
         $rules->add($rules->existsIn(['association_id'], 'Associations'));
         $rules->add($rules->existsIn(['tract_id'], 'Tracts'));
         return $rules;
+    }
+
+    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
+    {
+        if (isset($data['date'])) {
+            $data['date'] = new Time($data['date']);
+        }
+
+        if (isset($data['deadline'])) {
+            $data['deadline'] = new Time($data['deadline']);
+        }
+
     }
 }

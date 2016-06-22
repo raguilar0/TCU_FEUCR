@@ -90,10 +90,10 @@
                         <a  data-toggle="collapse" data-target="#association_id">Asociaciones</a>
                         <div id="association_id" class="collapse">
                             <ul>
-                                <li><?php echo $this->Html->link('Nueva Asociación',['controller'=>'Associations','action'=>'add']);?></li><br>
-                                <li><?php echo $this->Html->link('Ver Asociación',['controller'=>'Associations','action'=>'show_associations/1']);?></li><br>
-                                <li><?php echo $this->Html->link('Editar Asociación',['controller'=>'Associations','action'=>'show_associations/3']);?></li><br>
-                                <li><?php echo $this->Html->link('Borrar Asociación',['controller'=>'Associations','action'=>'show_associations/4']);?></li><br>
+                                <li><?php echo $this->Html->link('Nueva Asociación',['controller'=>'Associations','action'=>'add']);?></li>
+                                <li><?php echo $this->Html->link('Ver Asociación',['controller'=>'Associations','action'=>'show_associations/1']);?></li>
+                                <li><?php echo $this->Html->link('Editar Asociación',['controller'=>'Associations','action'=>'show_associations/3']);?></li>
+                                <li><?php echo $this->Html->link('Borrar Asociación',['controller'=>'Associations','action'=>'show_associations/4']);?></li>
 
                             </ul>
                         </div>
@@ -103,8 +103,8 @@
                         <a  data-toggle="collapse" data-target="#tract_id">Fechas de Tracto</a>
                         <div id="tract_id" class="collapse">
                             <ul>
-                                <li><?php echo $this->Html->link('Nuevo Tracto',['controller'=>'Tracts','action'=>'add']);?></li><br>
-                                <li><?php echo $this->Html->link('Administrar Tractos',['controller'=>'Tracts','action'=>'index']);?></li><br>
+                                <li><?php echo $this->Html->link('Nuevo Tracto',['controller'=>'Tracts','action'=>'add']);?></li>
+                                <li><?php echo $this->Html->link('Administrar Tractos',['controller'=>'Tracts','action'=>'index']);?></li>
 
 
                             </ul>
@@ -116,9 +116,9 @@
                         <a  data-toggle="collapse" data-target="#amounts_id">Montos de Tracto</a>
                         <div id="amounts_id" class="collapse">
                             <ul>
-                                <li><?php echo $this->Html->link('Nuevo Monto',['controller'=>'Amounts','action'=>'add']);?></li><br>
-                                <li><?php echo $this->Html->link('Ver Montos Detallados',['controller'=>'Associations','action'=>'show_associations/5']);?></li><br>
-                                <li><?php echo $this->Html->link('Editar Montos',['controller'=>'Amounts','action'=>'show_associations/1']);?></li><br>
+                                <li><?php echo $this->Html->link('Nuevo Monto',['controller'=>'Amounts','action'=>'add']);?></li>
+                                <li><?php echo $this->Html->link('Ver Montos Detallados',['controller'=>'Associations','action'=>'show_associations/5']);?></li>
+                                <li><?php echo $this->Html->link('Editar Montos',['controller'=>'Amounts','action'=>'show_associations/1']);?></li>
 
                             </ul>
                         </div>
@@ -127,8 +127,19 @@
                         <a  data-toggle="collapse" data-target="#surplus_id">Montos de Superávit</a>
                         <div id="surplus_id" class="collapse">
                             <ul>
-                                <li><?php echo $this->Html->link('Nuevo Monto',['controller'=>'Surpluses','action'=>'add']);?></li><br>
-                                <li><?php echo $this->Html->link('Administrar Montos',['controller'=>'Surpluses','action'=>'index']);?></li><br>
+                                <li><?php echo $this->Html->link('Nuevo Monto',['controller'=>'Surpluses','action'=>'add']);?></li>
+                                <li><?php echo $this->Html->link('Administrar Montos',['controller'=>'Surpluses','action'=>'index']);?></li>
+
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li>
+                        <a  data-toggle="collapse" data-target="#initial_id">Montos Iniciales</a>
+                        <div id="initial_id" class="collapse">
+                            <ul>
+                                <li><?php echo $this->Html->link('Nuevo Monto',['controller'=>'InitialAmounts','action'=>'add']);?></li>
+                                <li><?php echo $this->Html->link('Administrar Montos',['controller'=>'InitialAmounts','action'=>'index']);?></li>
 
                             </ul>
                         </div>
@@ -138,8 +149,8 @@
                         <a  data-toggle="collapse" data-target="#saving_id">Montos de Ahorro</a>
                         <div id="saving_id" class="collapse">
                             <ul>
-                                <li><?php echo $this->Html->link('Nuevo Monto',['controller'=>'Savings','action'=>'add']);?></li><br>
-                                <li><?php echo $this->Html->link('Administrar Montos',['controller'=>'Savings','action'=>'index']);?></li><br>
+                                <li><?php echo $this->Html->link('Nuevo Monto',['controller'=>'Savings','action'=>'add']);?></li>
+                                <li><?php echo $this->Html->link('Administrar Montos',['controller'=>'Savings','action'=>'index']);?></li>
 
                             </ul>
                         </div>
@@ -149,10 +160,10 @@
                         <a  data-toggle="collapse" data-target="#user_id">Usuarios</a>
                         <div id="user_id" class="collapse">
                             <ul>
-                                <li><?php echo $this->Html->link('Agregar Usuarios',['controller'=>'Users','action'=>'add']);?></li><br>
-                                <li><a href="#">Ver Usuarios</a></li><br>
-                                <li><a href="#">Editar Usuarios</a></li><br>
-                                <li><a href="#">Borrar Usuarios</a></li><br>
+                                <li><?php echo $this->Html->link('Agregar Usuarios',['controller'=>'Users','action'=>'add']);?></li>
+                                <li><a href="#">Ver Usuarios</a></li>
+                                <li><a href="#">Editar Usuarios</a></li>
+                                <li><a href="#">Borrar Usuarios</a></li>
 
                             </ul>
                         </div>
