@@ -23,12 +23,89 @@ class AmountsController extends AppController
 			$this->set('amount',$amount); // set() Pasa la variable amount a la vista.
 		}
 	}
+	
+	public function addAmounts()
+	{
+		if(($this->request->session()->read('Auth.User.role')) != 'rep'){
+			return $this->redirect($this->Auth->redirectUrl());
+		}
+		else{
+			$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
+			
+			if($this->request->is('POST'))
+			{
+				$tract = $this->getTractId(date('Y-m-d'));
+				$association_id = $this->request->session()->read('Auth.User.association_id');
+				$type = 1;
+				$data = $this->request->data;
+				
+				$data['tract_id'] = $tract;
+				$data['association_id'] = $association_id;
+				$data['type'] = $type;
+				
+				$entity =  $this->Amounts->newEntity($data);
+				
+				if($this->Amounts->save($entity))
+				{
+					$this->Flash->success('Se agregaron los montos exitosamente', ['key' => 'success']);
+				}
+				else
+				{
+					$this->Flash->error('No se pudo agregar el monto', ['key' => 'error']);
+				}
+			}
+			
+		}
+	}
+	
+	private function saveAmount($data, $association_id, $tracts)
+	{
+		
+		$date = $data['date'];  //Estos datos son comunes a todos los tractos
+		unset($data['date']);
+		
+		$detail = $data['detail'];
+		unset($data['detail']);
+		
+		$amount = $data['amount'];
+		unset($data['amount']);
+		
+		$index = 0;
+		$successIndex = 0;
+		
+		$values['association_id'] = $association_id;
+		$values['date'] = $date;
+		$values['detail'] = $detail;
+		$values['type'] = 0;
+		$values['amount'] = $amount;
+		$values['tract_id'] = $tracts[$index]['id'];//$this->getTractId($tracts[$index]['date']); //Pide el id del tracto tomando como fecha la fecha de inicio
+	
+		$entity = $this->Amounts->newEntity($values);
+	
+		try
+		{
+			if($this->Amounts->save($entity))
+			{
+				++$successIndex;
+			}
+		}
+		catch(Exception $e)
+		{
+	
+		}
+	
+		++$index;
+		
+		return $successIndex;
+
+	}
+	
 
 
 
 	public function add($association = null)
 	{
-		if(($this->request->session()->read('Auth.User.role')) != 'admin'){
+		if(($this->request->session()->read('Auth.User.role')) != 'rep'){
 			return $this->redirect($this->Auth->redirectUrl());
 		}
 		else{
@@ -40,7 +117,8 @@ class AmountsController extends AppController
 			{
 
 				$data = $this->request->data;
-
+				
+				
 				$association_id = $this->getAssociationId($association);
 
 				$successAmountsIndex = $this->saveAmounts($data, $association_id, $tracts); //Guardamos los montos
@@ -52,6 +130,7 @@ class AmountsController extends AppController
 				$message = 'Se agregaron exitosamente '.$successAmountsIndex.' montos';
 				$message .= '<br>'.'Se agregaron exitosamente '.$successBoxesTract.' cajas de Tracto';
 				$message .= '<br>'.'Se agregaron exitosamente '.$successBoxesGenerated.' cajas de ingresos generados';
+				debug($message);
 				die($message);
 
 
