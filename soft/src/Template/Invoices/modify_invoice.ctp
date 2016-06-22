@@ -50,22 +50,14 @@
       echo "<div class = 'col-xs-12 col-md-4'>";
        echo "<h4>".$this->Form->input('provider', ['class' => 'form-control','label'=>'Proveedor','value'=>$data['provider'], 'maxlength'=> '100', 'placeholder'=>'Ejemplo: PriceSmart'])."</h4>";
       echo "</div >";
-        $p = explode('T',$data['date']);
-     echo "<div class = 'col-xs-12 col-md-4'>";
-        	echo "<label for = 'date'>Fecha</label>";
-        	echo "<input type='date' name = 'date' class = 'form-control' id = 'date' value = ".$p[0].">";
-	  echo "</div >";
-
-
-  echo "</div >";
-    
-  echo "<div class = 'row'>";
 
       echo "<div class = 'col-xs-12 col-md-4'>";
        echo "<h4>".$this->Form->input('attendant', ['class' => 'form-control','label'=>'Responsable', 'value'=>$data['attendant'],'maxlength'=> '100', 'placeholder'=>'Ejemplo: Andrey Pérez'])."</h4>";
       echo "</div >";
 
   echo "</div >";
+    
+
 
 
    echo "<div class = 'row'>";

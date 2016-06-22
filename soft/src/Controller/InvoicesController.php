@@ -130,7 +130,7 @@ class InvoicesController extends AppController
 	              $query->update()
 	                    ->set(['number'=>$this->request->data['number'], 'amount'=>$this->request->data['amount'],
 	                          'kind'=>$invoices_type[$this->request->data['kind']], 'legal_certificate'=>$this->request->data['legal_certificate'],
-	                          'provider'=>$this->request->data['provider'], 'date'=> $this->request->data['date'],'attendant'=>$this->request->data['attendant'] ,'detail'=>$this->request->data['detail'],'clarifications'=>$this->request->data['clarifications'],'state'=>0, ])
+	                          'provider'=>$this->request->data['provider'],'attendant'=>$this->request->data['attendant'] ,'detail'=>$this->request->data['detail'],'clarifications'=>$this->request->data['clarifications'],'state'=>0, ])
 	                    ->where(['id'=>$id])
 	                    ->execute();
 
