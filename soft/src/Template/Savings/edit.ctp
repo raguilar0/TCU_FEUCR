@@ -13,6 +13,7 @@
             echo $this->Form->input('amount', ['label'=>'Monto a asignado', 'class'=>'form-control']);
             echo $this->Form->input('state', ['label'=>'Estado', 'class'=>'form-control']);
             echo $this->Form->input('association_id', ['options' => $associations, 'class'=>'form-control']);
+            echo $this->Form->input('tract_id', ['options' => $tracts, 'class'=> 'form-control','label'=>'Id del tracto']);
             echo $this->Form->input('letter', ['type'=>'textarea', 'class'=>'form-control', 'label'=>'Carta', 'rows'=>'20']);
         ?>
 

@@ -36,6 +36,11 @@ class SavingsTable extends Table
             'foreignKey' => 'association_id',
             'joinType' => 'INNER'
         ]);
+
+        $this->belongsTo('Tracts', [
+            'foreignKey' => 'tract_id',
+            'joinType' => 'INNER'
+        ]);
     }
 
     /**

@@ -117,6 +117,7 @@ CREATE TABLE savings
    state INT(1) DEFAULT 0,
    letter MEDIUMTEXT NOT NULL,
    association_id INT UNSIGNED NOT NULL,
+   tract_id INT UNSIGNED NOT NULL,
    FOREIGN KEY(association_id) REFERENCES associations(id)
 );
 
