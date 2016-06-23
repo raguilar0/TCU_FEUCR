@@ -16,6 +16,7 @@ class AssociationsTable extends Table
         $this->hasMany('Invoices');
         $this->hasMany('InitialAmounts');
         $this->hasMany('Surpluses');
+        $this->hasMany('Savings');
 
     }
 

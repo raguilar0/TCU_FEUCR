@@ -720,7 +720,7 @@ class AssociationsController extends AppController
 				$saving_amount = $this->Associations->Savings->find()
 					->hydrate(false)
 					->select(['amount'])
-					->andwhere(['association_id'=>$association_id, 'type'=>$amount_type])
+					->andwhere(['association_id'=>$association_id, 'state'=>1])
 					->join([
 						'table'=>'tracts',
 						'alias'=>'tract',
@@ -729,7 +729,7 @@ class AssociationsController extends AppController
 
 					]);
 
-				$saving_amount = $initial_amount->toArray();
+				$saving_amount = $saving_amount->toArray();
 				$information['savings'] = $saving_amount;
 			}
 
