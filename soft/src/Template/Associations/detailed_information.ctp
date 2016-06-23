@@ -119,7 +119,7 @@
 
 						<tr>
 							<th>Monto de Ahorro</th>
-							<td><?php //echo $monto_ahorro?></td>
+							<td class="saving_amount"></td>
 						</tr>
 
 						<tr>
@@ -176,7 +176,7 @@
 
 						<tr>
 							<th>Ahorro del período anterior</th>
-							<td><?php //echo $monto_ahorro ?></td>
+							<td class="saving_amount"></td>
 						</tr>
 
 						<tr>
@@ -524,7 +524,7 @@
 
 					<table class="table table-striped">
 						<tr>
-							<th><p style="font-size: larger;text-decoration:underline;">Estado general del Tracto</p></th>
+							<th><p style="font-size: larger;text-decoration:underline;">Estado general del Ingresos Generados</p></th>
 							<td> </td>
 						</tr>
 						<tr>
@@ -728,6 +728,7 @@ $(document).ready( function ()
 //*********************** END INVOICES *************************//
 
 		var tract_amount = 0;
+		var saving_amount = 0;
 		var tract_saving_total = 0;
 		var total_income = 0;
 		var tract_initial_amount = 0;
@@ -735,19 +736,26 @@ $(document).ready( function ()
 		var tract_final_balance = 0;
 		var tract_count = 0;
 		var date = "";
+		var saving_classes = 0;
+
 
 		if(object.initial_amount.length > 0)
 		{
  			tract_initial_amount = object.initial_amount[0].amount;
 		}	
 
+		if(object.savings.length > 0)
+		{
+			saving_amount = object.savings[0].amount;
+		}
+
 		if(object.amount.length > 0)
 		{
 			 tract_amount = object.amount[0].amount;
-			 tract_saving_total = object.amount[0].amount;
-			 total_income = (tract_initial_amount + tract_amount); 
+			 tract_saving_total = tract_amount + saving_amount;
+			 total_income = (tract_initial_amount + tract_saving_total);
 			
-			 tract_final_balance = ((tract_initial_amount + tract_amount ) - invoices_total);
+			 tract_final_balance = (total_income - invoices_total);
 			 tract_count = (tract_final_balance - total_boxes);
 			 date = "Periodo del tracto: <br><br>"+document.getElementById("tracts_id").value + " - " +object.amount[0].tract.deadline+"<br><br>";			
 		}
@@ -756,18 +764,30 @@ $(document).ready( function ()
 
 		amount_classes = document.getElementsByClassName("tract_saving_total");
     	document.getElementById("tract_amount").innerHTML = tract_amount;
+		saving_classes = document.getElementsByClassName("saving_amount");
+		saving_classes[0].innerHTML = saving_amount;
+		saving_classes[1].innerHTML = saving_amount;
     	
-    	amount_classes[0].innerHTML =  tract_amount; //TODO:Hacer la suma del monto de ahorro y el de tracto 
-    	amount_classes[1].innerHTML =  tract_amount ; //TODO:Hacer la suma del monto de ahorro y el de tracto 
+    	amount_classes[0].innerHTML =  tract_saving_total;
+    	amount_classes[1].innerHTML =  tract_saving_total ;
     	
     	document.getElementById("tract_date").innerHTML = date;
     	document.getElementById("total_income").innerHTML = total_income;//TODO: Sumar el saldo incial de cajas y el monto de ahorro
     	document.getElementById("total_spent").innerHTML = invoices_total;
     	document.getElementById("tract_initial_amount").innerHTML = tract_initial_amount;
+		if(tract_final_balance < 0)
+		{
+			document.getElementById("tract_final_balance").style = "color: red";
+		}
  
     	document.getElementById("tract_final_balance").innerHTML =  tract_final_balance; //TODO: El amount no es el correcto, lo correcto es sumar el ahorro, las cajas y el ingreso de tracto
 
     	document.getElementById("tract_count").innerHTML = tract_count;
+
+		if(tract_count < 0)
+		{
+			document.getElementById("tract_count").style = "color: red";
+		}
 
 
     }
