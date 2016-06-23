@@ -1,51 +1,52 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Initial Amount'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Associations'), ['controller' => 'Associations', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Association'), ['controller' => 'Associations', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Tracts'), ['controller' => 'Tracts', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Tract'), ['controller' => 'Tracts', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="initialAmounts index large-9 medium-8 columns content">
-    <h3><?= __('Initial Amounts') ?></h3>
-    <table cellpadding="0" cellspacing="0">
+
+<div class="row text-center">
+    <div class="col-xs-12">
+        <h1>¡Administrá los montos iniciales!</h1>
+    </div>
+
+</div>
+<br>
+<br>
+
+<div class="table-responsive">
+    <table class="table">
         <thead>
-            <tr>
-                <th><?= $this->Paginator->sort('id') ?></th>
-                <th><?= $this->Paginator->sort('amount') ?></th>
-                <th><?= $this->Paginator->sort('type') ?></th>
-                <th><?= $this->Paginator->sort('date') ?></th>
-                <th><?= $this->Paginator->sort('association_id') ?></th>
-                <th><?= $this->Paginator->sort('tract_id') ?></th>
-                <th class="actions"><?= __('Actions') ?></th>
-            </tr>
+        <tr>
+            <th><?= $this->Paginator->sort('id') ?></th>
+            <th><?= $this->Paginator->sort('Monto') ?></th>
+            <th><?= $this->Paginator->sort('Tipo') ?></th>
+            <th><?= $this->Paginator->sort('Fecha de asignación') ?></th>
+            <th><?= $this->Paginator->sort('Asociación') ?></th>
+            <th><?= $this->Paginator->sort('Tracto') ?></th>
+            <th class="actions"><?= __('Acciones') ?></th>
+        </tr>
         </thead>
         <tbody>
-            <?php foreach ($initialAmounts as $initialAmount): ?>
+        <?php foreach ($initialAmounts as $initialAmount): ?>
             <tr>
                 <td><?= $this->Number->format($initialAmount->id) ?></td>
                 <td><?= $this->Number->format($initialAmount->amount) ?></td>
-                <td><?= $this->Number->format($initialAmount->type) ?></td>
+                <td><?= $initialAmount->type ? 'Ingresos Generados': 'Tracto' ;//$this->Number->format($initialAmount->type) ?></td>
                 <td><?= h($initialAmount->date) ?></td>
                 <td><?= $initialAmount->has('association') ? $this->Html->link($initialAmount->association->name, ['controller' => 'Associations', 'action' => 'view', $initialAmount->association->id]) : '' ?></td>
-                <td><?= $initialAmount->has('tract') ? $this->Html->link($initialAmount->tract->id, ['controller' => 'Tracts', 'action' => 'view', $initialAmount->tract->id]) : '' ?></td>
+                <td><?= $initialAmount->has('tract') ? $this->Html->link($initialAmount->tract->date." - ".$initialAmount->tract->deadline, ['controller' => 'Tracts', 'action' => 'view', $initialAmount->tract->id]) : '' ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $initialAmount->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $initialAmount->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $initialAmount->id], ['confirm' => __('Are you sure you want to delete # {0}?', $initialAmount->id)]) ?>
+                    <?= $this->Html->link(__('Ver'), ['action' => 'view', $initialAmount->id]) ?>
+                    <?= $this->Html->link(__('Editar'), ['action' => 'edit', $initialAmount->id]) ?>
+                    <?= $this->Form->postLink(__('Borrar'), ['action' => 'delete', $initialAmount->id], ['confirm' => __('Seguro que deseas borrar este monto # {0}?', $initialAmount->id)]) ?>
                 </td>
             </tr>
-            <?php endforeach; ?>
+        <?php endforeach; ?>
         </tbody>
     </table>
+</div>
+
     <div class="paginator">
         <ul class="pagination">
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
+            <?= $this->Paginator->prev('< ' . __('anterior')) ?>
             <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
+            <?= $this->Paginator->next(__('siguiente') . ' >') ?>
         </ul>
         <p><?= $this->Paginator->counter() ?></p>
     </div>
-</div>
+

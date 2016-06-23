@@ -23,7 +23,15 @@ ul
     color:red;
 }
 
+.error
+{
+    color:red;
+}
 
+.success
+{
+    color:green;
+}
 
 
 .body

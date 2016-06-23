@@ -9,13 +9,30 @@
 
     <?= $this->Form->create($tract) ?>
         <div class="form-group">
-            <?php
 
-            echo $this->Form->input('number', ['class'=>'form-control', 'label'=>'Número de tracto']);
-            echo $this->Form->input('date', ['class'=>'form-control', 'label'=>'Fecha de inicio', 'type'=>'text']);
-            echo $this->Form->input('deadline', ['class'=>'form-control', 'label'=>'Fecha de finalización', 'type'=>'text']);
-            ?>
+
+            <?= $this->Form->input('number', ['class'=>'form-control', 'label'=>'Número de tracto']); ?>
+            <br>
+            <br>
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <label>Fecha de inicio</label>
+
+                    <input type="date" name="date" class="form-control" id="date" value = "<?php echo $tract->date->format('Y-m-d') ?>">
+
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <label style="margin-bottom: 15px;">Fecha de finalización</label>
+                    <input type="date" name="deadline" class="form-control" id="deadline" value = "<?php echo $tract->deadline->format('Y-m-d') ?>">
+                </div>
+            </div>
+
+
+
         </div>
+
+<br>
+<br>
 
 
 

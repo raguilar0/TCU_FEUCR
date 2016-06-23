@@ -16,6 +16,7 @@
             <th><?= $this->Paginator->sort('Estado') ?></th>
             <th><?= $this->Paginator->sort('Fecha') ?></th>
             <th><?= $this->Paginator->sort('Id de la asociación') ?></th>
+            <th><?= $this->Paginator->sort('Tracto') ?></th>
             <th class="actions"><?= __('Acciones') ?></th>
         </tr>
         </thead>
@@ -27,6 +28,7 @@
                 <td><?= $this->Number->format($saving->state) ?></td>
                 <td><?= h($saving->date) ?></td>
                 <td><?= $saving->has('association') ? $this->Html->link($saving->association->name, ['controller' => 'Associations', 'action' => 'view', $saving->association->id]) : '' ?></td>
+                <td><?= $saving->has('tract') ? $this->Html->link($saving->tract->date." - ".$saving->tract->deadline, ['controller' => 'Tracts', 'action' => 'view', $saving->tract->id]) : '' ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('Ver'), ['action' => 'view', $saving->id]) ?>
                     <?= $this->Html->link(__('Editar'), ['action' => 'edit', $saving->id]) ?>

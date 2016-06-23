@@ -20,7 +20,7 @@ class SavingsController extends AppController
     {
         $this->viewBuilder()->layout('admin_views');
         $this->paginate = [
-            'contain' => ['Associations']
+            'contain' => ['Associations', 'Tracts']
         ];
         $savings = $this->paginate($this->Savings);
 
@@ -66,7 +66,8 @@ class SavingsController extends AppController
             }
         }
         $associations = $this->Savings->Associations->find('list', ['limit' => 200]);
-        $this->set(compact('saving', 'associations'));
+        $tracts = $this->Savings->Tracts->find('list', ['limit' => 200]);
+        $this->set(compact('saving', 'associations', 'tracts'));
         $this->set('_serialize', ['saving']);
     }
 
@@ -93,7 +94,9 @@ class SavingsController extends AppController
             }
         }
         $associations = $this->Savings->Associations->find('list', ['limit' => 200]);
+        $tracts = $this->Savings->Tracts->find('list', ['limit' => 200]);
         $this->set(compact('saving', 'associations'));
+        $this->set(compact('saving', 'tracts'));
         $this->set('_serialize', ['saving']);
     }
 
