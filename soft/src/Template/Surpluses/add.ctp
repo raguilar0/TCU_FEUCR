@@ -12,7 +12,6 @@
     <div class="form-group">
         <?php
         echo $this->Form->input('amount', ['class'=>'form-control', 'label'=>'Monto a asignar']);
-        echo $this->Form->input('date', ['type'=>'text', 'class'=>'form-control', 'label'=>'Fecha de asignación del monto']);
         echo $this->Form->input('detail', ['type'=>'textarea','class'=>'form-control', 'label'=>'Detalles']);
         echo "<br>";
         echo $this->Form->input('association_id', ['options' => $associations, 'class'=>'form-control', 'label'=>'Asociación correspondiente']);

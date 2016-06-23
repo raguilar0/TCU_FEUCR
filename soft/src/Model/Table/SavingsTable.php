@@ -36,6 +36,11 @@ class SavingsTable extends Table
             'foreignKey' => 'association_id',
             'joinType' => 'INNER'
         ]);
+
+        $this->belongsTo('Tracts', [
+            'foreignKey' => 'tract_id',
+            'joinType' => 'INNER'
+        ]);
     }
 
     /**
@@ -63,9 +68,6 @@ class SavingsTable extends Table
             ->requirePresence('letter', 'create')
             ->notEmpty('letter');
 
-        $validator
-            ->requirePresence('date', 'create')
-            ->notEmpty('date');
 
         return $validator;
     }

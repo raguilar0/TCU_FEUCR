@@ -141,6 +141,11 @@ ul.alert-dropdown {
 
 }
 
+.error
+{
+    color:red;
+}
+
 .navbar .collapse ul {
     padding: 0;
 }

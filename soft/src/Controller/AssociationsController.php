@@ -667,6 +667,7 @@ class AssociationsController extends AppController
 
 	public function getAmounts($association_id = null, $amount_type = null, $box_type = null,$invoice_type = null, $date = null)
 	{
+<<<<<<< HEAD
 		if($this->Auth->user()){
 			if($amount_type != 2)
 			{
@@ -683,6 +684,20 @@ class AssociationsController extends AppController
 									]);
 
 				$amount = $amount->toArray();
+=======
+		if($amount_type != 2) //Si no es superávit
+		{
+
+			$amount = $this->Associations->Amounts->find()
+							->hydrate(false)
+							->select(['tract.number','amount','tract.deadline', 'date', 'detail'])
+							->andwhere(['association_id'=>$association_id, 'type'=>$amount_type])
+							->join([
+								'table'=>'tracts',
+								'alias'=>'tract',
+								'type'=>'RIGHT',
+								'conditions'=>'Amounts.tract_id = tract.id and tract.date = '."'".$date."'"
+>>>>>>> master
 
 
 				$box = $this->Associations->Boxes->find()
@@ -725,11 +740,35 @@ class AssociationsController extends AppController
 				//TODO: Filtrar para que solo me dé el superávit de cierta fecha
 
 
+<<<<<<< HEAD
 				$amount = $this->Associations->Surpluses->find()
 								->hydrate(false)
 								->select(['amount'])
 								->andwhere(['association_id'=>$association_id, 'YEAR(date)'=>$date]);
 
+=======
+			if($amount_type == 0) //Si es tracto se consulta además por los montos de ahorro
+			{
+				$saving_amount = $this->Associations->Savings->find()
+					->hydrate(false)
+					->select(['amount'])
+					->andwhere(['association_id'=>$association_id, 'type'=>$amount_type])
+					->join([
+						'table'=>'tracts',
+						'alias'=>'tract',
+						'type'=>'RIGHT',
+						'conditions'=>'Savings.tract_id = tract.id and tract.date = '."'".$date."'"
+
+					]);
+
+				$saving_amount = $initial_amount->toArray();
+				$information['savings'] = $saving_amount;
+			}
+
+		}
+		else
+		{
+>>>>>>> master
 
 				$amount = $amount->toArray();
 			}

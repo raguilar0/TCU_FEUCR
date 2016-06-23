@@ -4,7 +4,7 @@ CREATE TABLE headquarters
 	name varchar(100) NOT NULL,
 	image_name varchar(100) NOT NULL,
   UNIQUE(name)
-	
+
 );
 
 CREATE TABLE associations
@@ -27,9 +27,10 @@ CREATE TABLE associations
 CREATE TABLE surpluses(
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   amount DOUBLE NOT NULL,
-  date date NOT NULL,
+  date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   detail varchar(2048) NOT NULL,
-  association_id INT UNSIGNED NOT NULL
+  association_id INT UNSIGNED NOT NULL,
+  FOREIGN KEY(association_id) REFERENCES associations(id)
 );
 
 CREATE TABLE tracts
@@ -46,9 +47,9 @@ CREATE TABLE amounts
 (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   amount DOUBLE NOT NULL,
-  date date NOT NULL,
+  date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL ,
   detail varchar(2048) NOT NULL,
-  type INT(2) NOT NULL DEFAULT 0, --0:tracto, 1:monto generado, 2:superávit
+  type INT(2) NOT NULL DEFAULT 0, -- 0:tracto, 1:monto generado, 2:superávit
   association_id INT UNSIGNED NOT NULL,
   tract_id INT UNSIGNED NOT NULL,
 
@@ -62,7 +63,8 @@ CREATE TABLE initial_amounts
 (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   amount DOUBLE NOT NULL,
-  type INT(2) NOT NULL DEFAULT 0, --0:tracto, 1:monto generado
+  date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
+  type INT(2) NOT NULL DEFAULT 0, -- 0:tracto, 1:monto generado
   association_id INT UNSIGNED NOT NULL,
   tract_id INT UNSIGNED NOT NULL,
 
@@ -75,13 +77,13 @@ CREATE TABLE invoices
   number varchar(20) NOT NULL,
   legal_certificate varchar(20) NOT NULL,
   provider varchar(100) NOT NULL,
-  amount DOUBLE NOT NULL, 
+  amount DOUBLE NOT NULL,
   clarifications varchar(2048),
   image_name varchar(256),
   detail varchar(2048),
-  kind INT(1) DEFAULT 0, --0 = Tracto, 1 = Ingresos generados, 2 = Superavit
+  kind INT(1) DEFAULT 0, -- 0 = Tracto, 1 = Ingresos generados, 2 = Superavit
   state INT(1) NOT NULL DEFAULT 0,
-  date date,
+  date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
   attendant varchar(100),
   association_id INT UNSIGNED NOT NULL,
   tract_id INT UNSIGNED NOT NULL,
@@ -95,12 +97,12 @@ CREATE TABLE invoices
   UNIQUE(image_name)
 );
 
-CREATE TABLE boxes 
+CREATE TABLE boxes
 (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   little_amount DOUBLE NOT NULL DEFAULT 0,
   big_amount DOUBLE NOT NULL DEFAULT 0,
-  type INT UNSIGNED NOT NULL DEFAULT 0, --0:tracto, 1:monto generado, 2:superávit
+  type INT UNSIGNED NOT NULL DEFAULT 0, -- 0:tracto, 1:monto generado, 2:superávit
   association_id INT UNSIGNED NOT NULL,
   tract_id INT UNSIGNED NOT NULL,
 
@@ -110,11 +112,12 @@ CREATE TABLE boxes
 CREATE TABLE savings
 (
    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-   date TIMESTAMP DEFAULT TIMESTAMP ,
+   date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
    amount INT(32) NOT NULL DEFAULT 0,
    state INT(1) DEFAULT 0,
-   letter LONGBLOB NOT NULL,
+   letter MEDIUMTEXT NOT NULL,
    association_id INT UNSIGNED NOT NULL,
+   tract_id INT UNSIGNED NOT NULL,
    FOREIGN KEY(association_id) REFERENCES associations(id)
 );
 
@@ -136,8 +139,8 @@ CREATE TABLE users (
     name varchar(70) NOT NULL,
     last_name_1 varchar(30) NOT NULL,
     last_name_2 varchar(30),
-    association_id INT UNSIGNED NOT NULL, 
-
+    association_id INT UNSIGNED NOT NULL,
+    state INT(1) NOT NULL,
     FOREIGN KEY(association_id) REFERENCES associations(id),
 
     UNIQUE(username)
