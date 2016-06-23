@@ -23,14 +23,14 @@ echo "<br>";
         if($this->request->session()->read('Auth.User.role') == 'admin') {
           echo "<label for='sel1' id = 'role_label'><h4>Rol</h4></label>";
           //debug($role);
-          if($role == 'admin'){
+          if($user->role == 'admin'){
             echo "<select class='form-control' name = 'role'>";
                echo "<option>Administrador</option>";
                echo "<option>Representante</option>";
              echo "</select>";
           }
 
-          if($role == 'rep'){
+          if($user->role == 'rep'){
             echo "<select class='form-control' name = 'role'>";
                echo "<option>Representante</option>";
                echo "<option>Administrador</option>";

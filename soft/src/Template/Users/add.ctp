@@ -13,7 +13,7 @@
 <?= $this->Form->create($user); ?>
 
 <div class="form-group">
-    <?= "<h4>".$this->Form->input('username', ['class' => 'form-control','label'=>'Nombre de usuario'])."</h4>"; ?>
+    <?= "<h4>".$this->Form->input('username', ['class' => 'form-control','label'=>'Nombre de usuario','maxlength'=> '10'])."</h4>"; ?>
     <?= "<h4>".$this->Form->input('password', ['class' => 'form-control','label'=>'Contraseña'])."</h4>"; ?>
     <?= "<h4>".$this->Form->input('name', ['class' => 'form-control','label'=>'Nombre'])."</h4>"; ?>
     <?= "<h4>".$this->Form->input('last_name_1', ['class' => 'form-control','label'=>'Primer Apellido'])."</h4>"; ?>
@@ -50,14 +50,6 @@
 
 
 </div>
-
-
-
-
-
-
-
-
 
 <div class="row text-right">
     <div class="col-xs-12">

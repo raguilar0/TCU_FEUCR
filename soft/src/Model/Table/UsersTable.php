@@ -30,8 +30,8 @@ class UsersTable extends Table
 
               ->notEmpty('password', 'Contraseña requerida')
               ->add('password', 'validFormat',[
-                'rule'=>array('custom', '/^(?=.*\d).{4,8}$/'),
-                'message' => 'Password debe tener entre 4 y 8 caracteres y al menos un número'
+                'rule'=>array('custom', '/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/'),
+                'message' => 'Password debe tener mínimo 8 caracteres y al menos un número'
               ])
               ->notEmpty('name', 'Nombre requerido')
               ->add('name', 'validFormat', [
