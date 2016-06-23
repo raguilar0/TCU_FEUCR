@@ -75,7 +75,7 @@ CREATE TABLE invoices
 (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   number varchar(20) NOT NULL,
-  legal_certificate varchar(20) NOT NULL,
+  legal_certificate VARCHAR (20) NOT NULL,
   provider varchar(100) NOT NULL,
   amount DOUBLE NOT NULL,
   clarifications varchar(2048),
@@ -139,7 +139,11 @@ CREATE TABLE users (
     name varchar(70) NOT NULL,
     last_name_1 varchar(30) NOT NULL,
     last_name_2 varchar(30),
+<<<<<<< HEAD
     association_id INT UNSIGNED NOT NULL,
+=======
+    association_id INT UNSIGNED NOT NULL,
+>>>>>>> master
     state INT(1) NOT NULL,
     FOREIGN KEY(association_id) REFERENCES associations(id),
 
