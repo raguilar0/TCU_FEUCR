@@ -115,7 +115,7 @@ CREATE TABLE savings
    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
    amount INT(32) NOT NULL DEFAULT 0,
    state INT(1) DEFAULT 0,
-   letter LONGBLOB NOT NULL,
+   letter MEDIUMTEXT NOT NULL,
    association_id INT UNSIGNED NOT NULL,
    FOREIGN KEY(association_id) REFERENCES associations(id)
 );
