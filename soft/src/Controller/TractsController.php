@@ -36,7 +36,7 @@ class TractsController extends AppController
     {
         $this->viewBuilder()->layout('admin_views');
         $tract = $this->Tracts->get($id, [
-            'contain' => ['Amounts', 'Boxes', 'InitialAmounts', 'Invoices', 'Warehouses']
+            'contain' => ['Amounts', 'Boxes', 'InitialAmounts', 'Invoices']
         ]);
 
         $this->set('tract', $tract);
