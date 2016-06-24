@@ -339,28 +339,19 @@ class UsersController extends AppController
             return $this->redirect($this->Auth->logout());
         }
 
-        public function perfil($id = null) {
+        public function perfil() {
           if($this->Auth->user()){
             $this->viewBuilder()->layout('admin_views'); //Se deja este hasta mientras se haga el de representante
 
             $id =  $this->request->session()->read('Auth.User.id');; // Lo que me dijo Slon
             if($id) {
-                $user = $this->Users->get($id);
 
-                $head = $this->Users->Associations->find()
-                                ->hydrate(false)
-                                ->select(['id','name'])
-                                ->where(['id'=>$user->association_id]);
-
-                $head = $head->toArray();
-
-                $user['association'] = $head[0]['name'];
 
 
 
                 if($this->request->is(array('post','put')))
                 {
-                    $response = '0';
+
 
                     try
                     {
@@ -371,20 +362,29 @@ class UsersController extends AppController
                           ->where(['id'=> $id])
                           ->execute();
 
-                        $response = '1';
+                        $this->Flash->success('Se modificó el usuario correctamente');
+
                     }
                     catch(Exception $e)
                     {
-
+                        $this->Flash->error('No se pudo modificar el usuario');
                     }
 
-                    die($response);
 
                 }
-                else
-                {
+                
+                $user = $this->Users->get($id);
+
+                $head = $this->Users->Associations->find()
+                    ->hydrate(false)
+                    ->select(['id','name'])
+                    ->where(['id'=>$user->association_id]);
+
+                $head = $head->toArray();
+
+                $user['association'] = $head[0]['name'];
                     $this->set('data',$user); // set() Pasa la variable association a la vista.
-                }
+
             }
 
           }

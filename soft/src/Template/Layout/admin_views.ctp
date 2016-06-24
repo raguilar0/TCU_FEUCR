@@ -68,8 +68,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <?php echo $this->request->session()->read('Auth.User.name')." ".$this->request->session()->read('Auth.User.last_name_1'); ?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><?php echo $this->Html->link('Perfil',['controller'=>'Users','action'=>'perfil']);?></li><br>
-                            <li><?php echo $this->Html->link('Cerrar Sesión',['controller'=>'Users','action'=>'logout']);?></li><br>
-                        </li>
+                        <li><?php echo $this->Html->link('Cerrar Sesión',['controller'=>'Users','action'=>'logout']);?></li>
                     </ul>
                 </li>
             </ul>
@@ -155,6 +154,7 @@
                             <div id="account_id" class="collapse">
                                 <ul>
                                     <li><?php echo $this->Html->link('Nueva Cuenta',['controller'=>'Saving-accounts','action'=>'add']);?></li><br>
+                                    <li><?php echo $this->Html->link('Transferir cuentas',['controller'=>'Saving-accounts','action'=>'transfer']);?></li><br>
                                     <li><?php echo $this->Html->link('Administrar Montos',['controller'=>'Saving-accounts','action'=>'index']);?></li><br>
 
                                 </ul>
@@ -233,7 +233,7 @@
             </div>
             <!-- /.container-fluid -->
 
- 
+
         </div>
         <!-- /#page-wrapper -->
 

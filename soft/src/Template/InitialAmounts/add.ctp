@@ -81,17 +81,14 @@
             echo "<br>";
 
             echo "<div class = 'row'>";
-                echo "<div class='col-xs-12 col-md-4'>";
+                echo "<div class='col-xs-12 col-md-6'>";
                     echo $this->Form->input('tract_box',['type'=> 'checkbox', 'class'=>'checkbox-inline', 'label'=>'Caja de tracto']);
                 echo "</div>";
 
-                echo "<div class='col-xs-12 col-md-4'>";
+                echo "<div class='col-xs-12 col-md-6'>";
                     echo $this->Form->input('generated_box',['type'=> 'checkbox', 'class'=>'checkbox-inline', 'label'=>'Caja de ingresos generados', 'checked']);
                 echo "</div>";
 
-                echo "<div class='col-xs-12 col-md-4'>";
-                    echo $this->Form->input('saving_account',['type'=> 'checkbox', 'class'=>'checkbox-inline', 'label'=>'Cuenta de ahorro']);
-                echo "</div>";
             echo "</div>";
 
 

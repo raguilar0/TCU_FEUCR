@@ -149,15 +149,5 @@ table
     margin-top: 10px;
 }
 
-/**
-  El siguiente media query sirve para eliminar el scroll horizontal
-  que salía al ver la página con vista de móvil
-**/
-@media only screen and (max-width: 765px)
-{
-    .navbar-inverse
-    {
-        overflow: hidden;
-    }
-}
+
 

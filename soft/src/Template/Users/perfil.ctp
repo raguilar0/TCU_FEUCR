@@ -7,7 +7,7 @@
 
 <?php
 
-	echo $this->Form->create($data, ['id'=>'submit1']);
+	echo $this->Form->create($data);
 	echo "<div class='form-group'>";
 
     echo "<h4>".$this->Form->input('name', ['class' => 'form-control','label'=>'Nombre ','value'=>$data['name'], 'maxlength'=> '256'])."</h4>";
@@ -23,7 +23,8 @@
 
     echo "</div>";
 
- 	echo "<h4>".$this->Form->submit('Actualizar Informacion', ['class' => 'form-control', 'id' => 'user_id'])."</h4>";
+    echo "<br>";
+ 	echo "<h4>".$this->Form->submit('Actualizar', ['class' => 'form-control', 'id' => 'asso_id'])."</h4>";
 
     echo $this->Form->end();
 ?>
