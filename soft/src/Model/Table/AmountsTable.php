@@ -1,89 +1,67 @@
 <?php
 namespace App\Model\Table;
-
-use App\Model\Entity\Amount;
-use Cake\ORM\Query;
-use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-
-/**
- * Amounts Model
- *
- * @property \Cake\ORM\Association\BelongsTo $Associations
- * @property \Cake\ORM\Association\BelongsTo $Tracts
- */
+use Cake\I18n\Time;
+use Cake\Event\Event;
+use ArrayObject;
+use Cake\Datasource\ConnectionManager;
 class AmountsTable extends Table
 {
-
-    /**
-     * Initialize method
-     *
-     * @param array $config The configuration for the Table.
-     * @return void
-     */
     public function initialize(array $config)
     {
-        parent::initialize($config);
-
-        $this->table('amounts');
-        $this->displayField('id');
-        $this->primaryKey('id');
-
-        $this->belongsTo('Associations', [
-            'foreignKey' => 'association_id',
-            'joinType' => 'INNER'
-        ]);
-        $this->belongsTo('Tracts', [
-            'foreignKey' => 'tract_id',
-            'joinType' => 'INNER'
-        ]);
+        $this->addBehavior('Timestamp');
+        $this->belongsTo('Associations');
     }
-
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->integer('id')
-            ->allowEmpty('id', 'create');
-
-        $validator
-            ->numeric('amount')
-            ->requirePresence('amount', 'create')
-            ->notEmpty('amount');
-
-        $validator
-            ->requirePresence('date', 'create')
-            ->notEmpty('date');
-
-        $validator
-            ->requirePresence('detail', 'create')
-            ->notEmpty('detail');
-
-        $validator
-            ->integer('type')
-            ->requirePresence('type', 'create')
-            ->notEmpty('type');
-
+            ->requirePresence('amount')
+            ->notEmpty('amount')
+            ->add('amount', 'validFormat', [
+                                    'rule' => array('custom', '/^[0-9,.\-]+$/'),
+                                    'message' => 'Debe ser mayormente para números.'
+            ])
+            ->notEmpty('date')
+            ->notEmpty('deadline')
+            ->notEmpty('detail', 'Ingrese el detalle del monto')
+            ->add('detail', 'validFormat', [
+                                    'rule' => array('custom', '/[a-zA-Z0-9$.%@\-]+$/'),
+                                    'message' => 'Debe contener solamente letras.'
+            ])
+            ->add('detail', [
+                        'lengthBetween' => ['rule' => ['lengthBetween', 1, 8192],
+                                        'message' => 'Debe contener mínimo 1 y máximo 8192 caracteres.',
+                        ]
+            ]);
         return $validator;
     }
-
-    /**
-     * Returns a rules checker object that will be used for validating
-     * application integrity.
-     *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
-     */
-    public function buildRules(RulesChecker $rules)
+    public function validationUpdate(Validator $validator)
     {
-        $rules->add($rules->existsIn(['association_id'], 'Associations'));
-        $rules->add($rules->existsIn(['tract_id'], 'Tracts'));
-        return $rules;
+        $validator
+            ->requirePresence('amount')
+            ->notEmpty('amount')
+            ->add('amount', 'validFormat', [
+                'rule' => array('custom', '/^[0-9,.\-]+$/'),
+                'message' => 'Debe ser mayormente para números.'
+            ]);
+        
+        return $validator;
+    }
+    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
+    {
+       if (isset($data['date'])) {
+           $data['date'] = new Time($data['date']);
+       }
+       if (isset($data['deadline'])) {
+           $data['deadline'] = new Time($data['deadline']);
+       }
+    }
+    public function getConnection()
+    {
+       // $dsn = 'mysql://sql3114688:9KUJFT3TWD@sql3.freemysqlhosting.net/sql3114688';
+        //ConnectionManager::config('event', ['url' => $dsn]);
+        $connection = ConnectionManager::get('default');
+        return $connection;
     }
 }

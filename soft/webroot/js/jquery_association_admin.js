@@ -32,6 +32,11 @@ $('#submit_add_initial_amount').submit(function(e){
     addInitialAmounts();
 });
 
+$('#submit_add_saving_account').submit(function(e){
+    e.preventDefault();
+    transferSavingAccount();
+});
+
 $("#submit_add_tract").submit(function(e){
   e.preventDefault();
   addTract();
@@ -241,8 +246,7 @@ function addInitialAmounts()
     
             if(xhttp.readyState == 4 && xhttp.status == 200)
             {
-
-               document.getElementById("callback").innerHTML = xhttp.responseText;
+                document.getElementById("callback").innerHTML = xhttp.responseText;
                setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 25000);
              
             }
@@ -273,7 +277,56 @@ function addInitialAmounts()
         xhttp.open("POST", path,true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send($("#submit_add_initial_amount").serialize());
+        document.getElementById("callback").innerHTML = "Su transacción se está procesando...";
        
+
+}
+
+
+
+function transferSavingAccount()
+{
+
+    var xhttp = new XMLHttpRequest();
+
+
+    xhttp.onreadystatechange = function()
+    {
+
+        if(xhttp.readyState == 4 && xhttp.status == 200)
+        {
+            document.getElementById("callback").innerHTML = xhttp.responseText;
+            setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 25000);
+
+        }
+        else
+        {
+            if( xhttp.status == 404)
+            {
+
+                document.getElementById("callback").innerHTML = "Error: Se envió un nombre de sede que no coincide con nuestros registros.";
+                document.getElementById("callback").style.color = "red";
+                setTimeout(function(){document.getElementById("callback").innerHTML = "";}, 9000);
+
+            }
+
+
+        }
+
+    };
+
+
+
+
+    //Con esto obtengo la direccion relativa a la computadora en la que estoy
+    var path = location.pathname;
+    path = path.substring(0,path.length)+"/"+document.getElementById("associations").value;
+
+
+    xhttp.open("POST", path,true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send($("#submit_add_saving_account").serialize());
+    document.getElementById("callback").innerHTML = "Su transacción se está procesando...";
 
 }
 

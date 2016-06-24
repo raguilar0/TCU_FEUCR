@@ -71,6 +71,21 @@ CREATE TABLE initial_amounts
   FOREIGN KEY(association_id) REFERENCES associations(id)
 );
 
+CREATE TABLE saving_accounts
+(
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  amount DOUBLE NOT NULL,
+  date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  bank VARCHAR(128) NOT NULL,
+  account_owner VARCHAR(64) NOT NULL,
+  card_number VARCHAR(64) NOT NULL,
+  association_id INT UNSIGNED NOT NULL,
+
+  tract_id INT UNSIGNED NOT NULL,
+  FOREIGN KEY(association_id) REFERENCES associations(id),
+  FOREIGN KEY (tract_id) REFERENCES  tracts(id)
+);
+
 CREATE TABLE invoices
 (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -139,11 +154,7 @@ CREATE TABLE users (
     name varchar(70) NOT NULL,
     last_name_1 varchar(30) NOT NULL,
     last_name_2 varchar(30),
-<<<<<<< HEAD
     association_id INT UNSIGNED NOT NULL,
-=======
-    association_id INT UNSIGNED NOT NULL,
->>>>>>> master
     state INT(1) NOT NULL,
     FOREIGN KEY(association_id) REFERENCES associations(id),
 

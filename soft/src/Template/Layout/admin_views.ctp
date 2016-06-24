@@ -118,6 +118,17 @@
                         </li>
 
                         <li class="active">
+                            <a  data-toggle="collapse" data-target="#initial_id">Montos Iniciales</a>
+                            <div id="initial_id" class="collapse">
+                                <ul>
+                                    <li><?php echo $this->Html->link('Nuevo Monto',['controller'=>'initial-amounts','action'=>'add']);?></li><br>
+                                    <li><?php echo $this->Html->link('Administrar montos',['controller'=>'initial-amounts','action'=>'index']);?></li><br>
+
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="active">
                             <a  data-toggle="collapse" data-target="#surplus_id">Montos de Superávit</a>
                             <div id="surplus_id" class="collapse">
                                 <ul>
@@ -134,6 +145,17 @@
                                 <ul>
                                     <li><?php echo $this->Html->link('Nuevo Monto',['controller'=>'Savings','action'=>'add']);?></li><br>
                                     <li><?php echo $this->Html->link('Administrar Montos',['controller'=>'Savings','action'=>'index']);?></li><br>
+
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="active">
+                            <a  data-toggle="collapse" data-target="#account_id">Cuentas de Ahorro</a>
+                            <div id="account_id" class="collapse">
+                                <ul>
+                                    <li><?php echo $this->Html->link('Nueva Cuenta',['controller'=>'Saving-accounts','action'=>'add']);?></li><br>
+                                    <li><?php echo $this->Html->link('Administrar Montos',['controller'=>'Saving-accounts','action'=>'index']);?></li><br>
 
                                 </ul>
                             </div>
@@ -202,7 +224,7 @@
 
         <div id="page-wrapper">
 
-            <div class="container">
+            <div class="container-fluid">
 
                 <?= $this->fetch('content') ?>
 

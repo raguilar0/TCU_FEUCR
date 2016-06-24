@@ -1,52 +1,45 @@
-<div class="row text-center">
-    <div class="col-xs-12">
-        <h1>Administrá los montos</h1>
-    </div>
+<h4>Montos</h4>
 
+
+ 
+<!-- link to add new users page -->
+<!-- <div class='upper-right-opt'>
+<?php echo $this->Html->link( '+ New User', array( 'action' => 'add' ) ); ?>
 </div>
-<br>
-<br>
+ -->
+<table style='padding:5px;'>
+    <!-- table heading -->
+    <tr style='background-color:#fff;'>
+        <th>Monto Máximo</th>
+        <th>Fecha de Tracto</th>
+        <th>Fecha de Cierre</th>
+        <th>Asociación</th>
+    </tr>
+     
+<?php
+ 
+    foreach( $amount as $value ){
+     
+        echo "<tr>";
+            //echo "<td>".$value['id']."</td>";
+            echo "<td>".$value['amount']."</td>";
+            echo "<td>".$value['date']."</td>"; 
+            echo "<td>".$value['deadline']."</td>";
+            echo "<td>".$value['association_id']."</td>";
+            //here are the links to edit and delete actions
+            echo "<td class='actions'>";
+                echo $this->Html->link( 'Edit', array('action' => 'edit', $value['id']) );
+                 
+               /* 
+                echo $this->Form->postLink( 'Delete', array(
+                        'action' => 'delete', 
+                        $amount['Amount']['id']), array(
+                            'confirm'=>'Seguro que desea eliminar el monto?' ) );
+                */
+            echo "</td>";
+        echo "</tr>";
+    }
 
-<div class="table-responsive">
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th><?= $this->Paginator->sort('id') ?></th>
-                <th><?= $this->Paginator->sort('Monto') ?></th>
-                <th><?= $this->Paginator->sort('Fecha') ?></th>
-                <th><?= $this->Paginator->sort('Detalle') ?></th>
-                <th><?= $this->Paginator->sort('Tipo') ?></th>
-                <th><?= $this->Paginator->sort('Asociación') ?></th>
-                <th><?= $this->Paginator->sort('Id del Tracto') ?></th>
-                <th class="actions"><?= __('Acciones') ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($amounts as $amount): ?>
-            <tr>
-                <td><?= $this->Number->format($amount->id) ?></td>
-                <td><?= $this->Number->format($amount->amount) ?></td>
-                <td><?= h($amount->date) ?></td>
-                <td><?= h($amount->detail) ?></td>
-                <td><?= $this->Number->format($amount->type) ?></td>
-                <td><?= $amount->has('association') ? $this->Html->link($amount->association->name, ['controller' => 'Associations', 'action' => 'view', $amount->association->id]) : '' ?></td>
-                <td><?= $amount->has('tract') ? $this->Html->link($amount->tract->id, ['controller' => 'Tracts', 'action' => 'view', $amount->tract->id]) : '' ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('Ver'), ['action' => 'view', $amount->id]) ?>
-                    <?= $this->Html->link(__('Editar'), ['action' => 'edit', $amount->id]) ?>
-                    <?= $this->Form->postLink(__('Borrar'), ['action' => 'delete', $amount->id], ['confirm' => __('Seguro de que desea borrar el monto # {0}?', $amount->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->prev('< ' . __('anterior')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('siguiente') . ' >') ?>
-        </ul>
-        <p><?= $this->Paginator->counter() ?></p>
-    </div>
-</div>
+?>
+     
+</table>

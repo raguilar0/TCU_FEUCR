@@ -76,7 +76,25 @@
     {
         echo $this->Form->create(null, ['id'=>'submit_add_initial_amount']);
             echo "<div class='form-group'>";
-        
+
+            echo "<br>";
+            echo "<br>";
+
+            echo "<div class = 'row'>";
+                echo "<div class='col-xs-12 col-md-4'>";
+                    echo $this->Form->input('tract_box',['type'=> 'checkbox', 'class'=>'checkbox-inline', 'label'=>'Caja de tracto']);
+                echo "</div>";
+
+                echo "<div class='col-xs-12 col-md-4'>";
+                    echo $this->Form->input('generated_box',['type'=> 'checkbox', 'class'=>'checkbox-inline', 'label'=>'Caja de ingresos generados', 'checked']);
+                echo "</div>";
+
+                echo "<div class='col-xs-12 col-md-4'>";
+                    echo $this->Form->input('saving_account',['type'=> 'checkbox', 'class'=>'checkbox-inline', 'label'=>'Cuenta de ahorro']);
+                echo "</div>";
+            echo "</div>";
+
+
             echo "<br>";
             echo "<br>";
 

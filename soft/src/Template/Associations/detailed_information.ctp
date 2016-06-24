@@ -560,7 +560,7 @@
 
 						<tr>
 							<th><u>Cuenta de ahorro</u></th>
-							<td id="generated_saving_count"></td>
+							<td id="generated_saving_account"></td>
 						</tr>
 					</table>
 				</div>
@@ -779,6 +779,10 @@ $(document).ready( function ()
 		{
 			document.getElementById("tract_final_balance").style = "color: red";
 		}
+		else
+		{
+			document.getElementById("tract_final_balance").style = "color: green";
+		}
  
     	document.getElementById("tract_final_balance").innerHTML =  tract_final_balance; //TODO: El amount no es el correcto, lo correcto es sumar el ahorro, las cajas y el ingreso de tracto
 
@@ -787,6 +791,10 @@ $(document).ready( function ()
 		if(tract_count < 0)
 		{
 			document.getElementById("tract_count").style = "color: red";
+		}
+		else
+		{
+			document.getElementById("tract_count").style = "color: green";
 		}
 
 
@@ -899,6 +907,7 @@ $(document).ready( function ()
     var generated_initial_amount = 0;
 
     var generated_final_balance = 0;
+    var generated_saving_account = 0;
 
     var date = "";
 
@@ -914,6 +923,10 @@ $(document).ready( function ()
          date = "Periodo del tracto: <br><br>"+document.getElementById("tracts_id").value + " - " +object.amount[0].tract.deadline+"<br><br>";          
     }
 
+    if(object.saving_account.length > 0)
+	{
+		generated_saving_account = object.saving_account[0].amount;
+	}
 
     amount_classes[1].innerHTML =  incomes_total; 
  
@@ -923,9 +936,9 @@ $(document).ready( function ()
     document.getElementById("generated_total_spent").innerHTML = invoices_total;
     document.getElementById("generated_initial_amount").innerHTML = generated_initial_amount;
 
-    document.getElementById("generated_final_balance").innerHTML =  generated_final_balance; //TODO: El amount no es el correcto, lo correcto es sumar el ahorro, las cajas y el ingreso de tracto
+    document.getElementById("generated_final_balance").innerHTML =  generated_final_balance;
 
-    document.getElementById("generated_saving_count").innerHTML = 0; //TODO:Agregar una nueva tabla para la cuenta de ahorro de las asociaciones
+    document.getElementById("generated_saving_account").innerHTML = generated_saving_account;
 
 
 

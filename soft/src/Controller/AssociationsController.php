@@ -739,6 +739,24 @@ class AssociationsController extends AppController
 				$information['savings'] = $saving_amount;
 			}
 
+			if($amount_type == 1) //Si es ingresos generados además se consulta cuentas de ahorro
+			{
+				$saving_account = $this->Associations->SavingAccounts->find()
+					->hydrate(false)
+					->select(['amount'])
+					->where(['association_id'=>$association_id])
+					->join([
+						'table'=>'tracts',
+						'alias'=>'tract',
+						'type'=>'RIGHT',
+						'conditions'=>'SavingAccounts.tract_id = tract.id and tract.date = '."'".$date."'"
+
+					]);
+
+				$saving_account = $saving_account->toArray();
+				$information['saving_account'] = $saving_account;
+			}
+
 		}
 		else
 		{

@@ -172,21 +172,32 @@ class InitialAmountsController extends AppController
 
                 if($this->request->data['first_tract'] != $this->request->data['second_tract'])
                 {
+                    $message = "";
+                    
                     $association_id = $this->getAssociationId($association_name);
                     $first_tract_id = $this->getTractId($this->request->data['first_tract']);
                     $second_tract_id = $this->getTractId($this->request->data['second_tract']);
 
-                    $oldBoxTract = $this->getBox($association_id, $first_tract_id, 0); //Queremos la caja vieja del tracto
-                    $oldBoxGenerated = $this->getBox($association_id, $first_tract_id, 1); //Queremos la caja vieja de ingresos generados
 
-                    $message = $this->transferBox($oldBoxTract, $association_id, $second_tract_id, 0); //Creamos Tractos
+                    if($this->request->data['tract_box'] == '1') //Si el usuario marcó la casilla del checkbox de cajas de tracto
+                    {
+                        $oldBoxTract = $this->getBox($association_id, $first_tract_id, 0); //Queremos la caja vieja del tracto
+                        $message = $this->transferBox($oldBoxTract, $association_id, $second_tract_id, 0); //Creamos Tractos
+                        $message .= "<br>".$this->createInitialAmount( $oldBoxTract, $association_id, $second_tract_id, 0); //Creamos los montos iniciales de tracto
 
-                    $message .= "<br>".$this->transferBox($oldBoxGenerated,$association_id, $second_tract_id, 1); //Creamos ingresos  generados
+                    }
 
-                    $message .= "<br>".$this->createInitialAmount( $oldBoxTract, $association_id, $second_tract_id, 0); //Creamos los montos iniciales de tracto
-                    $message .= "<br>".$this->createInitialAmount( $oldBoxGenerated, $association_id, $second_tract_id, 1); //Creamos los montos iniciales de Ingresos Generados
+                    if($this->request->data['generated_box'] == '1') //Si el usuario marcó la casilla de
+                    {
+                        $oldBoxGenerated = $this->getBox($association_id, $first_tract_id, 1); //Queremos la caja vieja de ingresos generados
+                        $message .= "<br>".$this->transferBox($oldBoxGenerated,$association_id, $second_tract_id, 1); //Creamos ingresos  generados
+                        $message .= "<br>".$this->createInitialAmount( $oldBoxGenerated, $association_id, $second_tract_id, 1); //Creamos los montos iniciales de Ingresos Generados
+
+                    }
+
 
                     die($message);
+
 
                 }
                 else
