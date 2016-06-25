@@ -1,4 +1,5 @@
 <?php
+
 echo "<div class = 'row text-center'>";
     echo "<div class='col-xs-12'>";
         echo"<h1>".'Modificar la información de '.$user['name']."</h1>";
@@ -22,7 +23,7 @@ echo "<br>";
 
         if($this->request->session()->read('Auth.User.role') == 'admin') {
           echo "<label for='sel1' id = 'role_label'><h4>Rol</h4></label>";
-          //debug($role);
+          //debug($user);
           if($user->role == 'admin'){
             echo "<select class='form-control' name = 'role'>";
                echo "<option>Administrador</option>";
@@ -57,7 +58,7 @@ echo "<br>";
 
 
 	echo "<div class = 'row'>";
-	    echo "<div class = 'col-xs-12'>";    echo "<h4>".$this->Form->submit('Guardar Usuario', ['class' => 'form-control', 'id' => 'user_id'])."</h4>";
+	    echo "<div class = 'col-xs-12'>";    echo "<h4>".$this->Form->submit('Guardar Usuario', ['class' => 'form-control', 'id' => 'asso_id'])."</h4>";
 	    echo "</div>";
 	echo "</div>";
 

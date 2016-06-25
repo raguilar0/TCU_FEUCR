@@ -254,40 +254,37 @@ class UsersController extends AppController
     }
 
     public function modifyUser($id = null) {
-      if($this->Auth->user()){
+      if($this->Auth->user() && $id){
         $this->viewBuilder()->layout('admin_views');
-        $user = $this->Users->newEntity($this->request->data);
 
-        if($id){
+             if($this->request->is(array('post','put'))) {
+               if($this->request->data['role'] == 'Administrador'){
+                   $this->request->data['role'] = 'admin';
+               }
+               elseif ($this->request->data['role'] == 'Representante'){
+                   $this->request->data['role'] = 'rep';
+               }
+
+               $user = $this->Users->newEntity($this->request->data);
+                    $blocked = (isset($this->request->data['state']) ? 1 : 0); //Verifica si se checó el checkbox de bloqueado
+                    //debug($user->errors());
+                    if(!$user->errors()) {
+                      $query = $this->Users->query();
+                      $query->update()
+                            ->set(['username'=>$this->request->data['username'], 'name'=>$this->request->data['name'],
+                                  'last_name_1'=>$this->request->data['last_name_1'], 'last_name_2'=>$this->request->data['last_name_2'],
+                                  'role'=>$this->request->data['role'], 'state'=>$blocked])
+                            ->where(['id'=>$id])
+                            ->execute();
+                      $this->Flash->success(__('Usuario modificado correctamente.', ['key'=>'success']));
+                    }
+                    else{
+                        $this->Flash->error(__('Error al modificar usuario.'));
+                      }
+          }
           $user = $this->Users->get($id);
+          $this->set('user', $user);
 
-
-   //TODO:if($this->request->is(array('post','put'))) {
-
-          debug($user);
-
-          $blocked = (isset($$user['state']) ? 1 : 0); //Verifica si se checó el checkbox de bloqueado
-
-          //debug($user->errors());
-          if(!$user->errors()) {
-            $query = $this->Users->query();
-            $query->update()
-                  ->set(['username'=>$this->request->data['username'], 'name'=>$this->request->data['name'],
-                        'last_name_1'=>$this->request->data['last_name_1'], 'last_name_2'=>$this->request->data['last_name_2'],
-                        'role'=>$this->request->data['role'], 'state'=>$blocked])
-                  ->where(['id'=>$id])
-                  ->execute();
-                  debug($query);
-            $this->Flash->success(__('Usuario modificado correctamente.', ['key'=>'success']));
-          }
-          else{
-              $this->Flash->error(__('Error al modificar usuario.', ['key'=>'error']));
-          }
-
-        //}
-
-			}
-      $this->set('user', $user);
       }
       else{
         return $this->redirect(['controller'=>'pages', 'action'=>'home']);
