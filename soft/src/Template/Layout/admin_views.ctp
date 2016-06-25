@@ -80,16 +80,23 @@
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav side-nav">
                         <li class="active">
-                            <a  data-toggle="collapse" data-target="#association_id">Asociaciones</a>
+                            <a  data-toggle="collapse" data-target="#association_id">Administrar Asociaciones</a>
                             <div id="association_id" class="collapse">
                                 <ul>
                                     <li><?php echo $this->Html->link('Nueva Asociación',['controller'=>'Associations','action'=>'add']);?></li><br>
                                     <li><?php echo $this->Html->link('Ver Asociación',['controller'=>'Associations','action'=>'show_associations/1']);?></li><br>
                                     <li><?php echo $this->Html->link('Editar Asociación',['controller'=>'Associations','action'=>'show_associations/3']);?></li><br>
                                     <li><?php echo $this->Html->link('Borrar Asociación',['controller'=>'Associations','action'=>'show_associations/4']);?></li><br>
-
                                 </ul>
                             </div>
+                        </li>
+
+                        <li class="active">
+                          <?php echo $this->Html->link('Administrar Facturas',['controller'=>'Invoices','action'=>'modify']);?>
+                        </li>
+
+                        <li class="active">
+                          <?php echo $this->Html->link('Administrar Cajas',['controller'=>'Boxes','action'=>'modify']);?>
                         </li>
 
                         <li class="active">
@@ -98,12 +105,9 @@
                                 <ul>
                                     <li><?php echo $this->Html->link('Nuevo Tracto',['controller'=>'Tracts','action'=>'add']);?></li><br>
                                     <li><?php echo $this->Html->link('Administrar Tractos',['controller'=>'Tracts','action'=>'index']);?></li><br>
-
-
                                 </ul>
                             </div>
                         </li>
-
 
                         <li class="active">
                             <a  data-toggle="collapse" data-target="#amounts_id">Montos de Tracto</a>
@@ -164,6 +168,7 @@
                         <div id="association_admin" class="collapse">
                             <ul>
                               <li class="active"><?php echo $this->Html->link('Agregar Nueva Factura', '/invoices/add', ['id'=>'active-navbar']);?></li><br>
+                              <li class="active"><?php echo $this->Html->link('Administrar Facturas', '/invoices/modify', ['id'=>'active-navbar']);?></li><br>
                               <li class="active"><?php echo $this->Html->link('Actualizar Cajas', '/boxes/modify', ['id'=>'active-navbar']);?></li><br>
                             </ul>
                         </div>
@@ -211,7 +216,7 @@
             </div>
             <!-- /.container-fluid -->
 
- 
+
         </div>
         <!-- /#page-wrapper -->
 

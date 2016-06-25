@@ -94,12 +94,9 @@ class InvoicesController extends AppController
 	}
 
 	public function modify(){
-		if(($this->request->session()->read('Auth.User.role')) != 'rep'){
-			return $this->redirect($this->Auth->redirectUrl());
-		}
-		else {
+		if($this->Auth->user()){
 
-			$this->viewBuilder()->layout('associations_view'); //Carga un layout personalizado para esta vista
+			$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
 			$id =$this->request->session()->read('Auth.User.association_id');
 			if($id){
 
@@ -108,7 +105,10 @@ class InvoicesController extends AppController
 	          $invoice= $invoice->toArray();
 	          $this->set('invoice',$invoice);
         	}
-		}
+			}
+			else{
+				return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+			}
 	}
 
 	public function modifyInvoice($id = null){
