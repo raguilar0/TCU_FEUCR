@@ -71,8 +71,13 @@
       echo "</div >";
 
   echo "</div >";
-
-
+    
+    echo "<div class = 'row'>";
+        echo "<div class = 'col-xs-12'>";
+            echo "<a href='../image_view/".$data['id']."' target= '_blank'>Imagen de Factura</a>";
+        echo "</div>";
+    echo "</div>";
+    
 
     echo  "<div class='row text-center'>";
         echo "<div class = 'col-xs-12'>";   

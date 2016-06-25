@@ -51,20 +51,14 @@
        echo "<h4>".$this->Form->input('provider', ['class' => 'form-control','label'=>'Proveedor','value'=>$data['provider'], 'maxlength'=> '100', 'placeholder'=>'Ejemplo: PriceSmart'])."</h4>";
       echo "</div >";
 
-     echo "<div class = 'col-xs-12 col-md-4'>";
-        	echo "<label for = 'date'>Fecha</label>";
-        	echo "<input type='date' name = 'date' class = 'form-control' id = 'date'>";
-	  echo "</div >";
+    	echo "<div class = 'col-xs-12 col-md-4'>";
+            echo "<h4>".$this->Form->input('attendant', ['class' => 'form-control','label'=>'Responsable', 'value'=>$data['attendant'],'maxlength'=> '100', 'placeholder'=>'Ejemplo: Andrey Pérez'])."</h4>";
+        echo "</div >";
+	 echo "</div >";
 
 
   echo "</div >";
-  echo "<div class = 'row'>";
-
-      echo "<div class = 'col-xs-12 col-md-4'>";
-       echo "<h4>".$this->Form->input('attendant', ['class' => 'form-control','label'=>'Responsable', 'value'=>$data['attendant'],'maxlength'=> '100', 'placeholder'=>'Ejemplo: Andrey Pérez'])."</h4>";
-      echo "</div >";
-
-  echo "</div >";
+  
 
 
    echo "<div class = 'row'>";
@@ -87,6 +81,12 @@
         echo "</div >";
 
     echo "</div >";
+    
+    echo "<div class = 'row'>";
+        
+        echo "<a href='../image_view/".$data['id']."' target= '_blank'>Imagen de Factura</a>";
+       // echo $this->Html->image('invoices/'.$data['image_name'], ['alt' => 'Imagen de Factura']);
+    echo "</div>"; 
 
     echo  "<div class='row text-center'>";
         echo "<div class = 'col-xs-12'>";   
