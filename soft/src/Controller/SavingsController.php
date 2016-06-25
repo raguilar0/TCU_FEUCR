@@ -18,6 +18,7 @@ class SavingsController extends AppController
      */
     public function index()
     {
+      if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views');
 
         if(($this->request->session()->read('Auth.User.role')) == 'rep'){
@@ -44,6 +45,10 @@ class SavingsController extends AppController
 
         $this->set(compact('savings'));
         $this->set('_serialize', ['savings']);
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
     /**
@@ -55,6 +60,7 @@ class SavingsController extends AppController
      */
     public function view($id = null)
     {
+      if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views');
 
         if(($this->request->session()->read('Auth.User.role')) == 'admin'){
@@ -72,6 +78,10 @@ class SavingsController extends AppController
 
         $this->set('saving', $saving);
         $this->set('_serialize', ['saving']);
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
     /**
@@ -81,6 +91,7 @@ class SavingsController extends AppController
      */
     public function add()
     {
+      if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views');
 
         $saving = $this->Savings->newEntity();
@@ -97,6 +108,10 @@ class SavingsController extends AppController
         $tracts = $this->Savings->Tracts->find('list', ['limit' => 200]);
         $this->set(compact('saving', 'associations', 'tracts'));
         $this->set('_serialize', ['saving']);
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
     /**
@@ -108,6 +123,7 @@ class SavingsController extends AppController
      */
     public function edit($id = null)
     {
+      if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views');
         $saving = $this->Savings->get($id, [
             'contain' => []
@@ -124,15 +140,16 @@ class SavingsController extends AppController
             } else {
                 $this->Flash->error(__('The saving could not be saved. Please, try again.'));
             }
-
-
-
         }
         $associations = $this->Savings->Associations->find('list', ['limit' => 200]);
         $tracts = $this->Savings->Tracts->find('list', ['limit' => 200]);
         $this->set(compact('saving', 'associations'));
         $this->set(compact('saving', 'tracts'));
         $this->set('_serialize', ['saving']);
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
     /**
@@ -144,6 +161,7 @@ class SavingsController extends AppController
      */
     public function delete($id = null)
     {
+      if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views');
         $this->request->allowMethod(['post', 'delete']);
         $saving = $this->Savings->get($id);
@@ -153,5 +171,9 @@ class SavingsController extends AppController
             $this->Flash->error(__('The saving could not be deleted. Please, try again.'));
         }
         return $this->redirect(['action' => 'index']);
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 }
