@@ -19,10 +19,28 @@ class SavingsController extends AppController
     public function index()
     {
         $this->viewBuilder()->layout('admin_views');
-        $this->paginate = [
-            'contain' => ['Associations', 'Tracts']
-        ];
-        $savings = $this->paginate($this->Savings);
+
+        if(($this->request->session()->read('Auth.User.role')) == 'rep'){
+          $association_id = $this->request->session()->read('Auth.User.association_id');
+
+          $this->paginate['contain'] = [
+            'Tracts',
+            'Associations'=> function(\Cake\ORM\Query $query) use ($association_id){
+                return $query->where(['Associations.id'=>$association_id]);
+            }
+          ];
+
+            //$this->paginate = $querry;
+            $savings = $this->paginate($this->Savings);
+
+        }
+
+        if(($this->request->session()->read('Auth.User.role')) == 'admin'){
+          $this->paginate = [
+              'contain' => ['Associations', 'Tracts']
+          ];
+          $savings = $this->paginate($this->Savings);
+        }
 
         $this->set(compact('savings'));
         $this->set('_serialize', ['savings']);
@@ -38,9 +56,19 @@ class SavingsController extends AppController
     public function view($id = null)
     {
         $this->viewBuilder()->layout('admin_views');
-        $saving = $this->Savings->get($id, [
-            'contain' => ['Associations']
-        ]);
+
+        if(($this->request->session()->read('Auth.User.role')) == 'admin'){
+          $saving = $this->Savings->get($id, [
+              'contain' => ['Associations']
+          ]);
+        }
+
+        if(($this->request->session()->read('Auth.User.role')) == 'rep'){
+          $association_id = $this->request->session()->read('Auth.User.association_id');
+          $saving = $this->Savings->get($association_id, [
+              'contain' => ['Associations']
+          ]);
+        }
 
         $this->set('saving', $saving);
         $this->set('_serialize', ['saving']);
@@ -85,6 +113,10 @@ class SavingsController extends AppController
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
+          if(($this->request->session()->read('Auth.User.role')) == 'rep'){
+              $this->request->data['association_id'] = $this->request->session()->read('Auth.User.association_id');
+          }
+
             $saving = $this->Savings->patchEntity($saving, $this->request->data);
             if ($this->Savings->save($saving)) {
                 $this->Flash->success(__('The saving has been saved.'));
@@ -92,6 +124,9 @@ class SavingsController extends AppController
             } else {
                 $this->Flash->error(__('The saving could not be saved. Please, try again.'));
             }
+
+
+
         }
         $associations = $this->Savings->Associations->find('list', ['limit' => 200]);
         $tracts = $this->Savings->Tracts->find('list', ['limit' => 200]);

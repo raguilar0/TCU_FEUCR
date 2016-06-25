@@ -9,9 +9,10 @@
 
 
     <table class="table">
+
         <tr>
-            <th><?= __('Asociación') ?></th>
-            <td><?= $saving->has('association') ? $this->Html->link($saving->association->name, ['controller' => 'Associations', 'action' => 'view', $saving->association->id]) : '' ?></td>
+          <th><?php echo __('Asociación') ?></th>
+          <td><?php echo $saving->has('association') ? $this->Html->link($saving->association->name, ['controller' => 'Associations', 'action' => 'view', $saving->association->id]) : '' ?></td>
         </tr>
         <tr>
             <th><?= __('Id') ?></th>
@@ -30,4 +31,3 @@
             <td><?= h($saving->date) ?></td>
         </tr>
     </table>
-
