@@ -18,6 +18,7 @@ class AmountsController extends AppController
      */
     public function index()
     {
+      if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views');
         $this->paginate = [
             'contain' => ['Associations', 'Tracts']
@@ -26,6 +27,11 @@ class AmountsController extends AppController
 
         $this->set(compact('amounts'));
         $this->set('_serialize', ['amounts']);
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
+
     }
 
     /**
@@ -37,6 +43,7 @@ class AmountsController extends AppController
      */
     public function view($id = null)
     {
+      if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views');
         $amount = $this->Amounts->get($id, [
             'contain' => ['Associations', 'Tracts']
@@ -44,6 +51,11 @@ class AmountsController extends AppController
 
         $this->set('amount', $amount);
         $this->set('_serialize', ['amount']);
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
+
     }
 
     /**
@@ -53,6 +65,7 @@ class AmountsController extends AppController
      */
     public function add()
     {
+      if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views');
         $amount = $this->Amounts->newEntity();
         if ($this->request->is('post')) {
@@ -68,6 +81,11 @@ class AmountsController extends AppController
         $tracts = $this->Amounts->Tracts->find('list', ['limit' => 200]);
         $this->set(compact('amount', 'associations', 'tracts'));
         $this->set('_serialize', ['amount']);
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
+
     }
 
     /**
@@ -79,6 +97,7 @@ class AmountsController extends AppController
      */
     public function edit($id = null)
     {
+      if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views');
         $amount = $this->Amounts->get($id, [
             'contain' => []
@@ -96,6 +115,10 @@ class AmountsController extends AppController
         $tracts = $this->Amounts->Tracts->find('list', ['limit' => 200]);
         $this->set(compact('amount', 'associations', 'tracts'));
         $this->set('_serialize', ['amount']);
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
     /**
@@ -107,6 +130,7 @@ class AmountsController extends AppController
      */
     public function delete($id = null)
     {
+      if($this->Auth->user()){
         $this->request->allowMethod(['post', 'delete']);
         $amount = $this->Amounts->get($id);
         if ($this->Amounts->delete($amount)) {
@@ -115,5 +139,9 @@ class AmountsController extends AppController
             $this->Flash->error(__('The amount could not be deleted. Please, try again.'));
         }
         return $this->redirect(['action' => 'index']);
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }  
     }
 }

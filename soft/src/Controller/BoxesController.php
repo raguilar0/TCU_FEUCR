@@ -8,10 +8,7 @@ class BoxesController extends AppController
 {
 	public function modify()
 	{
-		if(($this->request->session()->read('Auth.User.role')) != 'rep'){
-			return $this->redirect($this->Auth->redirectUrl());
-		}
-		else{
+		if($this->Auth->user()){
 			$id = $this->request->session()->read('Auth.User.association_id');
 			$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
 
@@ -45,17 +42,16 @@ class BoxesController extends AppController
 
 			$this->set('data',$box);
 		}
+		else{
+				return $this->redirect($this->Auth->redirectUrl());
+
+		}
 
 	}
 
-
-
 	private function add($data)
 	{
-		if(($this->request->session()->read('Auth.User.role')) != 'admin'){
-			return $this->redirect($this->Auth->redirectUrl());
-		}
-		else{
+		if($this->Auth->user()){
 			$boxes = $this->Boxes->newEntity($data);
 			$response = 0;
 			$id = $this->request->session()->read('Auth.User.association_id');
@@ -64,28 +60,36 @@ class BoxesController extends AppController
 			{
 				$response = 1;
 			}
-		}
+    }
+    else{
+      return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+    }
+
 	}
 
 
 	private function getTractId($actualDate){
+		if($this->Auth->user()){
+			$this->loadModel('Tracts');
 
-		$this->loadModel('Tracts');
+			//$actualDate = date("Y-m-d");
 
-		//$actualDate = date("Y-m-d");
+			$id = $this->Tracts->find()
+						->hydrate(false)
+						->select(['id'])
+						->where(function ($exp) use($actualDate) {
+	                        return $exp
+	                        	->lte('date',$actualDate)
+	                        	->gte('deadline',$actualDate);
+	                    });
 
-		$id = $this->Tracts->find()
-					->hydrate(false)
-					->select(['id'])
-					->where(function ($exp) use($actualDate) {
-                        return $exp
-                        	->lte('date',$actualDate)
-                        	->gte('deadline',$actualDate);
-                    });
+	        $id = $id->toArray();
 
-        $id = $id->toArray();
-
-		return $id[0]['id'];
+			return $id[0]['id'];
+    }
+    else{
+      return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+    }
 
 	}
 

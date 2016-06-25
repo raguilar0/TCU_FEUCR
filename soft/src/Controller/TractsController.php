@@ -18,11 +18,16 @@ class TractsController extends AppController
      */
     public function index()
     {
+      if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views');
         $tracts = $this->paginate($this->Tracts);
 
         $this->set(compact('tracts'));
         $this->set('_serialize', ['tracts']);
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
     /**
@@ -34,6 +39,7 @@ class TractsController extends AppController
      */
     public function view($id = null)
     {
+      if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views');
         $tract = $this->Tracts->get($id, [
             'contain' => ['Amounts', 'Boxes', 'InitialAmounts', 'Invoices']
@@ -41,6 +47,10 @@ class TractsController extends AppController
 
         $this->set('tract', $tract);
         $this->set('_serialize', ['tract']);
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
     /**
@@ -50,6 +60,7 @@ class TractsController extends AppController
      */
     public function add()
     {
+      if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views');
         $tract = $this->Tracts->newEntity();
         if ($this->request->is('post')) {
@@ -63,6 +74,10 @@ class TractsController extends AppController
         }
         $this->set(compact('tract'));
         $this->set('_serialize', ['tract']);
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
     /**
@@ -74,6 +89,7 @@ class TractsController extends AppController
      */
     public function edit($id = null)
     {
+      if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views');
         $tract = $this->Tracts->get($id, [
             'contain' => []
@@ -90,6 +106,10 @@ class TractsController extends AppController
         }
         $this->set(compact('tract'));
         $this->set('_serialize', ['tract']);
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
     /**
@@ -101,6 +121,7 @@ class TractsController extends AppController
      */
     public function delete($id = null)
     {
+      if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views');
         $this->request->allowMethod(['post', 'delete']);
         $tract = $this->Tracts->get($id);
@@ -110,5 +131,9 @@ class TractsController extends AppController
             $this->Flash->error(__('The tract could not be deleted. Please, try again.'));
         }
         return $this->redirect(['action' => 'index']);
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 }

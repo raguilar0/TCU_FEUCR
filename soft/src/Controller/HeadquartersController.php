@@ -10,22 +10,23 @@ class HeadquartersController extends AppController
 
 	public function index()
 	{
-		if(($this->request->session()->read('Auth.User.role')) != 'admin'){
-			return $this->redirect($this->Auth->redirectUrl());
-		}
-		else{
-			$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
-		}
+		if($this->Auth->user()){
+			if(($this->request->session()->read('Auth.User.role')) != 'admin'){
+				return $this->redirect($this->Auth->redirectUrl());
+			}
+			else{
+				$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
+			}
+    }
+    else{
+      return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+    }
 	}
 
 
 	public function add()
 	{
-		if(($this->request->session()->read('Auth.User.role')) != 'admin'){
-			return $this->redirect($this->Auth->redirectUrl());
-		}
-		else{
-
+		if($this->Auth->user()){
 			$headquarter = $this->Headquarters->newEntity($this->request->data); //El parámetro es para validar los datos
 
 			$response = "0";
@@ -41,18 +42,16 @@ class HeadquartersController extends AppController
 				die($response);
 
 			}
-		}
+    }
+    else{
+      return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+    }
 	}
 
 
 	public function getInformation()
 	{
-
-		if(($this->request->session()->read('Auth.User.role')) != 'admin'){
-			return $this->redirect($this->Auth->redirectUrl());
-		}
-		else{
-
+		if($this->Auth->user()){
 			if($this->request->is(array('post','put')))
 			{
 
@@ -71,21 +70,16 @@ class HeadquartersController extends AppController
 				$data = $headquarter[0]['image_name'].",".$headquarter[0]['name'];
 				die($data);
 			}
-		}
+    }
+    else{
+      return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+    }
 	}
-
-
-
-
 
 
 	public function modifyHeadquarter()
 	{
-		if(($this->request->session()->read('Auth.User.role')) != 'admin'){
-			return $this->redirect($this->Auth->redirectUrl());
-		}
-		else{
-
+		if($this->Auth->user()){
 			$response = "0";
 
 			if($this->request->is(array('post','put')))
@@ -120,18 +114,17 @@ class HeadquartersController extends AppController
 					}
 				}
 			}
-
 			die($response);
-		}
+    }
+    else{
+      return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+    }
 	}
 
 
 	public function deleteHeadquarter()
 	{
-		if(($this->request->session()->read('Auth.User.role')) != 'admin'){
-			return $this->redirect($this->Auth->redirectUrl());
-		}
-		else{
+		if($this->Auth->user()){
 			$response = "1";
 			$headquarter = $this->Headquarters->get($this->request->session()->read('id_headquarter'));
 
@@ -141,7 +134,10 @@ class HeadquartersController extends AppController
 			}
 
 			die($response);
-		}
+    }
+    else{
+      return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+    }
 	}
 
 }

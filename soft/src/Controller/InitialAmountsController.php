@@ -18,6 +18,7 @@ class InitialAmountsController extends AppController
      */
     public function index()
     {
+      if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views');
         $this->paginate = [
             'contain' => ['Associations', 'Tracts']
@@ -26,6 +27,10 @@ class InitialAmountsController extends AppController
 
         $this->set(compact('initialAmounts'));
         $this->set('_serialize', ['initialAmounts']);
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
     /**
@@ -37,6 +42,7 @@ class InitialAmountsController extends AppController
      */
     public function view($id = null)
     {
+      if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views');
         $initialAmount = $this->InitialAmounts->get($id, [
             'contain' => ['Associations', 'Tracts']
@@ -44,6 +50,10 @@ class InitialAmountsController extends AppController
 
         $this->set('initialAmount', $initialAmount);
         $this->set('_serialize', ['initialAmount']);
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
     /**
@@ -80,6 +90,7 @@ class InitialAmountsController extends AppController
      */
     public function edit($id = null)
     {
+      if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views');
         $initialAmount = $this->InitialAmounts->get($id, [
             'contain' => []
@@ -88,7 +99,7 @@ class InitialAmountsController extends AppController
 
 
         if ($this->request->is(['patch', 'post', 'put'])) {
-            
+
             $initialAmount = $this->InitialAmounts->patchEntity($initialAmount, $this->request->data);
             if ($this->InitialAmounts->save($initialAmount)) {
                 $this->Flash->success(__('The initial amount has been saved.'));
@@ -112,25 +123,15 @@ class InitialAmountsController extends AppController
         $initialAmount->type = $types;
         $associations = $this->InitialAmounts->Associations->find('list', ['limit' => 200]);
         $tracts = $this->InitialAmounts->Tracts->find('list', ['limit' => 200]);
-        /**
-                                                    ->hydrate(false)
-                                                    ->select(['date'])
-                                                    ->where(['YEAR(date)'=> date('Y')])
-                                                    ->orWhere(['YEAR(date)'=>(date('Y') + 1)]);**/
-
-        $this->set(compact('initialAmount', 'associations', 'tracts'));
-        $this->set('_serialize', ['initialAmount']);
     }
+    else{
+      return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+    }
+  }
 
-    /**
-     * Delete method
-     *
-     * @param string|null $id Initial Amount id.
-     * @return \Cake\Network\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
     public function delete($id = null)
     {
+      if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views');
         $this->request->allowMethod(['post', 'delete']);
         $initialAmount = $this->InitialAmounts->get($id);
@@ -140,10 +141,15 @@ class InitialAmountsController extends AppController
             $this->Flash->error(__('The initial amount could not be deleted. Please, try again.'));
         }
         return $this->redirect(['action' => 'index']);
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
     public function add($association_name = null)
     {
+      if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
 
 
@@ -196,19 +202,19 @@ class InitialAmountsController extends AppController
 
             }
         }
-        else
-        {
-
-        }
 
         $this->set('head',$headquarters);
         $this->set('data', $tracts);
         $this->set('type', $amounts_type);
-
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
     private function createInitialAmount( $oldBox, $association_id, $tract_id, $type)
     {
+      if($this->Auth->user()){
         $type_name = ($type == 0 ? "Tracto":"Ingresos Generados");
 
 
@@ -237,13 +243,16 @@ class InitialAmountsController extends AppController
 
 
         return $message;
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
     private function transferBox($oldBox,$association_id, $second_tract_id, $type)
     {
 
-
-
+      if($this->Auth->user()){
         $type_name = ($type == 0 ? "Tracto":"Ingresos Generados");
         $message = "Se creó la caja para ".$type_name;
 
@@ -262,16 +271,16 @@ class InitialAmountsController extends AppController
         {
             $message = 'No se pudo crear la caja '.$type_name .' ya que se dio un error inesperado.';
         }
-
-
-
-
-
         return $message;
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
     private function getBox($association_id, $tract_id, $type)
     {
+      if($this->Auth->user()){
         $this->loadModel('Boxes');
 
         $box = $this->Boxes->find()
@@ -281,12 +290,15 @@ class InitialAmountsController extends AppController
         $box = $box->toArray();
 
         return $box;
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
-
-
 
     private function getAssociationId($association_name)
     {
+      if($this->Auth->user()){
         $association_id = $this->InitialAmounts->Associations->find() //Se busca primero el id de esa sede por medio del nombre
         ->hydrate(false)
             ->select(['id'])
@@ -295,10 +307,15 @@ class InitialAmountsController extends AppController
         $association_id = $association_id->toArray();
 
         return $association_id[0]['id'];
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
     private function getTracts($year)
     {
+      if($this->Auth->user()){
         $this->loadModel('Tracts');
 
         $tracts = $this->Tracts->find()
@@ -307,10 +324,15 @@ class InitialAmountsController extends AppController
         $tracts = $tracts->toArray();
 
         return $tracts;
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
     private function getHeadquarters()
     {
+      if($this->Auth->user()){
         $query = $this->InitialAmounts->Associations->Headquarters->find() //Se trae solo las sedes que tienen alguna asocicación asociada :p
         ->hydrate(false)
             ->select(['Headquarters.name'])
@@ -327,17 +349,18 @@ class InitialAmountsController extends AppController
         $headquarters = $query->toArray();
 
         return $headquarters;
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
-
-
-
-
 
     /**
      *  Esta funcion devuelve el id del presente tracto
      **/
     private function getTractId($actualDate)
     {
+      if($this->Auth->user()){
         $this->loadModel('Tracts');
 
         //$actualDate = date("Y-m-d");
@@ -354,6 +377,10 @@ class InitialAmountsController extends AppController
         $id = $id->toArray();
 
         return $id[0]['id'];
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
 
