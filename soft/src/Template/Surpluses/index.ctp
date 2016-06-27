@@ -12,18 +12,16 @@
     <table class="table">
         <thead>
         <tr>
-            <th><?= $this->Paginator->sort('id') ?></th>
-            <th><?= $this->Paginator->sort('Monto') ?></th>
-            <th><?= $this->Paginator->sort('Fecha') ?></th>
-            <th><?= $this->Paginator->sort('Detalles') ?></th>
-            <th><?= $this->Paginator->sort('Id de la asociación') ?></th>
+            <th><?= $this->Paginator->sort('amount',['Monto']) ?></th>
+            <th><?= $this->Paginator->sort('date',['Fecha de asignación']) ?></th>
+            <th><?= $this->Paginator->sort('detail',['Detalles']) ?></th>
+            <th><?= $this->Paginator->sort('association_id',['Asociación']) ?></th>
             <th class="actions"><?= __('Acciones') ?></th>
         </tr>
         </thead>
         <tbody>
         <?php foreach ($surpluses as $surplus): ?>
             <tr>
-                <td><?= $this->Number->format($surplus->id) ?></td>
                 <td><?= $this->Number->format($surplus->amount) ?></td>
                 <td><?= h($surplus->date) ?></td>
                 <td><?= h($surplus->detail) ?></td>

@@ -56,6 +56,7 @@ class SavingAccountsController extends AppController
         $this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vist
         $savingAccount = $this->SavingAccounts->newEntity();
         if ($this->request->is('post')) {
+
             $savingAccount = $this->SavingAccounts->patchEntity($savingAccount, $this->request->data);
             if ($this->SavingAccounts->save($savingAccount)) {
                 $this->Flash->success(__('The saving account has been saved.'));
@@ -63,9 +64,23 @@ class SavingAccountsController extends AppController
             } else {
                 $this->Flash->error(__('The saving account could not be saved. Please, try again.'));
             }
+            
         }
-        $associations = $this->SavingAccounts->Associations->find('list', ['limit' => 200]);
-        $tracts = $this->SavingAccounts->Tracts->find('list', ['limit' => 200]);
+        $associations = $this->SavingAccounts->Associations->find('list');
+
+        $tracts = $this->SavingAccounts->Tracts->find()
+            ->select(['id','date','deadline'])
+            ->where(['YEAR(date)'=>date('Y')])
+            ->orWhere(['YEAR(date)'=>(date('Y') + 1)]);
+        $temp = array();
+
+        foreach ($tracts as $key => $value)
+        {
+            $temp[$value->id] = $value->date." - ".$value->deadline;
+        }
+
+        $tracts = $temp;
+
         $this->set(compact('savingAccount', 'associations', 'tracts'));
         $this->set('_serialize', ['savingAccount']);
     }
@@ -92,8 +107,20 @@ class SavingAccountsController extends AppController
                 $this->Flash->error(__('The saving account could not be saved. Please, try again.'));
             }
         }
-        $associations = $this->SavingAccounts->Associations->find('list', ['limit' => 200]);
-        $tracts = $this->SavingAccounts->Tracts->find('list', ['limit' => 200]);
+        $associations = $this->SavingAccounts->Associations->find('list');
+        $tracts = $this->SavingAccounts->Tracts->find()
+            ->select(['id','date','deadline'])
+            ->where(['YEAR(date)'=>date('Y')])
+            ->orWhere(['YEAR(date)'=>(date('Y') + 1)])
+            ->orWhere(['YEAR(date)'=>(date('Y') - 1)]);
+        $temp = array();
+
+        foreach ($tracts as $key => $value)
+        {
+            $temp[$value->id] = $value->date." - ".$value->deadline;
+        }
+
+        $tracts = $temp;
         $this->set(compact('savingAccount', 'associations', 'tracts'));
         $this->set('_serialize', ['savingAccount']);
     }

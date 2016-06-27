@@ -1,118 +1,40 @@
 <div class="row text-center">
     <div class="col-xs-12">
-        <h1> <?php echo $data['name'].' ('.$data['acronym'].')';?> </h1>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-12 col-md-4">
-        <h3><b>Ubicación</b></h3>
-    </div>
-
-    <div class="col-xs-12 col-md-8">
-        <h3><?php echo $data['location'];?> </h3>
+        <h1>Información de la asociación</h1>
     </div>
 
 </div>
-
-<hr>
-
-<div class="row">
-    <div class="col-xs-12 col-md-4">
-        <h3><b>Horario</b></h3>
-    </div>
-
-    <div class="col-xs-12 col-md-8">
-          <h3><?php echo $data['schedule'];?> </h3>
-        
-    </div>   
-
-</div>
-
-<hr>
-
-<div class="row">
-    <div class="col-xs-12 col-md-4">
-        <h3><b>Tarjeta Autorizada</b></h3>
-    </div>
-
-    <div class="col-xs-12 col-md-8">
-          <h3><?php echo ($data['authorized_card'] == 1 ? 'Autorizada':'Sin Autorización');?> </h3>
-        
-    </div>
-
-</div>
-
-<hr>
-
-
-<div class="row">
-    <div class="col-xs-12 col-md-4">
-        <h3><b>Sede</b></h3>
-    </div>
-
-    <div class="col-xs-12 col-md-8">
-          <h3><?php echo $data['headquarter'];?> </h3>
-        
-    </div>  
-
-</div>
-
-<hr>
-
-
 <br>
 <br>
 
 
-<div class="row text-center">
-    <div class="col-xs-12">
-      <h2>Montos de Tracto</h2>
-    </div>
-
-</div>
-
-<br>
-
-<div class="table-responsive">
-  <table class="table tables">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Cantidad Asignada</th>
-      <th>Fecha de Asignación</th>      
-      <th>Fecha de Inicio del Tracto</th>
-      <th>Fecha de Fin del Tracto</th>             
-    </tr>
-  </thead>
-  <tbody>
-
-
-      <?php
-
-          foreach ($data['amounts'] as $key => $value) {
-             echo "<tr>";
-              echo "<td>".$value['tract']['number']."</td>";
-              echo "<td>".$value['amount']."</td>";
-              echo "<td>".$value['date']."</td>";              
-              echo "<td>".$value['tract']['date']."</td>";
-              echo "<td>".$value['tract']['deadline']."</td>";                      
-             echo "</tr>";
-          }
-      ?>
-
-
-
-
-  </tbody>
-</table>
-</div>
-
-<br>
-<br>
-
-<div class="row text-center">
-  <div class="col-xs-12">
-     <?php echo $this->Html->link('Atrás', '/associations/show_associations/1', ['class'=>'btn btn-primary']);?>
-  </div>
-</div>
+    <table class="table">
+        <tr>
+            <th><?= __('Sigla') ?></th>
+            <td><?= h($association->acronym) ?></td>
+        </tr>
+        <tr>
+            <th><?= __('Nombre') ?></th>
+            <td><?= h($association->name) ?></td>
+        </tr>
+        <tr>
+            <th><?= __('Dirección') ?></th>
+            <td><?= h($association->location) ?></td>
+        </tr>
+        <tr>
+            <th><?= __('Horario') ?></th>
+            <td><?= h($association->schedule) ?></td>
+        </tr>
+        <tr>
+            <th><?= __('Sede') ?></th>
+            <td><?= $association->has('headquarters') ? $this->Html->link($association->headquarters->name, ['controller' => 'Headquarters', 'action' => 'view', $association->headquarters->id]) : '' ?></td>
+        </tr>
+        <tr>
+            <th><?= __('Tarjeta autorizada') ?></th>
+            <td><?= ($this->Number->format($association->authorized_card) ? 'Aprobada': 'Reprobada' ); ?></td>
+        </tr>
+        <tr>
+            <th><?= __('Estado') ?></th>
+            <td><?= ($this->Number->format($association->enable) ? 'Habilitada': 'Deshabilitada' ); ?></td>
+        </tr>
+    </table>

@@ -1,60 +1,125 @@
 <?php
 namespace App\Model\Table;
 
+use App\Model\Entity\Association;
+use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
+/**
+ * Associations Model
+ *
+ * @property \Cake\ORM\Association\BelongsTo $Headquarters
+ * @property \Cake\ORM\Association\HasMany $Amounts
+ * @property \Cake\ORM\Association\HasMany $Boxes
+ * @property \Cake\ORM\Association\HasMany $InitialAmounts
+ * @property \Cake\ORM\Association\HasMany $Invoices
+ * @property \Cake\ORM\Association\HasMany $SavingAccounts
+ * @property \Cake\ORM\Association\HasMany $Savings
+ * @property \Cake\ORM\Association\HasMany $Surpluses
+ * @property \Cake\ORM\Association\HasMany $Users
+ * @property \Cake\ORM\Association\HasMany $Warehouses
+ */
 class AssociationsTable extends Table
 {
+
+    /**
+     * Initialize method
+     *
+     * @param array $config The configuration for the Table.
+     * @return void
+     */
     public function initialize(array $config)
     {
-        $this->addBehavior('Timestamp');
-        $this->belongsTo('Headquarters');
-        $this->hasMany('Amounts');
-        $this->hasMany('Boxes');
-        $this->hasMany('Invoices');
-        $this->hasMany('InitialAmounts');
-        $this->hasMany('Surpluses');
-        $this->hasMany('Savings');
-        $this->hasMany('SavingAccounts');
+        parent::initialize($config);
 
+        $this->table('associations');
+        $this->displayField('name');
+        $this->primaryKey('id');
+
+        $this->belongsTo('Headquarters', [
+            'foreignKey' => 'headquarter_id',
+            'joinType' => 'INNER'
+        ]);
+        $this->hasMany('Amounts', [
+            'foreignKey' => 'association_id'
+        ]);
+        $this->hasMany('Boxes', [
+            'foreignKey' => 'association_id'
+        ]);
+        $this->hasMany('InitialAmounts', [
+            'foreignKey' => 'association_id'
+        ]);
+        $this->hasMany('Invoices', [
+            'foreignKey' => 'association_id'
+        ]);
+        $this->hasMany('SavingAccounts', [
+            'foreignKey' => 'association_id'
+        ]);
+        $this->hasMany('Savings', [
+            'foreignKey' => 'association_id'
+        ]);
+        $this->hasMany('Surpluses', [
+            'foreignKey' => 'association_id'
+        ]);
+        $this->hasMany('Users', [
+            'foreignKey' => 'association_id'
+        ]);
+        $this->hasMany('Warehouses', [
+            'foreignKey' => 'association_id'
+        ]);
     }
 
+    /**
+     * Default validation rules.
+     *
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
+     */
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->notEmpty('acronym')
-            ->add('acronym', 'validFormat', [
-                            'rule' => array('custom', '/^[A-Za-z0-9\-]+$/'),
-                            'message' => 'Números o letras'
-            ])
-            ->notEmpty('name')
-            ->add('name', 'validFormat', [
-                        'rule' => array('custom', '/[A-Za-z0-9]([A-Za-z0-9]| )+/'),
-                        'message' => 'Solo letras y números.'
-            ])
-            ->notEmpty('location')
-            ->add('location', 'validFormat', [
-                        'rule' => array('custom', '/[A-Za-z0-9\.\-\#\,]+$/'),
-                        'message' => 'Solo letras y números.'
-            ])
-            ->notEmpty('headquarters')
-            ->add('name', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'])
-            ->add('acronym', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'])
-            ->add('id', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'
-            ])
-            ->notEmpty('schedule')
-            ->add('schedule', 'validFormat', [
-                        'rule' => array('custom', '/[A-Za-z0-9\:\-]+$/'),
-                        'message' => 'Solo letras y números.'
-            ]);
+            ->integer('id')
+            ->allowEmpty('id', 'create');
 
+        $validator
+            ->requirePresence('acronym', 'create')
+            ->notEmpty('acronym');
 
+        $validator
+            ->requirePresence('name', 'create')
+            ->notEmpty('name');
+
+        $validator
+            ->allowEmpty('location');
+
+        $validator
+            ->allowEmpty('schedule');
+
+        $validator
+            ->integer('authorized_card')
+            ->requirePresence('authorized_card', 'create')
+            ->notEmpty('authorized_card');
+
+        $validator
+            ->integer('enable')
+            ->requirePresence('enable', 'create')
+            ->notEmpty('enable');
 
         return $validator;
     }
 
-
-
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->existsIn(['headquarter_id'], 'Headquarters'));
+        return $rules;
+    }
 }

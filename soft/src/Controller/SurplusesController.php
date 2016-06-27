@@ -64,7 +64,7 @@ class SurplusesController extends AppController
                 $this->Flash->error(__('The surplus could not be saved. Please, try again.'));
             }
         }
-        $associations = $this->Surpluses->Associations->find('list', ['limit' => 200]);
+        $associations = $this->Surpluses->Associations->find('list');
         $this->set(compact('surplus', 'associations'));
         $this->set('_serialize', ['surplus']);
     }
@@ -91,7 +91,7 @@ class SurplusesController extends AppController
                 $this->Flash->error(__('The surplus could not be saved. Please, try again.'));
             }
         }
-        $associations = $this->Surpluses->Associations->find('list', ['limit' => 200]);
+        $associations = $this->Surpluses->Associations->find('list');
         $this->set(compact('surplus', 'associations'));
         $this->set('_serialize', ['surplus']);
     }

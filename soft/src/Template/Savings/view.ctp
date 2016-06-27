@@ -1,6 +1,6 @@
 <div class="row text-center">
     <div class="col-xs-12">
-        <h1>Información del monto de ahorro #<?= h($saving->id) ?></h1>
+        <h1>Información del monto de ahorro</h1>
     </div>
 
 </div>
@@ -14,8 +14,8 @@
             <td><?= $saving->has('association') ? $this->Html->link($saving->association->name, ['controller' => 'Associations', 'action' => 'view', $saving->association->id]) : '' ?></td>
         </tr>
         <tr>
-            <th><?= __('Id') ?></th>
-            <td><?= $this->Number->format($saving->id) ?></td>
+            <th><?= __('Tracto') ?></th>
+            <td><?= $saving->has('tract') ? $this->Html->link($saving->tract->date." - ".$saving->tract->deadline, ['controller' => 'Tracts', 'action' => 'view', $saving->tract->id]) : '' ?></td>
         </tr>
         <tr>
             <th><?= __('Monto asignado') ?></th>
@@ -28,6 +28,11 @@
         <tr>
             <th><?= __('Fecha') ?></th>
             <td><?= h($saving->date) ?></td>
+        </tr>
+        
+        <tr>
+            <th><?= __('Carta') ?></th>
+            <td><?= $this->Html->link( $saving->letter,['controller'=>'Savings', 'action'=>'download', $saving->letter]);?></td>
         </tr>
     </table>
 

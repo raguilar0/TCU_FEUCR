@@ -98,9 +98,7 @@ class InitialAmountsController extends AppController
             }
 
         }
-
-        $first = "";
-        $second = "";
+        
         $types = array(1 => 'Ingresos Generados', 0 => 'Tracto');
 
         if(!$initialAmount->type) //Cambiamos el contenido para hacer la interfaz más amena
@@ -110,13 +108,21 @@ class InitialAmountsController extends AppController
 
 
         $initialAmount->type = $types;
-        $associations = $this->InitialAmounts->Associations->find('list', ['limit' => 200]);
-        $tracts = $this->InitialAmounts->Tracts->find('list', ['limit' => 200]);
-        /**
-                                                    ->hydrate(false)
-                                                    ->select(['date'])
-                                                    ->where(['YEAR(date)'=> date('Y')])
-                                                    ->orWhere(['YEAR(date)'=>(date('Y') + 1)]);**/
+        $associations = $this->InitialAmounts->Associations->find('list');
+
+        $tracts = $this->InitialAmounts->Tracts->find()
+            ->select(['id','date','deadline'])
+            ->where(['YEAR(date)'=>date('Y')])
+            ->orWhere(['YEAR(date)'=>(date('Y') + 1)])
+            ->orWhere(['YEAR(date)'=>(date('Y') - 1)]);
+        $temp = array();
+
+        foreach ($tracts as $key => $value)
+        {
+            $temp[$value->id] = $value->date." - ".$value->deadline;
+        }
+
+        $tracts = $temp;
 
         $this->set(compact('initialAmount', 'associations', 'tracts'));
         $this->set('_serialize', ['initialAmount']);

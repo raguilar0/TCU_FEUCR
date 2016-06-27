@@ -12,9 +12,9 @@
             <thead>
             <tr>
                 <th><?= $this->Paginator->sort('id') ?></th>
-                <th><?= $this->Paginator->sort('Número de tracto') ?></th>
-                <th><?= $this->Paginator->sort('Fecha de inicio') ?></th>
-                <th><?= $this->Paginator->sort('Fecha de finalización') ?></th>
+                <th><?= $this->Paginator->sort('number',['Número de tracto']) ?></th>
+                <th><?= $this->Paginator->sort('date',['Fecha de inicio']) ?></th>
+                <th><?= $this->Paginator->sort('deadline',['Fecha de finalización']) ?></th>
                 <th class="actions"><?= __('Acciones') ?></th>
             </tr>
             </thead>

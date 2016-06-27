@@ -1,6 +1,6 @@
 <div class="row text-center">
     <div class="col-xs-12">
-        <h1>Información del tracto #<?= h($tract->id) ?></h1>
+        <h1>Información del tracto</h1>
     </div>
 
 </div>
@@ -9,10 +9,7 @@
 
 <div class="table-responsive">
     <table class="table">
-        <tr>
-            <th><?= __('Id') ?></th>
-            <td><?= $this->Number->format($tract->id) ?></td>
-        </tr>
+
         <tr>
             <th><?= __('Número') ?></th>
             <td><?= $this->Number->format($tract->number) ?></td>

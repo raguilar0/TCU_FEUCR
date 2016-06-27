@@ -63,10 +63,7 @@ class SavingsTable extends Table
         $validator
             ->integer('state')
             ->allowEmpty('state');
-
-        $validator
-            ->requirePresence('letter', 'create')
-            ->notEmpty('letter');
+        
 
 
         return $validator;

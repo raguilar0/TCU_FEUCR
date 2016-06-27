@@ -1,6 +1,6 @@
 <div class="row text-center">
     <div class="col-xs-12">
-        <h1>Información de la cuenta de ahorro #<?= h($savingAccount->id) ?></h1>
+        <h1>Información de la cuenta de ahorro</h1>
     </div>
 
 </div>
@@ -28,11 +28,7 @@
         </tr>
         <tr>
             <th><?= __('Tracto') ?></th>
-            <td><?= $savingAccount->has('tract') ? $this->Html->link($savingAccount->tract->id, ['controller' => 'Tracts', 'action' => 'view', $savingAccount->tract->id]) : '' ?></td>
-        </tr>
-        <tr>
-            <th><?= __('Id') ?></th>
-            <td><?= $this->Number->format($savingAccount->id) ?></td>
+            <td><?= $savingAccount->has('tract') ? $this->Html->link($savingAccount->tract->date." - ".$savingAccount->tract->deadline, ['controller' => 'Tracts', 'action' => 'view', $savingAccount->tract->id]) : '' ?></td>
         </tr>
         <tr>
             <th><?= __('Monto') ?></th>

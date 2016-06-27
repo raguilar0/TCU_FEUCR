@@ -11,22 +11,20 @@
     <table class="table">
         <thead>
         <tr>
-            <th><?= $this->Paginator->sort('id') ?></th>
-            <th><?= $this->Paginator->sort('Monto') ?></th>
-            <th><?= $this->Paginator->sort('Estado') ?></th>
-            <th><?= $this->Paginator->sort('Fecha') ?></th>
-            <th><?= $this->Paginator->sort('Id de la asociación') ?></th>
-            <th><?= $this->Paginator->sort('Tracto') ?></th>
+            <th><?= $this->Paginator->sort('amount',['Monto']) ?></th>
+            <th><?= $this->Paginator->sort('state',['Estado']) ?></th>
+            <th><?= $this->Paginator->sort('letter',['Carta']) ?></th>
+            <th><?= $this->Paginator->sort('association_id',['Asociación']) ?></th>
+            <th><?= $this->Paginator->sort('tract',['Tracto']) ?></th>
             <th class="actions"><?= __('Acciones') ?></th>
         </tr>
         </thead>
         <tbody>
         <?php foreach ($savings as $saving): ?>
             <tr>
-                <td><?= $this->Number->format($saving->id) ?></td>
                 <td><?= $this->Number->format($saving->amount) ?></td>
                 <td><?= $this->Number->format($saving->state) ?></td>
-                <td><?= h($saving->date) ?></td>
+                <td><?= $this->Html->link( $saving->letter,['controller'=>'Savings', 'action'=>'download', $saving->letter]);?></td>
                 <td><?= $saving->has('association') ? $this->Html->link($saving->association->name, ['controller' => 'Associations', 'action' => 'view', $saving->association->id]) : '' ?></td>
                 <td><?= $saving->has('tract') ? $this->Html->link($saving->tract->date." - ".$saving->tract->deadline, ['controller' => 'Tracts', 'action' => 'view', $saving->tract->id]) : '' ?></td>
                 <td class="actions">

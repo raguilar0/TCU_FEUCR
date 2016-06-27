@@ -1,6 +1,6 @@
 <div class="row text-center">
     <div class="col-xs-12">
-        <h1>Información del monto inicial #<?= h($initialAmount->id) ?></h1>
+        <h1>Información del monto inicial</h1>
     </div>
 
 </div>
@@ -15,12 +15,9 @@
         </tr>
         <tr>
             <th><?= __('Tracto') ?></th>
-            <td><?= $initialAmount->has('tract') ? $this->Html->link($initialAmount->tract->id, ['controller' => 'Tracts', 'action' => 'view', $initialAmount->tract->id]) : '' ?></td>
+            <td><?= $initialAmount->has('tract') ? $this->Html->link($initialAmount->tract->date." - ".$initialAmount->tract->deadline, ['controller' => 'Tracts', 'action' => 'view', $initialAmount->tract->id]) : '' ?></td>
         </tr>
-        <tr>
-            <th><?= __('Id') ?></th>
-            <td><?= $this->Number->format($initialAmount->id) ?></td>
-        </tr>
+
         <tr>
             <th><?= __('Monto') ?></th>
             <td><?= $this->Number->format($initialAmount->amount) ?></td>

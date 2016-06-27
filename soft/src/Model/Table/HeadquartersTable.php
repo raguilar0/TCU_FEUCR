@@ -1,38 +1,68 @@
 <?php
 namespace App\Model\Table;
 
+use App\Model\Entity\Headquarters;
+use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
+/**
+ * Headquarters Model
+ *
+ */
 class HeadquartersTable extends Table
 {
+
+    /**
+     * Initialize method
+     *
+     * @param array $config The configuration for the Table.
+     * @return void
+     */
     public function initialize(array $config)
     {
-        $this->addBehavior('Timestamp');
+        parent::initialize($config);
 
+        $this->table('headquarters');
+        $this->displayField('name');
+        $this->primaryKey('id');
     }
 
-
-	public function validationDefault(Validator $validator)
+    /**
+     * Default validation rules.
+     *
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
+     */
+    public function validationDefault(Validator $validator)
     {
         $validator
-            ->requirePresence('name')
-            ->add('name', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'])
-            ->add('name', 'validFormat', [
-                            'rule' => array('custom', '/^[A-Za-z0-9\- ]+$/'),
-                            'message' => 'Números o letras'
-            ])
-            ->add('name',  'lengthBetween',[
-                            'rule' => ['lengthBetween', 1, 50],
-                            'message' => 'Debe contener mínimo 1 y máximo 50 caracteres.'
-                ])
-            ->add('image_name', 'validFormat', [
-                            'rule' => array('custom', '/^[A-Za-z0-9.\-]+$/'),
-                            'message' => 'Números o letras'
-            ]);
+            ->integer('id')
+            ->allowEmpty('id', 'create');
+
+        $validator
+            ->requirePresence('name', 'create')
+            ->notEmpty('name')
+            ->add('name', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+
+        $validator
+            ->requirePresence('image_name', 'create')
+            ->notEmpty('image_name');
 
         return $validator;
     }
 
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->isUnique(['name']));
+        return $rules;
+    }
 }

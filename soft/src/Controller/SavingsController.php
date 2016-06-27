@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Filesystem\Folder;
+use Cake\Filesystem\File;
 
 /**
  * Savings Controller
@@ -39,7 +41,7 @@ class SavingsController extends AppController
     {
         $this->viewBuilder()->layout('admin_views');
         $saving = $this->Savings->get($id, [
-            'contain' => ['Associations']
+            'contain' => ['Associations', 'Tracts']
         ]);
 
         $this->set('saving', $saving);
@@ -57,16 +59,49 @@ class SavingsController extends AppController
 
         $saving = $this->Savings->newEntity();
         if ($this->request->is('post')) {
-            $saving = $this->Savings->patchEntity($saving, $this->request->data);
-            if ($this->Savings->save($saving)) {
-                $this->Flash->success(__('The saving has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The saving could not be saved. Please, try again.'));
+
+            $this->loadComponent('Upload');
+
+            $letter = $this->request->data['letter'];
+            unset($this->request->data['letter']); //Quitamos los datos del archivo
+
+            $letter_name = $this->Upload->savePDF($letter);
+
+            if(!empty($letter) && $letter_name)
+            {
+                $this->request->data['letter'] = $letter_name;
+                $saving = $this->Savings->patchEntity($saving, $this->request->data);
+                if ($this->Savings->save($saving)) {
+                    $this->Flash->success(__('The saving has been saved.'));
+                    return $this->redirect(['action' => 'index']);
+                } else {
+                    $this->Flash->error(__('The saving could not be saved. Please, try again.'));
+                }
             }
+            else
+            {
+                $this->Flash->error(__('No se pudo guardar el archivo, por favor intente de nuevo más tarde.'));
+            }
+            
+            
+            
+
         }
-        $associations = $this->Savings->Associations->find('list', ['limit' => 200]);
-        $tracts = $this->Savings->Tracts->find('list', ['limit' => 200]);
+        $associations = $this->Savings->Associations->find('list');
+
+        $tracts = $this->Savings->Tracts->find()
+            ->select(['id','date','deadline'])
+            ->where(['YEAR(date)'=>date('Y')])
+            ->orWhere(['YEAR(date)'=>(date('Y') + 1)]);
+        $temp = array();
+
+        foreach ($tracts as $key => $value)
+        {
+            $temp[$value->id] = $value->date." - ".$value->deadline;
+        }
+
+        $tracts = $temp;
+
         $this->set(compact('saving', 'associations', 'tracts'));
         $this->set('_serialize', ['saving']);
     }
@@ -93,8 +128,21 @@ class SavingsController extends AppController
                 $this->Flash->error(__('The saving could not be saved. Please, try again.'));
             }
         }
-        $associations = $this->Savings->Associations->find('list', ['limit' => 200]);
-        $tracts = $this->Savings->Tracts->find('list', ['limit' => 200]);
+        $associations = $this->Savings->Associations->find('list');
+        $tracts = $this->Savings->Tracts->find()
+                                        ->select(['id','date','deadline'])
+                                        ->where(['YEAR(date)'=>date('Y')])
+                                        ->orWhere(['YEAR(date)'=>(date('Y') + 1)])
+                                        ->orWhere(['YEAR(date)'=>(date('Y') - 1)]);
+        $temp = array();
+
+        foreach ($tracts as $key => $value)
+        {
+            $temp[$value->id] = $value->date." - ".$value->deadline;
+        }
+
+        $tracts = $temp;
+
         $this->set(compact('saving', 'associations'));
         $this->set(compact('saving', 'tracts'));
         $this->set('_serialize', ['saving']);
@@ -112,11 +160,48 @@ class SavingsController extends AppController
         $this->viewBuilder()->layout('admin_views');
         $this->request->allowMethod(['post', 'delete']);
         $saving = $this->Savings->get($id);
-        if ($this->Savings->delete($saving)) {
+
+        $deleted = $this->deleteLetter($saving->letter);
+
+        if ($deleted && $this->Savings->delete($saving)) {
             $this->Flash->success(__('The saving has been deleted.'));
+
+
         } else {
             $this->Flash->error(__('The saving could not be deleted. Please, try again.'));
         }
         return $this->redirect(['action' => 'index']);
+    }
+
+    private function deleteLetter($fileName)
+    {
+        $deleted = false;
+        $filePath = WWW_ROOT .'letters';
+
+        $dir = new Folder($filePath);
+
+        $file = new File($dir->pwd() . DS . $fileName);
+
+        if($file->delete())
+        {
+            $deleted = true;
+        }
+
+        return $deleted;
+    }
+
+    public function download($fileName)
+    {
+        if($fileName)
+        {
+            $filePath = WWW_ROOT .'letters'. DS . $fileName;
+
+            $this->response->file($filePath ,
+                ['download'=> true, 'name'=> $fileName, 'extension'=>'pdf']);
+        }
+        else
+        {
+            $this->Flash->error(__('El nombre del archivo es nulo'));
+        }
     }
 }
