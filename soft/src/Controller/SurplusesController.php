@@ -18,6 +18,7 @@ class SurplusesController extends AppController
      */
     public function index()
     {
+      if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views');
         $this->paginate = [
             'contain' => ['Associations']
@@ -26,6 +27,10 @@ class SurplusesController extends AppController
 
         $this->set(compact('surpluses'));
         $this->set('_serialize', ['surpluses']);
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
     /**
@@ -37,6 +42,7 @@ class SurplusesController extends AppController
      */
     public function view($id = null)
     {
+      if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views');
         $surplus = $this->Surpluses->get($id, [
             'contain' => ['Associations']
@@ -44,6 +50,10 @@ class SurplusesController extends AppController
 
         $this->set('surplus', $surplus);
         $this->set('_serialize', ['surplus']);
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
     /**
@@ -53,6 +63,7 @@ class SurplusesController extends AppController
      */
     public function add()
     {
+      if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views');
         $surplus = $this->Surpluses->newEntity();
         if ($this->request->is('post')) {
@@ -67,6 +78,10 @@ class SurplusesController extends AppController
         $associations = $this->Surpluses->Associations->find('list');
         $this->set(compact('surplus', 'associations'));
         $this->set('_serialize', ['surplus']);
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
     /**
@@ -78,6 +93,7 @@ class SurplusesController extends AppController
      */
     public function edit($id = null)
     {
+      if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views');
         $surplus = $this->Surpluses->get($id, [
             'contain' => []
@@ -94,6 +110,10 @@ class SurplusesController extends AppController
         $associations = $this->Surpluses->Associations->find('list');
         $this->set(compact('surplus', 'associations'));
         $this->set('_serialize', ['surplus']);
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
     /**
@@ -105,6 +125,7 @@ class SurplusesController extends AppController
      */
     public function delete($id = null)
     {
+      if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views');
         $this->request->allowMethod(['post', 'delete']);
         $surplus = $this->Surpluses->get($id);
@@ -114,10 +135,15 @@ class SurplusesController extends AppController
             $this->Flash->error(__('El superhábit no ha podido ser borrado. Intentelo de nuevo'));
         }
         return $this->redirect(['action' => 'index']);
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
     public function showAssociations($id = null)
     {
+      if($this->Auth->user()){
         if($id)
         {
             $this->viewBuilder()->layout('admin_views');
@@ -154,8 +180,9 @@ class SurplusesController extends AppController
         {
             $this->redirect(['action'=>'/']);
         }
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
-
-
-
 }

@@ -561,7 +561,7 @@ $(document).ready( function ()
                
         };
     
-        xhttp.open("GET", "/FEUCR/soft/amounts/getAssociations/"+document.getElementById("headquarter_id").value,true);
+        xhttp.open("GET", "/soft/amounts/getAssociations/"+document.getElementById("headquarter_id").value,true);
         //xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send();
        

@@ -58,50 +58,8 @@ class AmountsController extends AppController
 		}
 	}
 	
-	private function saveAmount($data, $association_id, $tracts)
-	{
-		
-		$date = $data['date'];  //Estos datos son comunes a todos los tractos
-		unset($data['date']);
-		
-		$detail = $data['detail'];
-		unset($data['detail']);
-		 
-		$amount = $data['amount'];
-		unset($data['amount']);
-		
-		$index = 0;
-		$successIndex = 0;
-		
-		$values['association_id'] = $association_id;
-		$values['date'] = $date;
-		$values['detail'] = $detail;
-		$values['type'] = 0;
-		$values['amount'] = $amount;
-		$values['tract_id'] = $tracts[$index]['id'];//$this->getTractId($tracts[$index]['date']); //Pide el id del tracto tomando como fecha la fecha de inicio
-	
-		$entity = $this->Amounts->newEntity($values);
-	
-		try
-		{
-			if($this->Amounts->save($entity))
-			{
-				++$successIndex;
-			}
-		}
-		catch(Exception $e)
-		{
-	
-		}
-	
-		++$index;
-		
-		return $successIndex;
 
-	}
 	
-
-
 
 	public function add($association = null)
 	{
@@ -266,28 +224,7 @@ class AmountsController extends AppController
 
 		return $headquarters;
 	}
-
-	private function createBoxes($little_amount, $big_amount, $tract_id, $association_id, $type)
-	{
-		$this->loadModel("Boxes");
-
-		$data['little_amount'] = $little_amount;
-		$data['big_amount'] = $big_amount;
-		$data['tract_id'] = $tract_id;
-		$data['association_id'] = $association_id;
-		$data['type'] = $type;
-
-		$boxes = $this->Boxes->newEntity($data);
-
-		$success = false;
-
-		if($this->Boxes->save($boxes))
-		{
-			$success = true;
-		}
-
-		return $success;
-	}
+	
 
 
 

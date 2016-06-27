@@ -77,8 +77,8 @@
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav side-nav">
                         <li class="active">
-                            <a  data-toggle="collapse" data-target="#headquarter_id">Sedes</a>
-                            <div id="headquarter_id" class="collapse">
+                            <a  data-toggle="collapse" data-target="#head_id">Sedes</a>
+                            <div id="head_id" class="collapse">
                                 <ul>
                                     <li><?php echo $this->Html->link('Nueva Sede',['controller'=>'Headquarters','action'=>'add']);?></li><br>
                                     <li><?php echo $this->Html->link('Administrar Sedes',['controller'=>'Headquarters','action'=>'index']);?></li><br>

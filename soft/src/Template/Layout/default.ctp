@@ -47,8 +47,8 @@
                     <ul class="nav navbar-nav">
                         <li class="active"><?php echo $this->Html->link('', ['controller'=>'Pages', 'action'=>'home'],['class'=>'glyphicon glyphicon-home'])?></li>
                         <li><a href="#asociaciones">Asociaciones</a></li>
-                        <li><a href="#acerca-de">Acerca de</a></li>
-                        <li><a href="#contacto">Contáctanos</a></li>
+                        <!--<li><a href="#acerca-de">Acerca de</a></li>
+                        <li><a href="#contacto">Contáctanos</a></li>-->
 
                         <li><?php
                             if(!is_null($this->request->session()->read('Auth.User')) )
