@@ -11,10 +11,12 @@
 
         <?php
             echo $this->Form->input('amount', ['label'=>'Monto a asignado', 'class'=>'form-control']);
-            echo $this->Form->input('association_id', ['options' => $associations, 'class'=>'form-control', 'label'=>'Asociación']);
+
             echo $this->Form->input('tract_id', ['options' => $tracts, 'class'=> 'form-control','label'=>'Tracto']);
             
-            //if(($saving->state == 0) || () ){
+
+            if(($this->request->session()->read('Auth.User.role')) == 'admin'){
+                
                 echo "<label><strong>Estado</strong></label><br/>";
                 echo $this->Form->radio(
                                         'state',
@@ -24,7 +26,9 @@
                                         ]
                                     
                                         );
-           // }
+                echo $this->Form->input('association_id', ['options' => $associations, 'class'=>'form-control']);
+            }
+
 
         ?>
 
@@ -32,4 +36,3 @@
 <br>
     <?= $this->Form->button(__('Guardar'), ['class'=>'form-control', 'id'=>'asso_id']) ?>
     <?= $this->Form->end() ?>
-

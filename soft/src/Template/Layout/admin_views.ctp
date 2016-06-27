@@ -62,8 +62,6 @@
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
-
-
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <?php echo $this->request->session()->read('Auth.User.name')." ".$this->request->session()->read('Auth.User.last_name_1'); ?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
@@ -100,17 +98,22 @@
                         </li>
 
                         <li class="active">
+                          <?php echo $this->Html->link('Administrar Facturas',['controller'=>'Invoices','action'=>'modify']);?>
+                        </li>
+
+                        <li class="active">
+                          <?php echo $this->Html->link('Administrar Cajas',['controller'=>'Boxes','action'=>'modify']);?>
+                        </li>
+
+                        <li class="active">
                             <a  data-toggle="collapse" data-target="#tract_id">Fechas de Tracto</a>
                             <div id="tract_id" class="collapse">
                                 <ul>
                                     <li><?php echo $this->Html->link('Nuevo Tracto',['controller'=>'Tracts','action'=>'add']);?></li><br>
                                     <li><?php echo $this->Html->link('Administrar Tractos',['controller'=>'Tracts','action'=>'index']);?></li><br>
-
-
                                 </ul>
                             </div>
                         </li>
-
 
                         <li class="active">
                             <a  data-toggle="collapse" data-target="#amounts_id">Montos de Tracto</a>
@@ -194,14 +197,23 @@
                         <div id="association_admin" class="collapse">
                             <ul>
                               <li class="active"><?php echo $this->Html->link('Agregar Nueva Factura', '/invoices/add', ['id'=>'active-navbar']);?></li><br>
+                              <li class="active"><?php echo $this->Html->link('Administrar Facturas', '/invoices/modify', ['id'=>'active-navbar']);?></li><br>
                               <li class="active"><?php echo $this->Html->link('Actualizar Cajas', '/boxes/modify', ['id'=>'active-navbar']);?></li><br>
                             </ul>
                         </div>
                     </li>
 
                     <li class="active">
-                        <?php echo $this->Html->link('Solicitar Monto de Ahorro', '/savings/show_associations/1');?>
+                        <a  data-toggle="collapse" data-target="#saving_id">Montos de Ahorro</a>
+                        <div id="saving_id" class="collapse">
+                            <ul>
+                                <li><?php echo $this->Html->link('Nuevo Monto',['controller'=>'Savings','action'=>'add']);?></li><br>
+                                <li><?php echo $this->Html->link('Administrar Montos',['controller'=>'Savings','action'=>'index']);?></li><br>
+
+                            </ul>
+                        </div>
                     </li>
+                    
 
                     <li class="active">
                       <?php echo $this->Html->link('Información General', '/associations/general_information/');?>

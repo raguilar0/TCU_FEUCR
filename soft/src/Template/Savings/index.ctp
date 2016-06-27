@@ -44,7 +44,11 @@
                 <td><?= $saving->has('tract') ? $this->Html->link($saving->tract->date." - ".$saving->tract->deadline, ['controller' => 'Tracts', 'action' => 'view', $saving->tract->id]) : '' ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('Ver'), ['action' => 'view', $saving->id]) ?>
-                    <?= $this->Html->link(__('Editar'), ['action' => 'edit', $saving->id]) ?>
+                    <?php
+                    if(($this->request->session()->read('Auth.User.role')) == 'admin'){
+                      echo $this->Html->link(__('Editar'), ['action' => 'edit', $saving->id]);
+                    }
+                    ?>
                     <?= $this->Form->postLink(__('Borrar'), ['action' => 'delete', $saving->id], ['confirm' => __('¿Estás seguro de que desea borrar este monto # {0}?', $saving->id)]) ?>
                 </td>
             </tr>
@@ -62,4 +66,3 @@
         </ul>
         <p><?= $this->Paginator->counter() ?></p>
     </div>
-

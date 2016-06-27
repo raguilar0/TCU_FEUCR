@@ -21,14 +21,37 @@ class SavingsController extends AppController
      */
     public function index()
     {
+      if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views');
-        $this->paginate = [
-            'contain' => ['Associations', 'Tracts']
-        ];
-        $savings = $this->paginate($this->Savings);
+
+        if(($this->request->session()->read('Auth.User.role')) == 'rep'){
+          $association_id = $this->request->session()->read('Auth.User.association_id');
+
+          $this->paginate['contain'] = [
+            'Tracts',
+            'Associations'=> function(\Cake\ORM\Query $query) use ($association_id){
+                return $query->where(['Associations.id'=>$association_id]);
+            }
+          ];
+
+            //$this->paginate = $querry;
+            $savings = $this->paginate($this->Savings);
+
+        }
+
+        if(($this->request->session()->read('Auth.User.role')) == 'admin'){
+          $this->paginate = [
+              'contain' => ['Associations', 'Tracts']
+          ];
+          $savings = $this->paginate($this->Savings);
+        }
 
         $this->set(compact('savings'));
         $this->set('_serialize', ['savings']);
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
     /**
@@ -40,13 +63,28 @@ class SavingsController extends AppController
      */
     public function view($id = null)
     {
+      if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views');
-        $saving = $this->Savings->get($id, [
-            'contain' => ['Associations', 'Tracts']
-        ]);
+
+        if(($this->request->session()->read('Auth.User.role')) == 'admin'){
+          $saving = $this->Savings->get($id, [
+              'contain' => ['Associations']
+          ]);
+        }
+
+        if(($this->request->session()->read('Auth.User.role')) == 'rep'){
+          $association_id = $this->request->session()->read('Auth.User.association_id');
+          $saving = $this->Savings->get($association_id, [
+              'contain' => ['Associations']
+          ]);
+        }
 
         $this->set('saving', $saving);
         $this->set('_serialize', ['saving']);
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
     /**
@@ -56,6 +94,7 @@ class SavingsController extends AppController
      */
     public function add()
     {
+      if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views');
 
         $saving = $this->Savings->newEntity();
@@ -105,6 +144,10 @@ class SavingsController extends AppController
 
         $this->set(compact('saving', 'associations', 'tracts'));
         $this->set('_serialize', ['saving']);
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
     /**
@@ -116,21 +159,21 @@ class SavingsController extends AppController
      */
     public function edit($id = null)
     {
+      if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views');
         $saving = $this->Savings->get($id, [
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
+          if(($this->request->session()->read('Auth.User.role')) == 'rep'){
+              $this->request->data['association_id'] = $this->request->session()->read('Auth.User.association_id');
+          }
+
             $saving = $this->Savings->patchEntity($saving, $this->request->data);
             if ($saving->state == 2)
             {
                 $this->deleteSaving($id);
-                /**
-                $entity = $this->Savings->get($id);
-                $result = $this->Savings->delete($entity);
-                $this->Flash->success(__('Monto rechazado correctamente.'));
-                return $this->redirect(['action' => 'index']);
-                **/
+
             }
             else{
                 if ($this->Savings->save($saving)) {
@@ -159,6 +202,10 @@ class SavingsController extends AppController
         $this->set(compact('saving', 'associations'));
         $this->set(compact('saving', 'tracts'));
         $this->set('_serialize', ['saving']);
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
     /**
@@ -170,6 +217,7 @@ class SavingsController extends AppController
      */
     public function delete($id = null)
     {
+      if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views');
         $this->request->allowMethod(['post', 'delete']);
         $saving = $this->Savings->get($id);
@@ -184,6 +232,10 @@ class SavingsController extends AppController
             $this->Flash->error(__('El ahorro no ha podido ser borrado. Intentelo de nuevo.'));
         }
         return $this->redirect(['action' => 'index']);
+    }
+    else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
     private function deleteSaving($id = null)
@@ -201,6 +253,8 @@ class SavingsController extends AppController
             $this->Flash->error(__('El ahorro no ha podido ser borrado. Intentelo de nuevo.'));
         }
         return $this->redirect(['action' => 'index']);
+      
+
     }
 
     private function deleteLetter($fileName)

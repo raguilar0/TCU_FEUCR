@@ -9,9 +9,10 @@
 
 
     <table class="table">
+
         <tr>
-            <th><?= __('Asociación') ?></th>
-            <td><?= $saving->has('association') ? $this->Html->link($saving->association->name, ['controller' => 'Associations', 'action' => 'view', $saving->association->id]) : '' ?></td>
+          <th><?php echo __('Asociación') ?></th>
+          <td><?php echo $saving->has('association') ? $this->Html->link($saving->association->name, ['controller' => 'Associations', 'action' => 'view', $saving->association->id]) : '' ?></td>
         </tr>
         <tr>
             <th><?= __('Tracto') ?></th>
@@ -35,4 +36,3 @@
             <td><?= $this->Html->link( $saving->letter,['controller'=>'Savings', 'action'=>'download', $saving->letter]);?></td>
         </tr>
     </table>
-
