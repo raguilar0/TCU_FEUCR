@@ -89,7 +89,7 @@
                     </div><!--/.col-md-4-->
                     <div class="col-md-3 col-sm-6">
                         <div class="center">
-                           <?php echo $this->Html->image('sedes/sede_interuniversitaria.jpg', ['alt' => 'Sede interuniversitaria']);?>                        
+                           <?php echo $this->Html->image('sedes/sede_interuniversitaria.jpg', ['alt' => 'Sede interuniversitaria']);?>
 
                             <h4>Sede Interuniversitaria de Alajuela</h4>
 
@@ -99,7 +99,7 @@
 
                    <div class="col-md-3 col-sm-6">
                         <div class="center">
-                           <?php echo $this->Html->image('sedes/recinto_golfito.jpg', ['alt' => 'Recinto de Golfito']);?> 
+                           <?php echo $this->Html->image('sedes/recinto_golfito.jpg', ['alt' => 'Recinto de Golfito']);?>
 
                             <h4>Recinto de Golfito</h4>
 
@@ -114,16 +114,17 @@
 
     <section id="future-1">
         <div class="container">
-            
+
         </div><!--/.container-->
     </section>
 
     <section id="future-2">
         <div class="container">
-            
+
         </div>
     </section>
-
+<?php
+/*
     <section id="acerca-de">
         <div class="container">
             <div class="box">
@@ -147,7 +148,7 @@
                                         <p><img class="img-responsive img-thumbnail img-circle" src="img/team2.jpg" alt="" ></p>
                                         <h3>Donald Ford<small class="designation">Senior Vice President</small></h3>
                                     </div>
-                                </div>        
+                                </div>
                                 <div class="col-sm-4">
                                     <div class="member">
                                         <p><img class="img-responsive img-thumbnail img-circle" src="img/team3.jpg" alt="" ></p>
@@ -163,13 +164,13 @@
                                         <p><img class="img-responsive img-thumbnail img-circle" src="img/team3.jpg" alt="" ></p>
                                         <h3>David Robbins<small class="designation">Co-Founder</small></h3>
                                     </div>
-                                </div>   
+                                </div>
                                 <div class="col-sm-4">
                                     <div class="member">
                                         <p><img class="img-responsive img-thumbnail img-circle" src="img/team1.jpg" alt="" ></p>
                                         <h3>Philip Mejia<small class="designation">Marketing Manager</small></h3>
                                     </div>
-                                </div>     
+                                </div>
                                 <div class="col-sm-4">
                                     <div class="member">
                                         <p><img class="img-responsive img-thumbnail img-circle" src="img/team2.jpg" alt="" ></p>
@@ -265,7 +266,8 @@
             </div><!--/.box-->
         </div><!--/.container-->
     </section><!--/#contact-->
-
+*/
+?>
     <footer id="footer">
         <div class="container">
             <div class="row">
