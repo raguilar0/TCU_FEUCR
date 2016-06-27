@@ -91,10 +91,10 @@ class InitialAmountsController extends AppController
             
             $initialAmount = $this->InitialAmounts->patchEntity($initialAmount, $this->request->data);
             if ($this->InitialAmounts->save($initialAmount)) {
-                $this->Flash->success(__('The initial amount has been saved.'));
+                $this->Flash->success(__('El monto inicial ha sido guardado.'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The initial amount could not be saved. Please, try again.'));
+                $this->Flash->error(__('El monto inicial no ha podido ser guardado. Intentelo de nuevo'));
             }
 
         }
@@ -141,9 +141,9 @@ class InitialAmountsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $initialAmount = $this->InitialAmounts->get($id);
         if ($this->InitialAmounts->delete($initialAmount)) {
-            $this->Flash->success(__('The initial amount has been deleted.'));
+            $this->Flash->success(__('El monto inicial no ha sido guardado.'));
         } else {
-            $this->Flash->error(__('The initial amount could not be deleted. Please, try again.'));
+            $this->Flash->error(__('El monto inicial no ha podido ser guardado. Intentelo de nuevo'));
         }
         return $this->redirect(['action' => 'index']);
     }
@@ -258,8 +258,6 @@ class InitialAmountsController extends AppController
 
     private function transferBox($oldBox,$association_id, $second_tract_id, $type)
     {
-
-
 
         $type_name = ($type == 0 ? "Tracto":"Ingresos Generados");
         $message = "Se creó la caja para ".$type_name;

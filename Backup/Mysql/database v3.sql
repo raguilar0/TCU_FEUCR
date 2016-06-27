@@ -129,7 +129,7 @@ CREATE TABLE savings
    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
    amount INT(32) NOT NULL DEFAULT 0,
-   state INT(1) DEFAULT 0,
+   state INT(1) DEFAULT 0, -- 0:pendiente 1:aceptado
    letter VARCHAR(256) NOT NULL,
    association_id INT UNSIGNED NOT NULL,
    tract_id INT UNSIGNED NOT NULL,

@@ -23,7 +23,22 @@
         <?php foreach ($savings as $saving): ?>
             <tr>
                 <td><?= $this->Number->format($saving->amount) ?></td>
-                <td><?= $this->Number->format($saving->state) ?></td>
+                <td><?php  
+                    switch ($this->Number->format($saving->state)) {
+                        case 0:
+                            echo "Pendiente";
+                            break;
+                        case 1:
+                            echo "Aceptado";
+                            break;
+  
+                    }
+                    
+                    
+                
+                
+                ?>
+                </td>
                 <td><?= $this->Html->link( $saving->letter,['controller'=>'Savings', 'action'=>'download', $saving->letter]);?></td>
                 <td><?= $saving->has('association') ? $this->Html->link($saving->association->name, ['controller' => 'Associations', 'action' => 'view', $saving->association->id]) : '' ?></td>
                 <td><?= $saving->has('tract') ? $this->Html->link($saving->tract->date." - ".$saving->tract->deadline, ['controller' => 'Tracts', 'action' => 'view', $saving->tract->id]) : '' ?></td>

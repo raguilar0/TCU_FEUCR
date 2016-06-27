@@ -55,10 +55,10 @@ class TractsController extends AppController
         if ($this->request->is('post')) {
             $tract = $this->Tracts->patchEntity($tract, $this->request->data);
             if ($this->Tracts->save($tract)) {
-                $this->Flash->success(__('The tract has been saved.'));
+                $this->Flash->success(__('El tracto ha sido guardado.'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The tract could not be saved. Please, try again.'));
+                $this->Flash->error(__('El tracto no ha podido ser guardado. Intentelo de nuevo'));
             }
         }
         $this->set(compact('tract'));
@@ -82,10 +82,10 @@ class TractsController extends AppController
             debug($this->request->data);
             $tract = $this->Tracts->patchEntity($tract, $this->request->data);
             if ($this->Tracts->save($tract)) {
-                $this->Flash->success(__('The tract has been saved.'));
+                $this->Flash->success(__('El tracto ha sido guardado.'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The tract could not be saved. Please, try again.'));
+                $this->Flash->error(__('El tracto no ha podido ser guardado. Intentelo de nuevo.'));
             }
         }
         $this->set(compact('tract'));
@@ -105,9 +105,9 @@ class TractsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $tract = $this->Tracts->get($id);
         if ($this->Tracts->delete($tract)) {
-            $this->Flash->success(__('The tract has been deleted.'));
+            $this->Flash->success(__('El tracto ha sido guardado.'));
         } else {
-            $this->Flash->error(__('The tract could not be deleted. Please, try again.'));
+            $this->Flash->error(__('El tracto no ha podido ser guardado. Intentelo de nuevo.'));
         }
         return $this->redirect(['action' => 'index']);
     }

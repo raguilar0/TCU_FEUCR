@@ -58,10 +58,10 @@ class SurplusesController extends AppController
         if ($this->request->is('post')) {
             $surplus = $this->Surpluses->patchEntity($surplus, $this->request->data);
             if ($this->Surpluses->save($surplus)) {
-                $this->Flash->success(__('The surplus has been saved.'));
+                $this->Flash->success(__('El superhábit ha sido guardado'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The surplus could not be saved. Please, try again.'));
+                $this->Flash->error(__('El superhábit no ha podido ser guardado. Intentelo de nuevo'));
             }
         }
         $associations = $this->Surpluses->Associations->find('list');
@@ -85,10 +85,10 @@ class SurplusesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $surplus = $this->Surpluses->patchEntity($surplus, $this->request->data);
             if ($this->Surpluses->save($surplus)) {
-                $this->Flash->success(__('The surplus has been saved.'));
+                $this->Flash->success(__('El superhábit ha sido guardado'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The surplus could not be saved. Please, try again.'));
+                $this->Flash->error(__('El superhábit no ha podido ser guardado. Intentelo de nuevo'));
             }
         }
         $associations = $this->Surpluses->Associations->find('list');
@@ -109,9 +109,9 @@ class SurplusesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $surplus = $this->Surpluses->get($id);
         if ($this->Surpluses->delete($surplus)) {
-            $this->Flash->success(__('The surplus has been deleted.'));
+            $this->Flash->success(__('El superhábit ha sido guardado.'));
         } else {
-            $this->Flash->error(__('The surplus could not be deleted. Please, try again.'));
+            $this->Flash->error(__('El superhábit no ha podido ser borrado. Intentelo de nuevo'));
         }
         return $this->redirect(['action' => 'index']);
     }

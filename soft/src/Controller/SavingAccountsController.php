@@ -59,10 +59,10 @@ class SavingAccountsController extends AppController
 
             $savingAccount = $this->SavingAccounts->patchEntity($savingAccount, $this->request->data);
             if ($this->SavingAccounts->save($savingAccount)) {
-                $this->Flash->success(__('The saving account has been saved.'));
+                $this->Flash->success(__('La cuenta de ahorros ha sido guardada.'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The saving account could not be saved. Please, try again.'));
+                $this->Flash->error(__('La cuenta de ahorros no ha podido ser guardada. Inténtelo de nuevo'));
             }
             
         }
@@ -101,10 +101,10 @@ class SavingAccountsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $savingAccount = $this->SavingAccounts->patchEntity($savingAccount, $this->request->data);
             if ($this->SavingAccounts->save($savingAccount)) {
-                $this->Flash->success(__('The saving account has been saved.'));
+                $this->Flash->success(__('La cuenta de ahorros ha sido guardada.'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The saving account could not be saved. Please, try again.'));
+                $this->Flash->error(__('La cuenta de ahorros no ha podido ser guardada. Inténtelo de nuevo'));
             }
         }
         $associations = $this->SavingAccounts->Associations->find('list');
@@ -138,9 +138,9 @@ class SavingAccountsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $savingAccount = $this->SavingAccounts->get($id);
         if ($this->SavingAccounts->delete($savingAccount)) {
-            $this->Flash->success(__('The saving account has been deleted.'));
+            $this->Flash->success(__('La cuenta de ahorros ha sido borrada.'));
         } else {
-            $this->Flash->error(__('The saving account could not be deleted. Please, try again.'));
+            $this->Flash->error(__('La cuenta de ahorros no ha podido ser borrada. Inténtelo de nuevo.'));
         }
         return $this->redirect(['action' => 'index']);
     }
