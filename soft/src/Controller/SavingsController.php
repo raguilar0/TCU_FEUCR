@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Core\Exception\Exception;
 use Cake\Filesystem\Folder;
 use Cake\Filesystem\File;
 
@@ -178,14 +179,23 @@ class SavingsController extends AppController
         $deleted = false;
         $filePath = WWW_ROOT .'letters';
 
-        $dir = new Folder($filePath);
-
-        $file = new File($dir->pwd() . DS . $fileName);
-
-        if($file->delete())
+        try
         {
-            $deleted = true;
+            $dir = new Folder($filePath);
+
+            $file = new File($dir->pwd() . DS . $fileName);
+
+            if($file->delete())
+            {
+                $deleted = true;
+            }
         }
+        catch (Exception $e)
+        {
+            $this->Flash->error(__('Ocurrió un error al tratar de borrar el archivo'));
+            return $this->redirect(['action' => 'index']);
+        }
+
 
         return $deleted;
     }
@@ -194,14 +204,24 @@ class SavingsController extends AppController
     {
         if($fileName)
         {
-            $filePath = WWW_ROOT .'letters'. DS . $fileName;
+            try
+            {
+                $filePath = WWW_ROOT .'letters'. DS . $fileName;
 
-            $this->response->file($filePath ,
-                ['download'=> true, 'name'=> $fileName, 'extension'=>'pdf']);
+                $this->response->file($filePath ,
+                    ['download'=> true, 'name'=> $fileName, 'extension'=>'pdf']);
+            }
+            catch (Exception $e)
+            {
+                $this->Flash->error(__('Ocurrió un error al tratar de abrir el archivo'));
+                return $this->redirect(['action' => 'index']);
+            }
+
         }
         else
         {
             $this->Flash->error(__('El nombre del archivo es nulo'));
+            return $this->redirect(['action' => 'index']);
         }
     }
 }
