@@ -66,7 +66,7 @@ class AmountsController extends AppController
 		
 		$detail = $data['detail'];
 		unset($data['detail']);
-		
+		 
 		$amount = $data['amount'];
 		unset($data['amount']);
 		

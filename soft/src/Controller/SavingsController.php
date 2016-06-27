@@ -59,10 +59,10 @@ class SavingsController extends AppController
         if ($this->request->is('post')) {
             $saving = $this->Savings->patchEntity($saving, $this->request->data);
             if ($this->Savings->save($saving)) {
-                $this->Flash->success(__('The saving has been saved.'));
+                $this->Flash->success(__('El ahorro ha sido guardado'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The saving could not be saved. Please, try again.'));
+                $this->Flash->error(__('El ahorro no pudo ser guardado. Intentelo de nuevo.'));
             }
         }
         $associations = $this->Savings->Associations->find('list', ['limit' => 200]);
@@ -86,11 +86,21 @@ class SavingsController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $saving = $this->Savings->patchEntity($saving, $this->request->data);
-            if ($this->Savings->save($saving)) {
-                $this->Flash->success(__('The saving has been saved.'));
+            if ($saving->state == 2)
+            {
+                //$this->Savings->delete(0);
+                $entity = $this->Savings->get($id);
+                $result = $this->Savings->delete($entity);
+                $this->Flash->success(__('Monto rechazado correctamente.'));
                 return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The saving could not be saved. Please, try again.'));
+            }
+            else{
+                if ($this->Savings->save($saving)) {
+                    $this->Flash->success(__('El ahorro ha sido guardado.'));
+                    return $this->redirect(['action' => 'index']);
+                } else {
+                    $this->Flash->error(__('El ahorro no ha podido ser guardado. Intentelo de nuevo'));
+                }
             }
         }
         $associations = $this->Savings->Associations->find('list', ['limit' => 200]);
@@ -113,9 +123,9 @@ class SavingsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $saving = $this->Savings->get($id);
         if ($this->Savings->delete($saving)) {
-            $this->Flash->success(__('The saving has been deleted.'));
+            $this->Flash->success(__('El ahorro ha sido guardado.'));
         } else {
-            $this->Flash->error(__('The saving could not be deleted. Please, try again.'));
+            $this->Flash->error(__('El ahorro no ha podido ser guardado. Intentelo de nuevo.'));
         }
         return $this->redirect(['action' => 'index']);
     }
