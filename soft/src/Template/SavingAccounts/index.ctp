@@ -35,7 +35,7 @@
                 <td class="actions">
                     <?= $this->Html->link(__('Ver'), ['action' => 'view', $savingAccount->id]) ?>
                     <?= $this->Html->link(__('Editar'), ['action' => 'edit', $savingAccount->id]) ?>
-                    <?= $this->Form->postLink(__('Borrar'), ['action' => 'delete', $savingAccount->id], ['confirm' => __('Seguro que desea borrar la cuenta de ahorro # {0}?', $savingAccount->id)]) ?>
+                    <?= (($this->request->session()->read('Auth.User.role')) == 'admin') ? $this->Form->postLink(__('Borrar'), ['action' => 'delete', $savingAccount->id], ['confirm' => __('Seguro que desea borrar la cuenta de ahorro # {0}?', $savingAccount->id)]) : '' ?>
                 </td>
             </tr>
         <?php endforeach; ?>
@@ -52,4 +52,3 @@
 
 
 </div>
-
