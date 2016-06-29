@@ -449,5 +449,63 @@ class AssociationsController extends AppController
         }
     }
 
+    public function generalInformation($id = null) {
+        if($this->Auth->user()){
+            $this->viewBuilder()->layout('admin_views'); //Se deja este hasta mientras se haga el de representante
+
+            $id = $this->request->session()->read('Auth.User.association_id');
+            if($id) {
+                $association = $this->Associations->get($id);
+
+                $head = $this->Associations->Headquarters->find()
+                    ->hydrate(false)
+                    ->select(['id','name'])
+                    ->where(['id'=>$association->headquarter_id]);
+
+                $head = $head->toArray();
+
+                $association['headquarter'] = $head[0]['name'];
+
+
+
+                if($this->request->is(array('post','put')))
+                {
+                    $response = '0';
+
+                    try
+                    {
+                        $query = $this->Associations->query();
+
+                        $query->update()
+                            ->set(['schedule'=> $this->request->data['schedule']])
+                            ->where(['id'=> $id])
+                            ->execute();
+
+                        $response = '1';
+                    }
+                    catch(Exception $e)
+                    {
+
+                    }
+
+                    die($response);
+
+                }
+                else
+                {
+                    $this->set('data',$association); // set() Pasa la variable association a la vista.
+                }
+            }
+            else
+            {
+                $this->redirect(['action'=>'/']);
+            }
+
+        }
+        else{
+            return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+        }
+    }
+
 
 }

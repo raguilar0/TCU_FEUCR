@@ -1,28 +1,31 @@
 
 
 
-    <section id="main-slider" class="carousel">
-        <div class="carousel-inner">
-            <div class="item active">
-                <div class="container">
-                    <div class="carousel-content">
-                        <h1>Somos UCR</h1>
-                        <p class="lead">La UCR es la mejor universidad Centroamericana</p>
-                    </div>
+<section id="main-slider" class="carousel">
+    <div class="carousel-inner">
+        <div class="item active">
+            <div class="container">
+                <div class="carousel-content">
+                    <h1>Somos Contraloría Estudiantil</h1>
+                    <p class="lead">Transparencia de la gestión</p>
                 </div>
-            </div><!--/.item-->
-            <div class="item">
-                <div class="container">
-                    <div class="carousel-content">
-                        <h1>Somos la Contraloría</h1>
-                        <p class="lead">Poner texto aquí</p>
-                    </div>
+            </div>
+        </div><!--/.item-->
+        <div class="item">
+            <div class="container">
+                <div class="carousel-content">
+                    <h1>Somos Contraloría Estudiantil</h1>
+                    <p class="lead">Fiscalizando el movimiento estudiantil</p>
                 </div>
-            </div><!--/.item-->
-        </div><!--/.carousel-inner-->
-        <a class="prev" href="#main-slider" data-slide="prev"><i class="icon-angle-left"></i></a>
-        <a class="next" href="#main-slider" data-slide="next"><i class="icon-angle-right"></i></a>
-    </section><!--/#main-slider-->
+            </div>
+        </div><!--/.item-->
+    </div><!--/.carousel-inner-->
+    <a class="prev" href="#main-slider" data-slide="prev"><i class="icon-angle-left"></i></a>
+    <a class="next" href="#main-slider" data-slide="next"><i class="icon-angle-right"></i></a>
+</section><!--/#main-slider-->
+
+
+
 
     <section id="asociaciones">
         <div class="container">
@@ -30,7 +33,7 @@
             <div class="box first">
                 <div class="row text-center texto">
                     <div class="col-md-12 col-sm-12">
-                        <h1>¡Ubicá la <b>Asociación</b> que buscás de acuerdo a la <b>Sede</b>!</h1>
+                        <h1>¡Ubicá la <b style="color:#FDB727">Asociación</b> que buscás de acuerdo a la <b style="color:#FDB727"s>Sede</b>!</h1>
                     </div>
 
                 </div>

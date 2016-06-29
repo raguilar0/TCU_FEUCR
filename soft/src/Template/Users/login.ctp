@@ -17,14 +17,22 @@
   <div class='row'>
     <div class='col-xs-12 col-md-6 col-md-offset-3' id=form_login>
       <fieldset>
-      <legend><?= __('Por favor digite su usuario y contraseña') ?></legend>
+      <h4><b><?= __('Por favor digite su usuario y contraseña') ?></b></h4>
+          <br>
       <h4><?= $this->Form->input('username', ['class' => 'form-control','label'=>'Nombre de usuario']) ?></h4>
       <h4><?= $this->Form->input('password', ['class' => 'form-control','label'=>'Contraseña']) ?></h4>
       </fieldset>
-      <?= $this->Form->submit(__('Login')); ?>
-      <?= $this->Form->end() ?>
+
     </div>
   </div>
+<br><br>
+    <div class="row text-center">
+        <div class="col-xs-12">
+            <?= $this->Form->submit(__('Login'),['class'=>'btn btn-primary']); ?>
+        </div>
+    </div>
+
+    <?= $this->Form->end() ?>
 </div>
 
 <div class="row text-right">

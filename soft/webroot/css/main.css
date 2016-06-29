@@ -1,7 +1,10 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700);
 body {
-  background: #e5e5e5;
+  background: #43ADE7;
+  background: linear-gradient(#43ADE7, #FFFFFF );
+  background-repeat: no-repeat;
   color: #999;
+
 }
 
 .body
@@ -24,7 +27,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: #777;
+  color: black;
   font-weight: 300;
 }
 a {
@@ -491,16 +494,17 @@ a:focus {
   margin-left: 20px;
   width: 200px;
   height: 78px;
-  background: url(../images/logo.png) no-repeat 0 50%;
 }
 .navbar-default .navbar-nav > li {
   margin-left: 1px;
 }
+
+
 .navbar-default .navbar-nav > li > a {
   padding: 30px 25px;
   font-size: 16px;
   line-height: 18px;
-  color: #999;
+  color: #43ADE7;
 }
 .navbar-default .navbar-nav > li > a > i {
   display: inline-block;
@@ -515,7 +519,7 @@ a:focus {
 .navbar-default .navbar-nav > li.active:hover > a:focus,
 .navbar-default .navbar-nav > li:hover > a:focus,
 .navbar-default .navbar-nav > li:focus > a:focus {
-  background-color: #52b6ec;
+  background-color: #FDB727;
   color: #fff;
 }
 .icon-lg {

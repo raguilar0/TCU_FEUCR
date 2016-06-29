@@ -200,7 +200,7 @@
                     </li>
 
                     <li class="active">
-                        <?php echo $this->Html->link('Solicitar Monto de Ahorro', '/savings/show_associations/1');?>
+                        <?php echo $this->Html->link('Solicitar Monto de Ahorro', '/savings/add');?>
                     </li>
 
                     <li class="active">
