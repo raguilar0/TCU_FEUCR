@@ -204,14 +204,7 @@
                     </li>
 
                     <li class="active">
-                        <a  data-toggle="collapse" data-target="#saving_id">Montos de Ahorro</a>
-                        <div id="saving_id" class="collapse">
-                            <ul>
-                                <li><?php echo $this->Html->link('Nuevo Monto',['controller'=>'Savings','action'=>'add']);?></li><br>
-                                <li><?php echo $this->Html->link('Administrar Montos',['controller'=>'Savings','action'=>'index']);?></li><br>
-
-                            </ul>
-                        </div>
+                        <?php echo $this->Html->link('Solicitar Monto de Ahorro', '/savings/add');?>
                     </li>
                     
 
