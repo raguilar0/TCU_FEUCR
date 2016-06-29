@@ -213,6 +213,15 @@
                     </li>
 
                     <li class="active">
+                        <a  data-toggle="collapse" data-target="#account_id">Cuentas de Ahorro</a>
+                        <div id="account_id" class="collapse">
+                            <ul>
+                                <li><?php echo $this->Html->link('Administrar Montos',['controller'=>'Saving-accounts','action'=>'index']);?></li><br>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="active">
                         <a  data-toggle="collapse" data-target="#user_id">Usuarios</a>
                         <div id="user_id" class="collapse">
                             <ul>

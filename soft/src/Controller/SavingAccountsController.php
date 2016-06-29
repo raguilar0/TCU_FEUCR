@@ -18,14 +18,33 @@ class SavingAccountsController extends AppController
      */
     public function index()
     {
-        $this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vist
-        $this->paginate = [
-            'contain' => ['Associations', 'Tracts']
-        ];
-        $savingAccounts = $this->paginate($this->SavingAccounts);
+      if($this->Auth->user()){
+        $this->viewBuilder()->layout('admin_views');
 
+        if(($this->request->session()->read('Auth.User.role')) == 'rep'){
+          $association_id = $this->request->session()->read('Auth.User.association_id');
+
+          $this->paginate['contain'] = [
+            'Tracts',
+            'Associations'=> function(\Cake\ORM\Query $query) use ($association_id){
+                return $query->where(['Associations.id'=>$association_id]);
+            }
+          ];
+          $savingAccounts = $this->paginate($this->SavingAccounts);
+        }
+
+        if(($this->request->session()->read('Auth.User.role')) == 'admin'){
+          $this->paginate = [
+              'contain' => ['Associations', 'Tracts']
+          ];
+          $savingAccounts = $this->paginate($this->SavingAccounts);
+        }
         $this->set(compact('savingAccounts'));
         $this->set('_serialize', ['savingAccounts']);
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
     /**
@@ -37,13 +56,19 @@ class SavingAccountsController extends AppController
      */
     public function view($id = null)
     {
-        $this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vist
+      if($this->Auth->user()){
+        $this->viewBuilder()->layout('admin_views');
         $savingAccount = $this->SavingAccounts->get($id, [
             'contain' => ['Associations', 'Tracts']
         ]);
 
         $this->set('savingAccount', $savingAccount);
         $this->set('_serialize', ['savingAccount']);
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
+
     }
 
     /**
@@ -53,6 +78,7 @@ class SavingAccountsController extends AppController
      */
     public function add()
     {
+      if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vist
         $savingAccount = $this->SavingAccounts->newEntity();
         if ($this->request->is('post')) {
@@ -83,6 +109,10 @@ class SavingAccountsController extends AppController
 
         $this->set(compact('savingAccount', 'associations', 'tracts'));
         $this->set('_serialize', ['savingAccount']);
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
     /**
@@ -94,6 +124,7 @@ class SavingAccountsController extends AppController
      */
     public function edit($id = null)
     {
+      if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vist
         $savingAccount = $this->SavingAccounts->get($id, [
             'contain' => []
@@ -123,6 +154,11 @@ class SavingAccountsController extends AppController
         $tracts = $temp;
         $this->set(compact('savingAccount', 'associations', 'tracts'));
         $this->set('_serialize', ['savingAccount']);
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
+
     }
 
     /**
@@ -134,6 +170,8 @@ class SavingAccountsController extends AppController
      */
     public function delete($id = null)
     {
+      if($this->Auth->user() && ($this->request->session()->read('Auth.User.role') == 'admin') ){
+
         $this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vist
         $this->request->allowMethod(['post', 'delete']);
         $savingAccount = $this->SavingAccounts->get($id);
@@ -143,10 +181,16 @@ class SavingAccountsController extends AppController
             $this->Flash->error(__('La cuenta de ahorros no ha podido ser borrada. Inténtelo de nuevo.'));
         }
         return $this->redirect(['action' => 'index']);
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
+
     }
 
     public function transfer($association_name = null)
     {
+      if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
 
 
@@ -196,11 +240,16 @@ class SavingAccountsController extends AppController
 
         $this->set('head',$headquarters);
         $this->set('data', $tracts);
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
 
     }
 
     private function createSavingAccount($newAccount)
     {
+      if($this->Auth->user()){
         $success = false;
         $savingAccount = $this->SavingAccounts->newEntity($newAccount);
 
@@ -209,21 +258,31 @@ class SavingAccountsController extends AppController
         }
 
         return $success;
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
 
     }
 
     private function getAccount($tract_id,$association_id)
     {
+      if($this->Auth->user()){
         $account = $this->SavingAccounts->find()
                         ->andWhere(['association_id'=>$association_id, 'tract_id'=>$tract_id]);
 
         $account = $account->toArray();
 
         return $account[0];
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
     private function getHeadquarters()
     {
+      if($this->Auth->user()){
         $query = $this->SavingAccounts->Associations->Headquarters->find() //Se trae solo las sedes que tienen alguna asocicación asociada :p
         ->hydrate(false)
             ->select(['Headquarters.name'])
@@ -240,11 +299,16 @@ class SavingAccountsController extends AppController
         $headquarters = $query->toArray();
 
         return $headquarters;
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
 
     private function getTracts($year)
     {
+      if($this->Auth->user()){
         $this->loadModel('Tracts');
 
         $tracts = $this->Tracts->find()
@@ -253,6 +317,10 @@ class SavingAccountsController extends AppController
         $tracts = $tracts->toArray();
 
         return $tracts;
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
     /**
@@ -260,6 +328,7 @@ class SavingAccountsController extends AppController
      **/
     private function getTractId($actualDate)
     {
+      if($this->Auth->user()){
         $this->loadModel('Tracts');
 
         //$actualDate = date("Y-m-d");
@@ -276,10 +345,15 @@ class SavingAccountsController extends AppController
         $id = $id->toArray();
 
         return $id[0]['id'];
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
     private function getAssociationId($association_name)
     {
+      if($this->Auth->user()){
         $association_id = $this->SavingAccounts->Associations->find() //Se busca primero el id de esa sede por medio del nombre
         ->hydrate(false)
             ->select(['id'])
@@ -288,6 +362,10 @@ class SavingAccountsController extends AppController
         $association_id = $association_id->toArray();
 
         return $association_id[0]['id'];
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
     }
 
 }
