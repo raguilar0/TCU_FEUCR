@@ -21,9 +21,19 @@ class BoxesController extends AppController
 			return $this->redirect($this->Auth->redirectUrl());
 		}else{
 		    $this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
+		    $tracts = $this->Boxes->Tracts->find()->select(['id','date','deadline']);
+            $temp = array();
+    
+            foreach ($tracts as $key => $value)
+            {
+                $temp[$value->id] = $value->date." - ".$value->deadline;
+            }
+    
+            $tracts = $temp;
 		    $this->paginate = [
             'contain' => ['Associations','Tracts']
             ];
+            
             $boxes = $this->paginate($this->Boxes);
             $this->set(compact('boxes'));
             $this->set('_serialize', ['boxes']);
@@ -77,6 +87,18 @@ class BoxesController extends AppController
     public function edit($id = null){
         if(($this->request->session()->read('Auth.User.role')) == 'admin' || ($this->request->session()->read('Auth.User.role')) == 'rep'){
             $this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
+            $tracts = $this->Boxes->Tracts->find()
+                                        ->select(['id','date','deadline'])
+                                        ->where(['YEAR(date)'=>date('Y')])
+                                        ->orWhere(['YEAR(date)'=>(date('Y') + 1)])
+                                        ->orWhere(['YEAR(date)'=>(date('Y') - 1)]);
+            $temp = array();
+    
+            foreach ($tracts as $key => $value)
+            {
+                $temp[$value->id] = $value->date." - ".$value->deadline;
+            }
+            $tract = $temp;
             $box = $this->Boxes->get($id, [
                 'contain' => ['Tracts']
             ]);
@@ -93,7 +115,9 @@ class BoxesController extends AppController
             $tracts = $this->Boxes->Tracts->find('list', ['limit' => 200]);
             $this->set(compact('box', 'associations', 'tracts'));
             $this->set('_serialize', ['box']);
-		}else{
+		    $this->set('data', $tract);
+            
+        }else{
 		    return $this->redirect($this->Auth->redirectUrl());
 		}
     }

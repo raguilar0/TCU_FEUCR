@@ -24,9 +24,9 @@
                     echo "<h4>".$this->Form->input('association_id', ['options' => $associations,'class' => 'form-control','label'=>'Asociación', 'min'=> '0'])."</h4>";
     	        echo "</div >";
     	        echo "<div class = 'col-xs-12 col-md-6'>";
-                    echo "<h4>".$this->Form->input('tract_id', ['options'=>$tracts,'class' => 'form-control','label'=>'Tracto', 'min'=> '0'])."</h4>";
+                    echo "<h4>".$this->Form->input('tract_id', ['options'=>$data,'class' => 'form-control','label'=>'Tracto', 'min'=> '0'])."</h4>";
     	        echo "</div >";
-    	    echo "</div >";    
+    	    echo "</div >"; 
     	    
         ?>
         </div>

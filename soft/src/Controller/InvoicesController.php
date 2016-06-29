@@ -3,6 +3,8 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
+use Cake\Filesystem\Folder;
+use Cake\Filesystem\File;
 
 class InvoicesController extends AppController
 {
@@ -155,28 +157,34 @@ class InvoicesController extends AppController
 	    $this->set('options', $options);
 	}
 
+	 
 	public function delete($id = null){
-
-		$invoice = $this->Invoices->get($id);
-		function afterDelete($id){
-	    	 $file = new File(WWW_ROOT .'/img/invoice/'. $invoice['image_name'],false, 0777);
-	    	 if($file->delete()){
-	        	 echo "File deleted";
-	        }
-	        else{
-	            echo "Deletion failed!!";
-	        }                
-	    }
-		if(!$this->Invoices->delete($invoice)){
-			$response = "0";
-		}else{
-			if(($this->request->session()->read('Auth.User.role')) == 'rep'){
-				return $this->redirect($this->Auth->redirectUrl("/invoices/modify/"));
+		if(($this->request->session()->read('Auth.User.role')) == 'rep' || ($this->request->session()->read('Auth.User.role')) == 'admin'){
+			$invoice = $this->Invoices->get($id);
+			$deleted = false;
+	        $filePath = WWW_ROOT .'/img/invoices';
+	
+	        $dir = new Folder($filePath);
+	
+	        $file = new File($dir->pwd() . DS . $invoice['image_name']);
+	
+	        if($file->delete())
+	        {
+	            $deleted = true;
+	        }	
+	        if(!$this->Invoices->delete($invoice)){
+				$response = "0";
 			}else{
-				return $this->redirect($this->Auth->redirectUrl("/invoices/admin-invoices/"));
+				if(($this->request->session()->read('Auth.User.role')) == 'rep'){
+					return $this->redirect($this->Auth->redirectUrl("/invoices/modify/"));
+				}else{
+					return $this->redirect($this->Auth->redirectUrl("/invoices/admin-invoices/"));
+				}
+	
 			}
-
 		}
+		
+		
 
 	}
 
