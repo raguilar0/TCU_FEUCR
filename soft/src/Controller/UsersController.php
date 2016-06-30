@@ -468,6 +468,20 @@ class UsersController extends AppController
       }
     }
     */
+    
+    public function isAuthorized($user)
+    {
+
+        if(in_array($this->request->action,['read','logout']))
+        {
+          return true;
+        }
+
+        
+    
+        return parent::isAuthorized($user);
+    }
+    
 }
 
 ?>

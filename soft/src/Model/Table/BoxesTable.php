@@ -83,4 +83,10 @@ class BoxesTable extends Table
         $rules->add($rules->existsIn(['tract_id'], 'Tracts'));
         return $rules;
     }
+    
+    public function isOwnedBy($boxId, $association_id)
+    {
+        
+        return $this->exists(['id' => $accountId, 'association_id' => $association_id]);
+    }
 }

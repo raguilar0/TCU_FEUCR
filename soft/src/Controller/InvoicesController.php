@@ -117,7 +117,7 @@ class InvoicesController extends AppController
 
 			if($id){
 					$invoice = $this->Invoices->get($id);
-					$invoices_type = array('Tracto'=> 0, 'Ingresos Generados'=> 1, 'Superávit' => 2);
+					$invoices_type = array(0 => 'Tracto', 1=>'Ingresos Generados', 2=>'Superávit');
 
 			$options['invoices_type'] = $invoices_type;
 
@@ -130,7 +130,7 @@ class InvoicesController extends AppController
 							$query = $this->Invoices->query();
 							$query->update()
 										->set(['number'=>$this->request->data['number'], 'amount'=>$this->request->data['amount'],
-													'kind'=>$invoices_type[$this->request->data['kind']], 'legal_certificate'=>$this->request->data['legal_certificate'],
+													'kind'=>$this->request->data['kind'], 'legal_certificate'=>$this->request->data['legal_certificate'],
 													'provider'=>$this->request->data['provider'],'attendant'=>$this->request->data['attendant'] ,'detail'=>$this->request->data['detail'],'clarifications'=>$this->request->data['clarifications'],'state'=>0, ])
 										->where(['id'=>$id])
 										->execute();
@@ -250,8 +250,8 @@ class InvoicesController extends AppController
 	}
 	
 	 public function imageView($id = null){
+	 	$this->viewBuilder()->layout('admin_views');
 		if(($this->request->session()->read('Auth.User.role')) == 'admin'){
-			$this->viewBuilder()->layout('admin_views');
 
 	    	if($id){
 	          $invoice = $this->Invoices->get($id);
@@ -269,6 +269,28 @@ class InvoicesController extends AppController
   				return $this->redirect($this->Auth->redirectUrl());	
   			}
   		}
+    }
+    
+    
+     public function isAuthorized($user)
+    {
+
+        if(in_array($this->request->action,['add','modify']))
+        {
+          return true;
+        }
+
+        if(in_array($this->request->action,['modifyInvoice','delete', 'imageView'])){
+        	
+            $invoiceId = (int)$this->request->params['pass'][0];
+        
+            if ($this->Invoices->isOwnedBy($invoiceId, $user['association_id'])) {
+                return true;
+            }
+            
+        }
+    
+        return parent::isAuthorized($user);
     }
 
 }

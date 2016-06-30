@@ -187,4 +187,16 @@ class BoxesController extends AppController
         $id = $id->toArray();
 		return $id[0]['id'];
 	}
+	
+	
+	public function isAuthorized($user)
+    {
+
+
+        if($this->request->action === 'modify'){
+        	  return true;
+        }
+    
+        return parent::isAuthorized($user);
+    }
 }

@@ -24,7 +24,8 @@
         </tr>
         <tr>
             <th><?= __('Estado (aprobado/rechazado)') ?></th>
-            <td><?= $this->Number->format($saving->state) ?></td>
+            <td><?= ($this->Number->format($saving->state) ? "Aceptado":"Pendiente" );?>
+            </td>
         </tr>
         <tr>
             <th><?= __('Fecha') ?></th>

@@ -24,19 +24,13 @@
       echo "<div class = 'col-xs-12 col-md-4'>";
        echo "<h4>".$this->Form->input('amount', ['class' => 'form-control','label'=>'Monto','value'=>$data['amount'], 'placeholder'=>'Monto de la factura'])."</h4>";
       echo "</div >";
-
+    
+     
 
     echo "<div class = 'col-xs-12 col-md-4'>";
-    echo "<label for='sel1' id = 'tipos_label'>Tipo</label>";
-       echo "<select class='form-control' name = 'kind'>";
-
-            $kind = $options['invoices_type'];
-            foreach ($kind as $key => $value) {
-                  echo "<option>".$key."</option>"."<br>";
-            }
-
-        echo "</select>";
+        echo $this->Form->input('kind', ['options' => $options['invoices_type'], 'label'=>'Tipo', 'class'=>'form-control']);
     echo "</div>";
+    
   echo "</div >";
 
 

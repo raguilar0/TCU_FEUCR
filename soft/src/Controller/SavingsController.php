@@ -5,6 +5,7 @@ use App\Controller\AppController;
 use Cake\Core\Exception\Exception;
 use Cake\Filesystem\Folder;
 use Cake\Filesystem\File;
+use Cake\Event\Event;
 
 /**
  * Savings Controller
@@ -13,6 +14,13 @@ use Cake\Filesystem\File;
  */
 class SavingsController extends AppController
 {
+  
+  
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        $this->Auth->allow('index');
+    }
 
     /**
      * Index method
@@ -68,15 +76,25 @@ class SavingsController extends AppController
 
         if(($this->request->session()->read('Auth.User.role')) == 'admin'){
           $saving = $this->Savings->get($id, [
-              'contain' => ['Associations']
+              'contain' => ['Associations', 'Tracts']
           ]);
         }
 
         if(($this->request->session()->read('Auth.User.role')) == 'rep'){
           $association_id = $this->request->session()->read('Auth.User.association_id');
-          $saving = $this->Savings->get($association_id, [
-              'contain' => ['Associations']
-          ]);
+          try
+          {
+              $saving = $this->Savings->get($id, [
+              'contain' => ['Tracts','Associations'=> function(\Cake\ORM\Query $query) use ($association_id){
+                return $query->where(['Associations.id'=>$association_id]);
+            }]
+             ]);
+          }
+          catch(Exception $e)
+          {
+             $this->Flash->error(__('No está autorizado a ver esta información.'));
+          }
+
         }
 
         $this->set('saving', $saving);
@@ -110,6 +128,11 @@ class SavingsController extends AppController
             if(!empty($letter) && $letter_name)
             {
                 $this->request->data['letter'] = $letter_name;
+                
+                if(($this->request->session()->read('Auth.User.role')) == 'rep'){
+                  $this->request->data['association_id'] = $this->request->session()->read('Auth.User.association_id');
+                }
+                  
                 $saving = $this->Savings->patchEntity($saving, $this->request->data);
                 if ($this->Savings->save($saving)) {
                     $this->Flash->success(__('El ahorro ha sido guardado'));
@@ -127,7 +150,10 @@ class SavingsController extends AppController
             
 
         }
+        
+
         $associations = $this->Savings->Associations->find('list');
+        
 
         $tracts = $this->Savings->Tracts->find()
             ->select(['id','date','deadline'])
@@ -307,4 +333,26 @@ class SavingsController extends AppController
             return $this->redirect(['action' => 'index']);
         }
     }
+    
+    public function isAuthorized($user)
+    {
+
+        if($this->request->action === 'add')
+        {
+          return true;
+        }
+
+        // The owner of an article can edit and delete it
+        if (in_array($this->request->action, ['view', 'delete'])) {
+            $accountId = (int)$this->request->params['pass'][0];
+        
+            if ($this->Savings->isOwnedBy($accountId, $user['association_id'])) {
+                return true;
+            }
+        }
+    
+        return parent::isAuthorized($user);
+    }
+    
+    
 }

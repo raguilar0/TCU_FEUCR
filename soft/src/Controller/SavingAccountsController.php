@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Event\Event;
 
 /**
  * SavingAccounts Controller
@@ -10,6 +11,12 @@ use App\Controller\AppController;
  */
 class SavingAccountsController extends AppController
 {
+  
+      public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        $this->Auth->allow('index');
+    }
 
     /**
      * Index method
@@ -130,6 +137,11 @@ class SavingAccountsController extends AppController
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
+          
+           if(($this->request->session()->read('Auth.User.role')) == 'rep'){
+              $this->request->data['association_id'] = $this->request->session()->read('Auth.User.association_id');
+           }
+           
             $savingAccount = $this->SavingAccounts->patchEntity($savingAccount, $this->request->data);
             if ($this->SavingAccounts->save($savingAccount)) {
                 $this->Flash->success(__('La cuenta de ahorros ha sido guardada.'));
@@ -367,5 +379,22 @@ class SavingAccountsController extends AppController
         return $this->redirect(['controller'=>'pages', 'action'=>'home']);
       }
     }
+
+
+    public function isAuthorized($user)
+    {
+
+        // The owner of an article can edit and delete it
+        if (in_array($this->request->action, ['edit', 'view'])) {
+            $accountId = (int)$this->request->params['pass'][0];
+        
+            if ($this->SavingAccounts->isOwnedBy($accountId, $user['association_id'])) {
+                return true;
+            }
+        }
+    
+        return parent::isAuthorized($user);
+    }
+
 
 }

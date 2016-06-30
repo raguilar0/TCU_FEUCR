@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Event\Event;
 
 /**
  * Associations Controller
@@ -10,6 +11,17 @@ use App\Controller\AppController;
  */
 class AssociationsController extends AppController
 {
+
+      public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        $this->Auth->allow('init');
+    }
+
+    public function init()
+    {
+        $this->viewBuilder()->layout('admin_views');
+    }
 
     /**
      * Index method
@@ -505,6 +517,19 @@ class AssociationsController extends AppController
         else{
             return $this->redirect(['controller'=>'pages', 'action'=>'home']);
         }
+    }
+
+    public function isAuthorized($user)
+    {
+
+        if($this->request->action === 'generalInformation')
+        {
+            return true;
+        }
+
+
+    
+        return parent::isAuthorized($user);
     }
 
 

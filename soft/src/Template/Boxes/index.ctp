@@ -25,7 +25,7 @@
                 <td><?= $box->has('association') ? $this->Html->link($box->association->name, ['controller' => 'Associations', 'action' => 'view', $box->association->id]) : '' ?></td>
                 <td><?= $this->Number->format($box->little_amount) ?></td>
                 <td><?= $this->Number->format($box->big_amount) ?></td>
-                <td><?= $this->Number->format($box->type) ?></td>
+                <td><?= ($this->Number->format($box->type) ? "Ingresos Generados" : "Tracto" ); ?></td>
                 <td><?= $box->has('tract') ? $this->Html->link($box->tract->date." - ".$box->tract->deadline, ['controller' => 'Tracts', 'action' => 'view', $box->tract->id]) : '' ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__(''), ['action' => 'edit', $box->id], ['class'=>'glyphicon glyphicon-pencil btn btn-primary']) ?>
