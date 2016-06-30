@@ -36,7 +36,8 @@
 							if($key['state'] == 1){
 									echo "<td> Aprobada </td>";
 							}
-							echo "<td>".$this->Html->link('','/invoices/modify_invoice/'.$key['id'], ['class'=>'glyphicon glyphicon-pencil btn btn-primary'])."  ".$this->Form->postLink('', ['action' => 'delete', $key->id], ['class'=>'glyphicon glyphicon-remove btn btn-danger' ,'confirm' => __('¿Estás seguro de que deseas borrarlo? # {0}?', $key->id)]);
+							echo "<td>".$this->Html->link('','/invoices/modify_invoice/'.$key['id'], ['class'=>'glyphicon glyphicon-pencil btn btn-primary'])."  "
+							.$this->Form->postLink('', ['action' => 'delete', $key->id], ['class'=>'glyphicon glyphicon-remove btn btn-danger' ,'confirm' => __('¿Estás seguro de que deseas borrarlo? # {0}?', $key->id)]);
           }
       ?>
   </tbody>

@@ -3,6 +3,8 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
+use Cake\Filesystem\Folder;
+use Cake\Filesystem\File;
 
 class InvoicesController extends AppController
 {
@@ -154,10 +156,23 @@ class InvoicesController extends AppController
     }
 	}
 
-	public function delete($id = null){
-		if($this->Auth->user()){
+	 
+	public function delete($id = null)
+	{
+		if(($this->request->session()->read('Auth.User.role')) == 'rep' || ($this->request->session()->read('Auth.User.role')) == 'admin'){
 			$invoice = $this->Invoices->get($id);
-			if(!$this->Invoices->delete($invoice)){
+			$deleted = false;
+	        $filePath = WWW_ROOT .'/img/invoices';
+	
+	        $dir = new Folder($filePath);
+	
+	        $file = new File($dir->pwd() . DS . $invoice['image_name']);
+	
+	        if($file->delete())
+	        {
+	            $deleted = true;
+	        }	
+	        if(!$this->Invoices->delete($invoice)){
 				$response = "0";
 			}else{
 				if(($this->request->session()->read('Auth.User.role')) == 'rep'){
@@ -165,12 +180,13 @@ class InvoicesController extends AppController
 				}else{
 					return $this->redirect($this->Auth->redirectUrl("/invoices/admin-invoices/"));
 				}
-
+	
 			}
-    }
-    else{
-      return $this->redirect(['controller'=>'pages', 'action'=>'home']);
-    }
+		}
+		
+    	else{
+    		 return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+    	}
 	}
 
 	public function adminModify(){
@@ -190,48 +206,69 @@ class InvoicesController extends AppController
 	}
 
 	public function adminModifyInvoice($id = null){
-		if($this->Auth->user()){
+		if(($this->request->session()->read('Auth.User.role')) != 'admin'){
+  			return $this->redirect($this->Auth->redirectUrl());
+  		}
+	    else{
+	    	$this->viewBuilder()->layout('admin_views');
+
+	    	if($id){
+	          $invoice = $this->Invoices->get($id);
+	          $invoices_type = array('Tracto'=> 0, 'Ingresos Generados'=> 1, 'Superávit' => 2);
+
+				$options['invoices_type'] = $invoices_type;
+
+	          if($this->request->is(array('post','put'))) {
+	            $invoice = $this->Invoices->newEntity($this->request->data);
+
+	            if(!$invoice->errors()) {
+
+	              $query = $this->Invoices->query();
+	              $query->update()
+	                    ->set(['number'=>$this->request->data['number'], 'amount'=>$this->request->data['amount'],
+	                          'kind'=>$invoices_type[$this->request->data['kind']], 'legal_certificate'=>$this->request->data['legal_certificate'],
+	                          'provider'=>$this->request->data['provider'],'attendant'=>$this->request->data['attendant'] ,
+	                          'detail'=>$this->request->data['detail'],'clarifications'=>$this->request->data['clarifications'],'state'=>$this->request->data['state']])
+	                    ->where(['id'=>$id])
+	                    ->execute();
+
+	              $this->Flash->success(__('Factura modificada correctamente.', ['key'=>'success']));
+
+	            }
+	            else{
+	                $this->Flash->error(__('Error al modificar factura.', ['key'=>'error']));
+	            }
+	          }
+
+	  			}
+	  			else {
+	  				$this->redirect(['action'=>'/']);
+	  			}
+	    }
+	    $this->set('data', $invoice);
+	    $this->set('options', $options);
+	}
+	
+	 public function imageView($id = null){
+		if(($this->request->session()->read('Auth.User.role')) == 'admin'){
 			$this->viewBuilder()->layout('admin_views');
 
-			if($id){
-					$invoice = $this->Invoices->get($id);
-					$invoices_type = array('Tracto'=> 0, 'Ingresos Generados'=> 1, 'Superávit' => 2);
-
-			$options['invoices_type'] = $invoices_type;
-
-					if($this->request->is(array('post','put'))) {
-						$invoice = $this->Invoices->newEntity($this->request->data);
-
-						if(!$invoice->errors()) {
-
-							$query = $this->Invoices->query();
-							$query->update()
-										->set(['number'=>$this->request->data['number'], 'amount'=>$this->request->data['amount'],
-													'kind'=>$invoices_type[$this->request->data['kind']], 'legal_certificate'=>$this->request->data['legal_certificate'],
-													'provider'=>$this->request->data['provider'], 'date'=> $this->request->data['date'],'attendant'=>$this->request->data['attendant'] ,
-													'detail'=>$this->request->data['detail'],'clarifications'=>$this->request->data['clarifications'],'state'=>$this->request->data['state']])
-										->where(['id'=>$id])
-										->execute();
-
-							$this->Flash->success(__('Factura modificada correctamente.', ['key'=>'success']));
-
-						}
-						else{
-								$this->Flash->error(__('Error al modificar factura.', ['key'=>'error']));
-						}
-					}
-
-				}
-				else {
-					$this->redirect(['action'=>'/']);
-				}
-
-		$this->set('data', $invoice);
-		$this->set('options', $options);
+	    	if($id){
+	          $invoice = $this->Invoices->get($id);
+	    	}
+	    	$this->set('data', $invoice);
+  			
+  		}else{
+  			if(($this->request->session()->read('Auth.User.role')) == 'rep'){
+  				//Falta validar que la factura pertenezca a mi asocia
+  				if($id){
+		          $invoice = $this->Invoices->get($id);
+		    	}
+		    	$this->set('data', $invoice);
+  			}else{
+  				return $this->redirect($this->Auth->redirectUrl());	
+  			}
+  		}
     }
-    else{
-      return $this->redirect(['controller'=>'pages', 'action'=>'home']);
-    }
-	}
 
 }
