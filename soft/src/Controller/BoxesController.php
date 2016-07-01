@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Core\Exception\Exception;
 
 /**
  * Boxes Controller
@@ -142,34 +143,52 @@ class BoxesController extends AppController
     }
     
     public function modify(){
-		if(($this->request->session()->read('Auth.User.role')) != 'rep'){
-			return $this->redirect($this->Auth->redirectUrl());
-		}
-		else{
-			$id = $this->request->session()->read('Auth.User.association_id');
-			$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
-			$actualDate = date("Y-m-d");
-			$tract_id = $this->getTractId($actualDate) ;
-			$box = $this->Boxes->find()
-						->select(['little_amount','big_amount'])
-						->andwhere(['association_id'=>$id, 'type'=> 1, 'tract_id' =>$tract_id]);
-			$box = $box->toArray();
-			if($this->request->is(array('post','put'))){
-				if($box != []){
-					$box = $this->Boxes->newEntity($this->request->data);
-					$query = $this->Boxes->query();
-					$query->update()
-						  ->set(['big_amount'=> $this->request->data['big_amount'], 'little_amount'=>$this->request->data['little_amount']])
-						  ->andwhere(['association_id'=> $id,'tract_id'=> $tract_id])
-						  ->execute();
-					$box = $this->Boxes->find()
-						->select(['little_amount','big_amount'])
-						->andwhere(['association_id'=>$id, 'type'=> 1, 'tract_id' =>$tract_id]);
-					$box = $box->toArray();
-				}
-			}
-			$this->set('data',$box);
-		}
+		//if(($this->request->session()->read('Auth.User.role')) != 'rep'){
+		//	return $this->redirect($this->Auth->redirectUrl());
+		//}
+		//else{
+            try
+            {
+                $id = $this->request->session()->read('Auth.User.association_id');
+                $this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
+                $actualDate = date("Y-m-d");
+
+                $tract_id = $this->getTractId($actualDate) ;
+                $box = $this->Boxes->find()
+                    ->select(['little_amount','big_amount'])
+                    ->andwhere(['association_id'=>$id, 'type'=> 1, 'tract_id' =>$tract_id]);
+                $box = $box->toArray();
+
+
+
+
+
+
+                if($this->request->is(array('post','put'))){
+                    if($box != []){
+                        $box = $this->Boxes->newEntity($this->request->data);
+                        $query = $this->Boxes->query();
+                        $query->update()
+                            ->set(['big_amount'=> $this->request->data['big_amount'], 'little_amount'=>$this->request->data['little_amount']])
+                            ->andwhere(['association_id'=> $id,'tract_id'=> $tract_id])
+                            ->execute();
+                        $box = $this->Boxes->find()
+                            ->select(['little_amount','big_amount'])
+                            ->andwhere(['association_id'=>$id, 'type'=> 1, 'tract_id' =>$tract_id]);
+                        $box = $box->toArray();
+                    }
+                }
+                
+
+                $this->set('data',$box);
+            }
+            catch (Exception $e)
+            {
+                $this->Flash->error(__('Aún no se le ha asignado una caja.'));
+                return $this->redirect(['Controller'=>'Associations','action' => 'init']);
+            }
+
+		//}
 
 	}
 	

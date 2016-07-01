@@ -214,7 +214,7 @@ class InvoicesController extends AppController
 
 	    	if($id){
 	          $invoice = $this->Invoices->get($id);
-	          $invoices_type = array('Tracto'=> 0, 'Ingresos Generados'=> 1, 'Superávit' => 2);
+	          $invoices_type = array(0 =>'Tracto',1=>'Ingresos Generados', 2=> 'Superávit');
 
 				$options['invoices_type'] = $invoices_type;
 
@@ -226,13 +226,15 @@ class InvoicesController extends AppController
 	              $query = $this->Invoices->query();
 	              $query->update()
 	                    ->set(['number'=>$this->request->data['number'], 'amount'=>$this->request->data['amount'],
-	                          'kind'=>$invoices_type[$this->request->data['kind']], 'legal_certificate'=>$this->request->data['legal_certificate'],
+	                          'kind'=>$this->request->data['kind'], 'legal_certificate'=>$this->request->data['legal_certificate'],
 	                          'provider'=>$this->request->data['provider'],'attendant'=>$this->request->data['attendant'] ,
-	                          'detail'=>$this->request->data['detail'],'clarifications'=>$this->request->data['clarifications'],'state'=>$this->request->data['state']])
+	                          'detail'=>$this->request->data['detail'],'clarifications'=>$this->request->data['clarifications'],'state'=>(isset($this->request->data['state'])? 1: 0)])
 	                    ->where(['id'=>$id])
 	                    ->execute();
 
-	              $this->Flash->success(__('Factura modificada correctamente.', ['key'=>'success']));
+
+	              $this->Flash->success(__('Factura modificada correctamente.'));
+					return $this->redirect(['controller'=>'invoices', 'action'=>'admin-modify']);
 
 	            }
 	            else{
@@ -240,10 +242,10 @@ class InvoicesController extends AppController
 	            }
 	          }
 
-	  			}
-	  			else {
-	  				$this->redirect(['action'=>'/']);
-	  			}
+			}
+			else {
+				$this->redirect(['action'=>'/']);
+			}
 	    }
 	    $this->set('data', $invoice);
 	    $this->set('options', $options);

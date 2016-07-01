@@ -220,26 +220,36 @@ class SavingAccountsController extends AppController
                 if($this->request->data['first_tract'] !== $this->request->data['second_tract'])
                 {
                     $association_id = $this->getAssociationId($association_name);
-                    $first_tract_id = $this->getTractId($this->request->data['first_tract']);
                     $second_tract_id = $this->getTractId($this->request->data['second_tract']);
 
-                    $oldAccount = $this->getAccount($first_tract_id,$association_id);
-
-                    $newAccount['amount'] = $oldAccount['amount'];
-                    $newAccount['bank'] = $oldAccount['bank'];
-                    $newAccount['account_owner'] = $oldAccount['account_owner'];
-                    $newAccount['card_number'] = $oldAccount['card_number'];
-                    $newAccount['association_id'] = $association_id;
-                    $newAccount['tract_id'] = $second_tract_id;
-
-                    if($this->createSavingAccount($newAccount))
+                    if($this->validateTract($this->SavingAccounts,$association_id,$second_tract_id) && ($this->request->data['first_tract'] != $this->request->data['second_tract']))
                     {
-                        die("Se transfirió la cuenta con éxito");
+
+                        $first_tract_id = $this->getTractId($this->request->data['first_tract']);
+
+                        $oldAccount = $this->getAccount($first_tract_id,$association_id);
+
+                        $newAccount['amount'] = $oldAccount['amount'];
+                        $newAccount['bank'] = $oldAccount['bank'];
+                        $newAccount['account_owner'] = $oldAccount['account_owner'];
+                        $newAccount['card_number'] = $oldAccount['card_number'];
+                        $newAccount['association_id'] = $association_id;
+                        $newAccount['tract_id'] = $second_tract_id;
+
+                        if($this->createSavingAccount($newAccount))
+                        {
+                            die("Se transfirió la cuenta con éxito");
+                        }
+                        else
+                        {
+                            die("No se pudo transferir la cuenta. Intentelo más tarde");
+                        }
                     }
                     else
                     {
-                        die("No se pudo transferir la cuenta. Intentelo más tarde");
+                        die("No se pudo crear la cuenta. Probablemente las fechas son iguales o ya existe una cuenta asociada a esta fecha de tracto.");
                     }
+
                 }
                 else
                 {
@@ -248,15 +258,36 @@ class SavingAccountsController extends AppController
 
             }
         }
+        else
+        {
+            $this->set('head',$headquarters);
+            $this->set('data', $tracts);
+        }
 
 
-        $this->set('head',$headquarters);
-        $this->set('data', $tracts);
+
       }
       else{
         return $this->redirect(['controller'=>'pages', 'action'=>'home']);
       }
 
+    }
+
+    private function validateTract($entity, $association_id, $tract_id)
+    {
+        $emp = true;
+        $query = $entity->find()
+            ->hydrate(false)
+            ->andWhere(['association_id'=>$association_id,'tract_id'=>$tract_id]);
+
+        $query = $query->toArray();
+
+        if(!empty($query))
+        {
+            $emp = false;
+        }
+
+        return $emp;
     }
 
     private function createSavingAccount($newAccount)

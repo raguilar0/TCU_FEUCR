@@ -8,43 +8,51 @@
 
 <?php
 
-	$big = 0;
-	$little = 0;
-	if($data != [])
+	if(!empty($data))
 	{
-		$big = $data[0]['big_amount'];
-		$little = $data[0]['little_amount'];
+		$big = 0;
+		$little = 0;
+		if($data != [])
+		{
+			$big = $data[0]['big_amount'];
+			$little = $data[0]['little_amount'];
+		}
+
+
+		echo $this->Form->create($data, []);
+		echo "<div class='form-group'>";
+
+
+
+
+		echo "<div class = 'row'>";
+
+		echo "<div class = 'col-xs-12 col-md-6'>";
+		echo "<h4>".$this->Form->input('big_amount', ['class' => 'form-control','label'=>'Caja Fuerte', 'min'=> '0','value'=>$big])."</h4>";
+		echo "</div >";
+
+
+		echo "<div class = 'col-xs-12 col-md-6'>";
+		echo "<h4>".$this->Form->input('little_amount', ['class' => 'form-control','label'=>'Caja Chica', 'min'=>'0', 'value'=>$little])."</h4>";
+		echo "</div >";
+
+		echo "</div>";
+
+		echo "</div >";
+
+
+		echo "<div class = 'row'>";
+		echo "<div class = 'col-xs-12'>";    echo "<h4>".$this->Form->submit('Actualizar Cajas', ['class' => 'form-control', 'id' => 'asso_id'])."</h4>";
+		echo "</div>";
+		echo  "</div>";
+
+		echo $this->Form->end();
+	}
+	else
+	{
+		echo "<h3> Aún no se le ha asignado una caja para este tracto. Por favor espere o póngase en contacto con la contraloría</h3>";
 	}
 
-
-	echo $this->Form->create($data, []);
-	echo "<div class='form-group'>";
-
-
-
-
-    echo "<div class = 'row'>";
-
-	    echo "<div class = 'col-xs-12 col-md-6'>";
-	     echo "<h4>".$this->Form->input('big_amount', ['class' => 'form-control','label'=>'Caja Fuerte', 'min'=> '0','value'=>$big])."</h4>";
-	    echo "</div >";
-
-
-	    echo "<div class = 'col-xs-12 col-md-6'>";
-	     echo "<h4>".$this->Form->input('little_amount', ['class' => 'form-control','label'=>'Caja Chica', 'min'=>'0', 'value'=>$little])."</h4>";
-	    echo "</div >";
-
-    echo "</div>";
-
-	echo "</div >";
-
-
-    echo "<div class = 'row'>";
-        echo "<div class = 'col-xs-12'>";    echo "<h4>".$this->Form->submit('Actualizar Cajas', ['class' => 'form-control', 'id' => 'asso_id'])."</h4>";
-        echo "</div>";
-    echo  "</div>";
-
-    echo $this->Form->end();
 
 ?>
 

@@ -917,11 +917,9 @@ $(document).ready( function ()
 
     }
 
-    if(object.amount.length > 0)
-    {
-         generated_final_balance = ((incomes_total + generated_initial_amount) - invoices_total);         
-         date = "Periodo del tracto: <br><br>"+document.getElementById("tracts_id").value + " - " +object.amount[0].tract.deadline+"<br><br>";          
-    }
+	 generated_final_balance = ((incomes_total + generated_initial_amount) - invoices_total);
+	 //date = "Periodo del tracto: <br><br>"+document.getElementById("tracts_id").value + " - " +object.amount[0].tract.deadline+"<br><br>";
+
 
     if(object.saving_account.length > 0)
 	{
@@ -937,6 +935,14 @@ $(document).ready( function ()
     document.getElementById("generated_initial_amount").innerHTML = generated_initial_amount;
 
     document.getElementById("generated_final_balance").innerHTML =  generated_final_balance;
+	  if(generated_final_balance < 0)
+	  {
+		  document.getElementById("generated_final_balance").style = "color:red";
+	  }
+	  else
+	  {
+		  document.getElementById("generated_final_balance").style = "color:green";
+	  }
 
     document.getElementById("generated_saving_account").innerHTML = generated_saving_account;
 

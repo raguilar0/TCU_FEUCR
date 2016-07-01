@@ -237,6 +237,23 @@ class InitialAmountsController extends AppController
       }
     }
 
+    private function validateTract($entity, $association_id, $tract_id, $type)
+    {
+        $emp = true;
+        $query = $entity->find()
+            ->hydrate(false)
+            ->andWhere(['association_id'=>$association_id,'tract_id'=>$tract_id, 'type'=>$type]);
+
+        $query = $query->toArray();
+
+        if(!empty($query))
+        {
+            $emp = false;
+        }
+
+        return $emp;
+    }
+
     private function createInitialAmount( $oldBox, $association_id, $tract_id, $type)
     {
       if($this->Auth->user()){
@@ -252,12 +269,16 @@ class InitialAmountsController extends AppController
 
         try
         {
-            $initial = $this->InitialAmounts->newEntity($array);
-
-            if($this->InitialAmounts->save($initial))
+            if($this->validateTract($this->InitialAmounts, $association_id, $tract_id, $type))
             {
-                $message = "Se guardó el monto inicial correspondiente a ".$type_name." con éxito";
+                $initial = $this->InitialAmounts->newEntity($array);
+
+                if($this->InitialAmounts->save($initial))
+                {
+                    $message = "Se guardó el monto inicial correspondiente a ".$type_name." con éxito";
+                }
             }
+
 
         }
         catch(Exception $e)
@@ -279,7 +300,7 @@ class InitialAmountsController extends AppController
 
       if($this->Auth->user()){
         $type_name = ($type == 0 ? "Tracto":"Ingresos Generados");
-        $message = "Se creó la caja para ".$type_name;
+        $message = "Se transfirió la caja de ".$type_name;
 
         try
         {

@@ -12,6 +12,7 @@ class AmountsTable extends Table
     {
         $this->addBehavior('Timestamp');
         $this->belongsTo('Associations');
+        $this->belongsTo('Tracts');
     }
     public function validationDefault(Validator $validator)
     {
@@ -22,6 +23,7 @@ class AmountsTable extends Table
                                     'rule' => array('custom', '/^[0-9,.\-]+$/'),
                                     'message' => 'Debe ser mayormente para números.'
             ])
+            ->notEmpty('tract_id')
             ->notEmpty('date')
             ->notEmpty('deadline')
             ->notEmpty('detail', 'Ingrese el detalle del monto')

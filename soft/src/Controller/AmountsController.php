@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Core\Exception\Exception;
 
 class AmountsController extends AppController
 {
@@ -42,17 +43,21 @@ class AmountsController extends AppController
 				$data['tract_id'] = $tract;
 				$data['association_id'] = $association_id;
 				$data['type'] = $type;
-				
-				$entity =  $this->Amounts->newEntity($data);
-				
-				if($this->Amounts->save($entity))
-				{
-					$this->Flash->success('Se agregaron los montos exitosamente', ['key' => 'success']);
-				}
-				else
-				{
-					$this->Flash->error('No se pudo agregar el monto', ['key' => 'error']);
-				}
+
+
+					$entity =  $this->Amounts->newEntity($data);
+
+					if($this->Amounts->save($entity))
+					{
+						$this->Flash->success('Se agregaron los montos exitosamente');
+					}
+					else
+					{
+						$this->Flash->error('No se pudo agregar el monto. Póngase en contacto con el administrador para verificar que se haya creado el tracto correspondiente');
+					}
+
+
+
 			}
 			
 		}
@@ -125,28 +130,52 @@ class AmountsController extends AppController
 			$values['type'] = 0;
 
 			foreach ($data as $key => $value) { //Se agrega monto por monto al tracto correspondiente
-				$values['amount'] = $value;
-				$values['tract_id'] = $tracts[$index]['id'];//$this->getTractId($tracts[$index]['date']); //Pide el id del tracto tomando como fecha la fecha de inicio
 
-				$entity = $this->Amounts->newEntity($values);
-
-				try
+				if($this->validateTract($this->Amounts,$association_id, $tracts[$index]['id'], 0))
 				{
-					if($this->Amounts->save($entity))
+					$values['amount'] = $value;
+					$values['tract_id'] = $tracts[$index]['id'];//$this->getTractId($tracts[$index]['date']); //Pide el id del tracto tomando como fecha la fecha de inicio
+
+					$entity = $this->Amounts->newEntity($values);
+
+					try
 					{
-						++$successIndex;
+						if($this->Amounts->save($entity))
+						{
+							++$successIndex;
+						}
 					}
-				}
-				catch(Exception $e)
-				{
+					catch(Exception $e)
+					{
+
+					}
 
 				}
 
 				++$index;
+
+
 			}
 
 			return $successIndex;
 		}
+	}
+
+	private function validateTract($entity, $association_id, $tract_id, $type)
+	{
+		$emp = true;
+		$query = $entity->find()
+					->hydrate(false)
+					->andWhere(['association_id'=>$association_id,'tract_id'=>$tract_id, 'type'=>$type]);
+
+		$query = $query->toArray();
+
+		if(!empty($query))
+		{
+			$emp = false;
+		}
+
+		return $emp;
 	}
 
 
@@ -167,24 +196,23 @@ class AmountsController extends AppController
 		$values['type'] = $type;
 
 		foreach ($data as $key => $value) { //Se agrega monto por monto al tracto correspondiente
-			$values['little_amount'] = 0;
-			$values['big_amount'] = 0;
-			$values['tract_id'] = $tracts[$index]['id'];//$this->getTractId($tracts[$index]['date']); //Pide el id del tracto tomando como fecha la fecha de inicio
 
-			$entity = $this->Boxes->newEntity($values);
-
-			try
+			if($this->validateTract($this->Boxes,$association_id, $tracts[$index]['id'], $type))
 			{
-				if($this->Boxes->save($entity))
-				{
-					++$successIndex;
+				$values['little_amount'] = 0;
+				$values['big_amount'] = 0;
+				$values['tract_id'] = $tracts[$index]['id'];//$this->getTractId($tracts[$index]['date']); //Pide el id del tracto tomando como fecha la fecha de inicio
+
+				$entity = $this->Boxes->newEntity($values);
+
+				try {
+					if ($this->Boxes->save($entity)) {
+						++$successIndex;
+					}
+				} catch (Exception $e) {
+
 				}
 			}
-			catch(Exception $e)
-			{
-
-			}
-
 
 			++$index;
 		}
@@ -195,14 +223,37 @@ class AmountsController extends AppController
 
 	public function getTracts($year)
 	{
+
+			$query = $this->Amounts->Tracts->find()
+			->hydrate(false)
+				->where(['YEAR(date)'=>$year]); //Queremos los tractos del año actual
+
+		/**
+		$query = $this->Amounts->Tracts->find() //Se trae solo las sedes que tienen alguna asocicación asociada :p
+		->hydrate(false)
+			->join([
+				'table'=>'amounts',
+				'alias'=>'a',
+				'type' => 'LEFT',
+				'conditions'=>'Tracts.id = a.tract_id',
+			]);
+
+
+
+
+
+
 		$this->loadModel('Tracts');
 
-		$tracts = $this->Tracts->find()
-					->hydrate(false)
-					->where(['YEAR(date)'=>$year]); //Queremos los tractos del año actual
-		$tracts = $tracts->toArray();
+
 
 		return $tracts;
+		 **/
+
+
+		$query = $query->toArray();
+
+		return $query;
 	}
 
 	private function getHeadquarters()
@@ -408,7 +459,21 @@ class AmountsController extends AppController
 		
 	}
 
-	
-	
-	
+
+	public function isAuthorized($user)
+	{
+
+		if($this->request->action === 'addAmounts')
+		{
+			return true;
+		}
+
+
+
+		return parent::isAuthorized($user);
+	}
+
+
+
+
 }

@@ -3,7 +3,7 @@
         <h1 id="association_name"></h1>  
 
         <h3><?php
-                echo "Agregar un nuevo monto";
+                echo "<h1>Agregar un nuevo monto</h1>";
          ?>
          </h3>  
     </div>
@@ -18,9 +18,9 @@
      
         echo $this->Form->create(null, ['id'=>'submit6']);
      
-        echo "<div class = 'col-xs-12 col-md-5'>";            
+        echo "<div class = 'col-xs-12 col-md-5'>";
             echo "<label><h4><strong>Monto</strong></h4></label>";
-            echo "<input name='amount' type='int' id = 'monto' class='form-control' required >";
+            echo "<input name='amount' type='int' id = 'monto' class='form-control' style = 'margin-top: 10px;' required >";
         echo "</div >";
         
         echo "<div class = 'col-xs-12 col-md-7'>";            

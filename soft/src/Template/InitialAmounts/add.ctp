@@ -185,3 +185,17 @@
   </div>
 </div>
 
+<?=$this->Html->script('amounts_admin') ?>
+
+<script>
+
+    //El siguiente script es para cargar las sedes y asociaciones que partenencen en esa sede. Esto en un dropdown
+
+    $(document).ready( function ()
+    {
+        var path = "<?php echo $this->Url->build(["controller" => "Amounts", "action" => "getAssociations"]);?>";
+        getAssociations(path);
+    });
+
+
+</script>

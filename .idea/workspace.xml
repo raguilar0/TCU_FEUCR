@@ -1,0 +1,1124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="28b7af6f-8eee-4ed7-80fb-ead25acd154c" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/soft/webroot/img/invoices/404_1467340891.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/FEUCR.iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/soft/webroot/js/amounts_admin.js" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Backup/Mysql/database v2.sql" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Backup/Mysql/database.sql" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Backup/Mysql/tcu_feur.sql" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Backup/Mysql/database v3.sql" afterPath="$PROJECT_DIR$/Backup/Mysql/crear.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/css/fonts/FontAwesome.otf" afterPath="$PROJECT_DIR$/soft/webroot/css/fonts/FontAwesome.otf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/css/fonts/fontawesome-webfont.eot" afterPath="$PROJECT_DIR$/soft/webroot/css/fonts/fontawesome-webfont.eot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/css/fonts/fontawesome-webfont.ttf" afterPath="$PROJECT_DIR$/soft/webroot/css/fonts/fontawesome-webfont.ttf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/css/fonts/fontawesome-webfont.woff" afterPath="$PROJECT_DIR$/soft/webroot/css/fonts/fontawesome-webfont.woff" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/css/fonts/glyphicons-halflings-regular.eot" afterPath="$PROJECT_DIR$/soft/webroot/css/fonts/glyphicons-halflings-regular.eot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/css/fonts/glyphicons-halflings-regular.ttf" afterPath="$PROJECT_DIR$/soft/webroot/css/fonts/glyphicons-halflings-regular.ttf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/css/fonts/glyphicons-halflings-regular.woff" afterPath="$PROJECT_DIR$/soft/webroot/css/fonts/glyphicons-halflings-regular.woff" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/img/invoices/00_1466965538.png" afterPath="$PROJECT_DIR$/soft/webroot/img/invoices/00_1466965538.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/img/invoices/404_1467271971.jpg" afterPath="$PROJECT_DIR$/soft/webroot/img/invoices/404_1467271971.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/letters/4_El_codigo_de_colores_de_las_resistencias_1467172848.pdf" afterPath="$PROJECT_DIR$/soft/webroot/letters/4_El_codigo_de_colores_de_las_resistencias_1467172848.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/letters/6_Ejemplo_Hoja_De_Datos_1467004236.pdf" afterPath="$PROJECT_DIR$/soft/webroot/letters/6_Ejemplo_Hoja_De_Datos_1467004236.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/letters/Cap6 - Redes Inalambricas_1467271783.pdf" afterPath="$PROJECT_DIR$/soft/webroot/letters/Cap6 - Redes Inalambricas_1467271783.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Backup/Mysql/poblar.sql" afterPath="$PROJECT_DIR$/Backup/Mysql/poblar.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/config/app.php" afterPath="$PROJECT_DIR$/soft/config/app.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Controller/AmountsController.php" afterPath="$PROJECT_DIR$/soft/src/Controller/AmountsController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Controller/BoxesController.php" afterPath="$PROJECT_DIR$/soft/src/Controller/BoxesController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Controller/InitialAmountsController.php" afterPath="$PROJECT_DIR$/soft/src/Controller/InitialAmountsController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Controller/InvoicesController.php" afterPath="$PROJECT_DIR$/soft/src/Controller/InvoicesController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Controller/SavingAccountsController.php" afterPath="$PROJECT_DIR$/soft/src/Controller/SavingAccountsController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Controller/SavingsController.php" afterPath="$PROJECT_DIR$/soft/src/Controller/SavingsController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Controller/SurplusesController.php" afterPath="$PROJECT_DIR$/soft/src/Controller/SurplusesController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Controller/UsersController.php" afterPath="$PROJECT_DIR$/soft/src/Controller/UsersController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Model/Entity/Amount.php" afterPath="$PROJECT_DIR$/soft/src/Model/Entity/Amount.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Model/Entity/Association.php" afterPath="$PROJECT_DIR$/soft/src/Model/Entity/Association.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Model/Entity/Box.php" afterPath="$PROJECT_DIR$/soft/src/Model/Entity/Box.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Model/Entity/Headquarters.php" afterPath="$PROJECT_DIR$/soft/src/Model/Entity/Headquarters.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Model/Entity/InitialAmount.php" afterPath="$PROJECT_DIR$/soft/src/Model/Entity/InitialAmount.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Model/Entity/Invoice.php" afterPath="$PROJECT_DIR$/soft/src/Model/Entity/Invoice.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Model/Entity/Saving.php" afterPath="$PROJECT_DIR$/soft/src/Model/Entity/Saving.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Model/Entity/SavingAccount.php" afterPath="$PROJECT_DIR$/soft/src/Model/Entity/SavingAccount.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Model/Entity/Surplus.php" afterPath="$PROJECT_DIR$/soft/src/Model/Entity/Surplus.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Model/Entity/Tract.php" afterPath="$PROJECT_DIR$/soft/src/Model/Entity/Tract.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Model/Table/AmountsTable.php" afterPath="$PROJECT_DIR$/soft/src/Model/Table/AmountsTable.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Model/Table/InitialAmountsTable.php" afterPath="$PROJECT_DIR$/soft/src/Model/Table/InitialAmountsTable.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Model/Table/SavingAccountsTable.php" afterPath="$PROJECT_DIR$/soft/src/Model/Table/SavingAccountsTable.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Model/Table/SavingsTable.php" afterPath="$PROJECT_DIR$/soft/src/Model/Table/SavingsTable.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Model/Table/SurplusesTable.php" afterPath="$PROJECT_DIR$/soft/src/Model/Table/SurplusesTable.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Model/Table/UsersTable.php" afterPath="$PROJECT_DIR$/soft/src/Model/Table/UsersTable.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Amounts/add.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Amounts/add.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Amounts/add_amounts.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Amounts/add_amounts.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Amounts/get_tract_id.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Amounts/get_tract_id.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Amounts/modify.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Amounts/modify.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Amounts/show_associations.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Amounts/show_associations.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Associations/detailed_information.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Associations/detailed_information.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Associations/edit.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Associations/edit.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Associations/general_information.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Associations/general_information.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Associations/init.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Associations/init.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Boxes/add.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Boxes/add.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Boxes/edit.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Boxes/edit.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Boxes/index.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Boxes/index.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Boxes/modify.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Boxes/modify.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Boxes/view.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Boxes/view.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Headquarters/edit.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Headquarters/edit.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Headquarters/index.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Headquarters/index.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Headquarters/view.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Headquarters/view.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/InitialAmounts/add.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/InitialAmounts/add.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/InitialAmounts/add_s.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/InitialAmounts/add_s.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/InitialAmounts/edit.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/InitialAmounts/edit.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/InitialAmounts/index.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/InitialAmounts/index.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/InitialAmounts/view.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/InitialAmounts/view.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Invoices/admin_modify.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Invoices/admin_modify.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Invoices/admin_modify_invoice.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Invoices/admin_modify_invoice.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Invoices/image_view.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Invoices/image_view.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Invoices/modify.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Invoices/modify.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Invoices/modify_invoice.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Invoices/modify_invoice.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Layout/admin_views.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Layout/admin_views.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/SavingAccounts/add.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/SavingAccounts/add.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/SavingAccounts/edit.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/SavingAccounts/edit.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/SavingAccounts/index.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/SavingAccounts/index.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/SavingAccounts/transfer.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/SavingAccounts/transfer.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/SavingAccounts/view.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/SavingAccounts/view.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Savings/add.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Savings/add.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Savings/download.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Savings/download.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Savings/edit.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Savings/edit.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Savings/index.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Savings/index.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Savings/view.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Savings/view.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Surpluses/add.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Surpluses/add.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Surpluses/edit.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Surpluses/edit.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Surpluses/index.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Surpluses/index.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Surpluses/show_associations.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Surpluses/show_associations.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Surpluses/view.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Surpluses/view.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Tracts/edit.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Tracts/edit.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Tracts/view.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Tracts/view.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Users/add.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Users/add.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Users/index.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Users/index.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Users/login.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Users/login.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Users/modify.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Users/modify.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Users/modify_user.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Users/modify_user.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Users/perfil.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Users/perfil.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Users/read.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Users/read.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Users/show_associations.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Users/show_associations.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/src/Template/Users/show_users.ctp" afterPath="$PROJECT_DIR$/soft/src/Template/Users/show_users.ctp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/tests/Fixture/AmountsFixture.php" afterPath="$PROJECT_DIR$/soft/tests/Fixture/AmountsFixture.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/tests/Fixture/AssociationsFixture.php" afterPath="$PROJECT_DIR$/soft/tests/Fixture/AssociationsFixture.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/tests/Fixture/BoxesFixture.php" afterPath="$PROJECT_DIR$/soft/tests/Fixture/BoxesFixture.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/tests/Fixture/HeadquartersFixture.php" afterPath="$PROJECT_DIR$/soft/tests/Fixture/HeadquartersFixture.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/tests/Fixture/InitialAmountsFixture.php" afterPath="$PROJECT_DIR$/soft/tests/Fixture/InitialAmountsFixture.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/tests/Fixture/SavingAccountsFixture.php" afterPath="$PROJECT_DIR$/soft/tests/Fixture/SavingAccountsFixture.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/tests/Fixture/SavingsFixture.php" afterPath="$PROJECT_DIR$/soft/tests/Fixture/SavingsFixture.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/tests/Fixture/SurplusesFixture.php" afterPath="$PROJECT_DIR$/soft/tests/Fixture/SurplusesFixture.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/tests/Fixture/TractsFixture.php" afterPath="$PROJECT_DIR$/soft/tests/Fixture/TractsFixture.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/tests/TestCase/Controller/AmountsControllerTest.php" afterPath="$PROJECT_DIR$/soft/tests/TestCase/Controller/AmountsControllerTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/tests/TestCase/Controller/AssociationsControllerTest.php" afterPath="$PROJECT_DIR$/soft/tests/TestCase/Controller/AssociationsControllerTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/tests/TestCase/Controller/BoxesControllerTest.php" afterPath="$PROJECT_DIR$/soft/tests/TestCase/Controller/BoxesControllerTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/tests/TestCase/Controller/HeadquartersControllerTest.php" afterPath="$PROJECT_DIR$/soft/tests/TestCase/Controller/HeadquartersControllerTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/tests/TestCase/Controller/InitialAmountsControllerTest.php" afterPath="$PROJECT_DIR$/soft/tests/TestCase/Controller/InitialAmountsControllerTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/tests/TestCase/Controller/SavingAccountsControllerTest.php" afterPath="$PROJECT_DIR$/soft/tests/TestCase/Controller/SavingAccountsControllerTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/tests/TestCase/Controller/SavingsControllerTest.php" afterPath="$PROJECT_DIR$/soft/tests/TestCase/Controller/SavingsControllerTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/tests/TestCase/Controller/SurplusesControllerTest.php" afterPath="$PROJECT_DIR$/soft/tests/TestCase/Controller/SurplusesControllerTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/tests/TestCase/Controller/TractsControllerTest.php" afterPath="$PROJECT_DIR$/soft/tests/TestCase/Controller/TractsControllerTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/tests/TestCase/Model/Table/AmountsTableTest.php" afterPath="$PROJECT_DIR$/soft/tests/TestCase/Model/Table/AmountsTableTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/tests/TestCase/Model/Table/AssociationsTableTest.php" afterPath="$PROJECT_DIR$/soft/tests/TestCase/Model/Table/AssociationsTableTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/tests/TestCase/Model/Table/BoxesTableTest.php" afterPath="$PROJECT_DIR$/soft/tests/TestCase/Model/Table/BoxesTableTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/tests/TestCase/Model/Table/HeadquartersTableTest.php" afterPath="$PROJECT_DIR$/soft/tests/TestCase/Model/Table/HeadquartersTableTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/tests/TestCase/Model/Table/InitialAmountsTableTest.php" afterPath="$PROJECT_DIR$/soft/tests/TestCase/Model/Table/InitialAmountsTableTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/tests/TestCase/Model/Table/SavingAccountsTableTest.php" afterPath="$PROJECT_DIR$/soft/tests/TestCase/Model/Table/SavingAccountsTableTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/tests/TestCase/Model/Table/SavingsTableTest.php" afterPath="$PROJECT_DIR$/soft/tests/TestCase/Model/Table/SavingsTableTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/tests/TestCase/Model/Table/SurplusesTableTest.php" afterPath="$PROJECT_DIR$/soft/tests/TestCase/Model/Table/SurplusesTableTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/tests/TestCase/Model/Table/TractsTableTest.php" afterPath="$PROJECT_DIR$/soft/tests/TestCase/Model/Table/TractsTableTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/vendor/cakephp/cakephp/src/Controller/Component/AuthComponent.php" afterPath="$PROJECT_DIR$/soft/vendor/cakephp/cakephp/src/Controller/Component/AuthComponent.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/css/css/font-awesome.css" afterPath="$PROJECT_DIR$/soft/webroot/css/css/font-awesome.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/css/css/font-awesome.min.css" afterPath="$PROJECT_DIR$/soft/webroot/css/css/font-awesome.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/css/font-awesome.min.css" afterPath="$PROJECT_DIR$/soft/webroot/css/font-awesome.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/css/fonts/fontawesome-webfont.svg" afterPath="$PROJECT_DIR$/soft/webroot/css/fonts/fontawesome-webfont.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/css/fonts/glyphicons-halflings-regular.svg" afterPath="$PROJECT_DIR$/soft/webroot/css/fonts/glyphicons-halflings-regular.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/css/layout.css" afterPath="$PROJECT_DIR$/soft/webroot/css/layout.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/css/plugins/morris.css" afterPath="$PROJECT_DIR$/soft/webroot/css/plugins/morris.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/css/sb-admin.css" afterPath="$PROJECT_DIR$/soft/webroot/css/sb-admin.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/css/sb-admin_k.css" afterPath="$PROJECT_DIR$/soft/webroot/css/sb-admin_k.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/js/html2canvas.js" afterPath="$PROJECT_DIR$/soft/webroot/js/html2canvas.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/js/jquery.isotope.min.js" afterPath="$PROJECT_DIR$/soft/webroot/js/jquery.isotope.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/js/jquery_association_admin.js" afterPath="$PROJECT_DIR$/soft/webroot/js/jquery_association_admin.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/js/jspdf.min.js" afterPath="$PROJECT_DIR$/soft/webroot/js/jspdf.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/js/main.js" afterPath="$PROJECT_DIR$/soft/webroot/js/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/js/plugins/flot/excanvas.min.js" afterPath="$PROJECT_DIR$/soft/webroot/js/plugins/flot/excanvas.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/js/plugins/flot/flot-data.js" afterPath="$PROJECT_DIR$/soft/webroot/js/plugins/flot/flot-data.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/js/plugins/flot/jquery.flot.js" afterPath="$PROJECT_DIR$/soft/webroot/js/plugins/flot/jquery.flot.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/js/plugins/flot/jquery.flot.pie.js" afterPath="$PROJECT_DIR$/soft/webroot/js/plugins/flot/jquery.flot.pie.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/js/plugins/flot/jquery.flot.resize.js" afterPath="$PROJECT_DIR$/soft/webroot/js/plugins/flot/jquery.flot.resize.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/js/plugins/flot/jquery.flot.tooltip.min.js" afterPath="$PROJECT_DIR$/soft/webroot/js/plugins/flot/jquery.flot.tooltip.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/js/plugins/morris/morris-data.js" afterPath="$PROJECT_DIR$/soft/webroot/js/plugins/morris/morris-data.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/js/plugins/morris/morris.js" afterPath="$PROJECT_DIR$/soft/webroot/js/plugins/morris/morris.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/js/plugins/morris/morris.min.js" afterPath="$PROJECT_DIR$/soft/webroot/js/plugins/morris/morris.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/soft/webroot/js/plugins/morris/raphael.min.js" afterPath="$PROJECT_DIR$/soft/webroot/js/plugins/morris/raphael.min.js" />
+    </list>
+    <ignored path="FEUCR.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <ignored path=".idea/dataSources.local.xml" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="FEUCR" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="InvoicesController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/soft/src/Controller/InvoicesController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="603">
+              <caret line="289" column="28" selection-start-line="289" selection-start-column="28" selection-end-line="289" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="admin_modify_invoice.ctp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/soft/src/Template/Invoices/admin_modify_invoice.ctp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="500">
+              <caret line="30" column="132" selection-start-line="30" selection-start-column="132" selection-end-line="30" selection-end-column="132" />
+              <folding>
+                <marker date="1467343074558" expanded="true" signature="3359:3472" ph="..." />
+                <marker date="1467343074558" expanded="true" signature="3387:3472" ph="..." />
+                <marker date="1467343074558" expanded="true" signature="3436:3472" ph="..." />
+                <marker date="1467343074558" expanded="true" signature="3538:3651" ph="..." />
+                <marker date="1467343074558" expanded="true" signature="3566:3651" ph="..." />
+                <marker date="1467343074558" expanded="true" signature="3615:3651" ph="..." />
+                <marker date="1467343074558" expanded="true" signature="3716:3807" ph="..." />
+                <marker date="1467343074558" expanded="true" signature="3742:3800" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="detailed_information.ctp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/soft/src/Template/Associations/detailed_information.ctp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="700">
+              <caret line="943" column="81" selection-start-line="943" selection-start-column="81" selection-end-line="943" selection-end-column="81" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="add_amounts.ctp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/soft/src/Template/Amounts/add_amounts.ctp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="418">
+              <caret line="22" column="107" selection-start-line="22" selection-start-column="107" selection-end-line="22" selection-end-column="107" />
+              <folding>
+                <marker date="1467346100890" expanded="true" signature="565:582" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="app.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/soft/config/app.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="608">
+              <caret line="32" column="47" selection-start-line="32" selection-start-column="47" selection-end-line="32" selection-end-column="47" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AmountsController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/soft/src/Controller/AmountsController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="454">
+              <caret line="55" column="174" selection-start-line="55" selection-start-column="174" selection-end-line="55" selection-end-column="174" />
+              <folding>
+                <element signature="e#33#66#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="modify.ctp" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/soft/src/Template/Boxes/modify.ctp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="549">
+              <caret line="52" column="17" selection-start-line="52" selection-start-column="17" selection-end-line="52" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AmountsTable.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/soft/src/Model/Table/AmountsTable.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="209">
+              <caret line="25" column="32" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AppController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/soft/src/Controller/AppController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="190">
+              <caret line="59" column="41" selection-start-line="59" selection-start-column="41" selection-end-line="59" selection-end-column="41" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="admin_views.ctp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/soft/src/Template/Layout/admin_views.ctp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="576">
+              <caret line="217" column="91" selection-start-line="217" selection-start-column="91" selection-end-line="217" selection-end-column="91" />
+              <folding>
+                <marker date="1467344865334" expanded="true" signature="11833:11885" ph="..." />
+                <marker date="1467344865334" expanded="true" signature="12015:12276" ph="..." />
+                <marker date="1467344865334" expanded="true" signature="12177:12276" ph="..." />
+                <marker date="1467344865334" expanded="true" signature="12210:12276" ph="..." />
+                <marker date="1467344865334" expanded="true" signature="12493:12739" ph="..." />
+                <marker date="1467344865334" expanded="true" signature="12640:12739" ph="..." />
+                <marker date="1467344865334" expanded="true" signature="12673:12739" ph="..." />
+                <marker date="1467344865334" expanded="true" signature="13286:13364" ph="..." />
+                <marker date="1467344865334" expanded="true" signature="13329:13364" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/Backup/Mysql/poblar.sql" />
+        <option value="$PROJECT_DIR$/soft/src/Controller/BoxesController.php" />
+        <option value="$PROJECT_DIR$/soft/vendor/cakephp/cakephp/src/Controller/Component/AuthComponent.php" />
+        <option value="$PROJECT_DIR$/soft/src/Template/Users/login.ctp" />
+        <option value="$PROJECT_DIR$/soft/webroot/js/initial_amounts_admin.php" />
+        <option value="$PROJECT_DIR$/soft/webroot/js/initial_amounts_admin.js" />
+        <option value="$PROJECT_DIR$/soft/webroot/js/jquery_association_admin.js" />
+        <option value="$PROJECT_DIR$/soft/src/Template/Amounts/add.ctp" />
+        <option value="$PROJECT_DIR$/soft/src/Template/InitialAmounts/add.ctp" />
+        <option value="$PROJECT_DIR$/soft/src/Controller/InitialAmountsController.php" />
+        <option value="$PROJECT_DIR$/soft/src/Controller/SavingAccountsController.php" />
+        <option value="$PROJECT_DIR$/soft/src/Template/SavingAccounts/add.ctp" />
+        <option value="$PROJECT_DIR$/soft/src/Template/SavingAccounts/transfer.ctp" />
+        <option value="$PROJECT_DIR$/soft/src/Controller/InvoicesController.php" />
+        <option value="$PROJECT_DIR$/soft/src/Template/Invoices/admin_modify_invoice.ctp" />
+        <option value="$PROJECT_DIR$/soft/src/Template/Associations/detailed_information.ctp" />
+        <option value="$PROJECT_DIR$/soft/src/Template/Layout/admin_views.ctp" />
+        <option value="$PROJECT_DIR$/soft/src/Template/Amounts/add_amounts.ctp" />
+        <option value="$PROJECT_DIR$/soft/config/app.php" />
+        <option value="$PROJECT_DIR$/soft/src/Model/Table/AmountsTable.php" />
+        <option value="$PROJECT_DIR$/soft/src/Controller/AmountsController.php" />
+        <option value="$PROJECT_DIR$/soft/src/Template/Boxes/modify.ctp" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-1" />
+    <option name="y" value="30" />
+    <option name="width" value="1922" />
+    <option name="height" value="1051" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="soft" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="soft" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webroot" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="soft" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webroot" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="soft" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="soft" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Template" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="soft" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Template" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SavingAccounts" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="soft" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Template" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Layout" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="soft" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Template" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Invoices" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="soft" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Template" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="InitialAmounts" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="soft" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Template" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Boxes" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="soft" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Template" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Associations" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="soft" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Template" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Amounts" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="soft" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Model" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Table" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="soft" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Model" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="soft" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Controller" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="soft" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Backup" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FEUCR" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Backup" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Mysql" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpBehatConfigurationType" factoryName="Behat">
+      <BehatRunner />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.npm" factoryName="npm">
+      <command value="run-script" />
+      <scripts />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="28b7af6f-8eee-4ed7-80fb-ead25acd154c" name="Default" comment="" />
+      <created>1467317320031</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1467317320031</updated>
+      <workItem from="1467317321429" duration="21502000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="21502000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-1" y="30" width="1922" height="1051" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Backup/Mysql/poblar.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="14" column="39" selection-start-line="14" selection-start-column="39" selection-end-line="14" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/src/Controller/BoxesController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="735">
+          <caret line="180" column="16" selection-start-line="180" selection-start-column="16" selection-end-line="180" selection-end-column="16" />
+          <folding>
+            <element signature="e#33#66#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/vendor/cakephp/cakephp/src/Controller/Component/AuthComponent.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="63">
+          <caret line="453" column="86" selection-start-line="453" selection-start-column="86" selection-end-line="453" selection-end-column="86" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/webroot/js/amounts_admin.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="817">
+          <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/webroot/js/jquery_association_admin.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3363">
+          <caret line="177" column="0" selection-start-line="177" selection-start-column="0" selection-end-line="177" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/src/Template/Amounts/add.ctp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="616">
+          <caret line="167" column="24" selection-start-line="167" selection-start-column="24" selection-end-line="167" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/src/Model/Table/TractsTable.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-342">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/src/Template/Users/login.ctp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1007">
+          <caret line="53" column="48" selection-start-line="53" selection-start-column="48" selection-end-line="53" selection-end-column="48" />
+          <folding>
+            <element signature="n#style#0;n#h4#0;n#div#0;n#div#3;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/src/Template/Layout/default.ctp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="9" column="29" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/src/Controller/InitialAmountsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="89">
+          <caret line="196" column="54" selection-start-line="196" selection-start-column="54" selection-end-line="196" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/src/Template/SavingAccounts/add.ctp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="513">
+          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/src/Template/SavingAccounts/transfer.ctp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="806">
+          <caret line="155" column="8" selection-start-line="155" selection-start-column="8" selection-end-line="155" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/src/Controller/SavingAccountsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="225" column="21" selection-start-line="225" selection-start-column="21" selection-end-line="225" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/src/Template/Invoices/modify_invoice.ctp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="291">
+          <caret line="19" column="156" selection-start-line="19" selection-start-column="153" selection-end-line="19" selection-end-column="156" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Backup/Mysql/crear.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1689">
+          <caret line="157" column="26" selection-start-line="157" selection-start-column="26" selection-end-line="157" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/src/Template/Invoices/admin_modify.ctp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/src/Template/InitialAmounts/add.ctp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="187" column="0" selection-start-line="187" selection-start-column="0" selection-end-line="200" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/src/Template/Boxes/edit.ctp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="22" column="38" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/src/Template/Invoices/admin_modify_invoice.ctp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="500">
+          <caret line="30" column="132" selection-start-line="30" selection-start-column="132" selection-end-line="30" selection-end-column="132" />
+          <folding>
+            <marker date="1467343074558" expanded="true" signature="3359:3472" ph="..." />
+            <marker date="1467343074558" expanded="true" signature="3387:3472" ph="..." />
+            <marker date="1467343074558" expanded="true" signature="3436:3472" ph="..." />
+            <marker date="1467343074558" expanded="true" signature="3538:3651" ph="..." />
+            <marker date="1467343074558" expanded="true" signature="3566:3651" ph="..." />
+            <marker date="1467343074558" expanded="true" signature="3615:3651" ph="..." />
+            <marker date="1467343074558" expanded="true" signature="3716:3807" ph="..." />
+            <marker date="1467343074558" expanded="true" signature="3742:3800" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/src/Template/Layout/admin_views.ctp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="576">
+          <caret line="217" column="91" selection-start-line="217" selection-start-column="91" selection-end-line="217" selection-end-column="91" />
+          <folding>
+            <marker date="1467344865334" expanded="true" signature="11833:11885" ph="..." />
+            <marker date="1467344865334" expanded="true" signature="12015:12276" ph="..." />
+            <marker date="1467344865334" expanded="true" signature="12177:12276" ph="..." />
+            <marker date="1467344865334" expanded="true" signature="12210:12276" ph="..." />
+            <marker date="1467344865334" expanded="true" signature="12493:12739" ph="..." />
+            <marker date="1467344865334" expanded="true" signature="12640:12739" ph="..." />
+            <marker date="1467344865334" expanded="true" signature="12673:12739" ph="..." />
+            <marker date="1467344865334" expanded="true" signature="13286:13364" ph="..." />
+            <marker date="1467344865334" expanded="true" signature="13329:13364" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/src/Template/Associations/detailed_information.ctp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="700">
+          <caret line="943" column="81" selection-start-line="943" selection-start-column="81" selection-end-line="943" selection-end-column="81" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/src/Controller/InvoicesController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="603">
+          <caret line="289" column="28" selection-start-line="289" selection-start-column="28" selection-end-line="289" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/src/Controller/AppController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="59" column="41" selection-start-line="59" selection-start-column="41" selection-end-line="59" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/src/Template/Amounts/add_amounts.ctp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="22" column="107" selection-start-line="22" selection-start-column="107" selection-end-line="22" selection-end-column="107" />
+          <folding>
+            <marker date="1467346100890" expanded="true" signature="565:582" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/config/app.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="608">
+          <caret line="32" column="47" selection-start-line="32" selection-start-column="47" selection-end-line="32" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/src/Model/Table/AmountsTable.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="25" column="32" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/src/Controller/AmountsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="454">
+          <caret line="55" column="174" selection-start-line="55" selection-start-column="174" selection-end-line="55" selection-end-column="174" />
+          <folding>
+            <element signature="e#33#66#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/soft/src/Template/Boxes/modify.ctp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="549">
+          <caret line="52" column="17" selection-start-line="52" selection-start-column="17" selection-end-line="52" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

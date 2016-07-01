@@ -11,7 +11,7 @@
   <br>
   <br>
   <br>
-  <?= $this->Flash->render('auth') ?>
+
   <?= $this->Form->create() ?>
 
   <div class='row'>
@@ -46,5 +46,12 @@
     <div class="col-xs-12 col-md-6">
         <h4 id="callback" style="color:#FF0000">
           <?= $this->Flash->render('error') ?></h4>
+    </div>
+</div>
+
+<div class="row text-right">
+    <div class="col-xs-12 col-md-6">
+        <h4 id="callback" style="color:#FF0000">
+            <?= $this->Flash->render('auth') ?>
     </div>
 </div>
