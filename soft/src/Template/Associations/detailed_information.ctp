@@ -37,19 +37,8 @@
 				</div>
 
 				<div class="col-xs-12 col-md-6">
-					<?php
-					echo "<label><h4><strong>Elegí el tracto</strong></h4></label>";
-					echo "<select class='form-control' id= 'tracts_id' name = 'type' onchange='getAmounts(0,0,0,this);'>";
+					<?= $this->Form->input('tract_id', ['options' => $dates, 'class'=> 'form-control','label'=>'Elegí la fecha', 'id'=>'tracts_id', 'onchange'=>'getAmounts(0,0,0,this);']);?>
 
-
-
-					foreach ($dates as $key => $value) {
-						echo $key;
-						echo "<option>".$value['tract']['date']."</option>"."<br>";
-					}
-
-					echo "</select>";
-					?>
 				</div>
 
 
@@ -396,19 +385,8 @@
 				</div>
 
 				<div class="col-xs-12 col-md-6">
-					<?php
-					echo "<label><h4><strong>Elegí el tracto</strong></h4></label>";
-					echo "<select class='form-control' id= 'generated_id' name = 'type' onchange='getAmounts(1,1,1,this);'>";
+					<?= $this->Form->input('tract_id', ['options' => $dates, 'class'=> 'form-control','label'=>'Elegí la fecha', 'id'=>'generated_id', 'onchange'=>'getAmounts(1,1,1,this);']);?>
 
-
-
-					foreach ($dates as $key => $value) {
-						echo $key;
-						echo "<option>".$value['tract']['date']."</option>"."<br>";
-					}
-
-					echo "</select>";
-					?>
 				</div>
 
 			</div>
@@ -608,18 +586,20 @@ $(document).ready( function ()
     
             if(xhttp.readyState == 4 && xhttp.status == 200)
             {
+				var obj = JSON.parse(xhttp.responseText);
+
             	switch(amount_type)
             	{
             		case 0:
-            			setTractValues(xhttp.responseText);
+            			setTractValues(obj);
             		break;
 
             		case 1:
-            			setGeneratedValues(xhttp.responseText);
+            			setGeneratedValues(obj);
             		break;
 
             		case 2:
-            			setSurplusValues(xhttp.responseText);
+            			setSurplusValues(obj);
             		break;            		            		
             	}
             	
@@ -635,34 +615,28 @@ $(document).ready( function ()
             }          
                
         };
-    
-    	var path = location.pathname;
 
-    	path = path.split('/');
 
-    	var index = getIndex(path, 'detailed_information');
-    	var newPath = "";
+		var newPath = "<?= $this->Url->build(["controller" => "Associations", "action" => "getAmounts"]); ?>"; //Con esto obtenemos la URL a la que necesitamos hacer el get
+		var association_id = <?=  $association_name[0]['id']; ?>; //Se obtiene el id de la asociación
 
-		for (var i = 0; i  < index; ++i) {
-			newPath += path[i]+"/";
-		}
-    	newPath += 'getAmounts/'+path[(index+1)];
 
-    	newPath += "/"+amount_type+"/"+box_type+"/"+invoice_type+"/"+object.value;
+		newPath += "/"+association_id+"/"+amount_type+"/"+box_type+"/"+invoice_type+"/"+object.value;
 
         xhttp.open("GET",newPath,true);
-        //xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send();
        
     }
     
-    function setTractValues(json)
+    function setTractValues(object)
     {
 
-    	object = JSON.parse(json);
+	var select =  document.getElementById("tracts_id");
+	var date = "Periodo del tracto: <br><br>"+select.options[select.selectedIndex].text +"<br><br>";
 
 
 
+//*******************************BOXES****************************//
 
     	var total_boxes = 0;
     	var little_amount_tract = 0;
@@ -686,7 +660,7 @@ $(document).ready( function ()
 
 //*******************************END BOXES****************************//
 
-
+//*******************************INVOICES****************************//
     	var invoices_length = object.invoices.length;
     	var html = "";
     	var invoices_total = 0;
@@ -728,26 +702,15 @@ $(document).ready( function ()
 //*********************** END INVOICES *************************//
 
 		var tract_amount = 0;
-		var saving_amount = 0;
 		var tract_saving_total = 0;
 		var total_income = 0;
-		var tract_initial_amount = 0;
 		var final_balance = 0;
 		var tract_final_balance = 0;
 		var tract_count = 0;
-		var date = "";
 		var saving_classes = 0;
+		var tract_initial_amount = ((object.initial_amount.length > 0)? object.initial_amount[0].amount : 0);
+		var saving_amount = ((object.savings.length > 0) ? object.savings[0].amount : 0);
 
-
-		if(object.initial_amount.length > 0)
-		{
- 			tract_initial_amount = object.initial_amount[0].amount;
-		}	
-
-		if(object.savings.length > 0)
-		{
-			saving_amount = object.savings[0].amount;
-		}
 
 		if(object.amount.length > 0)
 		{
@@ -757,10 +720,9 @@ $(document).ready( function ()
 			
 			 tract_final_balance = (total_income - invoices_total);
 			 tract_count = (tract_final_balance - total_boxes);
-			 date = "Periodo del tracto: <br><br>"+document.getElementById("tracts_id").value + " - " +object.amount[0].tract.deadline+"<br><br>";			
+
 		}
 
-	
 
 		amount_classes = document.getElementsByClassName("tract_saving_total");
     	document.getElementById("tract_amount").innerHTML = tract_amount;
@@ -772,30 +734,14 @@ $(document).ready( function ()
     	amount_classes[1].innerHTML =  tract_saving_total ;
     	
     	document.getElementById("tract_date").innerHTML = date;
-    	document.getElementById("total_income").innerHTML = total_income;//TODO: Sumar el saldo incial de cajas y el monto de ahorro
-    	document.getElementById("total_spent").innerHTML = invoices_total;
+    	document.getElementById("total_income").innerHTML = total_income; //Total de ingresos monto inicial + monto de ahorro
+    	document.getElementById("total_spent").innerHTML = invoices_total; //Total de gastos
     	document.getElementById("tract_initial_amount").innerHTML = tract_initial_amount;
-		if(tract_final_balance < 0)
-		{
-			document.getElementById("tract_final_balance").style = "color: red";
-		}
-		else
-		{
-			document.getElementById("tract_final_balance").style = "color: green";
-		}
- 
-    	document.getElementById("tract_final_balance").innerHTML =  tract_final_balance; //TODO: El amount no es el correcto, lo correcto es sumar el ahorro, las cajas y el ingreso de tracto
-
+		document.getElementById("tract_final_balance").style = ((tract_final_balance < 0)? "color: red" : "color:green");
+    	document.getElementById("tract_final_balance").innerHTML =  tract_final_balance; // saldo final = total de ingresos - total de gastos
     	document.getElementById("tract_count").innerHTML = tract_count;
+		document.getElementById("tract_count").style = ((tract_count < 0) ? "color: red": "color: green");
 
-		if(tract_count < 0)
-		{
-			document.getElementById("tract_count").style = "color: red";
-		}
-		else
-		{
-			document.getElementById("tract_count").style = "color: green";
-		}
 
 
     }
@@ -805,17 +751,17 @@ $(document).ready( function ()
 
 
 
-  function setGeneratedValues(json)
+  function setGeneratedValues(object)
   {
 
-
-	object = JSON.parse(json);
-
+    var select =  document.getElementById("generated_id");
+    var date = "Periodo del tracto: <br><br>"+select.options[select.selectedIndex].text +"<br><br>";
 
     var total_boxes = 0;
     var little_amount_generated = 0;
     var big_amount_generated = 0;
 
+  //*******************************BOXES****************************//
     var boxes_classes = document.getElementsByClassName("generated_total_boxes");
 
 
@@ -834,10 +780,13 @@ $(document).ready( function ()
 
 //*******************************END BOXES****************************//
 
+
+//*******************************INVOICES****************************//
+
     var invoices_length = object.invoices.length;
     var html = "";
     var invoices_total = 0;
-    var total_message = "";
+    var total_message = "<h4>Total: 0 </h4>";
 
     if(invoices_length > 0)
     {
@@ -871,12 +820,14 @@ $(document).ready( function ()
 
 //**************************** END INVOICES **********************//
 
+//*******************************INCOMES****************************//
+
     amount_classes = document.getElementsByClassName("generated_amount");
     
     html = "";
     var incomes_total = 0;
     total_message = "";
-    var incomes_length = object.amount.length;;
+    var incomes_length = object.amount.length;
 
     if(incomes_length > 0)
     {
@@ -903,47 +854,21 @@ $(document).ready( function ()
 
 //****************************** END INCOMES **************************//
 
+//*******************************AMOUNTS****************************//
 
-    var generated_initial_amount = 0;
-
-    var generated_final_balance = 0;
-    var generated_saving_account = 0;
-
-    var date = "";
-
-    if(object.initial_amount.length > 0)
-    {
-        generated_initial_amount = object.initial_amount[0].amount;
-
-    }
-
-	 generated_final_balance = ((incomes_total + generated_initial_amount) - invoices_total);
-	 //date = "Periodo del tracto: <br><br>"+document.getElementById("tracts_id").value + " - " +object.amount[0].tract.deadline+"<br><br>";
+    var generated_initial_amount = ((object.initial_amount.length > 0)? object.initial_amount[0].amount : 0);
+    var generated_final_balance = ((incomes_total + generated_initial_amount) - invoices_total);
+    var generated_saving_account = ((object.saving_account.length > 0)? object.saving_account[0].amount : 0);
 
 
-    if(object.saving_account.length > 0)
-	{
-		generated_saving_account = object.saving_account[0].amount;
-	}
+    amount_classes[1].innerHTML =  incomes_total;
 
-    amount_classes[1].innerHTML =  incomes_total; 
- 
-    
     document.getElementById("tract_date").innerHTML = date;
     document.getElementById("generated_total_income").innerHTML = incomes_total;
     document.getElementById("generated_total_spent").innerHTML = invoices_total;
     document.getElementById("generated_initial_amount").innerHTML = generated_initial_amount;
-
     document.getElementById("generated_final_balance").innerHTML =  generated_final_balance;
-	  if(generated_final_balance < 0)
-	  {
-		  document.getElementById("generated_final_balance").style = "color:red";
-	  }
-	  else
-	  {
-		  document.getElementById("generated_final_balance").style = "color:green";
-	  }
-
+    document.getElementById("generated_final_balance").style = ((generated_final_balance < 0) ? "color:red" : "color:green");
     document.getElementById("generated_saving_account").innerHTML = generated_saving_account;
 
 
@@ -956,12 +881,8 @@ $(document).ready( function ()
 
 
 
-function setSurplusValues(json)
+function setSurplusValues(object)
 {
-
-	object = JSON.parse(json);
-
-
 
 	var invoices_length = object.invoices.length;
 	var html = "";
@@ -1045,36 +966,14 @@ function setSurplusValues(json)
 
 function reloadPage(element)
 {
-	var hr = window.location.href;
-	var splt = hr.split('/');
-	var path = "";
-	var index = getIndex(splt, 'detailed_information');
 
-	for (var i = 0; i  < (index+2); ++i) {
-		path += splt[i]+"/";
-	}
+	var path = "<?= $this->Url->build(["controller" => "Associations", "action" => "detailedInformation"]); ?>"; //Con esto obtenemos la URL a la que necesitamos hacer el get
+	var association_id = <?=  $association_name[0]['id']; ?>; //Se obtiene el id de la asociación
 
-	path += element.value;
+
+	path += "/"+association_id+"/"+element.value;
 
 	window.location = path;
-}
-
-
-function getIndex(array,word) {
-	var len = array.length;
-	var index = 0;
-	var out = false;
-
-	for (var i = len - 1; (i >= 0) && !out; i--) {
-
-		if(array[i] == word)
-		{
-			index = i;
-			out = true;
-		}
-	}
-
-	return index;
 }
 
 

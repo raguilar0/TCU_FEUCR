@@ -202,7 +202,7 @@ class AssociationsController extends AppController
 
                 $tract_dates = $this->Associations->Amounts->find()
                     ->hydrate(false)
-                    ->select(['tract.date','type','tract.number'])
+                    ->select(['tract.date','tract.deadline','type','tract.number', 'tract.id'])
                     ->andwhere(['association_id'=>$id, 'YEAR(tract.date)'=>$year])
                     ->join([
                         'table'=>'tracts',
@@ -211,13 +211,19 @@ class AssociationsController extends AppController
                         'conditions'=>'Amounts.tract_id = tract.id'
 
                     ])
-                    //->order(['tract.id'=>'DESC', 'Amounts.id'=>'DESC']);
-                    //->order(['type'=>'ASC']);
+
                     ->group(['tract.date']);
-                //->limit(1);
 
 
                 $tract_dates = $tract_dates->toArray();
+
+                foreach ($tract_dates as $key => $value)
+                {
+                    $temp[$value['tract']['id']] = $value['tract']['date']." - ".$value['tract']['deadline'];
+                }
+
+                $tract_dates = $temp;
+
 
                 $this->loadModel('Tracts'); //Obtenemos todos los años que existen
 
@@ -232,7 +238,7 @@ class AssociationsController extends AppController
 
                 $association_name = $this->Associations->find()
                     ->hydrate(false)
-                    ->select(['name'])
+                    ->select(['name','id'])
                     ->where(['id'=>$id]);
 
                 $association_name = $association_name->toArray();
@@ -256,7 +262,7 @@ class AssociationsController extends AppController
 
 
 
-    public function getAmounts($association_id = null, $amount_type = null, $box_type = null,$invoice_type = null, $date = null)
+    public function getAmounts($association_id = null, $amount_type = null, $box_type = null,$invoice_type = null, $id = null)
     {
         if ($this->Auth->user()) {
 
@@ -271,7 +277,7 @@ class AssociationsController extends AppController
                         'table' => 'tracts',
                         'alias' => 'tract',
                         'type' => 'RIGHT',
-                        'conditions' => 'Amounts.tract_id = tract.id and tract.date = ' . "'" . $date . "'"
+                        'conditions' => 'Amounts.tract_id = tract.id and tract.id = ' . $id
 
                     ]);
 
@@ -286,7 +292,7 @@ class AssociationsController extends AppController
                         'table' => 'tracts',
                         'alias' => 'tract',
                         'type' => 'RIGHT',
-                        'conditions' => 'Boxes.tract_id = tract.id and tract.date = ' . "'" . $date . "'"
+                        'conditions' => 'Boxes.tract_id = tract.id and tract.id = ' . $id
 
                     ]);
 
@@ -301,7 +307,7 @@ class AssociationsController extends AppController
                         'table' => 'tracts',
                         'alias' => 'tract',
                         'type' => 'RIGHT',
-                        'conditions' => 'InitialAmounts.tract_id = tract.id and tract.date = ' . "'" . $date . "'"
+                        'conditions' => 'InitialAmounts.tract_id = tract.id and tract.id = '. $id
 
                     ]);
 
@@ -321,7 +327,7 @@ class AssociationsController extends AppController
                             'table' => 'tracts',
                             'alias' => 'tract',
                             'type' => 'RIGHT',
-                            'conditions' => 'Savings.tract_id = tract.id and tract.date = ' . "'" . $date . "'"
+                            'conditions' => 'Savings.tract_id = tract.id and tract.id = ' . $id
 
                         ]);
 
@@ -339,7 +345,7 @@ class AssociationsController extends AppController
                             'table' => 'tracts',
                             'alias' => 'tract',
                             'type' => 'RIGHT',
-                            'conditions' => 'SavingAccounts.tract_id = tract.id and tract.date = ' . "'" . $date . "'"
+                            'conditions' => 'SavingAccounts.tract_id = tract.id and tract.id = ' . $id
 
                         ]);
 
@@ -353,7 +359,7 @@ class AssociationsController extends AppController
                 $amount = $this->Associations->Surpluses->find()
                     ->hydrate(false)
                     ->select(['amount'])
-                    ->andwhere(['association_id' => $association_id, 'YEAR(date)' => $date]);
+                    ->andwhere(['association_id' => $association_id, 'YEAR(date)' => $id]);
 
 
                 $amount = $amount->toArray();
@@ -368,7 +374,7 @@ class AssociationsController extends AppController
                     'table' => 'tracts',
                     'alias' => 'tract',
                     'type' => 'RIGHT',
-                    'conditions' => 'Invoices.tract_id = tract.id and tract.date = ' . "'" . $date . "'"
+                    'conditions' => 'Invoices.tract_id = tract.id and tract.id = ' . $id
 
                 ]);
 
