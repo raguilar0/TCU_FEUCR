@@ -977,18 +977,13 @@ function reloadPage(element)
 }
 
 
-<?php
-$img = "/img/contraloria.jpg";
-$type = pathinfo($img, PATHINFO_EXTENSION);
-$base64 = 'data:image/' .$type .';base64,' . base64_encode($img);
-?>
 
 
 function generatePDF(title, id, date) {
 
 
 
-	var pdf = new jsPDF('landscape', 'pt', 'tabloid');
+	var pdf = new jsPDF('l', 'pt', 'tabloid');
 	pdf.setFontType("bold");
 
 	pdf.setFontSize(16);
@@ -1033,7 +1028,8 @@ function generatePDF(title, id, date) {
 		margins.top, { // y coord
 			'width': margins.width, // max width of content on PDF
 			//'elementHandlers': specialElementHandlers
-			'pagesplit': true
+			'pagesplit': true,
+			'margin':1
 		},
 
 		function (dispose) {
@@ -1044,22 +1040,6 @@ function generatePDF(title, id, date) {
 
 
 
-}
-
-function convertImgToBase64(url, callback, outputFormat){
-	var img = new Image();
-	img.crossOrigin = 'Anonymous';
-	img.onload = function(){
-		var canvas = document.createElement('CANVAS');
-		var ctx = canvas.getContext('2d');
-		canvas.height = this.height;
-		canvas.width = this.width;
-		ctx.drawImage(this,0,0);
-		var dataURL = canvas.toDataURL(outputFormat || 'image/png');
-		callback(dataURL);
-		canvas = null;
-	};
-	img.src = url;
 }
 
 
