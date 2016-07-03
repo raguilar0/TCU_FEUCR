@@ -33,6 +33,13 @@ class UsersTable extends Table
                 'rule'=>array('custom', '/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/'),
                 'message' => 'Password debe tener mínimo 8 caracteres y al menos un número'
               ])
+              ->notEmpty('repass', 'Ingrese su contraseña de nuevo.')
+              ->add('repass', [
+                      'compare' => [
+                                  'rule' => ['compareWith','password'],
+                                  'message' => 'Las contraseñas no coinciden.'
+                                  ]
+              ])
               ->notEmpty('name', 'Nombre requerido')
               ->add('name', 'validFormat', [
                           'rule' => array('custom', '/^[A-Za-z]+$/'),
