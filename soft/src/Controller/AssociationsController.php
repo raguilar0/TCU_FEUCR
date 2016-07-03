@@ -193,8 +193,15 @@ class AssociationsController extends AppController
 
     public function detailedInformation($id = null, $year = null)
     {
-        if($this->Auth->user()){
+
+
             $this->viewBuilder()->layout('admin_views');
+
+            if($this->request->session()->read('Auth.User.role') != 'admin') //Si no es admin, es rep y se le asigna el id de la asocia a la que pertenece
+            {
+                $id = $this->request->session()->read('Auth.User.association_id');
+            }
+
             if($id)
             {
 
@@ -216,7 +223,7 @@ class AssociationsController extends AppController
 
 
                 $tract_dates = $tract_dates->toArray();
-
+                $temp = array();
                 foreach ($tract_dates as $key => $value)
                 {
                     $temp[$value['tract']['id']] = $value['tract']['date']." - ".$value['tract']['deadline'];
@@ -254,10 +261,7 @@ class AssociationsController extends AppController
             {
                 $this->redirect(['action'=>'/']);
             }
-        }
-        else{
-            return $this->redirect(['controller'=>'pages', 'action'=>'home']);
-        }
+
     }
 
 
@@ -368,7 +372,7 @@ class AssociationsController extends AppController
 
             $invoices = $this->Associations->Invoices->find()
                 ->hydrate(false)
-                ->select(['date', 'number', 'detail', 'provider', 'amount', 'attendant', 'clarifications'])
+                ->select(['date', 'number', 'detail', 'provider', 'amount', 'attendant', 'clarifications', 'legal_certificate'])
                 ->andwhere(['association_id' => $association_id, 'kind' => $invoice_type, 'state' => 1])
                 ->join([
                     'table' => 'tracts',
@@ -528,7 +532,7 @@ class AssociationsController extends AppController
     public function isAuthorized($user)
     {
 
-        if($this->request->action === 'generalInformation')
+        if(in_array($this->request->action,['generalInformation', 'detailedInformation', 'getAmounts']))
         {
             return true;
         }

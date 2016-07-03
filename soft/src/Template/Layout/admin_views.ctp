@@ -199,6 +199,7 @@
                               <li class="active"><?php echo $this->Html->link('Agregar Nueva Factura', '/invoices/add', ['id'=>'active-navbar']);?></li><br>
                               <li class="active"><?php echo $this->Html->link('Administrar Facturas', '/invoices/modify', ['id'=>'active-navbar']);?></li><br>
                               <li class="active"><?php echo $this->Html->link('Actualizar Cajas', '/boxes/modify', ['id'=>'active-navbar']);?></li><br>
+                              <li class="active"><?php echo $this->Html->link('Montos detallados', ['controller'=>'Associations','action'=>'detailed-information'], ['id'=>'active-navbar']);?></li><br>
                             </ul>
                         </div>
                     </li>
@@ -294,9 +295,6 @@
     <?=$this->Html->script('modernizr/modernizr-custom.js') ?>
     <?=$this->Html->script('jquery-ui/jquery-ui.min.js') ?>
 
-
-    <?=$this->Html->script('jspdf.debug.js') ?>
-    <?=$this->Html->script('html2canvas.js') ?>
 
 
 </body>
