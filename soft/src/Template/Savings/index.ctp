@@ -43,13 +43,13 @@
                 <td><?= $saving->has('association') ? $this->Html->link($saving->association->name, ['controller' => 'Associations', 'action' => 'view', $saving->association->id]) : '' ?></td>
                 <td><?= $saving->has('tract') ? $this->Html->link($saving->tract->date." - ".$saving->tract->deadline, ['controller' => 'Tracts', 'action' => 'view', $saving->tract->id]) : '' ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('Ver'), ['action' => 'view', $saving->id]) ?>
+                    <?= $this->Html->link('', ['action' => 'view', $saving->id],['class'=>'glyphicon glyphicon-eye-open btn btn-info' ]) ?>
                     <?php
                     if(($this->request->session()->read('Auth.User.role')) == 'admin'){
-                      echo $this->Html->link(__('Editar'), ['action' => 'edit', $saving->id]);
+                      echo $this->Html->link('', ['action' => 'edit', $saving->id],['class'=>'glyphicon glyphicon-pencil btn btn-primary' ]);
                     }
                     ?>
-                    <?= $this->Form->postLink(__('Borrar'), ['action' => 'delete', $saving->id], ['confirm' => __('¿Estás seguro de que desea borrar este monto # {0}?', $saving->id)]) ?>
+                    <?= $this->Form->postLink('', ['action' => 'delete', $saving->id], ['class'=>'glyphicon glyphicon-remove btn btn-danger','confirm' => __('¿Estás seguro de que desea borrar este monto # {0}?', $saving->id)]) ?>
                 </td>
             </tr>
         <?php endforeach; ?>

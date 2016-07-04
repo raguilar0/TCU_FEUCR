@@ -31,9 +31,9 @@
                 <td><?= ($this->Number->format($association->authorized_card) ? 'Aprobada': 'Reprobada' ); ?></td>
                 <td><?= ($this->Number->format($association->enable) ? 'Habilitada': 'Deshabilitada' ); ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('Ver'), ['action' => 'view', $association->id]) ?>
-                    <?= $this->Html->link(__('Editar'), ['action' => 'edit', $association->id]) ?>
-                    <?= $this->Form->postLink(__('Borrar'), ['action' => 'delete', $association->id], ['confirm' => __('Are you sure you want to delete # {0}?', $association->id)]) ?>
+                    <?= $this->Html->link('', ['action' => 'view', $association->id],['class'=>'glyphicon glyphicon-eye-open btn btn-info' ]) ?>
+                    <?= $this->Html->link('', ['action' => 'edit', $association->id],['class'=>'glyphicon glyphicon-pencil btn btn-primary' ]) ?>
+                    <?= $this->Form->postLink('', ['action' => 'delete', $association->id], ['class'=>'glyphicon glyphicon-remove btn btn-danger','confirm' => __('Estas seguro que deseas borrarlo? # {0}?', $association->id)]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>

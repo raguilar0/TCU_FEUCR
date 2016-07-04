@@ -23,9 +23,9 @@
                 <td><?= h($headquarters->name) ?></td>
                 <td><?= h($headquarters->image_name) ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('Ver'), ['action' => 'view', $headquarters->id]) ?>
-                    <?= $this->Html->link(__('Editar'), ['action' => 'edit', $headquarters->id]) ?>
-                    <?= $this->Form->postLink(__('Borrar'), ['action' => 'delete', $headquarters->id], ['confirm' => __('Are you sure you want to delete # {0}?', $headquarters->id)]) ?>
+                    <?= $this->Html->link('', ['action' => 'view', $headquarters->id], ['class'=>'glyphicon glyphicon-eye-open btn btn-info' ]) ?>
+                    <?= $this->Html->link('',['action' => 'edit', $headquarters->id], ['class'=>'glyphicon glyphicon-pencil btn btn-primary' ]) ?>
+                    <?= $this->Form->postLink('', ['action' => 'delete', $headquarters->id], ['class'=>'glyphicon glyphicon-remove btn btn-danger', 'confirm' => __('Estas seguro que deseas borrarlo? # {0}?', $headquarters->id)]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>

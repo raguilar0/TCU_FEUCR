@@ -33,9 +33,9 @@
                 <td><?= $savingAccount->has('association') ? $this->Html->link($savingAccount->association->name, ['controller' => 'Associations', 'action' => 'view', $savingAccount->association->id]) : '' ?></td>
                 <td><?= $savingAccount->has('tract') ? $this->Html->link($savingAccount->tract->date." - ".$savingAccount->tract->deadline, ['controller' => 'Tracts', 'action' => 'view', $savingAccount->tract->id]) : '' ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('Ver'), ['action' => 'view', $savingAccount->id]) ?>
-                    <?= $this->Html->link(__('Editar'), ['action' => 'edit', $savingAccount->id]) ?>
-                    <?= (($this->request->session()->read('Auth.User.role')) == 'admin') ? $this->Form->postLink(__('Borrar'), ['action' => 'delete', $savingAccount->id], ['confirm' => __('Seguro que desea borrar la cuenta de ahorro # {0}?', $savingAccount->id)]) : '' ?>
+                    <?= $this->Html->link('', ['action' => 'view', $savingAccount->id],['class'=>'glyphicon glyphicon-eye-open btn btn-info' ]) ?>
+                    <?= $this->Html->link('', ['action' => 'edit', $savingAccount->id],['class'=>'glyphicon glyphicon-pencil btn btn-primary' ]) ?>
+                    <?= (($this->request->session()->read('Auth.User.role')) == 'admin') ? $this->Form->postLink('', ['action' => 'delete', $savingAccount->id], ['class'=>'glyphicon glyphicon-remove btn btn-danger','confirm' => __('Seguro que desea borrar la cuenta de ahorro # {0}?', $savingAccount->id)]) : '' ?>
                 </td>
             </tr>
         <?php endforeach; ?>

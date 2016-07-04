@@ -27,9 +27,9 @@
                 <td><?= h($surplus->detail) ?></td>
                 <td><?= $surplus->has('association') ? $this->Html->link($surplus->association->name, ['controller' => 'Associations', 'action' => 'view', $surplus->association->id]) : '' ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('Ver'), ['action' => 'view', $surplus->id]) ?>
-                    <?= $this->Html->link(__('Editar'), ['action' => 'edit', $surplus->id]) ?>
-                    <?= $this->Form->postLink(__('Borrar'), ['action' => 'delete', $surplus->id], ['confirm' => __('¿Estás seguro de que deseas borrarlo? # {0}?', $surplus->id)]) ?>
+                    <?= $this->Html->link('', ['action' => 'view', $surplus->id],['class'=>'glyphicon glyphicon-eye-open btn btn-info' ]) ?>
+                    <?= $this->Html->link('', ['action' => 'edit', $surplus->id],['class'=>'glyphicon glyphicon-pencil btn btn-primary' ]) ?>
+                    <?= $this->Form->postLink('', ['action' => 'delete', $surplus->id], ['class'=>'glyphicon glyphicon-remove btn btn-danger','confirm' => __('¿Estás seguro de que deseas borrarlo? # {0}?', $surplus->id)]) ?>
                 </td>
             </tr>
         <?php endforeach; ?>

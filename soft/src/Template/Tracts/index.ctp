@@ -26,9 +26,9 @@
                     <td><?= h($tract->date) ?></td>
                     <td><?= h($tract->deadline) ?></td>
                     <td class="actions">
-                        <?= $this->Html->link(__('Ver'), ['action' => 'view', $tract->id]) ?>
-                        <?= $this->Html->link(__('Editar'), ['action' => 'edit', $tract->id]) ?>
-                        <?= $this->Form->postLink(__('Borrar'), ['action' => 'delete', $tract->id], ['confirm' => __('Estás seguro de que deseas borrar esta fechas # {0}?', $tract->id)]) ?>
+                        <?= $this->Html->link('', ['action' => 'view', $tract->id],['class'=>'glyphicon glyphicon-eye-open btn btn-info' ]) ?>
+                        <?= $this->Html->link('', ['action' => 'edit', $tract->id],['class'=>'glyphicon glyphicon-pencil btn btn-primary' ]) ?>
+                        <?= $this->Form->postLink('', ['action' => 'delete', $tract->id], ['class'=>'glyphicon glyphicon-remove btn btn-danger','confirm' => __('Estás seguro de que deseas borrar esta fechas # {0}?', $tract->id)]) ?>
                     </td>
                 </tr>
             <?php endforeach; ?>

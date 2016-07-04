@@ -29,9 +29,9 @@
                 <td><?= $initialAmount->has('association') ? $this->Html->link($initialAmount->association->name, ['controller' => 'Associations', 'action' => 'view', $initialAmount->association->id]) : '' ?></td>
                 <td><?= $initialAmount->has('tract') ? $this->Html->link($initialAmount->tract->date." - ".$initialAmount->tract->deadline, ['controller' => 'Tracts', 'action' => 'view', $initialAmount->tract->id]) : '' ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('Ver'), ['action' => 'view', $initialAmount->id]) ?>
-                    <?= $this->Html->link(__('Editar'), ['action' => 'edit', $initialAmount->id]) ?>
-                    <?= $this->Form->postLink(__('Borrar'), ['action' => 'delete', $initialAmount->id], ['confirm' => __('Seguro que deseas borrar este monto # {0}?', $initialAmount->id)]) ?>
+                    <?= $this->Html->link('', ['action' => 'view', $initialAmount->id],['class'=>'glyphicon glyphicon-eye-open btn btn-info' ]) ?>
+                    <?= $this->Html->link('', ['action' => 'edit', $initialAmount->id],['class'=>'glyphicon glyphicon-pencil btn btn-primary' ]) ?>
+                    <?= $this->Form->postLink('', ['action' => 'delete', $initialAmount->id], ['class'=>'glyphicon glyphicon-remove btn btn-danger','confirm' => __('Seguro que deseas borrar este monto # {0}?', $initialAmount->id)]) ?>
                 </td>
             </tr>
         <?php endforeach; ?>
