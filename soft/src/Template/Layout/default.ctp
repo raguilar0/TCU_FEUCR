@@ -13,7 +13,7 @@
 
     <?php echo $this->Html->meta('favicon.ico','webroot/favicon.ico',array('type' => 'icon'));?>
 
-
+    <?=$this->Html->script('jquery2.js') ?>
 
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>

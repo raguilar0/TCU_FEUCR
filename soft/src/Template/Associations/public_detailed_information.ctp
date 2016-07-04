@@ -571,7 +571,6 @@
 
                 if(xhttp.readyState == 4 && xhttp.status == 200)
                 {
-                    reportData = xhttp.responseText;
                     var obj = JSON.parse(xhttp.responseText);
 
                     switch(amount_type)
@@ -638,7 +637,7 @@
 
     <?=$this->Html->script('detailed_information.js') ?> <!-- Código para los datos de la vista -->
 
-    
+
 
 
 </div>

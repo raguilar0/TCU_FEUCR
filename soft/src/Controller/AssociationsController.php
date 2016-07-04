@@ -15,7 +15,7 @@ class AssociationsController extends AppController
       public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow(['init', 'publicDetailedInformation', 'publicView']);
+        $this->Auth->allow(['init', 'publicDetailedInformation', 'publicView', 'getAmounts']);
     }
 
     public function init()
@@ -269,7 +269,7 @@ class AssociationsController extends AppController
 
     public function getAmounts($association_id = null, $amount_type = null, $box_type = null,$invoice_type = null, $id = null)
     {
-        if ($this->Auth->user()) {
+
 
             if ($amount_type != 2) //Si no es superávit
             {
@@ -396,9 +396,7 @@ class AssociationsController extends AppController
 
 
             die($information);
-        } else {
-            return $this->redirect(['controller' => 'pages', 'action' => 'home']);
-        }
+
     }
 
 
