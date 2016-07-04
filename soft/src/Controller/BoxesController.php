@@ -94,6 +94,7 @@ class BoxesController extends AppController
                                         ->orWhere(['YEAR(date)'=>(date('Y') + 1)])
                                         ->orWhere(['YEAR(date)'=>(date('Y') - 1)]);
             $temp = array();
+            $invoices_type = array('Tracto'=> 0, 'Ingresos Generados'=> 1);
     
             foreach ($tracts as $key => $value)
             {
@@ -107,7 +108,11 @@ class BoxesController extends AppController
                 $box = $this->Boxes->patchEntity($box, $this->request->data);
                 if ($this->Boxes->save($box)) {
                     $this->Flash->success(__('La caja fue modificada correctamente'));
-                    return $this->redirect(['action' => 'index']);
+                    if(($this->request->session()->read('Auth.User.role')) != 'rep'){
+                        return $this->redirect(['action' => 'index']);
+                    }else{
+                        return $this->redirect(['action' => 'modify']);
+                    }
                 } else {
                     $this->Flash->error(__('The box could not be saved. Please, try again.'));
                 }
@@ -143,53 +148,35 @@ class BoxesController extends AppController
     }
     
     public function modify(){
-		//if(($this->request->session()->read('Auth.User.role')) != 'rep'){
-		//	return $this->redirect($this->Auth->redirectUrl());
-		//}
-		//else{
-            try
-            {
-                $id = $this->request->session()->read('Auth.User.association_id');
-                $this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
-                $actualDate = date("Y-m-d");
-
-                $tract_id = $this->getTractId($actualDate) ;
-                $box = $this->Boxes->find()
-                    ->select(['little_amount','big_amount'])
-                    ->andwhere(['association_id'=>$id, 'type'=> 1, 'tract_id' =>$tract_id]);
-                $box = $box->toArray();
-
-
-
-
-
-
-                if($this->request->is(array('post','put'))){
-                    if($box != []){
-                        $box = $this->Boxes->newEntity($this->request->data);
-                        $query = $this->Boxes->query();
-                        $query->update()
-                            ->set(['big_amount'=> $this->request->data['big_amount'], 'little_amount'=>$this->request->data['little_amount']])
-                            ->andwhere(['association_id'=> $id,'tract_id'=> $tract_id])
-                            ->execute();
-                        $box = $this->Boxes->find()
-                            ->select(['little_amount','big_amount'])
-                            ->andwhere(['association_id'=>$id, 'type'=> 1, 'tract_id' =>$tract_id]);
-                        $box = $box->toArray();
-                    }
-                }
-                
-
-                $this->set('data',$box);
-            }
-            catch (Exception $e)
-            {
-                $this->Flash->error(__('Aún no se le ha asignado una caja.'));
-                return $this->redirect(['Controller'=>'Associations','action' => 'init']);
-            }
-
-		//}
-
+		if(($this->request->session()->read('Auth.User.role')) != 'rep'){
+			return $this->redirect($this->Auth->redirectUrl());
+		}
+		else{
+			$id = $this->request->session()->read('Auth.User.association_id');
+			$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
+			$actualDate = date("Y-m-d");
+			$tract_id = $this->getTractId($actualDate) ;
+			$boxes = $this->Boxes->find()
+						->select(['id','type','little_amount','big_amount'])
+						->andwhere(['association_id'=>$id,'tract_id' =>$tract_id]);
+			$boxes = $boxes->toArray();
+			if($this->request->is(array('post','put'))){
+				if($box != []){
+					$box = $this->Boxes->newEntity($this->request->data);
+					$query = $this->Boxes->query();
+					$query->update()
+						  ->set(['big_amount'=> $this->request->data['big_amount'], 'little_amount'=>$this->request->data['little_amount']])
+						  ->andwhere(['association_id'=> $id,'tract_id'=> $tract_id])
+						  ->execute();
+					$boxes = $this->Boxes->find()
+						->select(['little_amount','big_amount'])
+						->andwhere(['association_id'=>$id,'tract_id' =>$tract_id]);
+					$boxes = $boxes->toArray();
+					
+				}
+			}
+			$this->set('boxes',$boxes);
+		}
 	}
 	
 	private function getTractId($actualDate){

@@ -19,6 +19,7 @@
                     echo "<h4>".$this->Form->input('big_amount', ['class' => 'form-control','label'=>'Caja Fuerte', 'min'=> '0'])."</h4>";
     	        echo "</div >";
     	    echo "</div >";
+    	    if(($this->request->session()->read('Auth.User.role')) == 'admin'){
     	     echo "<div class = 'row'>";
                 echo "<div class = 'col-xs-12 col-md-6'>";
                     echo "<h4>".$this->Form->input('association_id', ['options' => $associations,'class' => 'form-control','label'=>'Asociación', 'min'=> '0'])."</h4>";
@@ -26,7 +27,8 @@
     	        echo "<div class = 'col-xs-12 col-md-6'>";
                     echo "<h4>".$this->Form->input('tract_id', ['options'=>$data,'class' => 'form-control','label'=>'Tracto', 'min'=> '0'])."</h4>";
     	        echo "</div >";
-    	    echo "</div >"; 
+    	      echo "</div >"; 
+    	    }
     	    
         ?>
         </div>
