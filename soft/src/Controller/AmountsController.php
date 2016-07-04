@@ -102,7 +102,7 @@ class AmountsController extends AppController
 			else
 			{
 
-					$headquarters = $this->getHeadquarters(); //Pide todas las sedes
+					$headquarters = $this->getHeadquarters(); //Pide todas las headquarter
 					$this->set('head',$headquarters);
 					$this->set('data', $tracts);
 			}
@@ -229,7 +229,7 @@ class AmountsController extends AppController
 				->where(['YEAR(date)'=>$year]); //Queremos los tractos del año actual
 
 		/**
-		$query = $this->Amounts->Tracts->find() //Se trae solo las sedes que tienen alguna asocicación asociada :p
+		$query = $this->Amounts->Tracts->find() //Se trae solo las headquarter que tienen alguna asocicación asociada :p
 		->hydrate(false)
 			->join([
 				'table'=>'amounts',
@@ -258,7 +258,7 @@ class AmountsController extends AppController
 
 	private function getHeadquarters()
 	{
-		$query = $this->Amounts->Associations->Headquarters->find() //Se trae solo las sedes que tienen alguna asocicación asociada :p
+		$query = $this->Amounts->Associations->Headquarters->find() //Se trae solo las headquarter que tienen alguna asocicación asociada :p
 		->hydrate(false)
 		->select(['Headquarters.name'])
 		->join([

@@ -10,11 +10,11 @@
 <br>
 
 
-    <?= $this->Form->create($headquarters) ?>
+    <?= $this->Form->create($headquarters,['enctype'=>'multipart/form-data']) ?>
     <div class="form-group">
         <?php
             echo $this->Form->input('name', ['label'=>'Nombre', 'class'=>'form-control']);
-            echo $this->Form->input('image_name', ['label'=>'Nombre de la imagen', 'class'=>'form-control']);
+            echo $this->Form->input('file', ['type'=>'file', 'label'=>'Imagen de la sede','required']);
         ?>
     </div>
 <br>

@@ -46,7 +46,7 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         <li class="active"><?php echo $this->Html->link('', ['controller'=>'Pages', 'action'=>'home'],['class'=>'glyphicon glyphicon-home'])?></li>
-                        <li><a href="#asociaciones">Asociaciones</a></li>
+                        <li><?= $this->Html->link('Asociaciones',['controller'=>'pages', 'action'=>'home', '#'=>'asociaciones']); ?></li>
 
 
                         <li><?php

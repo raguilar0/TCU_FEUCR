@@ -167,7 +167,7 @@ class InitialAmountsController extends AppController
         $this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
 
 
-        $headquarters = $this->getHeadquarters(); //Pide todas las sedes
+        $headquarters = $this->getHeadquarters(); //Pide todas las headquarter
         $tracts[0] = $this->getTracts(date('Y')-1);
         $tracts[1] = $this->getTracts(date('Y'));
 
@@ -379,7 +379,7 @@ class InitialAmountsController extends AppController
     private function getHeadquarters()
     {
       if($this->Auth->user()){
-        $query = $this->InitialAmounts->Associations->Headquarters->find() //Se trae solo las sedes que tienen alguna asocicación asociada :p
+        $query = $this->InitialAmounts->Associations->Headquarters->find() //Se trae solo las headquarter que tienen alguna asocicación asociada :p
         ->hydrate(false)
             ->select(['Headquarters.name'])
             ->join([

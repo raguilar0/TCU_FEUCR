@@ -51,6 +51,9 @@ class PagesController extends AppController
         if (!empty($path[1])) {
             $subpage = $path[1];
         }
+        $data = $this->getHeadquartersData();
+
+        $this->set('data', $data);
         $this->set(compact('page', 'subpage'));
 
         try {
@@ -62,4 +65,14 @@ class PagesController extends AppController
             throw new NotFoundException();
         }
     }
+
+
+    private function getHeadquartersData()
+    {
+        $this->loadModel("Headquarters");
+
+        return $this->Headquarters->find();
+    }
+
+
 }

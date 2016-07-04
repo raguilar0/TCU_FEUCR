@@ -15,7 +15,7 @@ class AssociationsController extends AppController
       public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow('init');
+        $this->Auth->allow(['init', 'publicDetailedInformation', 'publicView']);
     }
 
     public function init()
@@ -88,10 +88,10 @@ class AssociationsController extends AppController
             if ($this->request->is('post')) {
                 $association = $this->Associations->patchEntity($association, $this->request->data);
                 if ($this->Associations->save($association)) {
-                    $this->Flash->success(__('The association has been saved.'));
+                    $this->Flash->success(__('La asociación se guardó exitosamente'));
                     return $this->redirect(['action' => 'index']);
                 } else {
-                    $this->Flash->error(__('The association could not be saved. Please, try again.'));
+                    $this->Flash->error(__('La asociación no pudo ser guardada. Por favor intente de nuevo.'));
                 }
             }
 
@@ -129,10 +129,10 @@ class AssociationsController extends AppController
             if ($this->request->is(['patch', 'post', 'put'])) {
                 $association = $this->Associations->patchEntity($association, $this->request->data);
                 if ($this->Associations->save($association)) {
-                    $this->Flash->success(__('The association has been saved.'));
+                    $this->Flash->success(__('La asociación se guardó exitosamente.'));
                     return $this->redirect(['action' => 'index']);
                 } else {
-                    $this->Flash->error(__('The association could not be saved. Please, try again.'));
+                    $this->Flash->error(__('La asociación no pudo ser guardada. Por favor intente de nuevo.'));
                 }
             }
             $authorized = array(1 => 'Aprobada', 0 => 'Reprobada');
@@ -178,9 +178,9 @@ class AssociationsController extends AppController
             $this->request->allowMethod(['post', 'delete']);
             $association = $this->Associations->get($id);
             if ($this->Associations->delete($association)) {
-                $this->Flash->success(__('The association has been deleted.'));
+                $this->Flash->success(__('La asociación se eliminó exitosamente.'));
             } else {
-                $this->Flash->error(__('The association could not be deleted. Please, try again.'));
+                $this->Flash->error(__('La asociación no pudo ser eliminada. Por favor intente de nuevo.'));
             }
             return $this->redirect(['action' => 'index']);
         }
@@ -194,13 +194,14 @@ class AssociationsController extends AppController
     public function detailedInformation($id = null, $year = null)
     {
 
-
             $this->viewBuilder()->layout('admin_views');
 
             if($this->request->session()->read('Auth.User.role') != 'admin') //Si no es admin, es rep y se le asigna el id de la asocia a la que pertenece
             {
                 $id = $this->request->session()->read('Auth.User.association_id');
             }
+
+
 
             if($id)
             {
@@ -528,6 +529,87 @@ class AssociationsController extends AppController
             return $this->redirect(['controller'=>'pages', 'action'=>'home']);
         }
     }
+
+
+    public function publicView($id = null)
+    {
+        if($id)
+        {
+            $associations = $this->Associations->find()
+                                    ->hydrate(false)
+                                    ->where(['headquarter_id'=>$id]);
+
+            $this->set('data', $associations);
+        }
+    }
+
+
+    public function publicDetailedInformation($id = null, $year = null)
+    {
+
+
+        if($id)
+        {
+
+            $year = ($year ? $year: date('Y')); //Si el año viene nulo, agregamos el actual
+
+            $tract_dates = $this->Associations->Amounts->find()
+                ->hydrate(false)
+                ->select(['tract.date','tract.deadline','type','tract.number', 'tract.id'])
+                ->andwhere(['association_id'=>$id, 'YEAR(tract.date)'=>$year])
+                ->join([
+                    'table'=>'tracts',
+                    'alias'=>'tract',
+                    'type'=>'RIGHT',
+                    'conditions'=>'Amounts.tract_id = tract.id'
+
+                ])
+
+                ->group(['tract.date']);
+
+
+            $tract_dates = $tract_dates->toArray();
+            $temp = array();
+            foreach ($tract_dates as $key => $value)
+            {
+                $temp[$value['tract']['id']] = $value['tract']['date']." - ".$value['tract']['deadline'];
+            }
+
+            $tract_dates = $temp;
+
+
+            $this->loadModel('Tracts'); //Obtenemos todos los años que existen
+
+            $tracts_year = $this->Tracts->find()
+                ->hydrate(false)
+                ->select(['year'=>'YEAR(date)'])
+                ->order(['(year'=>" = '".$year."') DESC, year"]) //NO LO INTENTEN EN SUS CASAS!!! XD
+                ->group(['year']);
+
+            $tracts_year = $tracts_year->toArray();
+
+
+            $association_name = $this->Associations->find()
+                ->hydrate(false)
+                ->select(['name','id'])
+                ->where(['id'=>$id]);
+
+            $association_name = $association_name->toArray();
+
+
+            $this->set('dates',$tract_dates);
+            $this->set('association_name',$association_name);
+            $this->set('years',$tracts_year);
+
+
+        }
+        else
+        {
+            $this->redirect(['action'=>'/']);
+        }
+
+    }
+
 
     public function isAuthorized($user)
     {
