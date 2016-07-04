@@ -98,7 +98,7 @@ function generatePDF(title, type, date) {
     }
 
 
-    pdf.save('table.pdf');
+    pdf.save('Reporte.pdf');
 
 
 

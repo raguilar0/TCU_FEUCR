@@ -655,10 +655,10 @@ function reloadPage(element)
 </script>
 
 <?=$this->Html->script('detailed_information.js') ?> <!-- Código para los datos de la vista -->
+
 <?=$this->Html->script('jspdf.min.js') ?>
 <?=$this->Html->script('jspdf.plugin.autotable.js') ?>
 <?=$this->Html->script('pdf_report.js') ?> <!-- Código para generación de pdf -->
-
 
 
 
