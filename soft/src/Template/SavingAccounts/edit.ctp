@@ -18,7 +18,12 @@
      if(($this->request->session()->read('Auth.User.role')) == 'admin'){
         echo $this->Form->input('association_id', ['options' => $associations, 'class'=>'form-control', 'label'=>'Asociación']);
      }
-    echo $this->Form->input('tract_id', ['options' => $tracts, 'label'=>'Tracto', 'class'=>'form-control']);
+
+     if(($this->request->session()->read('Auth.User.role')) == 'admin')
+     {
+         echo $this->Form->input('tract_id', ['options' => $tracts, 'label'=>'Tracto', 'class'=>'form-control']);
+     }
+
     ?>
 </div>
 
