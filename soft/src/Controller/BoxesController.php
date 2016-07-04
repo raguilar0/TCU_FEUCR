@@ -199,7 +199,7 @@ class BoxesController extends AppController
     {
 
 
-        if($this->request->action === 'modify'){
+        if(in_array($this->request->action, ['modify', 'edit'])){
         	  return true;
         }
     
