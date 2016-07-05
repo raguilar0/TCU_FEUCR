@@ -20,7 +20,6 @@ echo "<br>";
 		    echo "<h4>".$this->Form->input('last_name_1', ['class' => 'form-control','label'=>'Primer Apellido','value'=>$user['last_name_1'], 'maxlength'=> '20'])."</h4>";
 				echo "<h4>".$this->Form->input('last_name_2', ['class' => 'form-control','label'=>'Segundo Apellido','value'=>$user['last_name_2'], 'maxlength'=> '20'])."</h4>";
 
-
         if($this->request->session()->read('Auth.User.role') == 'admin') {
           echo "<label for='sel1' id = 'role_label'><h4>Rol</h4></label>";
           //debug($user);
@@ -40,8 +39,9 @@ echo "<br>";
 
         }
 
-
+        echo "<td>".$this->Html->link('','/users/reset_password/'.$user['id'], ['class'=>'glyphicon glyphicon-lock btn btn-primary', 'label'=>'reestablecer contraseña'])."</td>";
 		    echo "<h4>".$this->Form->label('Users.blocked','Usuario Bloqueado ');
+
     	echo "</div>";
     echo "</div>";
 

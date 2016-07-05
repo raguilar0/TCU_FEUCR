@@ -3,6 +3,7 @@
 
 namespace App\Controller;
 
+use Cake\ORM\TableRegistry;
 use App\Controller\AppController;
 use Cake\Event\Event;
 
@@ -369,7 +370,7 @@ class UsersController extends AppController
 
 
                 }
-                
+
                 $user = $this->Users->get($id);
 
                 $head = $this->Users->Associations->find()
@@ -388,6 +389,95 @@ class UsersController extends AppController
           else{
             return $this->redirect(['controller'=>'pages', 'action'=>'home']);
           }
+      }
+
+      public function resetPassword($id = null){
+
+        if($this->Auth->user()){
+          debug($this->Auth);
+          //$this->viewBuilder()->layout('admin_views');
+          if($id){
+            $user = $this->Users->get($id);
+            //$user = $this->Users->findByToken($id);
+            //debug($user);
+            if($this->request->is(array('post','put'))) {
+              if(($this->request->session()->read('Auth.User.role')) == 'admin'){
+                //$pwtable = TableRegistry::get('Users');
+                $repass = $this->request->data['repass'];
+                $pw = $this->request->data['new_password'];
+
+                if($pw == $repass){
+                  debug($user);
+                  debug($this->users);
+                  $user->password= $pw;
+                  if($this->Users->save($user)){
+                    //$this->Users->save($user)
+                    $this->Flash->success(__('La contraseña se ha establecido correctamente.', ['key'=>'success']));
+                    debug($user);
+                  }
+                  else{
+                    $this->Flash->error(__('Error al cambiar la contraseña.', ['key'=>'error']));
+                  }
+
+
+                  /*
+                  if(!$user->errors()) {
+                    $query = $this->Users->query();
+                    $query->update()
+                          ->set(['password'=>$new_password])
+                          ->where(['id'=>$id])
+                          ->execute();
+                    $this->Flash->success(__('La contraseña se ha establecido correctamente.', ['key'=>'success']));
+                    debug($user);
+                  }
+                  else{
+                    $this->Flash->error(__('Error al cambiar la contraseña.', ['key'=>'error']));
+                  }
+                  */
+                }
+                else{
+                  $this->Flash->error(__('Las contraseñas no coinciden.', ['key'=>'error']));
+                }
+              }
+
+              if(($this->request->session()->read('Auth.User.role')) == 'rep'){
+                $pwtable = TableRegistry::get('Users');
+                $old_password = $this->request->data['old_password'];
+                $new_password = $this->request->data['new_password'];
+                $repass = $this->request->data['repass'];
+
+                if( $old_password == $user['password']){      //TODO: COMPARAR PASSWORDS HASHEADOS
+                  if($new_password == $repass){
+                    if(!$user->errors()) {
+                      $query = $this->Users->query();
+                      $query->update()
+                            ->set(['password'=>$new_password])
+                            ->where(['id'=>$id])
+                            ->execute();
+                      $this->Flash->success(__('La contraseña se ha establecido correctamente.', ['key'=>'success']));
+                      debug($user);
+                    }
+                    else{
+                      $this->Flash->error(__('Error al cambiar la contraseña.', ['key'=>'error']));
+                    }
+                  }
+                  else{
+                    $this->Flash->error(__('Las contraseñas no coinciden.', ['key'=>'error']));
+                  }
+                }
+                else{
+                  $this->Flash->error(__('La contraseña no coincide con la actual.', ['key'=>'error']));
+                }
+              }
+
+            }
+            $this->set('user', $user);
+          }
+        }
+        else{
+          return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+        }
+
       }
 
 /*
@@ -468,7 +558,7 @@ class UsersController extends AppController
       }
     }
     */
-    
+
     public function isAuthorized($user)
     {
 
@@ -477,11 +567,11 @@ class UsersController extends AppController
           return true;
         }
 
-        
-    
+
+
         return parent::isAuthorized($user);
     }
-    
+
 }
 
 ?>
