@@ -52,15 +52,7 @@
                         <li><?php
                             if(!is_null($this->request->session()->read('Auth.User')) )
                             {
-                                if(($this->request->session()->read('Auth.User.role') == 'admin'))
-                                {
-                                    echo $this->Html->link('Administrar',['controller'=>'associations', 'action'=>'index']);
-                                }
-                                else
-                                {
-                                    echo $this->Html->link('Administrar',['controller'=>'associations', 'action'=>'index_associations']);
-                                }
-
+                              echo $this->Html->link('Administrar',['controller'=>'associations', 'action'=>'init']);
                             }
                             ?>
                         </li>

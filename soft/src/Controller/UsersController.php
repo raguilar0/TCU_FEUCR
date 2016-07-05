@@ -310,9 +310,10 @@ class UsersController extends AppController
             if ($this->request->is('post')) {
 
                 $user = $this->Auth->identify();
+                //debug($user['state']);
                 if ($user) {
                   //debug($this->request->session()->read('Auth.User.state'));
-                    if($this->request->session()->read('Auth.User.state') == 0){
+                    if($user['state'] == 0){
                       $this->Auth->setUser($user);
                       return $this->redirect($this->Auth->redirectUrl());
                     }
@@ -341,7 +342,7 @@ class UsersController extends AppController
           if($this->Auth->user()){
             $this->viewBuilder()->layout('admin_views'); //Se deja este hasta mientras se haga el de representante
 
-            $id =  $this->request->session()->read('Auth.User.id');; // Lo que me dijo Slon
+            $id =  $this->request->session()->read('Auth.User.id'); // Lo que me dijo Slon
             if($id) {
 
 
@@ -394,46 +395,23 @@ class UsersController extends AppController
       public function resetPassword($id = null){
 
         if($this->Auth->user()){
-          debug($this->Auth);
-          //$this->viewBuilder()->layout('admin_views');
+          $this->viewBuilder()->layout('admin_views');
           if($id){
             $user = $this->Users->get($id);
-            //$user = $this->Users->findByToken($id);
-            //debug($user);
             if($this->request->is(array('post','put'))) {
               if(($this->request->session()->read('Auth.User.role')) == 'admin'){
-                //$pwtable = TableRegistry::get('Users');
+
                 $repass = $this->request->data['repass'];
                 $pw = $this->request->data['new_password'];
 
                 if($pw == $repass){
-                  debug($user);
-                  debug($this->users);
                   $user->password= $pw;
                   if($this->Users->save($user)){
-                    //$this->Users->save($user)
                     $this->Flash->success(__('La contraseña se ha establecido correctamente.', ['key'=>'success']));
-                    debug($user);
                   }
                   else{
                     $this->Flash->error(__('Error al cambiar la contraseña.', ['key'=>'error']));
                   }
-
-
-                  /*
-                  if(!$user->errors()) {
-                    $query = $this->Users->query();
-                    $query->update()
-                          ->set(['password'=>$new_password])
-                          ->where(['id'=>$id])
-                          ->execute();
-                    $this->Flash->success(__('La contraseña se ha establecido correctamente.', ['key'=>'success']));
-                    debug($user);
-                  }
-                  else{
-                    $this->Flash->error(__('Error al cambiar la contraseña.', ['key'=>'error']));
-                  }
-                  */
                 }
                 else{
                   $this->Flash->error(__('Las contraseñas no coinciden.', ['key'=>'error']));
@@ -441,38 +419,36 @@ class UsersController extends AppController
               }
 
               if(($this->request->session()->read('Auth.User.role')) == 'rep'){
-                $pwtable = TableRegistry::get('Users');
+
                 $old_password = $this->request->data['old_password'];
-                $new_password = $this->request->data['new_password'];
+                $pw = $this->request->data['new_password'];
                 $repass = $this->request->data['repass'];
 
-                if( $old_password == $user['password']){      //TODO: COMPARAR PASSWORDS HASHEADOS
-                  if($new_password == $repass){
-                    if(!$user->errors()) {
-                      $query = $this->Users->query();
-                      $query->update()
-                            ->set(['password'=>$new_password])
-                            ->where(['id'=>$id])
-                            ->execute();
-                      $this->Flash->success(__('La contraseña se ha establecido correctamente.', ['key'=>'success']));
-                      debug($user);
-                    }
-                    else{
-                      $this->Flash->error(__('Error al cambiar la contraseña.', ['key'=>'error']));
-                    }
+                debug($this->User->_setPassword($old_password));
+                debug($user->password);
+                if($this->User->_setPassword($old_password) == $user->password && $pw == $repass){      //no sabe quen es _setPassword!!!
+                  $user->password= $pw;
+                  if($this->Users->save($user)){
+                    $this->Flash->success(__('La contraseña se ha establecido correctamente.', ['key'=>'success']));
                   }
                   else{
-                    $this->Flash->error(__('Las contraseñas no coinciden.', ['key'=>'error']));
+                    $this->Flash->error(__('Error al cambiar la contraseña.', ['key'=>'error']));
                   }
                 }
                 else{
-                  $this->Flash->error(__('La contraseña no coincide con la actual.', ['key'=>'error']));
+                  $this->Flash->error(__('Las contraseñas no coinciden.', ['key'=>'error']));
                 }
               }
 
             }
-            $this->set('user', $user);
+
           }
+          else{ //si no tiene id usa el propio
+            $usr_id = $this->request->session()->read('Auth.User.id');
+            $user = $this->Users->get($usr_id);
+            debug($user);
+          }
+          $this->set('user', $user);
         }
         else{
           return $this->redirect(['controller'=>'pages', 'action'=>'home']);
@@ -562,7 +538,7 @@ class UsersController extends AppController
     public function isAuthorized($user)
     {
 
-        if(in_array($this->request->action,['read','logout']))
+        if(in_array($this->request->action,['modify', 'modifyUser', 'resetPassword', 'logout']))
         {
           return true;
         }
