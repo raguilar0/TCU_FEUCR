@@ -277,7 +277,7 @@ class UsersController extends AppController
                             ->set(['username'=>$this->request->data['username'], 'name'=>$this->request->data['name'],
                                   'last_name_1'=>$this->request->data['last_name_1'], 'last_name_2'=>$this->request->data['last_name_2'],
                                   'role'=>$this->request->data['role'], 'state'=>$blocked])
-                            ->where(['id'=>$id]);
+                            ->where(['id'=>$id])
                             ->execute();
                       $this->Flash->success(__('Usuario modificado correctamente.', ['key'=>'success']));
                     }
@@ -394,163 +394,78 @@ class UsersController extends AppController
           }
       }
 
-      public function resetPassword($id = null){
+      public function resetPassword($id = null)
+      {
+        $this->viewBuilder()->layout('admin_views');
 
-        if($this->Auth->user()){
-          //$this->viewBuilder()->layout('admin_views');
-          if($id){
-            $user = $this->Users->get($id);
-            $pass = $this->Users->newEntity($this->request->data);
-            debug($pass);
-            if($this->request->is(array('post','put'))) {
-              $pass = $this->Users->newEntity($this->request->data);
-              if(($this->request->session()->read('Auth.User.role')) == 'admin'){   //Administrador
-                $pw = $pass['password'];
-                $repass = $pass['repass'];
-                debug($this->request->data);
-                debug($pass);
-                debug($user->password);
-
-                //if($pw == $repass){
-                //$check = $this->Auth->DefaultPasswordHasher->check($repass, $pw);
-                debug($check);
-                if($check){//$this->Auth->DefaultPasswordHasher->check($repass, $pw)){  //por mientras logro comparar passwords adecuadamente...
-                  $user->password = $pw;
-                  if($this->Users->save($user)){
-                    $this->Flash->success(__('La contraseña se ha establecido correctamente.', ['key'=>'success']));
-                  }
-                  else{
-                    $this->Flash->error(__('Error al cambiar la contraseña.', ['key'=>'error']));
-                  }
-                }
-                else{
-                  $this->Flash->error(__('Las contraseñas no coinciden.', ['key'=>'error']));
-                }
-                debug($pass);
-              }
-
-              if(($this->request->session()->read('Auth.User.role')) == 'rep'){   //Representante
-
-                $old_password = $this->request->data['old_password'];
-                $pw = $this->request->data['password'];
-                $repass = $this->request->data['repass'];
-                /*
-                debug($this->User->_setPassword($old_password));
-                debug($user->password);
-                if($this->User->_setPassword($old_password) == $user->password && $pw == $repass){      //no sabe quen es _setPassword!!!
-                  $user->password= $pw;
-                  if($this->Users->save($user)){
-                    $this->Flash->success(__('La contraseña se ha establecido correctamente.', ['key'=>'success']));
-                  }
-                  else{
-                    $this->Flash->error(__('Error al cambiar la contraseña.', ['key'=>'error']));
-                  }
-                }
-                else{
-                  $this->Flash->error(__('Las contraseñas no coinciden.', ['key'=>'error']));
-                }
-                */
-              }
-
-            }
-
-          }
-          else{ //si no tiene id usa el propio
-            //$usr_id = $this->request->session()->read('Auth.User.id');
-            //$user = $this->Users->get($usr_id);
-
-          }
-          $this->set('pass', $pass);
-        }
-        else{
-          return $this->redirect(['controller'=>'pages', 'action'=>'home']);
-        }
-
-      }
-
-/*
-    public function addUser()
-    {
-      if(($this->request->session()->read('Auth.User.role')) != 'rep'){
-  			return $this->redirect($this->Auth->redirectUrl());
-  		}
-      else{
-        $associations_id = $this->request->session()->read('Auth.User.association_id');
-        $this->viewBuilder()->layout('associations_view'); //Carga un layout personalizado para esta vista
-
-        $user = $this->Users->newEntity($this->request->data); //El parámetro es para validar los datos
-
-
-        if($this->request->is('post'))
+        if($id)
         {
+          $user = $this->Users->get($id);
+
+          if($this->request->is("post"))
+          {
+
+              $user = $this->Users->patchEntity($user, $this->request->data,
+                  ['validate' => 'changePassword']
+              );
+
+              if ($this->Users->save($user)) {
+                  $this->Flash->success('La contraseña se cambió exitosamente');
+                  return $this->redirect(['controller'=>'users', 'action'=>'showAssociations',3]);
+
+              }
+              else {
+                  $this->Flash->error('Hubo un error mientras se intentaba cambiar la contraseña');
+              }
 
 
-            $response = "0,0"; //Funciona como booleano, para decidir qué mostrar en el ajax.
+          }
 
-            $this->loadModel('Headquarters'); //Carga el modelo de esta asociación
-            $headquarter = $this->Headquarters->find()
-                            ->hydrate(false)
-                            -> select(['id']) //Realiza la consulta
-                            -> where(["name = '".$this->request->data['headquarter_id']."'"]); //Obtiene el id donde la sede  elegida por el usuario
-
-            $headquarter = $headquarter->toArray();
-
-            $association['headquarter_id'] = $headquarter[0]['id']; //Reemplaza la elección del usuario por el id
-
-            if($this->Users->save($user)) //Guarda los date_offset_get()
-            {
-                $response = "1,0";
-
-                $query = $this->Users->find();
-
-                $query->hydrate(false);
-                $query->select(['max_id' => $query->func()->max('id')]);
-
-                $query = $query->toArray();
-
-
-                $this->request->data['spent'] = 0;
-                $this->request->data['user_id'] = $query[0]['max_id'];
-
-
-                $amounts = $this->Users->Amounts->newEntity($this->request->data);
-
-                if($this->Users->Amounts->save($amounts))
-                {
-                    $response = "1,1";
-                }
-            }
-
-
-            die($response);
-
+          $this->set('user',$user);
 
         }
         else
         {
-            //Hago esta operación en el else, porque no me interesa cargarlo cuando voy a guardar los datos
-
-            $this->loadModel('Headquarters'); //Carga el modelo de esta asociación
-
-            $headquarter = $this->Headquarters->find()
-                            -> select(['name']); //Realiza la consulta
-
-            $headquarter->hydrate(false); //Quita elementos inncesarios
-            $headquarter = $headquarter->toArray(); //Convierte el resultado a un array
-
-
-
-            $association['headquarter'] = $headquarter; //Lo asocia
-
+            return $this->redirect(['controller'=>'pages', 'action'=>'home']);
         }
+
+
       }
-    }
-    */
+
+      public function resetPass()
+      {
+
+
+        $user = $this->Users->get($this->request->session()->read('Auth.User.id')); // Lo que me dijo Slon);
+
+        if($this->request->is(array('post','put')))
+        {
+            $user = $this->Users->patchEntity($user, [
+                    'old_password'  => $this->request->data['old_password'],
+                    'password'      => $this->request->data['password'],
+                    'repass'     => $this->request->data['repass']
+                ],
+                ['validate' => 'changePass']
+            );
+            if ($this->Users->save($user)) {
+                $this->Flash->success('La contraseña se cambió exitosamente');
+
+            } else {
+                $this->Flash->error('No se pudo guardar la contraseña. Probablemente no digitó correctamente la contraseña antigua');
+            }
+
+            return $this->redirect(['controller'=>'users', 'action'=>'modify']);
+        }
+        $this->set('user',$user);
+
+
+
+      }
 
     public function isAuthorized($user)
     {
 
-        if(in_array($this->request->action,['modify', 'modifyUser', 'resetPassword', 'logout']))
+        if(in_array($this->request->action,['modify', 'modifyUser', 'resetPassword', 'logout', 'resetPass']))
         {
           return true;
         }

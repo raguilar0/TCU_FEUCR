@@ -5,21 +5,23 @@
     </div>
 </div>
 
-<?= $this->Form->create($pass); ?>
 
 <?php if(($this->request->session()->read('Auth.User.role')) == 'admin'){ ?>
+    <?= $this->Form->create(null,['onsubmit'=>'return compare()']); ?>
   <div class="form-group">
-      <?= "<h4>".$this->Form->input('password', ['class' => 'form-control','label'=>'Nueva contraseña', 'maxlength'=> '16','type'=>'password'])."</h4>"; ?>
-      <?= "<h4>".$this->Form->input('repass', ['class' => 'form-control','label'=>'Repetir contraseña', 'maxlength'=> '16','type'=>'password'])."</h4>"; ?>
+      <h4> <?= $this->Form->input('password', ['class' => 'form-control','label'=>'Nueva contraseña', 'maxlength'=> '16','type'=>'password', 'id'=>'pass']); ?> </h4>
+      <h4> <?= $this->Form->input('repass', ['class' => 'form-control','label'=>'Repetir contraseña', 'maxlength'=> '16','type'=>'password', 'id'=>'repa']); ?></h4>
+      <span id='message'></span>
   </div>
 
 <?php }?>
 
 <?php if(($this->request->session()->read('Auth.User.role')) == 'rep'){ ?>
+    <?= $this->Form->create(null,['url' => ['action' => 'reset-pass']],['onsubmit'=>'return compare()']); ?>
   <div class="form-group">
       <?= "<h4>".$this->Form->input('old_password', ['class' => 'form-control','label'=>'Inserte su contraseña actual','maxlength'=> '16','type'=>'password'])."</h4>"; ?>
-      <?= "<h4>".$this->Form->input('password', ['class' => 'form-control','label'=>'Nueva contraseña', 'maxlength'=> '16','type'=>'password'])."</h4>"; ?>
-      <?= "<h4>".$this->Form->input('repass', ['class' => 'form-control','label'=>'Repetir contraseña', 'maxlength'=> '16','type'=>'password'])."</h4>"; ?>
+      <?= "<h4>".$this->Form->input('password', ['class' => 'form-control','label'=>'Nueva contraseña', 'maxlength'=> '16','type'=>'password','id'=>'pass'])."</h4>"; ?>
+      <?= "<h4>".$this->Form->input('repass', ['class' => 'form-control','label'=>'Repetir contraseña', 'maxlength'=> '16','type'=>'password','id'=>'repa'])."</h4>"; ?>
   </div>
 
 <?php }?>
@@ -30,10 +32,33 @@
 <br>
 <div class="row">
     <div class="text-center">
-        <?= "<h4>".$this->Form->submit('Cambiar', ['class' => 'form-control btn btn-primary', 'id' => 'asso_id'])."</h4>"; ?>
+        <?= "<h4>".$this->Form->submit('Cambiar', ['class' => 'form-control btn btn-primary'])."</h4>"; ?>
     </div>
 </div>
 <?= $this->Form->end(); ?>
+
+
+
+<script>
+
+    function compare()
+    {
+        var pass = document.getElementById('pass');
+        var repa = document.getElementById('repa');
+        var success = true;
+
+        if(pass.value !== repa.value)
+        {
+            document.getElementById('message').style = "color:red";
+            document.getElementById('message').innerHTML = "Las contraseñas deben ser iguales";
+            success = false;
+        }
+
+        return success;
+    }
+
+</script>
+
 
 <br>
 <br>

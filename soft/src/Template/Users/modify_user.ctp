@@ -20,7 +20,7 @@ echo "<br>";
 		    echo "<h4>".$this->Form->input('last_name_1', ['class' => 'form-control','label'=>'Primer Apellido','value'=>$user['last_name_1'], 'maxlength'=> '20'])."</h4>";
 				echo "<h4>".$this->Form->input('last_name_2', ['class' => 'form-control','label'=>'Segundo Apellido','value'=>$user['last_name_2'], 'maxlength'=> '20'])."</h4>";
 
-        debug($this->request->session()->read('Auth.User.role'));
+        //debug($this->request->session()->read('Auth.User.role'));
         if($this->request->session()->read('Auth.User.role') == 'admin') {
           echo "<label for='sel1' id = 'role_label'><h4>Rol</h4></label>";
           //debug($user);
