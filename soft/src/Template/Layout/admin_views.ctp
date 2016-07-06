@@ -149,7 +149,7 @@
                                 </ul>
                             </div>
                         </li>
-                        
+
                         <li class="active">
                             <a  data-toggle="collapse" data-target="#surplus_id">Montos de Superávit</a>
                             <div id="surplus_id" class="collapse">
@@ -177,9 +177,7 @@
                             <div id="user_id" class="collapse">
                                 <ul>
                                     <li><?php echo $this->Html->link('Agregar Usuarios', '/users/add/');?></li><br>
-                                    <li><?php echo $this->Html->link('Ver Ususarios','/users/show_associations/1');?></li><br>
-                                    <li><?php echo $this->Html->link('Editar Usuarios','/users/show_associations/3');?></li><br>
-
+                                    <li><?php echo $this->Html->link('Administrar Usuarios','/users/show_associations/3');?></li><br>
                                 </ul>
                             </div>
                         </li>
@@ -237,8 +235,7 @@
                         <div id="user_id" class="collapse">
                             <ul>
                                 <li><?php echo $this->Html->link('Agregar Usuarios', '/users/add/');?></li><br>
-                                <li><?php echo $this->Html->link('Ver Ususarios','/users/read/');?></li><br>
-                                <li><?php //echo $this->Html->link('Editar Usuarios','/users/modify/');?></li><br>
+                                <li><?php echo $this->Html->link('Administrar Usuarios','/users/modify/');?></li><br>
 
                             </ul>
                         </div>
