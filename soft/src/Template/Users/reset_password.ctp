@@ -5,11 +5,11 @@
     </div>
 </div>
 
-<?= $this->Form->create($user); ?>
+<?= $this->Form->create($pass); ?>
 
 <?php if(($this->request->session()->read('Auth.User.role')) == 'admin'){ ?>
   <div class="form-group">
-      <?= "<h4>".$this->Form->input('new_password', ['class' => 'form-control','label'=>'Nueva contraseña', 'maxlength'=> '16','type'=>'password'])."</h4>"; ?>
+      <?= "<h4>".$this->Form->input('password', ['class' => 'form-control','label'=>'Nueva contraseña', 'maxlength'=> '16','type'=>'password'])."</h4>"; ?>
       <?= "<h4>".$this->Form->input('repass', ['class' => 'form-control','label'=>'Repetir contraseña', 'maxlength'=> '16','type'=>'password'])."</h4>"; ?>
   </div>
 
@@ -18,14 +18,14 @@
 <?php if(($this->request->session()->read('Auth.User.role')) == 'rep'){ ?>
   <div class="form-group">
       <?= "<h4>".$this->Form->input('old_password', ['class' => 'form-control','label'=>'Inserte su contraseña actual','maxlength'=> '16','type'=>'password'])."</h4>"; ?>
-      <?= "<h4>".$this->Form->input('new_password', ['class' => 'form-control','label'=>'Nueva contraseña', 'maxlength'=> '16','type'=>'password'])."</h4>"; ?>
+      <?= "<h4>".$this->Form->input('password', ['class' => 'form-control','label'=>'Nueva contraseña', 'maxlength'=> '16','type'=>'password'])."</h4>"; ?>
       <?= "<h4>".$this->Form->input('repass', ['class' => 'form-control','label'=>'Repetir contraseña', 'maxlength'=> '16','type'=>'password'])."</h4>"; ?>
   </div>
 
 <?php }?>
 
 
-<?= debug($user); ?>
+
 <br>
 <br>
 <div class="row">

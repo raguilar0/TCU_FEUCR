@@ -3,9 +3,11 @@
 
 namespace App\Controller;
 
+
 use Cake\ORM\TableRegistry;
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\Auth\DefaultPasswordHasher;
 
 class UsersController extends AppController
 {
@@ -275,7 +277,7 @@ class UsersController extends AppController
                             ->set(['username'=>$this->request->data['username'], 'name'=>$this->request->data['name'],
                                   'last_name_1'=>$this->request->data['last_name_1'], 'last_name_2'=>$this->request->data['last_name_2'],
                                   'role'=>$this->request->data['role'], 'state'=>$blocked])
-                            ->where(['id'=>$id])
+                            ->where(['id'=>$id]);
                             ->execute();
                       $this->Flash->success(__('Usuario modificado correctamente.', ['key'=>'success']));
                     }
@@ -395,17 +397,25 @@ class UsersController extends AppController
       public function resetPassword($id = null){
 
         if($this->Auth->user()){
-          $this->viewBuilder()->layout('admin_views');
+          //$this->viewBuilder()->layout('admin_views');
           if($id){
             $user = $this->Users->get($id);
+            $pass = $this->Users->newEntity($this->request->data);
+            debug($pass);
             if($this->request->is(array('post','put'))) {
-              if(($this->request->session()->read('Auth.User.role')) == 'admin'){
+              $pass = $this->Users->newEntity($this->request->data);
+              if(($this->request->session()->read('Auth.User.role')) == 'admin'){   //Administrador
+                $pw = $pass['password'];
+                $repass = $pass['repass'];
+                debug($this->request->data);
+                debug($pass);
+                debug($user->password);
 
-                $repass = $this->request->data['repass'];
-                $pw = $this->request->data['new_password'];
-
-                if($pw == $repass){
-                  $user->password= $pw;
+                //if($pw == $repass){
+                //$check = $this->Auth->DefaultPasswordHasher->check($repass, $pw);
+                debug($check);
+                if($check){//$this->Auth->DefaultPasswordHasher->check($repass, $pw)){  //por mientras logro comparar passwords adecuadamente...
+                  $user->password = $pw;
                   if($this->Users->save($user)){
                     $this->Flash->success(__('La contraseña se ha establecido correctamente.', ['key'=>'success']));
                   }
@@ -416,14 +426,15 @@ class UsersController extends AppController
                 else{
                   $this->Flash->error(__('Las contraseñas no coinciden.', ['key'=>'error']));
                 }
+                debug($pass);
               }
 
-              if(($this->request->session()->read('Auth.User.role')) == 'rep'){
+              if(($this->request->session()->read('Auth.User.role')) == 'rep'){   //Representante
 
                 $old_password = $this->request->data['old_password'];
-                $pw = $this->request->data['new_password'];
+                $pw = $this->request->data['password'];
                 $repass = $this->request->data['repass'];
-
+                /*
                 debug($this->User->_setPassword($old_password));
                 debug($user->password);
                 if($this->User->_setPassword($old_password) == $user->password && $pw == $repass){      //no sabe quen es _setPassword!!!
@@ -438,17 +449,18 @@ class UsersController extends AppController
                 else{
                   $this->Flash->error(__('Las contraseñas no coinciden.', ['key'=>'error']));
                 }
+                */
               }
 
             }
 
           }
           else{ //si no tiene id usa el propio
-            $usr_id = $this->request->session()->read('Auth.User.id');
-            $user = $this->Users->get($usr_id);
-            debug($user);
+            //$usr_id = $this->request->session()->read('Auth.User.id');
+            //$user = $this->Users->get($usr_id);
+
           }
-          $this->set('user', $user);
+          $this->set('pass', $pass);
         }
         else{
           return $this->redirect(['controller'=>'pages', 'action'=>'home']);

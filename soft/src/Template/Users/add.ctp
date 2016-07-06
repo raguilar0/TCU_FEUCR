@@ -13,7 +13,7 @@
 <?= $this->Form->create($user); ?>
 
 <div class="form-group">
-    <?= "<h4>".$this->Form->input('username', ['class' => 'form-control','label'=>'Nombre de usuario','maxlength'=> '16'])."</h4>"; ?>
+    <?= "<h4>".$this->Form->input('username', ['class' => 'form-control','label'=>'Nombre de usuario','maxlength'=> '20', 'type'=>'mail', 'placeholder'=>'@ucr.ac.cr'])."</h4>"; ?>
     <?= "<h4>".$this->Form->input('password', ['class' => 'form-control','label'=>'Contraseña', 'type'=>'password'])."</h4>"; ?>
     <?= "<h4>".$this->Form->input('repass', ['class' => 'form-control','label'=>'Contraseña', 'type'=>'password'])."</h4>"; ?>
     <?= "<h4>".$this->Form->input('name', ['class' => 'form-control','label'=>'Nombre'])."</h4>"; ?>

@@ -21,6 +21,12 @@ class User extends Entity
     {
         return (new DefaultPasswordHasher)->hash($password);
     }
+/*
+    protected function _setRepass($repass)
+    {
+        return (new DefaultPasswordHasher)->hash($repass);
+    }
+    */
 }
 
 ?>

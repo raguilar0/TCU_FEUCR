@@ -55,7 +55,15 @@ class UsersTable extends Table
                           'rule' => array('custom', '/^[A-Za-z]+$/'),
                           'message' => 'Debe contener únicamente letras.'
               ])
-              ->requirePresence('role') ;
+              ->notEmpty('role')
+              ->notEmpty('username')
+              ->add('username', 'validFormat', [
+                          'rule' => array('custom', '/^[a-z0-9\_\-]+@ucr.ac.cr$/'),
+                          'message' => 'Debe ser un correo institucional válido.',
+                          'rule' => array('maxLength', 20),
+                          'message' => 'Máximo 20 caracteres',
+              ])
+              ;
 
 
 
