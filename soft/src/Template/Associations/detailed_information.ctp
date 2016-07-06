@@ -1,3 +1,7 @@
+
+
+
+
 <ul class="nav nav-tabs">
   <li class="active"><a data-toggle="tab" href="#tract" onclick="getAmounts(0,0,0, document.getElementById('tracts_id'));">Montos de Tracto</a></li>
   <li><a data-toggle="tab" href="#generated" onclick="getAmounts(1,1,1,document.getElementById('generated_id'));">Ingresos Generados</a></li>
@@ -667,6 +671,7 @@ function reloadPage(element)
      <?php echo $this->Html->link('Atrás', '/associations/show_associations/5', ['class'=>'btn btn-primary']);?>
   </div>
 </div>
+
 
 
 

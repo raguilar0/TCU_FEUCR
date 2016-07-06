@@ -1,6 +1,4 @@
-INSERT INTO `headquarters` (`id`, `name`, `image_name`) VALUES
-(1, 'Rodrigo Facio', 'facio.jpg'),
-(2, 'Sede del atlántico', 'atlantico.jpg');
+INSERT INTO `headquarters` VALUES (1,'Rodrigo Facio','facio_1467607692.jpg'),(2,'Sede del atlántico','atlantico_1467607764.jpg'),(4,'Recinto de Golfito','recinto_golfito_1467609386.jpg'),(5,'Sede de Occidente','sede_occidente_1467609473.png'),(6,'Sede de Guanacaste','sede_guanacaste_1467609497.jpg'),(7,'Sede del pacífico','sede_pacífico_1467609532.jpg'),(8,'Sede Interuniversitaria de Alajuela','sede_interuniversitaria_1467609566.jpg');
 
 INSERT INTO `associations` (`id`, `acronym`, `name`, `location`, `schedule`, `authorized_card`, `enable`, `headquarter_id`) VALUES
 (1, 'AECCI', 'Asociación de Estudiantes de Ciencias de la Computación', 'San Pedro', '8-10 pm', 0, 1, 1),
