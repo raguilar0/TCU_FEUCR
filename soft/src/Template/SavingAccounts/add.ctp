@@ -1,6 +1,7 @@
 <div class="row text-center">
     <div class="col-xs-12">
         <h1>¡Agregá una nueva cuenta de ahorro!</h1>
+          <h2>Ingresos Generados</h2>
     </div>
 
 </div>
@@ -24,4 +25,3 @@
 <br>
 <?= $this->Form->button(__('Guardar'), ['class'=>'form-control', 'id'=>'asso_id']) ?>
     <?= $this->Form->end() ?>
-

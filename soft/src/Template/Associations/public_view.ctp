@@ -16,7 +16,7 @@
                 $data = $data->toArray();
                 if(count($data))
                 {
-                    echo "<h1>¡Elejí una asociación!</h1>";
+                    echo "<h1>¡Elegí una asociación!</h1>";
                 }
                 else
                 {
@@ -90,4 +90,3 @@
     <?php endfor; ?>
 
 </div>
-
