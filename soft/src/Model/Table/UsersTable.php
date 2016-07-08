@@ -54,8 +54,14 @@ class UsersTable extends Table
               ->notEmpty('username')
               ->add('username', 'validFormat', [
                           'rule' => array('custom', '/^[a-z0-9\_\-]+@ucr.ac.cr$/'),
-                          'message' => 'Debe ser un correo institucional válido.',
-              ]);
+                          'message' => 'Debe ser un correo institucional válido.'
+
+              ])
+                ->add('username', 'validFormat', [
+                'rule' => array('maxLength', 20),
+                'message' => 'Máximo 20 caracteres'
+              ])
+              ;
 
 
 
