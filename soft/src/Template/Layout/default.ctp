@@ -57,7 +57,13 @@
                             ?>
                         </li>
 
-                        <li><?php echo $this->Html->link('Login',['controller'=>'users', 'action'=>'login'],['id'=>'login_id'])?></li>
+                        <li><?php
+                                  if(is_null($this->request->session()->read('Auth.User'))){
+                                      echo $this->Html->link('Login',['controller'=>'users', 'action'=>'login'],['id'=>'login_id']);
+                                  }
+                            ?>
+                        </li>
+
 
                         <li><?php
                                 if(!is_null($this->request->session()->read('Auth.User')))
