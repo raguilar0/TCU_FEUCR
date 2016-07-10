@@ -14,7 +14,7 @@
     <div class="form-group">
         <?php
             echo $this->Form->input('name', ['label'=>'Nombre', 'class'=>'form-control']);
-            echo $this->Form->input('file', ['type'=>'file', 'label'=>'Imagen de la sede','required']);
+            echo $this->Form->input('file', ['type'=>'file', 'label'=>'Imagen de la sede (.png, .jpg, .jpeg)','required']);
         ?>
     </div>
 <br>

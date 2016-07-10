@@ -9,8 +9,14 @@
 <br>
     <?= $this->Form->create($saving) ?>
 
+        <label>Monto a asignar</label>
+        <div class="input-group">
+            <span class="input-group-addon" >₡</span>
+            <?= $this->Form->input('amount', ['label'=>false, 'class'=>'form-control', 'placeholder'=>'Ejemplo: 50000']); ?>
+            <span class="input-group-addon">.00</span>
+        </div>
+
         <?php
-            echo $this->Form->input('amount', ['label'=>'Monto a asignado', 'class'=>'form-control']);
 
             echo $this->Form->input('tract_id', ['options' => $tracts, 'class'=> 'form-control','label'=>'Tracto']);
             

@@ -109,7 +109,7 @@ CREATE TABLE invoices
   CHECK(kind > -1 and kind < 3),
   CHECK(state > -1 and state < 3),
 
-  UNIQUE(image_name)
+  UNIQUE(image_name(256))
 );
 
 CREATE TABLE boxes

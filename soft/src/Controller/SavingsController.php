@@ -196,19 +196,14 @@ class SavingsController extends AppController
           }
 
             $saving = $this->Savings->patchEntity($saving, $this->request->data);
-            if ($saving->state == 2)
-            {
-                $this->deleteSaving($id);
 
+            if ($this->Savings->save($saving)) {
+                $this->Flash->success(__('El ahorro ha sido guardado.'));
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error(__('El ahorro no ha podido ser guardado. Intentelo de nuevo'));
             }
-            else{
-                if ($this->Savings->save($saving)) {
-                    $this->Flash->success(__('El ahorro ha sido guardado.'));
-                    return $this->redirect(['action' => 'index']);
-                } else {
-                    $this->Flash->error(__('El ahorro no ha podido ser guardado. Intentelo de nuevo'));
-                }
-            }
+
         }
         $associations = $this->Savings->Associations->find('list');
         $tracts = $this->Savings->Tracts->find()
@@ -263,25 +258,7 @@ class SavingsController extends AppController
         return $this->redirect(['controller'=>'pages', 'action'=>'home']);
       }
     }
-
-    private function deleteSaving($id = null)
-    {
-
-        $saving = $this->Savings->get($id);
-
-        $deleted = $this->deleteLetter($saving->letter);
-
-        if ($deleted && $this->Savings->delete($saving)) {
-            $this->Flash->success(__('El monto de ahorro se ha borrado correctamente.'));
-
-
-        } else {
-            $this->Flash->error(__('El ahorro no ha podido ser borrado. Intentelo de nuevo.'));
-        }
-        return $this->redirect(['action' => 'index']);
-      
-
-    }
+    
 
     private function deleteLetter($fileName)
     {

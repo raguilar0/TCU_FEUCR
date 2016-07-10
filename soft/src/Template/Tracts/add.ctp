@@ -12,7 +12,7 @@
     <?= $this->Form->create($tract) ?>
 
 <div class="form-group">
-    <?= $this->Form->input('number', ['class'=>'form-control', 'label'=>'Número de tracto']); ?>
+    <?= $this->Form->input('number', ['class'=>'form-control', 'label'=>'Número de tracto', 'placeholder'=>'Números válidos: 2,3,4,1']); ?>
     <br>
     <br>
     <div class="row">
