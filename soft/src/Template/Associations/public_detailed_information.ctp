@@ -1,8 +1,14 @@
 <div class="container">;
 
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-tabs" id="public_amounts_nav">
         <li class="active"><a data-toggle="tab" href="#tract" onclick="getAmounts(0,0,0, document.getElementById('tracts_id'));">Montos de Tracto</a></li>
         <li><a data-toggle="tab" href="#generated" onclick="getAmounts(1,1,1,document.getElementById('generated_id'));">Ingresos Generados</a></li>
         <li><a data-toggle="tab" href="#surplus" onclick="getAmounts(2,2,2,document.getElementById('surplus_year_id'));">Superávit</a></li>
@@ -27,21 +33,23 @@
             <div class="row text-center">
 
                 <div class="col-xs-12 col-md-6">
-                    <?php
-                    echo "<label><h5><strong>Elegí el año</strong></h5></label>";
-                    echo "<select class='form-control' id= 'tract_year_id' name = 'year' onchange='reloadPage(this)'>";
+
+                        <?php
+                        echo "<label><h5><strong>Elegí el año</strong></h5></label>";
+                        echo "<select class='form-control classic' id= 'tract_year_id' name = 'year' onchange='reloadPage(this)'>";
 
 
-                    foreach ($years as $key => $value) {
-                        echo "<option>".$value['year']."</option>"."<br>";
-                    }
+                        foreach ($years as $key => $value) {
+                            echo "<option>".$value['year']."</option>"."<br>";
+                        }
 
-                    echo "</select>";
-                    ?>
+                        echo "</select>";
+                        ?>
+
                 </div>
 
                 <div class="col-xs-12 col-md-6" style='margin-top: 15px;'>
-                    <?= $this->Form->input('tract_id', ['options' => $dates, 'class'=> 'form-control','label'=>'Elegí la fecha', 'id'=>'tracts_id', 'onchange'=>'getAmounts(0,0,0,this);']);?>
+                    <?= $this->Form->input('tract_id', ['options' => $dates, 'class'=> 'form-control classic','label'=>'Elegí la fecha', 'id'=>'tracts_id', 'onchange'=>'getAmounts(0,0,0,this);']);?>
 
                 </div>
 
@@ -228,7 +236,7 @@
                 <div class="col-xs-12 col-md-6 col-md-offset-3">
                     <?php
                     echo "<label><h4><strong>Elegí el año</strong></h4></label>";
-                    echo "<select class='form-control' id= 'surplus_year_id' name = 'year' onchange='getAmounts(2,2,2,this);'>";
+                    echo "<select class='form-control classic' id= 'surplus_year_id' name = 'year' onchange='getAmounts(2,2,2,this);'>";
 
 
                     foreach ($years as $key => $value) {
@@ -363,7 +371,7 @@
                 <div class="col-xs-12 col-md-6">
                     <?php
                     echo "<label><h5><strong>Elegí el año</strong></h5></label>";
-                    echo "<select class='form-control' id= 'tracts_generated_id' name = 'year' onchange='reloadPage(this)'>";
+                    echo "<select class='form-control classic' id= 'tracts_generated_id' name = 'year' onchange='reloadPage(this)'>";
 
 
                     foreach ($years as $key => $value) {
@@ -375,7 +383,7 @@
                 </div>
 
                 <div class="col-xs-12 col-md-6" style='margin-top: 15px;'>
-                    <?= $this->Form->input('tract_id', ['options' => $dates, 'class'=> 'form-control','label'=>'Elegí la fecha', 'id'=>'generated_id', 'onchange'=>'getAmounts(1,1,1,this);']);?>
+                    <?= $this->Form->input('tract_id', ['options' => $dates, 'class'=> 'form-control classic','label'=>'Elegí la fecha', 'id'=>'generated_id', 'onchange'=>'getAmounts(1,1,1,this);']);?>
 
                 </div>
 

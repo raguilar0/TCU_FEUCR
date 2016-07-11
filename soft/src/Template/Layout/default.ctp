@@ -34,17 +34,20 @@
     <header id="header" role="banner">
         <div class="container">
             <div id="navbar" class="navbar navbar-default">
+
                 <div class="navbar-header">
+                    <?= $this->Html->image('ico/logo.png', ['alt'=>'Logo','class'=>'img-responsive','url'=>['controller'=>'Pages', 'action'=>'home'],'id'=>'logo'])?>
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="index.html"></a>
                 </div>
                 <div class="collapse navbar-collapse">
+
                     <ul class="nav navbar-nav">
+
                         <li class="active"><?php echo $this->Html->link('', ['controller'=>'Pages', 'action'=>'home'],['class'=>'glyphicon glyphicon-home'])?></li>
                         <li><?= $this->Html->link('Asociaciones',['controller'=>'pages', 'action'=>'home', '#'=>'asociaciones']); ?></li>
 
@@ -57,7 +60,13 @@
                             ?>
                         </li>
 
-                        <li><?php echo $this->Html->link('Login',['controller'=>'users', 'action'=>'login'],['id'=>'login_id'])?></li>
+                        <li><?php
+                            if(is_null($this->request->session()->read('Auth.User')) )
+                            {
+                                echo $this->Html->link('Login', ['controller' => 'users', 'action' => 'login'], ['id' => 'login_id']);
+                            }
+                            ?>
+                        </li>
 
                         <li><?php
                                 if(!is_null($this->request->session()->read('Auth.User')))

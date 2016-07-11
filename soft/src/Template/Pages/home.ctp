@@ -35,7 +35,7 @@
 
                 <div class="row text-center texto">
                     <div class="col-md-12 col-sm-12">
-                        <h1>¡Ubicá la <b style="color:#FDB727">Asociación</b> que buscás de acuerdo a la <b style="color:#FDB727"s>Sede</b>!</h1>
+                        <h1>¡Ubicá la <b class="yellow_id">Asociación</b> que buscás de acuerdo a la <b class="yellow_id">Sede</b>!</h1>
                     </div>
 
                 </div>

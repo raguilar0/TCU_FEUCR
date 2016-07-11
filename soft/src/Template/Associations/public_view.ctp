@@ -77,7 +77,12 @@
             <?= "<div class='col-md-3 col-sm-6'>"; ?>
             <?= "<div class='center'>"; ?>
 
-            <?php echo $this->Html->link($data[$index]['acronym'],['controller' => 'Associations', 'action' => 'public-detailed-information', $data[$index]['id']], ['class'=> 'btn btn-primary']); ++$index?>
+            <?php
+            echo $this->Html->image('ico/association.png',['alt'=>'logo', 'id'=>'association_icon', 'url'=>['controller' => 'Associations', 'action' => 'public-detailed-information', $data[$index]['id']]]);
+            echo "<br />";
+            echo "<strong>".$this->Html->link($data[$index]['acronym'],['controller' => 'Associations', 'action' => 'public-detailed-information', $data[$index]['id']])."</strong>";
+            ++$index
+            ?>
 
 
             <?= "</div>";?>
