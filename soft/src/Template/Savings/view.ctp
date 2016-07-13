@@ -24,7 +24,20 @@
         </tr>
         <tr>
             <th><?= __('Estado (aprobado/rechazado)') ?></th>
-            <td><?= ($this->Number->format($saving->state) ? "Aceptado":"Pendiente" );?>
+            <td><?php
+                switch ($this->Number->format($saving->state)) {
+                    case 0:
+                        echo "Pendiente";
+                        break;
+                    case 1:
+                        echo "Aceptado";
+                        break;
+                    case 2:
+                        echo "Rechazado";
+                        break;
+                }
+
+                ?>
             </td>
         </tr>
         <tr>

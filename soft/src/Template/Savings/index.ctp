@@ -12,6 +12,7 @@
         <thead>
         <tr>
             <th><?= $this->Paginator->sort('amount',['Monto']) ?></th>
+            <th><?= $this->Paginator->sort('date',['Fecha']) ?></th>
             <th><?= $this->Paginator->sort('state',['Estado']) ?></th>
             <th><?= $this->Paginator->sort('letter',['Carta']) ?></th>
             <th><?= $this->Paginator->sort('association_id',['Asociación']) ?></th>
@@ -23,6 +24,7 @@
         <?php foreach ($savings as $saving): ?>
             <tr>
                 <td><?= $this->Number->format($saving->amount) ?></td>
+                <td><?= $saving->date?></td>
                 <td><?php  
                     switch ($this->Number->format($saving->state)) {
                         case 0:
@@ -31,7 +33,9 @@
                         case 1:
                             echo "Aceptado";
                             break;
-  
+                        case 2:
+                            echo "Rechazado";
+                            break;
                     }
                     
                     
