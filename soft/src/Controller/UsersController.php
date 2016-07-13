@@ -320,7 +320,7 @@ class UsersController extends AppController
                       return $this->redirect($this->Auth->redirectUrl());
                     }
                     else{
-                      $this->Flash->error('Usuario Bloqueado', ['key' => 'error']);
+                      $this->Flash->error('Usuario o contraseña inválidos. Intente nuevamente.', ['key' => 'error']);
                     }
                 }
                 else{

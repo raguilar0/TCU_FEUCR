@@ -35,7 +35,7 @@
 
 
     echo "<div class = 'row'>";
-    
+
       echo "<div class = 'col-xs-12 col-md-4'>";
        echo "<h4>".$this->Form->input('legal_certificate', ['class' => 'form-control','label'=>'Cédula Juridica', 'value'=>$data['legal_certificate'],'maxlength'=> '12', 'placeholder'=>'Ejemplo: 1-234-567890'])."</h4>";
       echo "</div >";
@@ -51,21 +51,21 @@
 
 
   echo "</div >";
-  
+
 
 
    echo "<div class = 'row'>";
 
       echo "<div class = 'col-xs-12'>";
-       echo "<h4>".$this->Form->input('detail', ['class' => 'form-control','label'=>'Detalles','value'=>$data['detail'], 'maxlength'=> '1024', 'type'=>'textarea'])."</h4>";
+       echo "<h4>".$this->Form->input('detail', ['class' => 'form-control','label'=>'Descripción','value'=>$data['detail'], 'maxlength'=> '1024', 'type'=>'textarea'])."</h4>";
       echo "</div >";
 
       echo "<div class = 'col-xs-12'>";
-       echo "<h4>".$this->Form->input('clarifications', ['class' => 'form-control','label'=>'Aclaraciones','value'=>$data['clarifications'], 'maxlength'=> '1024', 'type'=>'textarea'])."</h4>";
+       echo "<h4>".$this->Form->input('clarifications', ['class' => 'form-control','label'=>'Observaciones','value'=>$data['clarifications'], 'maxlength'=> '1024', 'type'=>'textarea'])."</h4>";
       echo "</div >";
 
   echo "</div >";
-    
+
     echo "<div class = 'row'>";
 
         echo "<div class = 'col-xs-12'>";
@@ -74,15 +74,15 @@
         echo "</div >";
 
     echo "</div >";
-    
+
     echo "<div class = 'row'>";
-        
+
         echo "<a href='../image_view/".$data['id']."' target= '_blank'>Imagen de Factura</a>";
        // echo $this->Html->image('invoices/'.$data['image_name'], ['alt' => 'Imagen de Factura']);
-    echo "</div>"; 
+    echo "</div>";
 
     echo  "<div class='row text-center'>";
-        echo "<div class = 'col-xs-12'>";   
+        echo "<div class = 'col-xs-12'>";
         echo "<h4>".$this->Form->submit('Modificar factura', ['class'=>'btn btn-primary', 'id' => 'invoice_id'])."</h4>";
         echo "</div>";
 

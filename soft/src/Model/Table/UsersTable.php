@@ -40,6 +40,7 @@ class UsersTable extends Table
                           'rule' => array('custom', '/^[A-Za-z]+$/'),
                           'message' => 'Debe contener únicamente letras.'
               ])
+              
               ->notEmpty('last_name_1')
               ->add('last_name_1', 'validFormat', [
                           'rule' => array('custom', '/^[A-Za-z]+$/'),
@@ -53,13 +54,9 @@ class UsersTable extends Table
               ->notEmpty('role')
               ->notEmpty('username')
               ->add('username', 'validFormat', [
-                          'rule' => array('custom', '/^[a-z0-9\_\-]+@ucr.ac.cr$/'),
+                          'rule' => array('custom', '/^[a-z0-9\_\-\.]+@ucr.ac.cr$/'),
                           'message' => 'Debe ser un correo institucional válido.'
 
-              ])
-                ->add('username', 'validFormat', [
-                'rule' => array('maxLength', 20),
-                'message' => 'Máximo 20 caracteres'
               ])
               ;
 
