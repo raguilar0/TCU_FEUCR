@@ -33,7 +33,7 @@ class InvoicesTable extends Table
                       'message' => 'Formato inválido. Solo números.'
           ])
           ->add('clarifications', 'validFormat', [
-                      'rule' => array('custom', '/^[A-Za-z0-9\.\,\-\:]+$/'),
+                      'rule' => array('custom', '/^[A-Za-z0-9" "\,\.\-\:]+$/'),
                       'message' => 'Formato inválido'
           ])
           ->notEmpty('detail')
@@ -48,12 +48,12 @@ class InvoicesTable extends Table
           ])
           ->notEmpty('attendant')
           ->add('attendant', 'validFormat', [
-                      'rule' => array('custom', '/^[A-Za-z]+$/'),
+                      'rule' => array('custom', '/^[A-Za-z0-9" "]+$/'),
                       'message' => 'Formato inválido'
           ])
           ->notEmpty('provider')
           ->add('provider', 'validFormat', [
-                      'rule' => array('custom', '/^[A-Za-z]+$/'),
+                      'rule' => array('custom', '/^[A-Za-z0-9" "\,\.\-\:]+$/'),
                       'message' => 'Formato inválido'
           ])
           ->notEmpty('legal_certificate')
@@ -78,11 +78,11 @@ class InvoicesTable extends Table
 
 
     }
-    
-    
+
+
     public function isOwnedBy($accountId, $association_id)
     {
-        
+
         return $this->exists(['id' => $accountId, 'association_id' => $association_id]);
     }
 
