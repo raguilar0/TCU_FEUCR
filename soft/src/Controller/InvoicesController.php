@@ -94,66 +94,76 @@ class InvoicesController extends AppController
 	}
 
 	public function modify(){
-		if($this->Auth->user()){
-
-			$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
-			$id =$this->request->session()->read('Auth.User.association_id');
-			if($id){
-
-	          $invoice = $this->Invoices->find()
-	                              ->where(['association_id'=>$id]);
-	          $invoice= $invoice->toArray();
-	          $this->set('invoice',$invoice);
-        	}
+		if(($this->request->session()->read('Auth.User.role')) != 'rep'){
+  			return $this->redirect($this->Auth->redirectUrl());
+  		}
+	    else{
+			if($this->Auth->user()){
+	
+				$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
+				$id =$this->request->session()->read('Auth.User.association_id');
+				if($id){
+	
+		          $invoice = $this->Invoices->find()
+		                              ->where(['association_id'=>$id]);
+		          $invoice= $invoice->toArray();
+		          $this->set('invoice',$invoice);
+	        	}
 			}
 			else{
 				return $this->redirect(['controller'=>'pages', 'action'=>'home']);
 			}
+	    }
 	}
 
 	public function modifyInvoice($id = null){
-		if($this->Auth->user()){
-			$this->viewBuilder()->layout('admin_views');
-
-			if($id){
-					$invoice = $this->Invoices->get($id);
-					$invoices_type = array(0 => 'Tracto', 1=>'Ingresos Generados', 2=>'Superávit');
-
-			$options['invoices_type'] = $invoices_type;
-
-					if($this->request->is(array('post','put'))) {
-
-						$invoice = $this->Invoices->newEntity($this->request->data);
-
-						if(!$invoice->errors()) {
-
-							$query = $this->Invoices->query();
-							$query->update()
-										->set(['number'=>$this->request->data['number'], 'amount'=>$this->request->data['amount'],
-													'kind'=>$this->request->data['kind'], 'legal_certificate'=>$this->request->data['legal_certificate'],
-													'provider'=>$this->request->data['provider'],'attendant'=>$this->request->data['attendant'] ,'detail'=>$this->request->data['detail'],'clarifications'=>$this->request->data['clarifications'],'state'=>0, ])
-										->where(['id'=>$id])
-										->execute();
-
-							$this->Flash->success(__('Factura modificada correctamente.'));
-
+		if(($this->request->session()->read('Auth.User.role')) != 'rep'){
+  			return $this->redirect($this->Auth->redirectUrl());
+  		}
+	    else{
+			if($this->Auth->user()){
+				$this->viewBuilder()->layout('admin_views');
+	
+				if($id){
+						$invoice = $this->Invoices->get($id);
+						$invoices_type = array(0 => 'Tracto', 1=>'Ingresos Generados', 2=>'Superávit');
+	
+				$options['invoices_type'] = $invoices_type;
+	
+						if($this->request->is(array('post','put'))) {
+	
+							$invoice = $this->Invoices->newEntity($this->request->data);
+	
+							if(!$invoice->errors()) {
+	
+								$query = $this->Invoices->query();
+								$query->update()
+											->set(['number'=>$this->request->data['number'], 'amount'=>$this->request->data['amount'],
+														'kind'=>$this->request->data['kind'], 'legal_certificate'=>$this->request->data['legal_certificate'],
+														'provider'=>$this->request->data['provider'],'attendant'=>$this->request->data['attendant'] ,'detail'=>$this->request->data['detail'],'clarifications'=>$this->request->data['clarifications'],'state'=>0, ])
+											->where(['id'=>$id])
+											->execute();
+	
+								$this->Flash->success(__('Factura modificada correctamente.', ['key'=>'success']));
+	
+							}
+							else{
+									$this->Flash->error(__('Error al modificar factura.', ['key'=>'error']));
+							}
 						}
-						else{
-								$this->Flash->error(__('Error al modificar factura.'));
-						}
+	
 					}
-
-				}
-				else {
-					$this->redirect(['action'=>'/']);
-				}
-
-		$this->set('data', $invoice);
-		$this->set('options', $options);
-    }
-    else{
-      return $this->redirect(['controller'=>'pages', 'action'=>'home']);
-    }
+					else {
+						$this->redirect(['action'=>'/']);
+					}
+	
+				$this->set('data', $invoice);
+				$this->set('options', $options);
+		    }
+		    else{
+		      return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+		    }
+	    }
 	}
 
 
@@ -190,19 +200,24 @@ class InvoicesController extends AppController
 	}
 
 	public function adminModify(){
-		if($this->Auth->user()){
-			$this->viewBuilder()->layout('admin_views');
-        	$this->paginate = [
-	            'contain' => ['Associations']
-	        ];
-	        $invoices = $this->paginate($this->Invoices);
-
-	        $this->set(compact('invoices'));
-	        $this->set('_serialize', ['invoices']);
-    }
-    else{
-      return $this->redirect(['controller'=>'pages', 'action'=>'home']);
-    }
+		if(($this->request->session()->read('Auth.User.role')) != 'admin'){
+  			return $this->redirect($this->Auth->redirectUrl());
+  		}
+	    else{
+			if($this->Auth->user()){
+				$this->viewBuilder()->layout('admin_views');
+	        	$this->paginate = [
+		            'contain' => ['Associations']
+		        ];
+		        $invoices = $this->paginate($this->Invoices);
+	
+		        $this->set(compact('invoices'));
+		        $this->set('_serialize', ['invoices']);
+		    }
+		    else{
+		      return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+		    }
+	    }
 	}
 
 	public function adminModifyInvoice($id = null){
@@ -215,8 +230,10 @@ class InvoicesController extends AppController
 	    	if($id){
 	          $invoice = $this->Invoices->get($id);
 	          $invoices_type = array(0 =>'Tracto',1=>'Ingresos Generados', 2=> 'Superávit');
+	          $invoices_state = array(0=>'Pendiente',1=>'Aceptada',2=>'Rechazada');
 
 				$options['invoices_type'] = $invoices_type;
+				$states['invoices_state'] = $invoices_state;
 
 	          if($this->request->is(array('post','put'))) {
 	            $invoice = $this->Invoices->newEntity($this->request->data);
@@ -228,7 +245,7 @@ class InvoicesController extends AppController
 	                    ->set(['number'=>$this->request->data['number'], 'amount'=>$this->request->data['amount'],
 	                          'kind'=>$this->request->data['kind'], 'legal_certificate'=>$this->request->data['legal_certificate'],
 	                          'provider'=>$this->request->data['provider'],'attendant'=>$this->request->data['attendant'] ,
-	                          'detail'=>$this->request->data['detail'],'clarifications'=>$this->request->data['clarifications'],'state'=>(isset($this->request->data['state'])? 1: 0)])
+	                          'detail'=>$this->request->data['detail'],'clarifications'=>$this->request->data['clarifications'],'state'=>$this->request->data['state']])
 	                    ->where(['id'=>$id])
 	                    ->execute();
 
@@ -249,6 +266,8 @@ class InvoicesController extends AppController
 	    }
 	    $this->set('data', $invoice);
 	    $this->set('options', $options);
+	    $this->set('states', $states);
+	    
 	}
 
 	 public function imageView($id = null){

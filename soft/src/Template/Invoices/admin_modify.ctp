@@ -30,11 +30,19 @@
                 <td><?= h($key->attendant) ?></td>
                 <td><?= "¢ ".h(number_format($key->amount, 2, ".",",")) ?></td>
                 <?php
-                  if($key->state == 0){
-                    echo "<td> Sin aprobar </td>";
-                  }else{
-                    echo "<td> Aprobada </td>";
-                  }
+                    switch ($key->state) {
+                    case 0:
+                        echo "<td> Pendiente </td>";
+                        break;
+                    case 1:
+                         echo "<td> Aproobada </td>";
+                         break;
+                    default:
+                        echo "<td> Rechazada </td>";    
+                        break;
+                        
+                    }
+                  
                 ?>
                 <td class="actions">
                     <?= $this->Html->link('', ['action' => 'admin_modify_invoice', $key->id], ['class'=>'glyphicon glyphicon-pencil btn btn-primary' ]) ?>

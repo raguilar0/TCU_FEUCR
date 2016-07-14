@@ -74,8 +74,11 @@
     echo "<div class = 'row'>";
 
         echo "<div class = 'col-xs-12'>";
-            echo $this->Form->checkbox('state', ['hiddenField' => false, 'class'=>'checkbox-inline', 'id'=>'id_state'])."</h4>";
-            echo "<label for='id_state'>Aprobada</label>" ;
+        
+           echo "<div class = 'col-xs-12 col-md-4'>";
+            echo "<h4>".$this->Form->input('state', ['options' => $states['invoices_state'],'class' => 'form-control','label'=>'Estado'])."</h4>";
+        echo "</div >";
+        
         echo "</div >";
 
     echo "</div >";
