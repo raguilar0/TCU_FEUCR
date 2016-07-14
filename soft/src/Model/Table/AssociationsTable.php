@@ -121,13 +121,17 @@ class AssociationsTable extends Table
             ->requirePresence('authorized_card', 'create')
             ->notEmpty('authorized_card')
             ->add('authorized_card', 'validFormat', [
-                        'rule' => array('custom', '/^[A-Za-z]+$/'),
+                        'rule' => array('custom', '/^[0-1]$/'),
                         'message' => 'Formato inválido'
             ])
 
             ->integer('enable')
             ->requirePresence('enable', 'create')
-            ->notEmpty('enable');
+            ->notEmpty('enable')
+            ->add('authorized_card', 'validFormat', [
+                        'rule' => array('custom', '/^[0-1]$/'),
+                        'message' => 'Formato inválido'
+            ]);
 
         return $validator;
     }

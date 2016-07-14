@@ -172,7 +172,7 @@ function setGeneratedValues(object)
 
 
 
-    amount_classes[1].innerHTML =  object.amounts.total_income;
+    amount_classes[1].innerHTML =  object.amounts.period_income;
 
     document.getElementById("generated_date").innerHTML = date;
     document.getElementById("generated_total_income").innerHTML = object.amounts.total_income;
