@@ -42,19 +42,19 @@ class InvoicesController extends AppController
 
 						if($this->Invoices->save($invoice))
 						{
-							$this->Flash->Success('Factura Agregada', ['key' => 'success']);
+							$this->Flash->Success('Factura Agregada');
 						}
 						else{
-							$this->Flash->error('Error al agregar factura.', ['key' => 'error']);
+							$this->Flash->error('Error al agregar factura.');
 						}
 
 					}
 					else{
-							$this->Flash->error('Error al subir archivo.', ['key' => 'error']);
+							$this->Flash->error('Error al subir archivo.');
 					}
 				}
 				else{
-					$this->Flash->error('Adjunte archivo.', ['key' => 'error']);
+					$this->Flash->error('Adjunte archivo.');
 				}
 
 			}
@@ -135,11 +135,11 @@ class InvoicesController extends AppController
 										->where(['id'=>$id])
 										->execute();
 
-							$this->Flash->success(__('Factura modificada correctamente.', ['key'=>'success']));
+							$this->Flash->success(__('Factura modificada correctamente.'));
 
 						}
 						else{
-								$this->Flash->error(__('Error al modificar factura.', ['key'=>'error']));
+								$this->Flash->error(__('Error al modificar factura.'));
 						}
 					}
 
@@ -156,22 +156,22 @@ class InvoicesController extends AppController
     }
 	}
 
-	 
+
 	public function delete($id = null)
 	{
 		if(($this->request->session()->read('Auth.User.role')) == 'rep' || ($this->request->session()->read('Auth.User.role')) == 'admin'){
 			$invoice = $this->Invoices->get($id);
 			$deleted = false;
 	        $filePath = WWW_ROOT .'/img/invoices';
-	
+
 	        $dir = new Folder($filePath);
-	
+
 	        $file = new File($dir->pwd() . DS . $invoice['image_name']);
-	
+
 	        if($file->delete())
 	        {
 	            $deleted = true;
-	        }	
+	        }
 	        if(!$this->Invoices->delete($invoice)){
 				$response = "0";
 			}else{
@@ -180,10 +180,10 @@ class InvoicesController extends AppController
 				}else{
 					return $this->redirect($this->Auth->redirectUrl("/invoices/admin-invoices/"));
 				}
-	
+
 			}
 		}
-		
+
     	else{
     		 return $this->redirect(['controller'=>'pages', 'action'=>'home']);
     	}
@@ -238,7 +238,7 @@ class InvoicesController extends AppController
 
 	            }
 	            else{
-	                $this->Flash->error(__('Error al modificar factura.', ['key'=>'error']));
+	                $this->Flash->error(__('Error al modificar factura.'));
 	            }
 	          }
 
@@ -250,7 +250,7 @@ class InvoicesController extends AppController
 	    $this->set('data', $invoice);
 	    $this->set('options', $options);
 	}
-	
+
 	 public function imageView($id = null){
 	 	$this->viewBuilder()->layout('admin_views');
 		if(($this->request->session()->read('Auth.User.role')) == 'admin'){
@@ -259,7 +259,7 @@ class InvoicesController extends AppController
 	          $invoice = $this->Invoices->get($id);
 	    	}
 	    	$this->set('data', $invoice);
-  			
+
   		}else{
   			if(($this->request->session()->read('Auth.User.role')) == 'rep'){
   				//Falta validar que la factura pertenezca a mi asocia
@@ -268,12 +268,12 @@ class InvoicesController extends AppController
 		    	}
 		    	$this->set('data', $invoice);
   			}else{
-  				return $this->redirect($this->Auth->redirectUrl());	
+  				return $this->redirect($this->Auth->redirectUrl());
   			}
   		}
     }
-    
-    
+
+
      public function isAuthorized($user)
     {
 
@@ -283,15 +283,15 @@ class InvoicesController extends AppController
         }
 
         if(in_array($this->request->action,['modifyInvoice','delete', 'imageView'])){
-        	
+
             $invoiceId = (int)$this->request->params['pass'][0];
-        
+
             if ($this->Invoices->isOwnedBy($invoiceId, $user['association_id'])) {
                 return true;
             }
-            
+
         }
-    
+
         return parent::isAuthorized($user);
     }
 

@@ -24,6 +24,8 @@
 
         echo $this->Form->input('association_id', ['options' => $association, 'class'=>'form-control', 'label'=>'Asociación correspondiente']);
 
+        //echo $this->Form->input('role', ['options' => $role, 'class'=>'form-control', 'label'=>'Rol']);
+
         echo "<label for='sel1' id = 'role_label'><h4>Rol:</h4></label>";
         echo "<select class='form-control' name = 'role'>";
         $kind = $role;

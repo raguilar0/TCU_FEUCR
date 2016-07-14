@@ -69,11 +69,11 @@
    echo "<div class = 'row'>";
 
 	    echo "<div class = 'col-xs-12'>";
-	     echo "<h4>".$this->Form->input('detail', ['class' => 'form-control','label'=>'Detalles', 'maxlength'=> '1024', 'type'=>'textarea'])."</h4>";
+	     echo "<h4>".$this->Form->input('detail', ['class' => 'form-control','label'=>'Descripción', 'maxlength'=> '1024', 'type'=>'textarea'])."</h4>";
 	    echo "</div >";
 
 	    echo "<div class = 'col-xs-12'>";
-	     echo "<h4>".$this->Form->input('clarifications', ['class' => 'form-control','label'=>'Aclaraciones', 'maxlength'=> '1024', 'type'=>'textarea'])."</h4>";
+	     echo "<h4>".$this->Form->input('clarifications', ['class' => 'form-control','label'=>'Observaciones', 'maxlength'=> '1024', 'type'=>'textarea'])."</h4>";
 	    echo "</div >";
 
 	echo "</div >";

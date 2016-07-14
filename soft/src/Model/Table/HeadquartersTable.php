@@ -44,7 +44,14 @@ class HeadquartersTable extends Table
         $validator
             ->requirePresence('name', 'create')
             ->notEmpty('name')
-            ->add('name', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->add('name', 'unique', [
+              'rule' => 'validateUnique',
+              'provider' => 'table'
+          ])
+            ->add('name', 'validFormat', [
+                        'rule' => array('custom', '/^[A-Za-záéíóú0-9" "]+$/'),
+                        'message' => 'Formato inválido'
+            ]);
 
         $validator
             ->requirePresence('image_name', 'create')

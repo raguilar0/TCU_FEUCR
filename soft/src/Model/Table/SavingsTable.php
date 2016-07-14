@@ -58,12 +58,16 @@ class SavingsTable extends Table
         $validator
             ->integer('amount')
             ->requirePresence('amount', 'create')
-            ->notEmpty('amount');
+            ->notEmpty('amount')
+            ->add('amount', 'validFormat', [
+                        'rule' => array('custom', '/^[0-9\,\.]+$/'),
+                        'message' => 'Formato inválido.'
+            ]);
 
         $validator
             ->integer('state')
             ->allowEmpty('state');
-        
+
 
 
         return $validator;
@@ -93,12 +97,12 @@ class SavingsTable extends Table
         }
 
     }
-    
+
     public function isOwnedBy($accountId, $association_id)
     {
-        
+
         return $this->exists(['id' => $accountId, 'association_id' => $association_id]);
     }
-    
+
 
 }

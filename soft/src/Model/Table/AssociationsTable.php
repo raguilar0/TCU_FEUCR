@@ -89,28 +89,42 @@ class AssociationsTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->allowEmpty('id', 'create')
 
-        $validator
             ->requirePresence('acronym', 'create')
-            ->notEmpty('acronym');
+            ->notEmpty('acronym')
+            ->add('acronym', 'validFormat', [
+                        'rule' => array('custom', '/^[A-Za-z0-9" "\,\.\-\:áéíóú]+$/'),
+                        'message' => 'Formato inválido'
+            ])
 
-        $validator
             ->requirePresence('name', 'create')
-            ->notEmpty('name');
+            ->notEmpty('name')
+            ->add('name', 'validFormat', [
+                        'rule' => array('custom', '/^[A-Za-z0-9" "\,\.\-\:áéíóú]+$/'),
+                        'message' => 'Formato inválido'
+            ])
 
-        $validator
-            ->allowEmpty('location');
+            ->allowEmpty('location')
+            ->add('location', 'validFormat', [
+                        'rule' => array('custom', '/^[A-Za-z0-9" "\,\.\-\#\:áéíóú]+$/'),
+                        'message' => 'Formato inválido'
+            ])
 
-        $validator
-            ->allowEmpty('schedule');
+            ->allowEmpty('schedule')
+            ->add('schedule', 'validFormat', [
+                        'rule' => array('custom', '/^[A-Za-z0-9" "\,\.\-\:áéíóú]+$/'),
+                        'message' => 'Formato inválido'
+            ])
 
-        $validator
             ->integer('authorized_card')
             ->requirePresence('authorized_card', 'create')
-            ->notEmpty('authorized_card');
+            ->notEmpty('authorized_card')
+            ->add('authorized_card', 'validFormat', [
+                        'rule' => array('custom', '/^[A-Za-z]+$/'),
+                        'message' => 'Formato inválido'
+            ])
 
-        $validator
             ->integer('enable')
             ->requirePresence('enable', 'create')
             ->notEmpty('enable');

@@ -77,7 +77,11 @@ class TractsTable extends Table
         $validator
             ->date('date')
             ->requirePresence('date', 'create')
-            ->notEmpty('date');
+            ->notEmpty('date')
+            ->add('date', 'validFormat', [
+                        'rule' => array('custom', '/^[0-9\/]+$/'),
+                        'message' => 'Formato inválido. Solo números.'
+            ]);
 
         $validator
             ->date('deadline')
