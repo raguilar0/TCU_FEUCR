@@ -141,48 +141,4 @@ class SurplusesController extends AppController
       }
     }
 
-    public function showAssociations($id = null)
-    {
-      if($this->Auth->user()){
-        if($id)
-        {
-            $this->viewBuilder()->layout('admin_views');
-
-
-            $query = $this->Surpluses->Associations->Headquarters->find()
-                ->hydrate(false)
-                ->select(['a.name','a.id','name'])
-                ->join([
-                    'table'=>'associations',
-                    'alias'=>'a',
-                    'type' => 'RIGHT',
-                    'conditions'=>'Headquarters.id = a.headquarter_id',
-                ])
-                ->where(['a.enable'=>1])
-                ->order(['Headquarters.name']);
-
-
-            $query = $query->toArray();
-
-
-
-            switch ($id) {
-                case 1:
-                    $query['link'] = 'add';
-                    break;
-
-            }
-
-            $this->set('data',$query);
-
-        }
-        else
-        {
-            $this->redirect(['action'=>'/']);
-        }
-      }
-      else{
-        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
-      }
-    }
 }

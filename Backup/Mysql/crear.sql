@@ -3,7 +3,7 @@ CREATE TABLE headquarters
 	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	name varchar(100) NOT NULL,
 	image_name varchar(100) NOT NULL,
-  UNIQUE(name)
+  UNIQUE(name, image_name)
 
 );
 
@@ -28,7 +28,7 @@ CREATE TABLE surpluses(
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   amount DOUBLE NOT NULL,
   date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  detail varchar(2048) NOT NULL,
+  detail TEXT NOT NULL,
   association_id INT UNSIGNED NOT NULL,
   FOREIGN KEY(association_id) REFERENCES associations(id)
 );
@@ -48,7 +48,7 @@ CREATE TABLE amounts
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   amount DOUBLE NOT NULL,
   date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL ,
-  detail varchar(2048) NOT NULL,
+  detail TEXT NOT NULL,
   type INT(2) NOT NULL DEFAULT 0, -- 0:tracto, 1:monto generado, 2:superávit
   association_id INT UNSIGNED NOT NULL,
   tract_id INT UNSIGNED NOT NULL,
@@ -93,9 +93,9 @@ CREATE TABLE invoices
   legal_certificate VARCHAR (20) NOT NULL,
   provider varchar(100) NOT NULL,
   amount DOUBLE NOT NULL,
-  clarifications varchar(2048),
+  clarifications TEXT,
   image_name varchar(256),
-  detail varchar(2048),
+  detail TEXT,
   kind INT(1) DEFAULT 0, -- 0 = Tracto, 1 = Ingresos generados, 2 = Superavit
   state INT(1) NOT NULL DEFAULT 0,
   date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,

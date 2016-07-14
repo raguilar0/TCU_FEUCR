@@ -314,7 +314,7 @@ class SavingsController extends AppController
     public function isAuthorized($user)
     {
 
-        if($this->request->action === 'add')
+        if(in_array($this->request->action, ['add', 'download']))
         {
           return true;
         }

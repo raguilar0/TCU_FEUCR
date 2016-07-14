@@ -18,20 +18,16 @@
      
         echo $this->Form->create(null, ['id'=>'submit6']);
 
-     echo "<div class = 'col-xs-12 col-md-5'>";
+     echo "<div class = 'col-xs-12'>";
 
-     echo "<label style='margin-bottom: 35px;'>Monto</label>";
-     echo "<div class='input-group'>";
-     echo "<span class='input-group-addon' >₡</span>";
-     echo $this->Form->input('amount', ['class' => 'form-control','label'=>false, 'placeholder'=>'Ejemplo: 500000']);
-     echo "<span class='input-group-addon'>.00</span>";
+         echo "<label'><h4><strong>Monto</strong></h4></label>";
+         echo "<div class='input-group'>";
+             echo "<span class='input-group-addon' >₡</span>";
+                echo $this->Form->input('amount', ['class' => 'form-control','label'=>false, 'placeholder'=>'Ejemplo: 500000']);
+             echo "<span class='input-group-addon'>.00</span>";
+         echo "</div >";
      echo "</div >";
-     echo "</div >";
-        
-        echo "<div class = 'col-xs-12 col-md-7'>";            
-            echo "<label><h4><strong>Fecha de monto</strong></h4></label>";
-            echo "<input name='date' type='date' id = 'date' class='form-control date' required >";
-        echo "</div >";
+
      ?>
  </div>
  

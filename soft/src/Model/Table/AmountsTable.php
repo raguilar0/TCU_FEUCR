@@ -12,7 +12,10 @@ class AmountsTable extends Table
     {
         $this->addBehavior('Timestamp');
         $this->belongsTo('Associations');
-        $this->belongsTo('Tracts');
+        $this->belongsTo('Tracts', [
+            'foreignKey' => 'tract_id',
+            'joinType' => 'INNER'
+        ]);
     }
     public function validationDefault(Validator $validator)
     {

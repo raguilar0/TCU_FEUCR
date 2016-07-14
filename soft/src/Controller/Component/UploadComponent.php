@@ -25,17 +25,18 @@ class UploadComponent extends Component
 				$dir = WWW_ROOT.'img'.DS.'invoices';
 
 				$allowed = array('png','jpg','jpeg');
-				$extention = explode('.', $filename);//substr(strrchr($filename, '.'), 1);
+				$extention = explode('.', $filename);
 				
 				$date = date_create();
 				$id = date_timestamp_get($date);
+				$random = rand(0, 10000);
 
 
 				if(in_array(strtolower($extention[1]), $allowed))
 				{
 					if(is_uploaded_file($file_temp_name))
 					{
-						$filename = $extention[0]."_".$id.".".$extention[1];
+						$filename = "factura_".$random."_".$id.".".$extention[1];
 						move_uploaded_file($file_temp_name, $dir.DS.$filename);
 
 						$saved = $filename;
@@ -70,13 +71,13 @@ class UploadComponent extends Component
 
 				$date = date_create();
 				$id = date_timestamp_get($date);
-
+				$random = rand(0, 10000);
 
 				if(in_array(strtolower($extention[1]), $allowed))
 				{
 					if(is_uploaded_file($file_temp_name))
 					{
-						$filename = $extention[0]."_".$id.".".$extention[1];
+						$filename = "solicitud_de_monto_de_ahorro_".$random."_".$id.".".$extention[1];
 						move_uploaded_file($file_temp_name, $dir.DS.$filename);
 
 						$saved = $filename;
@@ -108,6 +109,7 @@ class UploadComponent extends Component
 
 				$allowed = array('png','jpg','jpeg');
 				$extention = explode('.', $filename);
+				$random = rand(0, 10000);
 
 				$date = date_create();
 				$id = date_timestamp_get($date);
@@ -117,7 +119,7 @@ class UploadComponent extends Component
 				{
 					if(is_uploaded_file($file_temp_name))
 					{
-						$filename = $extention[0]."_".$id.".".$extention[1];
+						$filename = "imagen_sede_".$random."_".$id.".".$extention[1];
 						move_uploaded_file($file_temp_name, $dir.DS.$filename);
 
 						$saved = $filename;

@@ -1,6 +1,6 @@
 
 
-
+<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/1.4.5/numeral.min.js"></script>
 
 <ul class="nav nav-tabs">
   <li class="active"><a data-toggle="tab" href="#tract" onclick="getAmounts(0,0,0, document.getElementById('tracts_id'));">Montos de Tracto</a></li>
@@ -14,8 +14,6 @@
 		<?php 
 			echo "<h1 id='association_name'>".$association_name[0]['name']."</h1>";
 		?>
-		
-		<h2 id = "tract_date"></h2>
 	</div>
 </div>
 
@@ -25,9 +23,20 @@
 		<div id="tract" class="tab-pane fade in active">
 
 			<div class="row text-center">
+				<div class="col-xs-12">
+					<h2 id = "tract_date">No hay montos de tractos para esta asociación aún.</h2>
+				</div>
+			</div>
+
+			<br>
+
+
+	<?php if(!empty($years) and !empty($dates)):?>
+			<div class="row text-center">
 
 				<div class="col-xs-12 col-md-6">
 					<?php
+
 					echo "<label><h5><strong>Elegí el año</strong></h5></label>";
 					echo "<select class='form-control' id= 'tract_year_id' name = 'year' onchange='reloadPage(this)'>";
 
@@ -218,8 +227,9 @@
 			</div>
 			<br>
 			<br>
-
+	<?php endif;?>
 		</div>
+
 
 
 
@@ -231,6 +241,14 @@
 
 
 		<div id="surplus" class="tab-pane fade">
+
+			<div class="row text-center">
+				<div class="col-xs-12">
+					<h2 id = "surplus_date">No hay montos de superávit registrados para este año.</h2>
+				</div>
+			</div>
+
+			<?php if(!empty($years)):?>
 
 			<div class="row text-center">
 
@@ -367,12 +385,23 @@
 			<br>
 			<br>
 
+			<?php endif;?>
+
 		</div>
 
 
 		<!--************************************************ INGRESOS GENERADOS ********************** -->
 		<div id="generated" class="tab-pane fade">
 
+			<div class="row text-center">
+				<div class="col-xs-12">
+					<h2 id = "generated_date">No hay montos de ingresos generados registrados para esta asociación aún.</h2>
+				</div>
+			</div>
+
+			<br>
+
+			<?php if(!empty($years) and !empty($dates)):?>
 
 			<div class="row text-center">
 
@@ -565,10 +594,7 @@
 			<br>
 
 
-
-
-
-
+			<?php endif;?>
 
 		</div>
 	</div>

@@ -121,7 +121,7 @@
                                 <ul>
                                     <li><?php echo $this->Html->link('Nuevo Monto',['controller'=>'Amounts','action'=>'add']);?></li><br>
                                     <li><?php echo $this->Html->link('Ver Montos Detallados',['controller'=>'Associations','action'=>'show_associations/5']);?></li><br>
-                                    <li><?php echo $this->Html->link('Editar Montos',['controller'=>'Amounts','action'=>'show_associations/1']);?></li><br>
+                                    <li><?php echo $this->Html->link('Administrar montos',['controller'=>'Amounts','action'=>'index']);?></li><br>
 
                                 </ul>
                             </div>
@@ -256,9 +256,8 @@
 
             <div class="container-fluid">
 
-                <?= $this->fetch('content') ?>
-
                 <?= $this->Flash->render() ?>
+                <?= $this->fetch('content') ?>
 
             </div>
             <!-- /.container-fluid -->

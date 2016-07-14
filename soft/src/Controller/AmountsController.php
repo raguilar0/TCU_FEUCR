@@ -7,22 +7,42 @@ use Cake\Core\Exception\Exception;
 class AmountsController extends AppController
 {
 
+	/**
+	 * Index method
+	 *
+	 * @return \Cake\Network\Response|null
+	 */
 	public function index()
 	{
-		if(($this->request->session()->read('Auth.User.role')) != 'admin'){
-			return $this->redirect($this->Auth->redirectUrl());
-		}
-		else{
-			$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
 
-			$amount = $this->Amounts->find()
-							->hydrate(false);
+		$this->viewBuilder()->layout('admin_views');
+		$this->paginate = [
+			'contain' => ['Associations', 'Tracts']
+		];
+		$amounts = $this->paginate($this->Amounts);
 
+		$this->set(compact('amounts'));
+		$this->set('_serialize', ['amounts']);
 
-			$amount = $amount->toArray();
+	}
 
-			$this->set('amount',$amount); // set() Pasa la variable amount a la vista.
-		}
+	/**
+	 * View method
+	 *
+	 * @param string|null $id Initial Amount id.
+	 * @return \Cake\Network\Response|null
+	 * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+	 */
+	public function view($id = null)
+	{
+			$this->viewBuilder()->layout('admin_views');
+			$amounts = $this->Amounts->get($id, [
+				'contain' => ['Associations', 'Tracts']
+			]);
+
+			$this->set('amount', $amounts);
+			$this->set('_serialize', ['amount']);
+
 	}
 	
 	public function addAmounts()
@@ -228,27 +248,6 @@ class AmountsController extends AppController
 			->hydrate(false)
 				->where(['YEAR(date)'=>$year]); //Queremos los tractos del año actual
 
-		/**
-		$query = $this->Amounts->Tracts->find() //Se trae solo las headquarter que tienen alguna asocicación asociada :p
-		->hydrate(false)
-			->join([
-				'table'=>'amounts',
-				'alias'=>'a',
-				'type' => 'LEFT',
-				'conditions'=>'Tracts.id = a.tract_id',
-			]);
-
-
-
-
-
-
-		$this->loadModel('Tracts');
-
-
-
-		return $tracts;
-		 **/
 
 
 		$query = $query->toArray();
@@ -342,6 +341,39 @@ class AmountsController extends AppController
 			return $association_id[0]['id'];
 	}
 
+
+	public function edit($id = null)
+	{
+
+		$this->viewBuilder()->layout('admin_views');
+		$amount = $this->Amounts->get($id, [
+			'contain' => []
+		]);
+
+
+
+		if ($this->request->is(['patch', 'post', 'put'])) {
+
+			$amount = $this->Amounts->patchEntity($amount, $this->request->data);
+			if ($this->Amounts->save($amount)) {
+				$this->Flash->success(__('El monto ha sido guardado.'));
+				return $this->redirect(['action' => 'index']);
+			} else {
+				$this->Flash->error(__('El monto no ha podido ser guardado. Intentelo de nuevo'));
+			}
+
+		}
+		
+
+
+		$this->set(compact('amount'));
+		$this->set('_serialize', ['amount']);
+
+	}
+
+
+
+	/**
 	public function edit($id)
 	{
 		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
@@ -380,7 +412,7 @@ class AmountsController extends AppController
 
 
 				}
-				$this->Flash->success($message, ['key' => 'message']);
+				$this->Flash->success($message);
 				$query = $this->getModifyInformation($id, date('Y'));//Pide la información de los montos
 
 			}
@@ -389,6 +421,7 @@ class AmountsController extends AppController
 
 		$this->set('data',$query); // set() Pasa la variable id a la vista.
 	}
+**/
 
 	private function getModifyInformation($id, $year)
 	{
@@ -409,55 +442,7 @@ class AmountsController extends AppController
 		return $query;
 	}
 
-	
-	public function showAssociations($id = null)
-	{
 
-		if($id)
-		{
-			$this->viewBuilder()->layout('admin_views');
-
-			$this->loadModel('Headquarters');
-
-			$query = $this->Headquarters->find()
-				->hydrate(false)
-				->select(['a.name','a.id','name'])
-				->join([
-					'table'=>'associations',
-					'alias'=>'a',
-					'type' => 'RIGHT',
-					'conditions'=>'Headquarters.id = a.headquarter_id',
-				])
-				->where(['a.enable'=>1])
-				->order(['Headquarters.name']);
-
-			$query = $query->toArray();
-
-			switch ($id) {
-				case 1:
-					$query['link'] = 'edit';
-					break;
-
-			}
-
-
-
-
-
-
-
-
-			$this->set('data',$query);
-		}
-		else
-		{
-			$this->redirect(['controller'=>'associations','action'=>'/']);
-		}
-
-
-		
-		
-	}
 
 
 	public function isAuthorized($user)

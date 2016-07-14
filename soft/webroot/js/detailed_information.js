@@ -5,27 +5,13 @@ function setTractValues(object)
     var date = "Periodo del tracto: <br><br>"+select.options[select.selectedIndex].text +"<br><br>";
 
 
-
-//*******************************BOXES****************************//
-
-    var total_boxes = 0;
-    var little_amount_tract = 0;
-    var big_amount_tract = 0;
-
     var boxes_classes = document.getElementsByClassName("boxes_total_tract");
 
 
-    if(object.boxes.length > 0)
-    {
-        little_amount_tract = object.boxes[0].little_amount;
-        big_amount_tract = object.boxes[0].big_amount;
-        total_boxes = (object.boxes[0].little_amount + object.boxes[0].big_amount);
-    }
-
-    boxes_classes[0].innerHTML = total_boxes;
-    boxes_classes[1].innerHTML = total_boxes;
-    document.getElementById("little_amount_tract").innerHTML = little_amount_tract;
-    document.getElementById("big_amount_tract").innerHTML = big_amount_tract;
+    boxes_classes[0].innerHTML = object.amounts.total_boxes;
+    boxes_classes[1].innerHTML = object.amounts.total_boxes;
+    document.getElementById("little_amount_tract").innerHTML = object.amounts.little_amount;
+    document.getElementById("big_amount_tract").innerHTML = object.amounts.big_amount;
 
 
 //*******************************END BOXES****************************//
@@ -33,8 +19,6 @@ function setTractValues(object)
 //*******************************INVOICES****************************//
     var invoices_length = object.invoices.length;
     var html = "";
-    var invoices_total = 0;
-    var total_message = "";
 
     if(invoices_length > 0)
     {
@@ -56,62 +40,35 @@ function setTractValues(object)
 
             html+="</tr>";
 
-            invoices_total += object.invoices[i].amount;
         }
 
 
-        total_message = "<h4>Total: "+invoices_total+"</h4>";
 
     }
 
-    document.getElementById("tract_invoices_total").innerHTML = total_message;
+    document.getElementById("tract_invoices_total").innerHTML = "<h4> Total: "+object.amounts.total_outgoing+"</h4>";
     document.getElementById("tract_invoices").innerHTML = html;
 
 
 
 
-//*********************** END INVOICES *************************//
-
-    var tract_amount = 0;
-    var tract_saving_total = 0;
-    var total_income = 0;
-    var final_balance = 0;
-    var tract_final_balance = 0;
-    var tract_count = 0;
-    var saving_classes = 0;
-    var tract_initial_amount = ((object.initial_amount.length > 0)? object.initial_amount[0].amount : 0);
-    var saving_amount = ((object.savings.length > 0) ? object.savings[0].amount : 0);
-
-
-    if(object.amount.length > 0)
-    {
-        tract_amount = object.amount[0].amount;
-        tract_saving_total = tract_amount + saving_amount;
-        total_income = (tract_initial_amount + tract_saving_total);
-
-        tract_final_balance = (total_income - invoices_total);
-        tract_count = (tract_final_balance - total_boxes);
-
-    }
-
-
     amount_classes = document.getElementsByClassName("tract_saving_total");
-    document.getElementById("tract_amount").innerHTML = tract_amount;
+    document.getElementById("tract_amount").innerHTML = object.amounts.tract_amount;
     saving_classes = document.getElementsByClassName("saving_amount");
-    saving_classes[0].innerHTML = saving_amount;
-    saving_classes[1].innerHTML = saving_amount;
+    saving_classes[0].innerHTML = object.amounts.saving_amount;
+    saving_classes[1].innerHTML = object.amounts.saving_amount;
 
-    amount_classes[0].innerHTML =  tract_saving_total;
-    amount_classes[1].innerHTML =  tract_saving_total ;
+    amount_classes[0].innerHTML =  object.amounts.period_income;
+    amount_classes[1].innerHTML =  object.amounts.period_income;
 
     document.getElementById("tract_date").innerHTML = date;
-    document.getElementById("total_income").innerHTML = total_income; //Total de ingresos monto inicial + monto de ahorro
-    document.getElementById("total_spent").innerHTML = invoices_total; //Total de gastos
-    document.getElementById("tract_initial_amount").innerHTML = tract_initial_amount;
-    document.getElementById("tract_final_balance").style = ((tract_final_balance < 0)? "color: red" : "color:green");
-    document.getElementById("tract_final_balance").innerHTML =  tract_final_balance; // saldo final = total de ingresos - total de gastos
-    document.getElementById("tract_count").innerHTML = tract_count;
-    document.getElementById("tract_count").style = ((tract_count < 0) ? "color: red": "color: green");
+    document.getElementById("total_income").innerHTML = object.amounts.total_income; //Total de ingresos monto inicial + monto de ahorro
+    document.getElementById("total_spent").innerHTML = object.amounts.total_outgoing; //Total de gastos
+    document.getElementById("tract_initial_amount").innerHTML = object.amounts.initial_amount;
+    document.getElementById("tract_final_balance").style = ((object.amounts.final_balance < 0)? "color: red" : "color:green");
+    document.getElementById("tract_final_balance").innerHTML =  object.amounts.final_balance; // saldo final = total de ingresos - total de gastos
+    document.getElementById("tract_count").innerHTML = object.amounts.account;
+    document.getElementById("tract_count").style = ((object.amounts.negative_final_balance != 0) ? "color: red": "color: green");
 
 
 
@@ -128,25 +85,16 @@ function setGeneratedValues(object)
     var select =  document.getElementById("generated_id");
     var date = "Periodo del tracto: <br><br>"+select.options[select.selectedIndex].text +"<br><br>";
 
-    var total_boxes = 0;
-    var little_amount_generated = 0;
-    var big_amount_generated = 0;
 
     //*******************************BOXES****************************//
     var boxes_classes = document.getElementsByClassName("generated_total_boxes");
 
 
-    if(object.boxes.length > 0)
-    {
-        little_amount_generated = object.boxes[0].little_amount;
-        big_amount_generated = object.boxes[0].big_amount;
-        total_boxes = (object.boxes[0].little_amount + object.boxes[0].big_amount);
-    }
 
-    boxes_classes[0].innerHTML = total_boxes;
-    boxes_classes[1].innerHTML = total_boxes;
-    document.getElementById("generated_little_amount").innerHTML = little_amount_generated;
-    document.getElementById("generated_big_amount").innerHTML = big_amount_generated;
+    boxes_classes[0].innerHTML = object.amounts.total_boxes;
+    boxes_classes[1].innerHTML = object.amounts.total_boxes;
+    document.getElementById("generated_little_amount").innerHTML = object.amounts.little_amount;
+    document.getElementById("generated_big_amount").innerHTML = object.amounts.big_amount;
 
 
 //*******************************END BOXES****************************//
@@ -156,8 +104,7 @@ function setGeneratedValues(object)
 
     var invoices_length = object.invoices.length;
     var html = "";
-    var invoices_total = 0;
-    var total_message = "<h4>Total: 0 </h4>";
+
 
     if(invoices_length > 0)
     {
@@ -179,15 +126,14 @@ function setGeneratedValues(object)
 
             html+="</tr>";
 
-            invoices_total += object.invoices[i].amount;
+
         }
 
 
-        total_message = "<h4>Total: "+invoices_total+"</h4>";
 
     }
 
-    document.getElementById("generated_invoices_total").innerHTML = total_message;
+    document.getElementById("generated_invoices_total").innerHTML = "<h4> Total: "+object.amounts.total_outgoing+"</h4>";
     document.getElementById("generated_invoices").innerHTML = html;
 
 //**************************** END INVOICES **********************//
@@ -197,9 +143,7 @@ function setGeneratedValues(object)
     amount_classes = document.getElementsByClassName("generated_amount");
 
     html = "";
-    var incomes_total = 0;
-    total_message = "";
-    var incomes_length = object.amount.length;
+    var incomes_length = object.amounts.amounts.length;
 
     if(incomes_length > 0)
     {
@@ -208,40 +152,35 @@ function setGeneratedValues(object)
             html+="<tr>";
 
             html+="<td>"+(i+1)+"</td>";
-            html+="<td>"+(object.amount[i].date.split("T"))[0]+"</td>";
-            html+="<td>"+object.amount[i].detail+"</td>";
-            html+="<td>"+object.amount[i].amount+"</td>";
+            html+="<td>"+(object.amounts.amounts[i].date.split("T"))[0]+"</td>";
+            html+="<td>"+object.amounts.amounts[i].detail+"</td>";
+            html+="<td>"+object.amounts.amounts[i].amount+"</td>";
 
             html+="</tr>";
 
-            incomes_total += object.amount[i].amount;
         }
 
 
-        total_message = "<h4>Total: "+incomes_total+"</h4>";
     }
 
-    amount_classes[0].innerHTML = total_message;
+    amount_classes[0].innerHTML = "<h4> Total: "+ object.amounts.total_income+"</h4>";
     document.getElementById("generated_incomes").innerHTML = html;
 
 //****************************** END INCOMES **************************//
 
 //*******************************AMOUNTS****************************//
 
-    var generated_initial_amount = ((object.initial_amount.length > 0)? object.initial_amount[0].amount : 0);
-    var generated_final_balance = ((incomes_total + generated_initial_amount) - invoices_total);
-    var generated_saving_account = ((object.saving_account.length > 0)? object.saving_account[0].amount : 0);
 
 
-    amount_classes[1].innerHTML =  incomes_total;
+    amount_classes[1].innerHTML =  object.amounts.total_income;
 
-    document.getElementById("tract_date").innerHTML = date;
-    document.getElementById("generated_total_income").innerHTML = incomes_total;
-    document.getElementById("generated_total_spent").innerHTML = invoices_total;
-    document.getElementById("generated_initial_amount").innerHTML = generated_initial_amount;
-    document.getElementById("generated_final_balance").innerHTML =  generated_final_balance;
-    document.getElementById("generated_final_balance").style = ((generated_final_balance < 0) ? "color:red" : "color:green");
-    document.getElementById("generated_saving_account").innerHTML = generated_saving_account;
+    document.getElementById("generated_date").innerHTML = date;
+    document.getElementById("generated_total_income").innerHTML = object.amounts.total_income;
+    document.getElementById("generated_total_spent").innerHTML = object.amounts.total_outgoing;
+    document.getElementById("generated_initial_amount").innerHTML = object.amounts.initial_amount;
+    document.getElementById("generated_final_balance").innerHTML =  object.amounts.final_balance;
+    document.getElementById("generated_final_balance").style = ((object.amounts.negative_final_balance != 0) ? "color:red" : "color:green");
+    document.getElementById("generated_saving_account").innerHTML = object.amounts.account;
 
 
 
@@ -258,8 +197,6 @@ function setSurplusValues(object)
 
     var invoices_length = object.invoices.length;
     var html = "";
-    var invoices_total = 0;
-    var total_message = "";
 
     if(invoices_length > 0)
     {
@@ -281,51 +218,31 @@ function setSurplusValues(object)
 
             html+="</tr>";
 
-            invoices_total += object.invoices[i].amount;
         }
 
 
-        total_message = "<h4>Total: "+invoices_total+"</h4>";
-
     }
 
-    document.getElementById("surplus_total_invoices").innerHTML = total_message;
+    document.getElementById("surplus_total_invoices").innerHTML = "<h4> Total: "+object.amounts.total_outgoing+"</h4>";
     document.getElementById("surplus_invoices").innerHTML = html;
 
 //******************* END INVOICES **********************///
 
 
-    var surplus_amount = 0;
-    var surplus_final_balance = 0;
-    var date = "No hay montos de superavit para el año "+document.getElementById("surplus_year_id").value+"<br><br>";
-    var length = object.amount.length;
+    date = "Superávit del año: "+document.getElementById("surplus_year_id").value +"<br><br>";
 
-    if(length > 0)
-    {
-
-        for(var i = 0; i < length; ++i)
-        {
-            surplus_amount += object.amount[i].amount;
-        }
-
-
-
-        surplus_final_balance = (surplus_amount - invoices_total);
-
-        date = "Superávit del año: "+document.getElementById("surplus_year_id").value +"<br><br>";
-    }
 
     amount_classes = document.getElementsByClassName("surplus_amount");
 
 
-    amount_classes[0].innerHTML =  surplus_amount;
-    amount_classes[1].innerHTML =  surplus_amount ;
-    amount_classes[2].innerHTML =  surplus_amount ;
+    amount_classes[0].innerHTML =  object.amounts.amount;
+    amount_classes[1].innerHTML =  object.amounts.amount;
+    amount_classes[2].innerHTML =  object.amounts.amount;
 
-    document.getElementById("tract_date").innerHTML = date;
-    document.getElementById("surplus_total_spent").innerHTML = invoices_total;
-    document.getElementById("surplus_final_balance").innerHTML =  surplus_final_balance;
-
+    document.getElementById("surplus_date").innerHTML = date;
+    document.getElementById("surplus_total_spent").innerHTML = object.amounts.total_outgoing;
+    document.getElementById("surplus_final_balance").innerHTML = object.amounts.final_balance;
+    document.getElementById("surplus_final_balance").style = ((object.amounts.negative_final_balance != 0) ? "color:red" : "color:green");
 
 
 

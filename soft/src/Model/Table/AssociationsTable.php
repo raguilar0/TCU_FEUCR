@@ -42,6 +42,10 @@ class AssociationsTable extends Table
             'foreignKey' => 'headquarter_id',
             'joinType' => 'INNER'
         ]);
+        $this->belongsTo('Tracts', [
+            'foreignKey' => 'tract_id',
+            'joinType' => 'INNER'
+        ]);
         $this->hasMany('Amounts', [
             'foreignKey' => 'association_id'
         ]);
@@ -68,6 +72,10 @@ class AssociationsTable extends Table
         ]);
         $this->hasMany('Warehouses', [
             'foreignKey' => 'association_id'
+        ]);
+
+        $this->belongsTo('Tracts', [
+            'foreignKey' => 'tract_id'
         ]);
     }
 

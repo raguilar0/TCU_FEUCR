@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Core\Exception\Exception;
 use Cake\Event\Event;
 
 /**
@@ -176,12 +177,21 @@ class AssociationsController extends AppController
         if ($this->Auth->user()) {
             $this->viewBuilder()->layout('admin_views');
             $this->request->allowMethod(['post', 'delete']);
-            $association = $this->Associations->get($id);
-            if ($this->Associations->delete($association)) {
-                $this->Flash->success(__('La asociación se eliminó exitosamente.'));
-            } else {
-                $this->Flash->error(__('La asociación no pudo ser eliminada. Por favor intente de nuevo.'));
+
+            try
+            {
+                $query = $this->Associations->query();
+                $query->update()
+                    ->set(['enable' => 0])
+                    ->where(['id' => $id])
+                    ->execute();
+                $this->Flash->success(__('La asociación se deshabilitó exitosamente.'));
             }
+            catch (Exception $e)
+            {
+                $this->Flash->error(__('La asociación no pudo ser deshabilitada. Por favor intente de nuevo.'));
+            }
+
             return $this->redirect(['action' => 'index']);
         }
         else
@@ -208,6 +218,7 @@ class AssociationsController extends AppController
 
                 $year = ($year ? $year: date('Y')); //Si el año viene nulo, agregamos el actual
 
+
                 $tract_dates = $this->Associations->Amounts->find()
                     ->hydrate(false)
                     ->select(['tract.date','tract.deadline','type','tract.number', 'tract.id'])
@@ -223,7 +234,10 @@ class AssociationsController extends AppController
                     ->group(['tract.date']);
 
 
+
+
                 $tract_dates = $tract_dates->toArray();
+
                 $temp = array();
                 foreach ($tract_dates as $key => $value)
                 {
@@ -271,137 +285,178 @@ class AssociationsController extends AppController
     {
 
 
-            if ($amount_type != 2) //Si no es superávit
-            {
+        if($amount_type != 2)
+        {
+            $amount = $this->Associations->get($association_id, ['contain' => ['Boxes.Tracts'=> function ($q) use($id,$box_type){
+                return $q->andWhere(['Tracts.id' => $id, 'Boxes.type'=>$box_type]);
+            } ,'InitialAmounts.Tracts'=> function ($q) use($id){
+                return $q->where(['Tracts.id' => $id]);
+            }, 'Savings.Tracts'=> function ($q) use($id){
+                return $q->andWhere(['Tracts.id' => $id, 'Savings.state'=>1]);
+            }, 'SavingAccounts.Tracts'=> function ($q) use($id){
+                return $q->where(['Tracts.id' => $id]);
+            }, 'Amounts.Tracts'=> function ($q) use($id, $amount_type){
+                return $q->andWhere(['Tracts.id' => $id, 'Amounts.type'=>$amount_type]);
+            }, 'Invoices.Tracts'=> function ($q) use($id, $amount_type, $association_id,$invoice_type){
+                return $q->andWhere(['Tracts.id' => $id, 'Invoices.kind' => $invoice_type, 'Invoices.state' => 1]);
+            }]]);
 
-                $amount = $this->Associations->Amounts->find()
-                    ->hydrate(false)
-                    ->select(['tract.number', 'amount', 'tract.deadline', 'date', 'detail'])
-                    ->andwhere(['association_id' => $association_id, 'type' => $amount_type])
-                    ->join([
-                        'table' => 'tracts',
-                        'alias' => 'tract',
-                        'type' => 'RIGHT',
-                        'conditions' => 'Amounts.tract_id = tract.id and tract.id = ' . $id
+            $amount = $amount->toArray();
 
-                    ]);
-
-                $amount = $amount->toArray();
-
-
-                $box = $this->Associations->Boxes->find()
-                    ->hydrate(false)
-                    ->select(['little_amount', 'big_amount'])
-                    ->andwhere(['association_id' => $association_id, 'type' => $box_type])
-                    ->join([
-                        'table' => 'tracts',
-                        'alias' => 'tract',
-                        'type' => 'RIGHT',
-                        'conditions' => 'Boxes.tract_id = tract.id and tract.id = ' . $id
-
-                    ]);
-
-                $box = $box->toArray();
-
-
-                $initial_amount = $this->Associations->InitialAmounts->find()
-                    ->hydrate(false)
-                    ->select(['amount'])
-                    ->andwhere(['association_id' => $association_id, 'type' => $amount_type])
-                    ->join([
-                        'table' => 'tracts',
-                        'alias' => 'tract',
-                        'type' => 'RIGHT',
-                        'conditions' => 'InitialAmounts.tract_id = tract.id and tract.id = '. $id
-
-                    ]);
-
-                $initial_amount = $initial_amount->toArray();
-
-
-                $information['boxes'] = $box;
-                $information['initial_amount'] = $initial_amount;
-
-                if ($amount_type == 0) //Si es tracto se consulta además por los montos de ahorro
-                {
-                    $saving_amount = $this->Associations->Savings->find()
-                        ->hydrate(false)
-                        ->select(['amount'])
-                        ->andwhere(['association_id' => $association_id, 'state' => 1])
-                        ->join([
-                            'table' => 'tracts',
-                            'alias' => 'tract',
-                            'type' => 'RIGHT',
-                            'conditions' => 'Savings.tract_id = tract.id and tract.id = ' . $id
-
-                        ]);
-
-                    $saving_amount = $saving_amount->toArray();
-                    $information['savings'] = $saving_amount;
-                }
-
-                if ($amount_type == 1) //Si es ingresos generados además se consulta cuentas de ahorro
-                {
-                    $saving_account = $this->Associations->SavingAccounts->find()
-                        ->hydrate(false)
-                        ->select(['amount'])
-                        ->where(['association_id' => $association_id])
-                        ->join([
-                            'table' => 'tracts',
-                            'alias' => 'tract',
-                            'type' => 'RIGHT',
-                            'conditions' => 'SavingAccounts.tract_id = tract.id and tract.id = ' . $id
-
-                        ]);
-
-                    $saving_account = $saving_account->toArray();
-                    $information['saving_account'] = $saving_account;
-                }
-
-            } else {
-
-
-                $amount = $this->Associations->Surpluses->find()
-                    ->hydrate(false)
-                    ->select(['amount'])
-                    ->andwhere(['association_id' => $association_id, 'YEAR(date)' => $id]);
-
-
-                $amount = $amount->toArray();
-            }
-
+            $invoices = $amount['invoices'];
+            unset($amount['invoices']);
+        }
+        else
+        {
+            $amount = $this->Associations->Surpluses->find()
+                ->hydrate(false)
+                ->select(['amount'])
+                ->andwhere(['association_id' => $association_id, 'YEAR(date)' => $id]);
 
             $invoices = $this->Associations->Invoices->find()
                 ->hydrate(false)
                 ->select(['date', 'number', 'detail', 'provider', 'amount', 'attendant', 'clarifications', 'legal_certificate'])
-                ->andwhere(['association_id' => $association_id, 'kind' => $invoice_type, 'state' => 1])
-                ->join([
-                    'table' => 'tracts',
-                    'alias' => 'tract',
-                    'type' => 'RIGHT',
-                    'conditions' => 'Invoices.tract_id = tract.id and tract.id = ' . $id
+                ->andwhere(['association_id' => $association_id, 'kind' => $invoice_type, 'state' => 1, 'YEAR(date)'=> $id]); //En este caso el id viene con el año que deseo recuperar
 
-                ]);
-
+            $amount = $amount->toArray();
             $invoices = $invoices->toArray();
+        }
 
 
-//
-            $information['amount'] = $amount;
 
-            $information['invoices'] = $invoices;
+        $information['amount'] = $amount;
 
 
-            $information = json_encode($information);
+
+        $total_outgoings = 0;
+        foreach ($invoices as $key => $value)
+        {
+            $total_outgoings = $total_outgoings+$value['amount'];
+        }
 
 
-            die($information);
+
+        switch ($amount_type)
+        {
+            case 0:
+                $information = $this->processTractData($information, $total_outgoings);
+                break;
+            case 1:
+               $information = $this->processGeneratedData($information, $total_outgoings);
+                break;
+            case 2:
+                $information = $this->processSurplusesData($information, $total_outgoings);
+                break;
+        }
+
+
+            $data['amounts'] = $information;
+            $data['invoices'] = $invoices;
+            $data = json_encode($data);
+
+           // debug($data);
+           die($data);
 
     }
 
+    private function processTractData($data, $total_outgoings)
+    {
+
+        $tract_amount = ((empty($data['amount']['amounts']))? 0: $data['amount']['amounts'][0]['amount']);//Si está vacío devuelve 0
+        $saving_amount = ((empty($data['amount']['savings']))? 0: $data['amount']['savings'][0]['amount']); //Si está vacío devuelve 0
+        $little_amount = ((empty($data['amount']['boxes']))? 0: $data['amount']['boxes'][0]['little_amount']);//Si está vacío devuelve 0
+        $big_amount = ((empty($data['amount']['boxes']))? 0: $data['amount']['boxes'][0]['big_amount']);//Si está vacío devuelve 0
+        $total_boxes = $little_amount + $big_amount; // Total de cajas
+        $initial_amount = ((empty($data['amount']['initial_amounts']))? 0: $data['amount']['initial_amounts'][0]['amount']);
+
+        $period_income = $tract_amount + $saving_amount;
+        $total_income = $initial_amount + $period_income;
+        $final_balance = $total_income - $total_outgoings;
+        $negative_final_balance = (($final_balance < 0)? 1: 0);
+        $account = $final_balance - $total_boxes;
 
 
-        public function showAssociations($id = null)
+        $information['period_income'] = "¢ ".number_format($period_income,2,",","."); //Ingresos del período: Es la suma de los montos de ahorro y los montos de ahorro
+        $information['total_income'] = "¢ ".number_format($total_income, 2, ",","."); //Total de ingresos: Es la suma del saldo inicial de cajas e ingresos del período
+
+        $information['total_outgoing'] = "¢ ".number_format($total_outgoings,2,",",".");;
+
+        $information['final_balance'] = "¢ ".number_format($final_balance, 2, ",", "."); //Saldo final: Total de ingresos - total de gastos
+
+
+
+        $information['tract_amount'] = "¢ ".number_format($tract_amount,2,",",".");
+        $information['saving_amount'] = "¢ ".number_format($saving_amount,2,",",".");
+        $information['little_amount'] = "¢ ".number_format($little_amount,2,",",".");
+        $information['big_amount'] = "¢ ".number_format($big_amount,2,",",".");
+        $information['total_boxes'] = "¢ ".number_format($total_boxes,2,",",".");
+        $information['initial_amount'] = "¢ ".number_format($initial_amount,2,",",".");
+        $information['account'] = "¢ ".number_format($account,2,",",".");
+        $information['negative_final_balance'] = $negative_final_balance;
+
+
+
+        return $information;
+
+
+    }
+
+    private function processGeneratedData($data, $total_outgoings)
+    {
+        $little_amount = ((empty($data['amount']['boxes']))? 0: $data['amount']['boxes'][0]['little_amount']);//Si está vacío devuelve 0
+        $big_amount = ((empty($data['amount']['boxes']))? 0: $data['amount']['boxes'][0]['big_amount']);//Si está vacío devuelve 0
+        $total_boxes = $little_amount + $big_amount; // Total de cajas
+        $initial_amount = ((empty($data['amount']['initial_amounts']))? 0: $data['amount']['initial_amounts'][0]['amount']);
+        $account = ((empty($data['amount']['saving_accounts']))? 0: $data['amount']['saving_accounts'][0]['amount']);
+
+        $period_income = 0;
+
+        foreach ($data['amount']['amounts'] as $key => $value) //Se obtiene el total de ingresos
+        {
+            $period_income = $period_income + $value['amount'];
+        }
+
+        $total_income = $initial_amount + $period_income;
+        $final_balance = $total_income - $total_outgoings;
+        $negative_final_balance = (($final_balance < 0)? 1: 0);
+
+
+
+        $information['amounts'] =  $data['amount']['amounts'];
+        $information['little_amount'] = "¢ ".number_format($little_amount,2,",",".");
+        $information['big_amount'] = "¢ ".number_format($big_amount,2,",",".");
+        $information['total_income'] = "¢ ".number_format($total_income, 2, ",","."); //Total de ingresos: Es la suma del saldo inicial de cajas e ingresos del período
+        $information['total_outgoing'] = "¢ ".number_format($total_outgoings,2,",",".");;
+        $information['final_balance'] = "¢ ".number_format($final_balance, 2, ",", "."); //Saldo final: Total de ingresos - total de gastos
+        $information['account'] = "¢ ".number_format($account,2,",",".");
+        $information['total_boxes'] = "¢ ".number_format($total_boxes,2,",",".");
+        $information['initial_amount'] = "¢ ".number_format($initial_amount,2,",",".");
+        $information['negative_final_balance'] = $negative_final_balance;
+
+        return $information;
+    }
+
+    private function processSurplusesData($data, $total_outgoings)
+    {
+        $total_income = 0;
+
+        foreach ($data['amount'] as $key => $value)
+        {
+            $total_income = $total_income + $value['amount'];
+        }
+
+        $final_balance = $total_income - $total_outgoings;
+        $negative_final_balance = (($final_balance < 0)? 1: 0);
+
+        $information['amount'] = "¢ ".number_format($total_income,2,",",".");
+        $information['total_outgoing'] = "¢ ".number_format($total_outgoings,2,",",".");
+        $information['final_balance'] = "¢ ".number_format($final_balance,2,",",".");
+        $information['negative_final_balance'] = $negative_final_balance;
+
+        return $information;
+    }
+
+    public function showAssociations($id = null)
     {
         if($this->Auth->user()){
             if($id)
@@ -460,15 +515,7 @@ class AssociationsController extends AppController
 
     }
 
-    public function indexAssociations()
-    {
-        if($this->Auth->user()){
-            $this->viewBuilder()->layout('admin_views');
-        }
-        else{
-            return $this->redirect(['controller'=>'pages', 'action'=>'home']);
-        }
-    }
+
 
     public function generalInformation($id = null) {
         if($this->Auth->user()){
@@ -535,7 +582,7 @@ class AssociationsController extends AppController
         {
             $associations = $this->Associations->find()
                                     ->hydrate(false)
-                                    ->where(['headquarter_id'=>$id]);
+                                    ->andWhere(['headquarter_id'=>$id, 'enable'=>1]);
 
             $this->set('data', $associations);
         }

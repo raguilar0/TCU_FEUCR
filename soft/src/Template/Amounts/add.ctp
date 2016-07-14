@@ -64,82 +64,78 @@
 
 
 
-<?php
-
-
-    if(!empty($data[0]))
-    {
-        echo $this->Form->create(null, ['id'=>'submit5']);
-
-            echo "<div class='form-group'>";
-        
-
-
-                echo "<div class='table-responsive'>";
-                    echo "<table class='table'>";
-                    echo "<thead>";
-                    echo "<tr>";
-                    echo "<th>Montos</th>";
-                    echo "<th>Fecha del Tracto</th>";
-                    echo "</tr>";
-                    echo "</thead>";
-                
-                    echo "<tbody>";
-
-                        //data = array_reverse($data);
-                        
-                        $tract[1] = "Tracto 1";
-                        $tract[2] = "Tracto 2";
-                        $tract[3] = "Tracto 3";
-                        $tract[4] = "Tracto 4";
-                        
-                        foreach ($data as $key => $value) {
-                         
-                         
-                         $tract_name = $tract[$value['number']];
-                         
-                         echo "<tr>";
-                            echo "<td>".$this->Form->input('amountTract'.$value['number'], ['class' => 'form-control', 'label'=>$tract_name, 'min'=>'0', 'placeholder'=>'Monto a asignar', 'required'])."</td>";
-                            echo "<td>".$this->Form->input('tract0', ['class' => 'form-control', 'label'=>$tract_name,'type'=>'text','disabled','value'=>$value['date']])."</td>";
-                          echo "</tr>";
-                          echo "<br>";
-                            
-                        }   
-                        
-                        
-                       
-
-                    echo "</tbody>";
-                  echo "</table>";
-              echo "</div>";
 
 
 
-            echo "<div class='row text-center'>";
-                echo "<div class='col-xs-12'>";
-                    echo "<h4>Detalle</h4>";
-                    echo "<h4>".$this->Form->textarea('detail', ['class' => 'form-control', 'required'])."</h4>";
-                echo "</div>";
-            echo "</div>";
+    <?php if(!empty($data[0])): ?>
+
+        <?= $this->Form->create(null, ['id'=>'submit5']); ?>
+
+            <div class='form-group'>
+
+                <div class="row">
+                    <div class="col-md-6 col-xs-4"><h4><strong>Montos</strong></h4></div>
+                    <div class="col-md-6 col-xs-8"><h4><strong>Fecha del Tracto<strong></h4></div>
+                </div>
+
+                <?php
+
+                    $tract[1] = "Tracto 1";
+                    $tract[2] = "Tracto 2";
+                    $tract[3] = "Tracto 3";
+                    $tract[4] = "Tracto 4";
+
+                foreach ($data as $key => $value){
+                    $tract_name = $tract[$value['number']];
+
+                    echo "<div class='row'>";
+                        echo "<div class='col-md-6 col-xs-8'>";
+                            echo "<label>".$tract_name."</label>";
+                            echo "<div class='input-group'>";
+                                echo "<span class='input-group-addon' >₡</span>";
+                                echo $this->Form->input('amountTract'.$value['number'], ['class' => 'form-control', 'label'=>false, 'min'=>'0', 'placeholder'=>'Ejemplo: 50000', 'required']);
+                                echo "<span class='input-group-addon'>.00</span>";
+                            echo "</div>";
+                        echo "</div>";
+
+                        echo "<div class='col-md-6 col-xs-4'>";
+                            echo $this->Form->input('tract0', ['class' => 'form-control', 'label'=>$tract_name,'type'=>'text','disabled','value'=>$value['date']." - ".$value['deadline']]);
+                        echo "</div>";
+                    echo "</div>";
+
+                }
 
 
-            echo "<div class='row text-center'>";
-                echo "<div class = 'col-xs-12'>";               
-                    echo "<h4>".$this->Form->submit('Guardar Montos', ['class' => 'form-control btn btn-primary', 'id' => 'asso_id'])."</h4>";
-                echo "</div>";
-            echo "</div>";
+                ?>
 
-            echo "</div>";
+
+<br>
+<br>
+
+
+            <div class='row text-center'>
+                <div class='col-xs-12'>
+                    <h4>Detalle</h4>
+                   <h4><?=$this->Form->textarea('detail', ['class' => 'form-control', 'required'])?></h4>
+                </div>
+            </div>
+
+
+            <div class='row text-center'>
+                <div class = 'col-xs-12'>
+                   <h4><?= $this->Form->submit('Guardar Montos', ['class' => 'form-control btn btn-primary', 'id' => 'asso_id'])?></h4>
+                </div>
+            </div>
+            </div>
 
 
 
 
-        echo $this->Form->end();        
-    }
+        <?= $this->Form->end(); ?>
+    <?php endif; ?>
 
 
 
-?>
 
 <div class="row text-right">
     <div class="col-xs-12">
