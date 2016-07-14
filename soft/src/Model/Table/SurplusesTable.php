@@ -53,12 +53,20 @@ class SurplusesTable extends Table
         $validator
             ->numeric('amount')
             ->requirePresence('amount', 'create')
-            ->notEmpty('amount');
-        
+            ->notEmpty('amount')
+            ->add('amount', 'validFormat', [
+                        'rule' => array('custom', '/^[0-9\,\.]+$/'),
+                        'message' => 'Formato inválido.'
+            ]);
+
 
         $validator
             ->requirePresence('detail', 'create')
-            ->notEmpty('detail');
+            ->notEmpty('detail')
+            ->add('detail', 'validFormat', [
+                        'rule' => array('custom', '/^[0-9A-Za-záéíóú" "\,\.\:\-]+$/'),
+                        'message' => 'Formato inválido.'
+            ]);
 
         return $validator;
     }

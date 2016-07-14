@@ -55,12 +55,20 @@ class BoxesTable extends Table
         $validator
             ->numeric('little_amount')
             ->requirePresence('little_amount', 'create')
-            ->notEmpty('little_amount');
+            ->notEmpty('little_amount')
+            ->add('little_amount', 'validFormat', [
+                        'rule' => array('custom', '/^[0-9\,\.]+$/'),
+                        'message' => 'Formato inválido. Solo números.'
+            ]);
 
         $validator
             ->numeric('big_amount')
             ->requirePresence('big_amount', 'create')
-            ->notEmpty('big_amount');
+            ->notEmpty('big_amount')
+            ->add('big_amount', 'validFormat', [
+                        'rule' => array('custom', '/^[0-9\,\.]+$/'),
+                        'message' => 'Formato inválido. Solo números.'
+            ]);
 
         $validator
             ->integer('type')
@@ -83,10 +91,10 @@ class BoxesTable extends Table
         $rules->add($rules->existsIn(['tract_id'], 'Tracts'));
         return $rules;
     }
-    
+
     public function isOwnedBy($boxId, $association_id)
     {
-        
+
         return $this->exists(['id' => $accountId, 'association_id' => $association_id]);
     }
 }

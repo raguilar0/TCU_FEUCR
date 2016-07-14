@@ -29,31 +29,31 @@ class InvoicesTable extends Table
           ])
           ->notEmpty('amount')
           ->add('amount', 'validFormat', [
-                      'rule' => array('custom', '/^[0-9]+$/'),
+                      'rule' => array('custom', '/^[0-9\,\.]+$/'),
                       'message' => 'Formato inválido. Solo números.'
           ])
           ->add('clarifications', 'validFormat', [
-                      'rule' => array('custom', '/^[A-Za-z0-9" "\,\.\-\:]+$/'),
+                      'rule' => array('custom', '/^[A-Za-z0-9" "\,\.\-\:áéíóú]+$/'),
                       'message' => 'Formato inválido'
           ])
           ->notEmpty('detail')
           ->add('detail', 'validFormat', [
-                      'rule' => array('custom', '/^[A-Za-z0-9" "\,\.\-\:]+$/'),
+                      'rule' => array('custom', '/^[A-Za-záéíóú0-9" "\,\.\-\:]+$/'),
                       'message' => 'Formato inválido'
           ])
           ->notEmpty('kind')
           ->add('kind', 'validFormat', [
-                      'rule' => array('custom', '/^[A-Za-z0-9]+$/'),
+                      'rule' => array('custom', '/^[A-Za-záéíóú0-9" "]+$/'),
                       'message' => 'Formato inválido'
           ])
           ->notEmpty('attendant')
           ->add('attendant', 'validFormat', [
-                      'rule' => array('custom', '/^[A-Za-z0-9" "]+$/'),
+                      'rule' => array('custom', '/^[A-Za-záéíóú0-9" "]+$/'),
                       'message' => 'Formato inválido'
           ])
           ->notEmpty('provider')
           ->add('provider', 'validFormat', [
-                      'rule' => array('custom', '/^[A-Za-z0-9" "\,\.\-\:]+$/'),
+                      'rule' => array('custom', '/^[A-Za-záéíóú0-9" "\,\.\-\:]+$/'),
                       'message' => 'Formato inválido'
           ])
           ->notEmpty('legal_certificate')

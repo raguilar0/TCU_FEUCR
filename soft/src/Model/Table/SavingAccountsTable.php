@@ -55,20 +55,36 @@ class SavingAccountsTable extends Table
         $validator
             ->numeric('amount')
             ->requirePresence('amount', 'create')
-            ->notEmpty('amount');
-        
+            ->notEmpty('amount')
+            ->add('amount', 'validFormat', [
+                        'rule' => array('custom', '/^[0-9\,\.]+$/'),
+                        'message' => 'Formato inválido. Solo números.'
+            ]);
 
         $validator
             ->requirePresence('bank', 'create')
-            ->notEmpty('bank');
+            ->notEmpty('bank')
+            ->add('bank', 'validFormat', [
+                        'rule' => array('custom', '/^[A-Za-záéíóú" "\,\.]+$/'),
+                        'message' => 'Formato inválido. Solo números.'
+            ]);
 
         $validator
             ->requirePresence('account_owner', 'create')
-            ->notEmpty('account_owner');
+            ->notEmpty('account_owner')
+            ->add('account_owner', 'validFormat', [
+                        'rule' => array('custom', '/^[A-Za-záéíóú" "\,\.]+$/'),
+                        'message' => 'Formato inválido.'
+            ]);
 
         $validator
             ->requirePresence('card_number', 'create')
-            ->notEmpty('card_number');
+            ->notEmpty('card_number')
+            ->add('card_number', 'validFormat', [
+                        'rule' => array('custom', '/^[0-9\-]+$/'),
+                        'message' => 'Formato inválido. Sólo números'
+            ]);
+
 
         return $validator;
     }
@@ -90,7 +106,7 @@ class SavingAccountsTable extends Table
 
     public function isOwnedBy($accountId, $association_id)
     {
-        
+
         return $this->exists(['id' => $accountId, 'association_id' => $association_id]);
     }
 

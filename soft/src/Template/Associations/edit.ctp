@@ -14,6 +14,7 @@
 <div class="form-group">
 
     <?php
+    
     echo $this->Form->input('acronym', ['label'=>'Sigla', 'class'=>'form-control']);
     echo $this->Form->input('name', ['label'=>'Nombre de la asociación', 'class'=>'form-control']);
     echo $this->Form->input('location', ['label'=>'Dirección', 'class'=>'form-control']);
