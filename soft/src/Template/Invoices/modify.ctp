@@ -13,11 +13,14 @@
   <table class="table read_association">
   <thead>
     <tr>
-      <th>Numero</th>
-      <th>Proveedor</th>
-      <th>Resposable</th>
-      <th>Monto</th>
-			<th>Estado</th>
+       <th> Número</th>
+        <th><?= $this->Paginator->sort('kind', ['label'=>'Tipo']) ?></th>
+        <th><?= $this->Paginator->sort('date', ['label'=>'Fecha']) ?></th>
+        <th>Proveedor</th>
+        <th>Responsable</th>
+        <th>Monto</th>
+        <th><?= $this->Paginator->sort('state',['label'=>'Estado']) ?></th>
+        <th class="actions"><?= __('Acciones') ?></th>
     </tr>
   </thead>
   <tbody>
@@ -26,6 +29,19 @@
           foreach ($invoice as $key) {
               echo "<tr>";
               echo "<td>".$key['number']."</td>";
+              switch ($key->kind) {
+              case 0:
+                  echo "<td> Tracto </td>";
+                  break;
+              case 1:
+                   echo "<td> Ing.Gen. </td>";
+                   break;
+              default:
+                  echo "<td> Superavit </td>";    
+                  break;
+                  
+              }
+              echo "<td>".$key['date']."</td>";
               echo "<td>".$key['provider']."</td>";
               echo "<td>".$key['attendant']."</td>";
               echo "<td>".$key['amount']."</td>";
@@ -48,6 +64,8 @@
   </tbody>
 </table>
 </div>
+
+
 
 <div class="row text-center">
   <div class="col-xs-12">
