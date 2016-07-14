@@ -133,7 +133,6 @@ class AssociationsController extends AppController
                     $this->Flash->success(__('La asociación se guardó exitosamente.'));
                     return $this->redirect(['action' => 'index']);
                 } else {
-                    debug($association->errors());
                     $this->Flash->error(__('La asociación no pudo ser guardada. Por favor intente de nuevo.'));
                 }
             }
