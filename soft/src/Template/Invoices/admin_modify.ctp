@@ -14,7 +14,8 @@
         <tr>
             <th><?= $this->Paginator->sort('Numero') ?></th>
             <th><?= $this->Paginator->sort('Proveedor') ?></th>
-            <th><?= $this->Paginator->sort('Associación') ?></th>
+            <th><?= $this->Paginator->sort('Fecha') ?></th>
+            <th><?= $this->Paginator->sort('Asociación') ?></th>
             <th><?= $this->Paginator->sort('Resposable') ?></th>
             <th><?= $this->Paginator->sort('Monto') ?></th>
             <th><?= $this->Paginator->sort('Estado') ?></th>
@@ -23,9 +24,11 @@
         </thead>
         <tbody>
         <?php foreach ($invoices as $key): ?>
+        
             <tr>
                 <td><?= h($key->number) ?></td>
                 <td><?= h($key->provider) ?></td>
+                <td><?= $key->date ?></td>
                 <td><?= $key->has('association') ? $this->Html->link($key->association->name, ['controller' => 'Associations', 'action' => 'view', $key->association->id]) : '' ?></td>
                 <td><?= h($key->attendant) ?></td>
                 <td><?= h($key->amount) ?></td>
