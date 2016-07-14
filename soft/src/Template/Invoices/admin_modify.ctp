@@ -13,7 +13,7 @@
         <thead>
         <tr>
             <th> Número</th>
-            <th><?= $this->Paginator->sort('kind', ['label'=>'TIpo']) ?></th>
+            <th><?= $this->Paginator->sort('kind', ['label'=>'Tipo']) ?></th>
             <th><?= $this->Paginator->sort('date', ['label'=>'Fecha']) ?></th>
             <th><?= $this->Paginator->sort('association',['label'=>'Asociación']) ?></th>
             <th>Monto</th>
