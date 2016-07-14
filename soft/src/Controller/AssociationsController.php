@@ -421,7 +421,7 @@ class AssociationsController extends AppController
         $negative_final_balance = (($final_balance < 0)? 1: 0);
 
 
-
+        $information['period_income'] = "¢ ".number_format($period_income,2,",",".");
         $information['amounts'] =  $data['amount']['amounts'];
         $information['little_amount'] = "¢ ".number_format($little_amount,2,",",".");
         $information['big_amount'] = "¢ ".number_format($big_amount,2,",",".");
