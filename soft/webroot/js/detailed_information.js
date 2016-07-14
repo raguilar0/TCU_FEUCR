@@ -163,7 +163,7 @@ function setGeneratedValues(object)
 
     }
 
-    amount_classes[0].innerHTML = "<h4> Total: "+ object.amounts.total_income+"</h4>";
+    amount_classes[0].innerHTML = "<h4> Total: "+ object.amounts.period_income+"</h4>";
     document.getElementById("generated_incomes").innerHTML = html;
 
 //****************************** END INCOMES **************************//
