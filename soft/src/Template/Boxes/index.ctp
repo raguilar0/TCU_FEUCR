@@ -23,8 +23,8 @@
             <?php foreach ($boxes as $box): ?>
             <tr>
                 <td><?= $box->has('association') ? $this->Html->link($box->association->name, ['controller' => 'Associations', 'action' => 'view', $box->association->id]) : '' ?></td>
-                <td><?= $this->Number->format($box->little_amount) ?></td>
-                <td><?= $this->Number->format($box->big_amount) ?></td>
+                <td><?= "¢ ".number_format($box->little_amount,2,".",",") ?></td>
+                <td><?= "¢ ".number_format($box->big_amount,2 ,".",",")?></td>
                 <?php if($box->type== 0){
                     echo "<td>Tracto</td>";
                 }else{

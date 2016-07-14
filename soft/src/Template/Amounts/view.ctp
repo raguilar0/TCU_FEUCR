@@ -20,7 +20,7 @@
 
     <tr>
         <th><?= __('Monto') ?></th>
-        <td><?= $this->Number->format($amount->amount) ?></td>
+        <td><?= "¢ ".number_format($amount->amount,2,".",",") ?></td>
     </tr>
     <tr>
         <th><?= __('Tipo') ?></th>

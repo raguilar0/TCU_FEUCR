@@ -28,7 +28,7 @@
                 <td><?= h($key->provider) ?></td>
                 <td><?= $key->has('association') ? $this->Html->link($key->association->name, ['controller' => 'Associations', 'action' => 'view', $key->association->id]) : '' ?></td>
                 <td><?= h($key->attendant) ?></td>
-                <td><?= h($key->amount) ?></td>
+                <td><?= "¢ ".h(number_format($key->amount, 2, ".",",")) ?></td>
                 <?php
                   if($key->state == 0){
                     echo "<td> Sin aprobar </td>";

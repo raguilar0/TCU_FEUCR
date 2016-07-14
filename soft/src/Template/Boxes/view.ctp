@@ -22,11 +22,11 @@
         </tr>
         <tr>
             <th><?= __('Little Amount') ?></th>
-            <td><?= $this->Number->format($box->little_amount) ?></td>
+            <td><?= "¢ ".number_format($box->little_amount,2,".",",") ?></td>
         </tr>
         <tr>
             <th><?= __('Big Amount') ?></th>
-            <td><?= $this->Number->format($box->big_amount) ?></td>
+            <td><?= "¢ ".number_format($box->big_amount,2 ,".",",") ?></td>
         </tr>
         <tr>
             <th><?= __('Type') ?></th>

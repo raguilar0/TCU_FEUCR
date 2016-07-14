@@ -13,10 +13,24 @@
             
             echo "<div class = 'row'>";
                 echo "<div class = 'col-xs-12 col-md-6'>";
-                    echo "<h4>".$this->Form->input('little_amount', ['class' => 'form-control','label'=>'Caja Chica', 'min'=> '0'])."</h4>";
+                    echo "<label> Caja chica </label>";
+                    echo "<div class='input-group'>";
+                        echo "<span class='input-group-addon' >₡</span>";
+                            echo $this->Form->input('little_amount', ['class' => 'form-control','label'=>false, 'min'=> '0']);
+                        echo "<span class='input-group-addon'>.00</span>";
+                    echo "</div>";
     	        echo "</div >";
+
+
+
     	        echo "<div class = 'col-xs-12 col-md-6'>";
-                    echo "<h4>".$this->Form->input('big_amount', ['class' => 'form-control','label'=>'Caja Fuerte', 'min'=> '0'])."</h4>";
+                    echo "<label> Caja fuerte </label>";
+                    echo "<div class='input-group'>";
+                        echo "<span class='input-group-addon' >₡</span>";
+                            echo $this->Form->input('big_amount', ['class' => 'form-control','label'=>false, 'min'=> '0']);
+                        echo "<span class='input-group-addon'>.00</span>";
+                    echo "</div>";
+
     	        echo "</div >";
     	    echo "</div >";
     	    if(($this->request->session()->read('Auth.User.role')) == 'admin'){

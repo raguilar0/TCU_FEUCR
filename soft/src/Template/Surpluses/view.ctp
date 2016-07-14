@@ -20,7 +20,7 @@
 
         <tr>
             <th><?= __('Monto asignado') ?></th>
-            <td><?= $this->Number->format($surplus->amount) ?></td>
+            <td><?= "¢ ".number_format($surplus->amount,2,".",",") ?></td>
         </tr>
         <tr>
             <th><?= __('Fecha de asignación') ?></th>

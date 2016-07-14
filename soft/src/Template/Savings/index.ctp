@@ -23,7 +23,7 @@
         <tbody>
         <?php foreach ($savings as $saving): ?>
             <tr>
-                <td><?= $this->Number->format($saving->amount) ?></td>
+                <td><?= "¢ ".number_format($saving->amount,2,".",",") ?></td>
                 <td><?= $saving->date?></td>
                 <td><?php  
                     switch ($this->Number->format($saving->state)) {

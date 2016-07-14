@@ -25,7 +25,7 @@
         <tbody>
         <?php foreach ($savingAccounts as $savingAccount): ?>
             <tr>
-                <td><?= $this->Number->format($savingAccount->amount) ?></td>
+                <td><?= "¢ ".number_format($savingAccount->amount,2,".",",") ?></td>
                 <td><?= h($savingAccount->date) ?></td>
                 <td><?= h($savingAccount->bank) ?></td>
                 <td><?= h($savingAccount->account_owner) ?></td>

@@ -22,7 +22,7 @@
         <tbody>
         <?php foreach ($surpluses as $surplus): ?>
             <tr>
-                <td><?= $this->Number->format($surplus->amount) ?></td>
+                <td><?= "¢ ".number_format($surplus->amount,2,".",",") ?></td>
                 <td><?= h($surplus->date) ?></td>
                 <td><?= h($surplus->detail) ?></td>
                 <td><?= $surplus->has('association') ? $this->Html->link($surplus->association->name, ['controller' => 'Associations', 'action' => 'view', $surplus->association->id]) : '' ?></td>

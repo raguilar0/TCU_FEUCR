@@ -22,7 +22,12 @@
 
 
       echo "<div class = 'col-xs-12 col-md-4'>";
-       echo "<h4>".$this->Form->input('amount', ['class' => 'form-control','label'=>'Monto','value'=>$data['amount'], 'placeholder'=>'Monto de la factura'])."</h4>";
+        echo "<label> Monto </label>";
+            echo "<div class='input-group'>";
+            echo "<span class='input-group-addon' >₡</span>";
+                echo $this->Form->input('amount', ['class' => 'form-control','label'=>false,'value'=>$data['amount'], 'placeholder'=>'Monto de la factura']);
+            echo "<span class='input-group-addon'>.00</span>";
+            echo "</div>";
       echo "</div >";
 
 

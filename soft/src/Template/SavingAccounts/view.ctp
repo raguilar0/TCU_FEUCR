@@ -32,7 +32,7 @@
         </tr>
         <tr>
             <th><?= __('Monto') ?></th>
-            <td><?= $this->Number->format($savingAccount->amount) ?></td>
+            <td><?= "¢ ".number_format($savingAccount->amount,2,".",",") ?></td>
         </tr>
         <tr>
             <th><?= __('Fecha') ?></th>

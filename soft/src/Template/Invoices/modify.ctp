@@ -28,7 +28,7 @@
               echo "<td>".$key['number']."</td>";
               echo "<td>".$key['provider']."</td>";
               echo "<td>".$key['attendant']."</td>";
-              echo "<td>".$key['amount']."</td>";
+              echo "<td>"."¢ ".number_format($key['amount'],2,".",",")."</td>";
 							//echo "<td>".$key['mail']."</td>";
 							if($key['state'] == 0) {
 								echo "<td> Sin aprobar </td>";

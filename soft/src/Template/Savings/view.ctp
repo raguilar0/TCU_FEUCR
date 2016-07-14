@@ -20,7 +20,7 @@
         </tr>
         <tr>
             <th><?= __('Monto asignado') ?></th>
-            <td><?= $this->Number->format($saving->amount) ?></td>
+            <td><?= "¢ ".number_format($saving->amount,2,".",",") ?></td>
         </tr>
         <tr>
             <th><?= __('Estado (aprobado/rechazado)') ?></th>

@@ -24,7 +24,7 @@
         <tbody>
         <?php foreach ($amounts as $amount): ?>
             <tr>
-                <td><?= $this->Number->format($amount->amount) ?></td>
+                <td><?= "¢ ".number_format($amount->amount,2,".",",") ?></td>
                 <td><?= $amount->type ? 'Ingresos Generados': 'Tracto' ;?></td>
                 <td><?= h($amount->date) ?></td>
                 <td><?= $amount->detail ?></td>

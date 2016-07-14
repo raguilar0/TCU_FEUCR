@@ -23,7 +23,7 @@
         <tbody>
         <?php foreach ($initialAmounts as $initialAmount): ?>
             <tr>
-                <td><?= $this->Number->format($initialAmount->amount) ?></td>
+                <td><?= "¢ ".number_format($initialAmount->amount,2,".",",")?></td>
                 <td><?= $initialAmount->type ? 'Ingresos Generados': 'Tracto' ;?></td>
                 <td><?= h($initialAmount->date) ?></td>
                 <td><?= $initialAmount->has('association') ? $this->Html->link($initialAmount->association->name, ['controller' => 'Associations', 'action' => 'view', $initialAmount->association->id]) : '' ?></td>
