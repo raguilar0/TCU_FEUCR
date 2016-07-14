@@ -13,7 +13,7 @@
         <thead>
         <tr>
             <th> Número</th>
-            <th><?= $this->Paginator->sort('kind', ['label'=>'TIpo']) ?></th>
+            <th><?= $this->Paginator->sort('kind', ['label'=>'Tipo']) ?></th>
             <th><?= $this->Paginator->sort('date', ['label'=>'Fecha']) ?></th>
             <th><?= $this->Paginator->sort('association',['label'=>'Asociación']) ?></th>
             <th>Monto</th>
@@ -43,7 +43,6 @@
                 ?>
                 <td><?= $key->date ?></td>
                 <td><?= $key->has('association') ? $this->Html->link($key->association->name, ['controller' => 'Associations', 'action' => 'view', $key->association->id]) : '' ?></td>
-                <td><?= h($key->attendant) ?></td>
                 <td><?= "¢ ".h(number_format($key->amount, 2, ".",",")) ?></td>
                 <?php
                     switch ($key->state) {
