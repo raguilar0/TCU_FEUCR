@@ -24,7 +24,7 @@ class AmountsController extends AppController
 			$this->set('amount',$amount); // set() Pasa la variable amount a la vista.
 		}
 	}
-	
+
 	public function addAmounts()
 	{
 		if(($this->request->session()->read('Auth.User.role')) != 'rep'){
@@ -32,14 +32,14 @@ class AmountsController extends AppController
 		}
 		else{
 			$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
-			
+
 			if($this->request->is('POST'))
 			{
 				$tract = $this->getTractId(date('Y-m-d'));
 				$association_id = $this->request->session()->read('Auth.User.association_id');
 				$type = 1;
 				$data = $this->request->data;
-				
+
 				$data['tract_id'] = $tract;
 				$data['association_id'] = $association_id;
 				$data['type'] = $type;
@@ -59,12 +59,12 @@ class AmountsController extends AppController
 
 
 			}
-			
+
 		}
 	}
-	
 
-	
+
+
 
 	public function add($association = null)
 	{
@@ -80,8 +80,8 @@ class AmountsController extends AppController
 			{
 
 				$data = $this->request->data;
-				
-				
+
+
 				$association_id = $this->getAssociationId($association);
 
 				$successAmountsIndex = $this->saveAmounts($data, $association_id, $tracts); //Guardamos los montos
@@ -275,7 +275,7 @@ class AmountsController extends AppController
 
 		return $headquarters;
 	}
-	
+
 
 
 
@@ -380,7 +380,7 @@ class AmountsController extends AppController
 
 
 				}
-				$this->Flash->success($message, ['key' => 'message']);
+				$this->Flash->success($message);
 				$query = $this->getModifyInformation($id, date('Y'));//Pide la información de los montos
 
 			}
@@ -409,7 +409,7 @@ class AmountsController extends AppController
 		return $query;
 	}
 
-	
+
 	public function showAssociations($id = null)
 	{
 
@@ -455,8 +455,8 @@ class AmountsController extends AppController
 		}
 
 
-		
-		
+
+
 	}
 
 

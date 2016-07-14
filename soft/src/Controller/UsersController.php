@@ -179,11 +179,11 @@ class UsersController extends AppController
             $user = $this->Users->newEntity($this->request->data);
 
             if ($this->Users->save($user)) {
-                $this->Flash->success('El usuario ha sido agregado', ['key' => 'success']);
+                $this->Flash->success('El usuario ha sido agregado');
                 //return $this->redirect(['action' => 'add']);
             }
             else{
-                $this->Flash->error(__('Error al agregar usuario.', ['key'=>'error']));
+                $this->Flash->error(__('Error al agregar usuario.'));
             }
 
         }
@@ -279,7 +279,7 @@ class UsersController extends AppController
                                   'role'=>$this->request->data['role'], 'state'=>$blocked])
                             ->where(['id'=>$id])
                             ->execute();
-                      $this->Flash->success(__('Usuario modificado correctamente.', ['key'=>'success']));
+                      $this->Flash->success(__('Usuario modificado correctamente.'));
                     }
                     else{
                         $this->Flash->error(__('Error al modificar usuario.'));
@@ -320,11 +320,11 @@ class UsersController extends AppController
                       return $this->redirect($this->Auth->redirectUrl());
                     }
                     else{
-                      $this->Flash->error('Usuario o contraseña inválidos. Intente nuevamente.', ['key' => 'error']);
+                      $this->Flash->error('Usuario o contraseña inválidos. Intente nuevamente.');
                     }
                 }
                 else{
-                  $this->Flash->error('Usuario o contraseña inválidos. Intente nuevamente.', ['key' => 'error']);
+                  $this->Flash->error('Usuario o contraseña inválidos. Intente nuevamente.');
 
                 }
             }
@@ -436,7 +436,7 @@ class UsersController extends AppController
       {
 
 
-        $user = $this->Users->get($this->request->session()->read('Auth.User.id')); // Lo que me dijo Slon);
+        $user = $this->Users->get($this->request->session()->read('Auth.User.id'));
 
         if($this->request->is(array('post','put')))
         {
