@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\ORM\TableRegistry;
 use App\Controller\AppController;
 use Cake\Event\Event;
@@ -29,17 +30,27 @@ class UsersController extends AppController
        }
     }
 
+    /**
     public function view($id)
     {
       if($this->Auth->user()){
-        $user = $this->Users->get($id);
-        $this->set(compact('user'));
+          try
+          {
+              $user = $this->Users->get($id);
+              $this->set(compact('user'));
+          }
+          catch (RecordNotFoundException $e)
+          {
+              $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
+              return $this->redirect(['action' => 'index']);
+          }
+
       }
       else{
         return $this->redirect(['controller'=>'pages', 'action'=>'home']);
       }
     }
-
+**/
     public function showUsers($id = null)
     {
       if($this->Auth->user()){
@@ -400,7 +411,16 @@ class UsersController extends AppController
 
         if($id)
         {
-          $user = $this->Users->get($id);
+            try
+            {
+                $user = $this->Users->get($id);
+            }
+            catch (RecordNotFoundException $e)
+            {
+                $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
+                return $this->redirect(['action' => 'init']);
+            }
+
 
           if($this->request->is("post"))
           {
@@ -435,8 +455,16 @@ class UsersController extends AppController
       public function resetPass()
       {
 
+        try
+        {
+            $user = $this->Users->get($this->request->session()->read('Auth.User.id')); // Lo que me dijo Slon);
+        }
+        catch (RecordNotFoundException $e)
+        {
+            $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
+            return $this->redirect(['action' => 'init']);
+        }
 
-        $user = $this->Users->get($this->request->session()->read('Auth.User.id')); // Lo que me dijo Slon);
 
         if($this->request->is(array('post','put')))
         {

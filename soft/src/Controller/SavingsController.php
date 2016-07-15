@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Core\Exception\Exception;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Filesystem\Folder;
 use Cake\Filesystem\File;
 use Cake\Event\Event;
@@ -72,13 +73,22 @@ class SavingsController extends AppController
     public function view($id = null)
     {
       if($this->Auth->user()){
-        $this->viewBuilder()->layout('admin_views');
+          try
+          {
+              $this->viewBuilder()->layout('admin_views');
 
-        if(($this->request->session()->read('Auth.User.role')) == 'admin'){
-          $saving = $this->Savings->get($id, [
-              'contain' => ['Associations', 'Tracts']
-          ]);
-        }
+              if(($this->request->session()->read('Auth.User.role')) == 'admin'){
+                  $saving = $this->Savings->get($id, [
+                      'contain' => ['Associations', 'Tracts']
+                  ]);
+              }
+          }
+          catch (RecordNotFoundException $e)
+          {
+              $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
+              return $this->redirect(['action' => 'index']);
+          }
+
 
         if(($this->request->session()->read('Auth.User.role')) == 'rep'){
           $association_id = $this->request->session()->read('Auth.User.association_id');
@@ -186,10 +196,20 @@ class SavingsController extends AppController
     public function edit($id = null)
     {
       if($this->Auth->user()){
-        $this->viewBuilder()->layout('admin_views');
-        $saving = $this->Savings->get($id, [
-            'contain' => []
-        ]);
+
+          try
+          {
+              $this->viewBuilder()->layout('admin_views');
+              $saving = $this->Savings->get($id, [
+                  'contain' => []
+              ]);
+          }
+          catch (RecordNotFoundException $e)
+          {
+              $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
+              return $this->redirect(['action' => 'index']);
+          }
+
         if ($this->request->is(['patch', 'post', 'put'])) {
           if(($this->request->session()->read('Auth.User.role')) == 'rep'){
               $this->request->data['association_id'] = $this->request->session()->read('Auth.User.association_id');
@@ -239,20 +259,39 @@ class SavingsController extends AppController
     public function delete($id = null)
     {
       if($this->Auth->user()){
-        $this->viewBuilder()->layout('admin_views');
-        $this->request->allowMethod(['post', 'delete']);
-        $saving = $this->Savings->get($id);
 
-        $deleted = $this->deleteLetter($saving->letter);
+          try
+          {
+              $this->viewBuilder()->layout('admin_views');
+              $this->request->allowMethod(['post', 'delete']);
+              $saving = $this->Savings->get($id);
 
-        if ($deleted && $this->Savings->delete($saving)) {
-            $this->Flash->success(__('El monto de ahorro se ha borrado correctamente.'));
+              try
+              {
+                  $deleted = $this->deleteLetter($saving->letter);
+
+                  if ($deleted && $this->Savings->delete($saving)) {
+                      $this->Flash->success(__('El monto de ahorro se ha borrado correctamente.'));
 
 
-        } else {
-            $this->Flash->error(__('El ahorro no ha podido ser borrado. Intentelo de nuevo.'));
-        }
-        return $this->redirect(['action' => 'index']);
+                  } else {
+                      $this->Flash->error(__('El ahorro no ha podido ser borrado. Intentelo de nuevo.'));
+                  }
+                  return $this->redirect(['action' => 'index']);
+              }
+              catch (\PDOException $e)
+              {
+                  $this->Flash->error(__('Error al borrar el monto de ahorro. Esto puede deberse a que existe información asociada a este monto de ahorro en la base de datos. Debe borrar cualquier información asociada y luego borrar el monto de ahorro.'));
+                  return $this->redirect(['action' => 'index']);
+              }
+
+          }
+          catch (RecordNotFoundException $record)
+          {
+              $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
+              return $this->redirect(['action' => 'index']);
+          }
+
     }
     else{
         return $this->redirect(['controller'=>'pages', 'action'=>'home']);

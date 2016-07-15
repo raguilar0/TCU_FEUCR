@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Core\Exception\Exception;
+use Cake\Datasource\Exception\RecordNotFoundException;
 
 class AmountsController extends AppController
 {
@@ -35,13 +36,23 @@ class AmountsController extends AppController
 	 */
 	public function view($id = null)
 	{
+		try
+		{
 			$this->viewBuilder()->layout('admin_views');
 			$amounts = $this->Amounts->get($id, [
 				'contain' => ['Associations', 'Tracts']
 			]);
-
 			$this->set('amount', $amounts);
 			$this->set('_serialize', ['amount']);
+		}
+		catch (RecordNotFoundException $e)
+		{
+			$this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
+			return $this->redirect(['action' => 'index']);
+		}
+
+
+
 
 	}
 	
@@ -75,8 +86,6 @@ class AmountsController extends AppController
 					{
 						$this->Flash->error('No se pudo agregar el monto. Póngase en contacto con el administrador para verificar que se haya creado el tracto correspondiente');
 					}
-
-
 
 			}
 			
@@ -345,29 +354,36 @@ class AmountsController extends AppController
 	public function edit($id = null)
 	{
 
-		$this->viewBuilder()->layout('admin_views');
-		$amount = $this->Amounts->get($id, [
-			'contain' => []
-		]);
+		try
+		{
+			$this->viewBuilder()->layout('admin_views');
+			$amount = $this->Amounts->get($id, [
+				'contain' => []
+			]);
 
 
 
-		if ($this->request->is(['patch', 'post', 'put'])) {
+			if ($this->request->is(['patch', 'post', 'put'])) {
 
-			$amount = $this->Amounts->patchEntity($amount, $this->request->data);
-			if ($this->Amounts->save($amount)) {
-				$this->Flash->success(__('El monto ha sido guardado.'));
-				return $this->redirect(['action' => 'index']);
-			} else {
-				$this->Flash->error(__('El monto no ha podido ser guardado. Intentelo de nuevo'));
+				$amount = $this->Amounts->patchEntity($amount, $this->request->data);
+				if ($this->Amounts->save($amount)) {
+					$this->Flash->success(__('El monto ha sido guardado.'));
+					return $this->redirect(['action' => 'index']);
+				} else {
+					$this->Flash->error(__('El monto no ha podido ser guardado. Intentelo de nuevo'));
+				}
+
 			}
 
+
+			$this->set(compact('amount'));
+			$this->set('_serialize', ['amount']);
 		}
-		
-
-
-		$this->set(compact('amount'));
-		$this->set('_serialize', ['amount']);
+		catch (RecordNotFoundException $e)
+		{
+			$this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
+			return $this->redirect(['action' => 'index']);
+		}
 
 	}
 
