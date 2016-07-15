@@ -327,34 +327,45 @@ class UsersController extends AppController
     }
 
     public function login()
-        {
+    {
 
-        if(!$this->Auth->user()){
-            if ($this->request->is('post')) {
+    if(!$this->Auth->user()){
+        if ($this->request->is('post')) {
 
-                $user = $this->Auth->identify();
-                //debug($user['state']);
-                if ($user) {
-                  //debug($this->request->session()->read('Auth.User.state'));
-                    if($user['state'] == 0){
-                      $this->Auth->setUser($user);
-                      return $this->redirect($this->Auth->redirectUrl());
-                    }
-                    else{
-                      $this->Flash->error('Usuario o contraseña inválidos. Intente nuevamente.');
-                    }
+            $user = $this->Auth->identify();
+            if ($user) {
+                if(!$user['state'] && $this->validateAssociation($user['association_id'])){
+                  $this->Auth->setUser($user);
+                  return $this->redirect($this->Auth->redirectUrl());
                 }
                 else{
                   $this->Flash->error('Usuario o contraseña inválidos. Intente nuevamente.');
-
                 }
             }
-          }
-          else{
-            return $this->redirect(['controller'=>'pages', 'action'=>'home']);
-          }
+            else{
+              $this->Flash->error('Usuario o contraseña inválidos. Intente nuevamente.');
 
+            }
         }
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
+
+    }
+
+    public function validateAssociation($association_id)
+    {
+        $query = $this->Users->Associations->find()
+                            ->hydrate(false)
+                            ->select(['enable'])
+                            ->where(['id'=>$association_id]);
+
+        $query = $query->toArray();
+
+        return $query[0]['enable'];
+    }
+
 
         public function logout()
         {

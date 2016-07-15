@@ -86,7 +86,7 @@
 
 
          <?= $this->fetch('content') ?>
-
+    <?= $this->Flash->render() ?>
 
 
      <?=$this->Html->script('jquery.js') ?>
