@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Datasource\Exception\RecordNotFoundException;
 
 /**
  * Surpluses Controller
@@ -43,13 +44,22 @@ class SurplusesController extends AppController
     public function view($id = null)
     {
       if($this->Auth->user()){
-        $this->viewBuilder()->layout('admin_views');
-        $surplus = $this->Surpluses->get($id, [
-            'contain' => ['Associations']
-        ]);
+          try
+          {
+              $this->viewBuilder()->layout('admin_views');
+              $surplus = $this->Surpluses->get($id, [
+                  'contain' => ['Associations']
+              ]);
 
-        $this->set('surplus', $surplus);
-        $this->set('_serialize', ['surplus']);
+              $this->set('surplus', $surplus);
+              $this->set('_serialize', ['surplus']);
+          }
+          catch (RecordNotFoundException $e)
+          {
+              $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
+              return $this->redirect(['action' => 'index']);
+          }
+
       }
       else{
         return $this->redirect(['controller'=>'pages', 'action'=>'home']);
@@ -94,22 +104,31 @@ class SurplusesController extends AppController
     public function edit($id = null)
     {
       if($this->Auth->user()){
-        $this->viewBuilder()->layout('admin_views');
-        $surplus = $this->Surpluses->get($id, [
-            'contain' => []
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $surplus = $this->Surpluses->patchEntity($surplus, $this->request->data);
-            if ($this->Surpluses->save($surplus)) {
-                $this->Flash->success(__('El superávit ha sido guardado'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('El superávit no ha podido ser guardado. Intentelo de nuevo'));
-            }
-        }
-        $associations = $this->Surpluses->Associations->find('list');
-        $this->set(compact('surplus', 'associations'));
-        $this->set('_serialize', ['surplus']);
+          try
+          {
+              $this->viewBuilder()->layout('admin_views');
+              $surplus = $this->Surpluses->get($id, [
+                  'contain' => []
+              ]);
+              if ($this->request->is(['patch', 'post', 'put'])) {
+                  $surplus = $this->Surpluses->patchEntity($surplus, $this->request->data);
+                  if ($this->Surpluses->save($surplus)) {
+                      $this->Flash->success(__('El superávit ha sido guardado'));
+                      return $this->redirect(['action' => 'index']);
+                  } else {
+                      $this->Flash->error(__('El superávit no ha podido ser guardado. Intentelo de nuevo'));
+                  }
+              }
+              $associations = $this->Surpluses->Associations->find('list');
+              $this->set(compact('surplus', 'associations'));
+              $this->set('_serialize', ['surplus']);
+          }
+          catch (RecordNotFoundException $e)
+          {
+              $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
+              return $this->redirect(['action' => 'index']);
+          }
+
       }
       else{
         return $this->redirect(['controller'=>'pages', 'action'=>'home']);
@@ -126,15 +145,32 @@ class SurplusesController extends AppController
     public function delete($id = null)
     {
       if($this->Auth->user()){
-        $this->viewBuilder()->layout('admin_views');
-        $this->request->allowMethod(['post', 'delete']);
-        $surplus = $this->Surpluses->get($id);
-        if ($this->Surpluses->delete($surplus)) {
-            $this->Flash->success(__('El superávit ha sido guardado.'));
-        } else {
-            $this->Flash->error(__('El superávit no ha podido ser borrado. Intentelo de nuevo'));
-        }
-        return $this->redirect(['action' => 'index']);
+          try
+          {
+              $this->viewBuilder()->layout('admin_views');
+              $this->request->allowMethod(['post', 'delete']);
+              $surplus = $this->Surpluses->get($id);
+              try
+              {
+                  if ($this->Surpluses->delete($surplus)) {
+                      $this->Flash->success(__('El superávit ha sido guardado.'));
+                  } else {
+                      $this->Flash->error(__('El superávit no ha podido ser borrado. Intentelo de nuevo'));
+                  }
+                  return $this->redirect(['action' => 'index']);
+              }
+              catch (\PDOException $e)
+              {
+                  $this->Flash->error(__('Error al borrar el superávit. Esto puede deberse a que hay información asociada en la base de datos a este superávit. Borre cualquier información asociada y luego intente de nuevo.'));
+                  return $this->redirect(['action' => 'index']);
+              }
+          }
+          catch (RecordNotFoundException $record)
+          {
+              $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
+              return $this->redirect(['action' => 'index']);
+          }
+
       }
       else{
         return $this->redirect(['controller'=>'pages', 'action'=>'home']);

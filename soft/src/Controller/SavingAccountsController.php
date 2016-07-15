@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
 
 /**
@@ -64,13 +65,22 @@ class SavingAccountsController extends AppController
     public function view($id = null)
     {
       if($this->Auth->user()){
-        $this->viewBuilder()->layout('admin_views');
-        $savingAccount = $this->SavingAccounts->get($id, [
-            'contain' => ['Associations', 'Tracts']
-        ]);
+          try
+          {
+              $this->viewBuilder()->layout('admin_views');
+              $savingAccount = $this->SavingAccounts->get($id, [
+                  'contain' => ['Associations', 'Tracts']
+              ]);
 
-        $this->set('savingAccount', $savingAccount);
-        $this->set('_serialize', ['savingAccount']);
+              $this->set('savingAccount', $savingAccount);
+              $this->set('_serialize', ['savingAccount']);
+          }
+          catch (RecordNotFoundException $e)
+          {
+              $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
+              return $this->redirect(['action' => 'index']);
+          }
+
       }
       else{
         return $this->redirect(['controller'=>'pages', 'action'=>'home']);
@@ -132,40 +142,50 @@ class SavingAccountsController extends AppController
     public function edit($id = null)
     {
       if($this->Auth->user()){
-        $this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vist
-        $savingAccount = $this->SavingAccounts->get($id, [
-            'contain' => []
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-          
-           if(($this->request->session()->read('Auth.User.role')) == 'rep'){
-              $this->request->data['association_id'] = $this->request->session()->read('Auth.User.association_id');
-           }
-           
-            $savingAccount = $this->SavingAccounts->patchEntity($savingAccount, $this->request->data);
-            if ($this->SavingAccounts->save($savingAccount)) {
-                $this->Flash->success(__('La cuenta de ahorros ha sido guardada.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('La cuenta de ahorros no ha podido ser guardada. Inténtelo de nuevo'));
-            }
-        }
-        $associations = $this->SavingAccounts->Associations->find('list');
-        $tracts = $this->SavingAccounts->Tracts->find()
-            ->select(['id','date','deadline'])
-            ->where(['YEAR(date)'=>date('Y')])
-            ->orWhere(['YEAR(date)'=>(date('Y') + 1)])
-            ->orWhere(['YEAR(date)'=>(date('Y') - 1)]);
-        $temp = array();
 
-        foreach ($tracts as $key => $value)
-        {
-            $temp[$value->id] = $value->date." - ".$value->deadline;
-        }
+          try
+          {
+              $this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vist
+              $savingAccount = $this->SavingAccounts->get($id, [
+                  'contain' => []
+              ]);
+              if ($this->request->is(['patch', 'post', 'put'])) {
 
-        $tracts = $temp;
-        $this->set(compact('savingAccount', 'associations', 'tracts'));
-        $this->set('_serialize', ['savingAccount']);
+                  if(($this->request->session()->read('Auth.User.role')) == 'rep'){
+                      $this->request->data['association_id'] = $this->request->session()->read('Auth.User.association_id');
+                  }
+
+                  $savingAccount = $this->SavingAccounts->patchEntity($savingAccount, $this->request->data);
+                  if ($this->SavingAccounts->save($savingAccount)) {
+                      $this->Flash->success(__('La cuenta de ahorros ha sido guardada.'));
+                      return $this->redirect(['action' => 'index']);
+                  } else {
+                      $this->Flash->error(__('La cuenta de ahorros no ha podido ser guardada. Inténtelo de nuevo'));
+                  }
+              }
+              $associations = $this->SavingAccounts->Associations->find('list');
+              $tracts = $this->SavingAccounts->Tracts->find()
+                  ->select(['id','date','deadline'])
+                  ->where(['YEAR(date)'=>date('Y')])
+                  ->orWhere(['YEAR(date)'=>(date('Y') + 1)])
+                  ->orWhere(['YEAR(date)'=>(date('Y') - 1)]);
+              $temp = array();
+
+              foreach ($tracts as $key => $value)
+              {
+                  $temp[$value->id] = $value->date." - ".$value->deadline;
+              }
+
+              $tracts = $temp;
+              $this->set(compact('savingAccount', 'associations', 'tracts'));
+              $this->set('_serialize', ['savingAccount']);
+          }
+          catch (RecordNotFoundException $e)
+          {
+              $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
+              return $this->redirect(['action' => 'index']);
+          }
+
       }
       else{
         return $this->redirect(['controller'=>'pages', 'action'=>'home']);
@@ -184,15 +204,34 @@ class SavingAccountsController extends AppController
     {
       if($this->Auth->user() && ($this->request->session()->read('Auth.User.role') == 'admin') ){
 
-        $this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vist
-        $this->request->allowMethod(['post', 'delete']);
-        $savingAccount = $this->SavingAccounts->get($id);
-        if ($this->SavingAccounts->delete($savingAccount)) {
-            $this->Flash->success(__('La cuenta de ahorros ha sido borrada.'));
-        } else {
-            $this->Flash->error(__('La cuenta de ahorros no ha podido ser borrada. Inténtelo de nuevo.'));
-        }
-        return $this->redirect(['action' => 'index']);
+          try
+          {
+              $this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vist
+              $this->request->allowMethod(['post', 'delete']);
+              $savingAccount = $this->SavingAccounts->get($id);
+
+              try
+              {
+                  if ($this->SavingAccounts->delete($savingAccount)) {
+                      $this->Flash->success(__('La cuenta de ahorros ha sido borrada.'));
+                  } else {
+                      $this->Flash->error(__('La cuenta de ahorros no ha podido ser borrada. Inténtelo de nuevo.'));
+                  }
+                  return $this->redirect(['action' => 'index']);
+              }
+              catch (\PDOException $e)
+              {
+                  $this->Flash->error(__('Error al borrar la cuenta. Esto puede deberse a que existe información asociada en la base de datos. Debe borrar cualquier información y luego borrar la cuenta.'));
+                  return $this->redirect(['action' => 'index']);
+              }
+
+          }
+          catch (RecordNotFoundException $record)
+          {
+              $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
+              return $this->redirect(['action' => 'index']);
+          }
+
       }
       else{
         return $this->redirect(['controller'=>'pages', 'action'=>'home']);

@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Filesystem\Folder;
 use Cake\Filesystem\File;
 
@@ -48,10 +49,19 @@ class HeadquartersController extends AppController
     {
         if($this->Auth->user())
         {
-            $this->viewBuilder()->layout('admin_views');
-            $headquarters = $this->Headquarters->get($id, [
-                'contain' => []
-            ]);
+            try
+            {
+                $this->viewBuilder()->layout('admin_views');
+                $headquarters = $this->Headquarters->get($id, [
+                    'contain' => []
+                ]);
+            }
+            catch (RecordNotFoundException $e)
+            {
+                $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
+                return $this->redirect(['action' => 'index']);
+            }
+
         }
         else
         {
@@ -122,10 +132,19 @@ class HeadquartersController extends AppController
     {
         if ($this->Auth->user()) {
 
-            $this->viewBuilder()->layout('admin_views');
-            $headquarters = $this->Headquarters->get($id, [
-                'contain' => []
-            ]);
+            try
+            {
+                $this->viewBuilder()->layout('admin_views');
+                $headquarters = $this->Headquarters->get($id, [
+                    'contain' => []
+                ]);
+            }
+            catch (RecordNotFoundException $e)
+            {
+                $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
+                return $this->redirect(['action' => 'index']);
+            }
+
 
             if ($this->request->is("get")) {
                 $session = $this->request->session();
@@ -205,17 +224,34 @@ class HeadquartersController extends AppController
         {
             $this->viewBuilder()->layout('admin_views');
             $this->request->allowMethod(['post', 'delete']);
-            $headquarters = $this->Headquarters->get($id);
+            try
+            {
+                $headquarters = $this->Headquarters->get($id);
 
-            $image_name = $headquarters->image_name; //Se borra primero la imagen
+                try
+                {
+                    $image_name = $headquarters->image_name; //Se borra primero la imagen
 
-            if ($this->Headquarters->delete($headquarters)) {
-                $this->deleteHeadquarterImage($image_name); //Se borra primero la imagen
-                $this->Flash->success(__('La sede se eliminó exitosamente.'));
-            } else {
-                $this->Flash->error(__('La sede no pudo ser eliminada. Por favor intente de nuevo'));
+                    if ($this->Headquarters->delete($headquarters)) {
+                        $this->deleteHeadquarterImage($image_name); //Se borra primero la imagen
+                        $this->Flash->success(__('La sede se eliminó exitosamente.'));
+                    } else {
+                        $this->Flash->error(__('La sede no pudo ser eliminada. Por favor intente de nuevo'));
+                    }
+                    return $this->redirect(['action' => 'index']);
+                }
+                catch (\PDOException $e)
+                {
+                    $this->Flash->error(__('No se pudo borrar la sede. Esto puede deberse a que tiene información asociada en la base de datos, por ejemplo asociaciones. Debe borrar cualquier asociación que pertenezca a esta sede y luego borrar la sede.'));
+                    return $this->redirect(['action' => 'index']);
+                }
             }
-            return $this->redirect(['action' => 'index']);
+            catch (RecordNotFoundException $record)
+            {
+                $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
+                return $this->redirect(['action' => 'index']);
+            }
+
         }
         else
         {

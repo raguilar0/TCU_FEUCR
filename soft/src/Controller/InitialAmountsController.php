@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Datasource\Exception\RecordNotFoundException;
 
 /**
  * InitialAmounts Controller
@@ -43,13 +44,23 @@ class InitialAmountsController extends AppController
     public function view($id = null)
     {
       if($this->Auth->user()){
-        $this->viewBuilder()->layout('admin_views');
-        $initialAmount = $this->InitialAmounts->get($id, [
-            'contain' => ['Associations', 'Tracts']
-        ]);
 
-        $this->set('initialAmount', $initialAmount);
-        $this->set('_serialize', ['initialAmount']);
+          try
+          {
+              $this->viewBuilder()->layout('admin_views');
+              $initialAmount = $this->InitialAmounts->get($id, [
+                  'contain' => ['Associations', 'Tracts']
+              ]);
+
+              $this->set('initialAmount', $initialAmount);
+              $this->set('_serialize', ['initialAmount']);
+          }
+          catch (RecordNotFoundException $e)
+          {
+              $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
+              return $this->redirect(['action' => 'index']);
+          }
+
       }
       else{
         return $this->redirect(['controller'=>'pages', 'action'=>'home']);
@@ -91,10 +102,19 @@ class InitialAmountsController extends AppController
     public function edit($id = null)
     {
       if($this->Auth->user()){
-        $this->viewBuilder()->layout('admin_views');
-        $initialAmount = $this->InitialAmounts->get($id, [
-            'contain' => []
-        ]);
+          try
+          {
+              $this->viewBuilder()->layout('admin_views');
+              $initialAmount = $this->InitialAmounts->get($id, [
+                  'contain' => []
+              ]);
+          }
+          catch (RecordNotFoundException $e)
+          {
+              $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
+              return $this->redirect(['action' => 'index']);
+          }
+
 
 
 
@@ -146,15 +166,35 @@ class InitialAmountsController extends AppController
     public function delete($id = null)
     {
       if($this->Auth->user()){
-        $this->viewBuilder()->layout('admin_views');
-        $this->request->allowMethod(['post', 'delete']);
-        $initialAmount = $this->InitialAmounts->get($id);
-        if ($this->InitialAmounts->delete($initialAmount)) {
-            $this->Flash->success(__('El monto inicial no ha sido guardado.'));
-        } else {
-            $this->Flash->error(__('El monto inicial no ha podido ser guardado. Intentelo de nuevo'));
-        }
-        return $this->redirect(['action' => 'index']);
+
+          try
+          {
+              $this->viewBuilder()->layout('admin_views');
+              $this->request->allowMethod(['post', 'delete']);
+              $initialAmount = $this->InitialAmounts->get($id);
+
+              try
+              {
+                  if ($this->InitialAmounts->delete($initialAmount)) {
+                      $this->Flash->success(__('El monto inicial no ha sido guardado.'));
+                  } else {
+                      $this->Flash->error(__('El monto inicial no ha podido ser guardado. Intentelo de nuevo'));
+                  }
+                  return $this->redirect(['action' => 'index']);
+              }
+              catch (\PDOException $e)
+              {
+                  $this->Flash->error(__('No se pudo borrar el monto inicial. Esto puede deberse a que hay información asociada en la base de datos. Borre cualquier información asociada a este monto inicial y luego intente de nuevo.'));
+                  return $this->redirect(['action' => 'index']);
+              }
+          }
+          catch (RecordNotFoundException $record)
+          {
+              $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
+              return $this->redirect(['action' => 'index']);
+          }
+
+
       }
       else{
         return $this->redirect(['controller'=>'pages', 'action'=>'home']);

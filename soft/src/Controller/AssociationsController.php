@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Core\Exception\Exception;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
 
 /**
@@ -60,13 +61,22 @@ class AssociationsController extends AppController
     {
         if($this->Auth->user())
         {
-            $this->viewBuilder()->layout('admin_views');
-            $association = $this->Associations->get($id, [
-                'contain' => ['Headquarters', 'Amounts', 'Boxes', 'InitialAmounts', 'Invoices', 'SavingAccounts', 'Savings', 'Surpluses', 'Users', 'Warehouses']
-            ]);
+            try
+            {
+                $this->viewBuilder()->layout('admin_views');
+                $association = $this->Associations->get($id, [
+                    'contain' => ['Headquarters', 'Amounts', 'Boxes', 'InitialAmounts', 'Invoices', 'SavingAccounts', 'Savings', 'Surpluses', 'Users', 'Warehouses']
+                ]);
 
-            $this->set('association', $association);
-            $this->set('_serialize', ['association']);
+                $this->set('association', $association);
+                $this->set('_serialize', ['association']);
+            }
+            catch (RecordNotFoundException $e)
+            {
+                $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
+                return $this->redirect(['action' => 'index']);
+            }
+
         }
         else
         {
@@ -123,37 +133,47 @@ class AssociationsController extends AppController
     {
         if($this->Auth->user())
         {
-            $this->viewBuilder()->layout('admin_views');
-            $association = $this->Associations->get($id, [
-                'contain' => []
-            ]);
-            if ($this->request->is(['patch', 'post', 'put'])) {
-                $association = $this->Associations->patchEntity($association, $this->request->data);
-                if ($this->Associations->save($association)) {
-                    $this->Flash->success(__('La asociación se guardó exitosamente.'));
-                    return $this->redirect(['action' => 'index']);
-                } else {
-                    $this->Flash->error(__('La asociación no pudo ser guardada. Por favor intente de nuevo.'));
+            try
+            {
+                $this->viewBuilder()->layout('admin_views');
+                $association = $this->Associations->get($id, [
+                    'contain' => []
+                ]);
+                if ($this->request->is(['patch', 'post', 'put'])) {
+                    $association = $this->Associations->patchEntity($association, $this->request->data);
+                    if ($this->Associations->save($association)) {
+                        $this->Flash->success(__('La asociación se guardó exitosamente.'));
+                        return $this->redirect(['action' => 'index']);
+                    } else {
+                        $this->Flash->error(__('La asociación no pudo ser guardada. Por favor intente de nuevo.'));
+                    }
                 }
-            }
-            $authorized = array(1 => 'Aprobada', 0 => 'Reprobada');
+                $authorized = array(1 => 'Aprobada', 0 => 'Reprobada');
 
-            if(!$association->authorized_card) //Cambiamos el contenido para hacer la interfaz más amena
+                if(!$association->authorized_card) //Cambiamos el contenido para hacer la interfaz más amena
+                {
+                    $authorized = array(0 => 'Reprobada', 1 => 'Aprobada');
+                }
+
+                $state = array(1 => 'Habilitada', 0 => 'Deshabilitada');
+                if(!$association->enable) //Cambiamos el contenido para hacer la interfaz más amena
+                {
+                    $state = array(0 => 'Deshabilitada', 1 => 'Habilitada');
+                }
+
+                $association->authorized_card = $authorized;
+                $association->enable = $state;
+                $headquarters = $this->Associations->Headquarters->find('list');
+                $this->set(compact('association', 'headquarters'));
+                $this->set('_serialize', ['association']);
+            }
+            catch (RecordNotFoundException $e)
             {
-                $authorized = array(0 => 'Reprobada', 1 => 'Aprobada');
+                $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
+                return $this->redirect(['action' => 'index']);
             }
 
-            $state = array(1 => 'Habilitada', 0 => 'Deshabilitada');
-            if(!$association->enable) //Cambiamos el contenido para hacer la interfaz más amena
-            {
-                $state = array(0 => 'Deshabilitada', 1 => 'Habilitada');
-            }
 
-            $association->authorized_card = $authorized;
-            $association->enable = $state;
-            $headquarters = $this->Associations->Headquarters->find('list');
-            $this->set(compact('association', 'headquarters'));
-            $this->set('_serialize', ['association']);
         }
         else
         {
@@ -175,24 +195,34 @@ class AssociationsController extends AppController
     public function delete($id = null)
     {
         if ($this->Auth->user()) {
-            $this->viewBuilder()->layout('admin_views');
-            $this->request->allowMethod(['post', 'delete']);
 
             try
             {
-                $query = $this->Associations->query();
-                $query->update()
-                    ->set(['enable' => 0])
-                    ->where(['id' => $id])
-                    ->execute();
-                $this->Flash->success(__('La asociación se deshabilitó exitosamente.'));
+                $this->viewBuilder()->layout('admin_views');
+                $this->request->allowMethod(['post', 'delete']);
+
+                try
+                {
+                    $query = $this->Associations->query();
+                    $query->update()
+                        ->set(['enable' => 0])
+                        ->where(['id' => $id])
+                        ->execute();
+                    $this->Flash->success(__('La asociación se deshabilitó exitosamente.'));
+                }
+                catch (Exception $e)
+                {
+                    $this->Flash->error(__('La asociación no pudo ser deshabilitada. Por favor intente de nuevo.'));
+                }
+
+                return $this->redirect(['action' => 'index']);
             }
-            catch (Exception $e)
+            catch (RecordNotFoundException $e)
             {
-                $this->Flash->error(__('La asociación no pudo ser deshabilitada. Por favor intente de nuevo.'));
+                $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
+                return $this->redirect(['action' => 'index']);
             }
 
-            return $this->redirect(['action' => 'index']);
         }
         else
         {
@@ -517,7 +547,7 @@ class AssociationsController extends AppController
 
 
 
-    public function generalInformation($id = null) {
+    public function generalInformation() {
         if($this->Auth->user()){
             $this->viewBuilder()->layout('admin_views'); //Se deja este hasta mientras se haga el de representante
 
@@ -553,7 +583,8 @@ class AssociationsController extends AppController
                     }
                     catch(Exception $e)
                     {
-
+                        $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
+                        return $this->redirect(['action' => 'init']);
                     }
 
                     die($response);
@@ -592,9 +623,22 @@ class AssociationsController extends AppController
     public function publicDetailedInformation($id = null, $year = null)
     {
 
-
         if($id)
         {
+
+            $association_name = $this->Associations->find()
+                ->hydrate(false)
+                ->select(['name','id','enable'])
+                ->where(['id'=>$id]);
+
+            $association_name = $association_name->toArray();
+
+            if(isset($association_name[0]) && !$association_name[0]['enable'])
+            {
+                $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
+                return $this->redirect(['controller'=>'pages','action' => 'home']);
+            }
+
 
             $year = ($year ? $year: date('Y')); //Si el año viene nulo, agregamos el actual
 
@@ -633,13 +677,6 @@ class AssociationsController extends AppController
 
             $tracts_year = $tracts_year->toArray();
 
-
-            $association_name = $this->Associations->find()
-                ->hydrate(false)
-                ->select(['name','id'])
-                ->where(['id'=>$id]);
-
-            $association_name = $association_name->toArray();
 
 
             $this->set('dates',$tract_dates);

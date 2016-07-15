@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\ORM\TableRegistry;
 use Cake\Filesystem\Folder;
 use Cake\Filesystem\File;
@@ -125,7 +126,16 @@ class InvoicesController extends AppController
 				$this->viewBuilder()->layout('admin_views');
 	
 				if($id){
-						$invoice = $this->Invoices->get($id);
+						try
+						{
+							$invoice = $this->Invoices->get($id);
+						}
+						catch (RecordNotFoundException $e)
+						{
+							$this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
+							return $this->redirect(['action' => 'init']);
+						}
+				
 						$invoices_type = array(0 => 'Tracto', 1=>'Ingresos Generados', 2=>'Superávit');
 	
 				$options['invoices_type'] = $invoices_type;
@@ -170,7 +180,17 @@ class InvoicesController extends AppController
 	public function delete($id = null)
 	{
 		if(($this->request->session()->read('Auth.User.role')) == 'rep' || ($this->request->session()->read('Auth.User.role')) == 'admin'){
-			$invoice = $this->Invoices->get($id);
+
+			try
+			{
+				$invoice = $this->Invoices->get($id);
+			}
+			catch (RecordNotFoundException $record)
+			{
+				$this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
+				return $this->redirect(['action' => 'init']);
+			}
+
 			$deleted = false;
 	        $filePath = WWW_ROOT .'/img/invoices';
 
@@ -228,7 +248,16 @@ class InvoicesController extends AppController
 	    	$this->viewBuilder()->layout('admin_views');
 
 	    	if($id){
-	          $invoice = $this->Invoices->get($id);
+				try
+				{
+					$invoice = $this->Invoices->get($id);
+				}
+				catch (RecordNotFoundException $e)
+				{
+					$this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
+					return $this->redirect(['action' => 'init']);
+				}
+
 	          $invoices_type = array(0 =>'Tracto',1=>'Ingresos Generados', 2=> 'Superávit');
 	          $invoices_state = array(0=>'Pendiente',1=>'Aceptada',2=>'Rechazada');
 
@@ -275,7 +304,16 @@ class InvoicesController extends AppController
 		if(($this->request->session()->read('Auth.User.role')) == 'admin'){
 
 	    	if($id){
-	          $invoice = $this->Invoices->get($id);
+				try
+				{
+					$invoice = $this->Invoices->get($id);
+				}
+				catch (RecordNotFoundException $e)
+				{
+					$this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
+					return $this->redirect(['action' => 'init']);
+				}
+
 	    	}
 	    	$this->set('data', $invoice);
 
@@ -283,7 +321,16 @@ class InvoicesController extends AppController
   			if(($this->request->session()->read('Auth.User.role')) == 'rep'){
   				//Falta validar que la factura pertenezca a mi asocia
   				if($id){
-		          $invoice = $this->Invoices->get($id);
+					try
+					{
+						$invoice = $this->Invoices->get($id);
+					}
+					catch (RecordNotFoundException $e)
+					{
+						$this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
+						return $this->redirect(['action' => 'init']);
+					}
+
 		    	}
 		    	$this->set('data', $invoice);
   			}else{
