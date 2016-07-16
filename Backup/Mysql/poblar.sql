@@ -6,8 +6,5 @@ INSERT INTO `associations` (`id`, `acronym`, `name`, `location`, `schedule`, `au
 (3, 'aasas', 'asadsd', 'asasda', 'asdas', 1, 1, 2);
 
 INSERT INTO `users` (`id`, `username`, `password`, `role`, `name`, `last_name_1`, `last_name_2`, `association_id`, `state`) VALUES
-(1, 'jose', '$2y$10$pN0tmFT2erqmzn8IEdNCEO7VMfNHvQkov/B749P1dM2pYIbz0O8/u', 'admin', 'Jose', 'Slon', 'Baltodano', 1, 0),
-(2, 'ricardo', '$2y$10$MQgIEulTS8TQvwwiArI6IeZ6M1nSGiybXu73IMW50r3RvMKlk0Hm2', 'rep', 'Ricardo', 'Aguilar', 'Vargas', 1, 0),
-(5, 'andrey', '$2y$10$vr9iJ56rbwPGHKfL.ZoYueEgq3aGETP0izgQQd49mmPnbgFU5ltm2', 'admin', 'Andrey', 'Perez', 'Perez', 1, 0),
-(55, 'gabriel', '$2y$10$4.cENrfd8cHuZyqhOzhYBurAIaaqpUdstrgzMGB3bENGZA6U9uN/q', 'rep', 'Gabriel', 'Quesada', 'Monge', 1, 0),
-(57, 'testUser', '$2y$10$JcdjrI254cdjnKXl3aTbZ.ADRxC2I6yohYyo.xm/YC3CG5ndd.RVu', 'admin', 'prueba', 'prueba', 'prueba', 1, 0);
+(66, 'representante@ucr.ac.cr', '$2y$10$TY39JobDKft00fDMOEqVpuY4.U0UehnxI692S5FofAp8bzz5m2/dG', 'rep', 'Ricardo', 'Vargas', 'Aguilar', 1, 0),
+(67, 'administrador@ucr.ac.cr', '$2y$10$G0228sStqUKRzq8/YXMJyuQUMfzifEveBbCG7BZw1FcHAidNWXrSa', 'admin', 'Andrey', 'Pérez', 'Prueba', 1, 0);

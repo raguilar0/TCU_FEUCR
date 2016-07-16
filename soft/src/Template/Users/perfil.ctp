@@ -25,9 +25,18 @@
     echo "</div>";
 
     echo "<br>";
- 	echo "<h4>".$this->Form->submit('Actualizar', ['class' => 'form-control', 'id' => 'asso_id'])."</h4>";
+
+    echo "<div class='row text-center'>";
+        echo "<div class='col-xs-12'>";
+     	    echo "<h4>".$this->Form->submit('Actualizar', ['class' => ' btn btn-primary'])."</h4>";
+        echo "</div>";
+    echo "</div>";
 
     echo $this->Form->end();
+
+    echo "<br>";
+
+    echo $this->Html->link('Cambiar contraseña',['action'=>'reset-pass'],['class'=>'btn btn-danger']);
 ?>
 
 

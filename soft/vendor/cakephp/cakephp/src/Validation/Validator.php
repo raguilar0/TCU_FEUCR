@@ -96,12 +96,12 @@ class Validator implements ArrayAccess, IteratorAggregate, Countable
     {
         $errors = [];
 
-        $requiredMessage = 'This field is required';
-        $emptyMessage = 'This field cannot be left empty';
+        $requiredMessage = 'Este campo es requerido';
+        $emptyMessage = 'Este campo no puede dejarse vacío';
 
         if ($this->_useI18n) {
-            $requiredMessage = __d('cake', 'This field is required');
-            $emptyMessage = __d('cake', 'This field cannot be left empty');
+            $requiredMessage = __d('cake', 'Este campo es requerido');
+            $emptyMessage = __d('cake', 'Este campo no puede dejarse vacío');
         }
 
         foreach ($this->_fields as $name => $field) {

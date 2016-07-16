@@ -13,7 +13,6 @@ class UsersTable extends Table
     {
         $this->addBehavior('Timestamp');
         $this->belongsTo('Associations');
-        $this->hasMany('Amounts');
 
     }
 
@@ -109,19 +108,17 @@ class UsersTable extends Table
             ->notEmpty('old_password');
 
         $validator
-            ->add('password1', [
-                'length' => [
-                    'rule' => ['minLength', 8],
-                    'message' => 'La contraseña debe ser mínimo de 8 caracteres',
-                ]
+            ->add('password', 'validFormat',[
+                'rule'=>array('custom', '/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/'),
+                'message' => 'Password debe tener mínimo 8 caracteres y al menos un número'
             ])
-            ->add('password1',[
+            ->add('password',[
                 'match'=>[
-                    'rule'=> ['compareWith','password2'],
-                    'message'=>'Las contraseñas no son iguales!',
+                    'rule'=> ['compareWith','repass'],
+                    'message'=>'¡Las contraseñas no son iguales!',
                 ]
             ])
-            ->notEmpty('password1');
+            ->notEmpty('password');
 
         return $validator;
     }

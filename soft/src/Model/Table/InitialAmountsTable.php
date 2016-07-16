@@ -53,7 +53,8 @@ class InitialAmountsTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->allowEmpty('id', 'create')
+            ->requirePresence('tract_id');
 
         $validator
             ->numeric('amount')

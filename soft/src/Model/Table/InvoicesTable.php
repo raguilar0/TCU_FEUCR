@@ -25,6 +25,7 @@ class InvoicesTable extends Table
     {
 
       $validator
+          ->requirePresence('tract_id')
           ->notEmpty('number')
           ->add('number', 'validFormat', [
                       'rule' => array('custom', '/[0-9]+$/'),
