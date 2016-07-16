@@ -26,7 +26,7 @@ class AmountsTable extends Table
                                     'rule' => array('custom', '/^[0-9,.\-]+$/'),
                                     'message' => 'Debe ser mayormente para números.'
             ])
-            ->requirePresence('tract_id')
+            ->requirePresence('tract_id','create')
             ->notEmpty('date')
             ->notEmpty('deadline')
             ->notEmpty('detail', 'Ingrese el detalle del monto')
