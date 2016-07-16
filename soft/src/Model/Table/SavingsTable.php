@@ -58,7 +58,7 @@ class SavingsTable extends Table
         $validator
             ->integer('amount')
             ->requirePresence('amount', 'create')
-            ->requirePresence('tract_id')
+            ->requirePresence('tract_id', 'create')
             ->notEmpty('amount')
             ->add('amount', 'validFormat', [
                         'rule' => array('custom', '/^[0-9\,\.]+$/'),

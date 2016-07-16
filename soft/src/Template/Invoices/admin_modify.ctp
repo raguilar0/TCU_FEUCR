@@ -50,7 +50,7 @@
                         echo "<td> Pendiente </td>";
                         break;
                     case 1:
-                         echo "<td> Aproobada </td>";
+                         echo "<td> Aprobada </td>";
                          break;
                     default:
                         echo "<td> Rechazada </td>";    

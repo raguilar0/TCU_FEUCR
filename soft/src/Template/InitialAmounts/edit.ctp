@@ -16,13 +16,7 @@
             <?= $this->Form->input('amount', ['label'=>false, 'class'=>'form-control', 'placeholder'=>'Ejemplo: 50000']); ?>
             <span class="input-group-addon">.00</span>
         </div>
-        <?php
-            echo $this->Form->input('type', ['options' => $initialAmount->type, 'class'=> 'form-control','label'=>'Tipo']);
-            echo $this->Form->input('association_id', ['options' => $associations, 'label'=>'Asociación', 'class' =>'form-control']);
-            echo $this->Form->input('tract_id', ['options' => $tracts, 'class'=> 'form-control','label'=>'Tracto']);
 
-
-        ?>
 
         </div>
 <?= $this->Form->button(__('Guardar'), ['class'=>'form-control', 'id'=>'asso_id']) ?>

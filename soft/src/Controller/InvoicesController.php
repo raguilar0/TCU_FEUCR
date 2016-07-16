@@ -147,26 +147,19 @@ class InvoicesController extends AppController
 				
 						$invoices_type = array(0 => 'Tracto', 1=>'Ingresos Generados', 2=>'Superávit');
 	
-				$options['invoices_type'] = $invoices_type;
+						$options['invoices_type'] = $invoices_type;
 	
 						if($this->request->is(array('post','put'))) {
-	
-							$invoice = $this->Invoices->newEntity($this->request->data);
-	
-							debug($invoice->errors());
-							if(!$invoice->errors()) {
-	
-								$query = $this->Invoices->query();
-								$query->update()
-											->set(['number'=>$this->request->data['number'], 'amount'=>$this->request->data['amount'],
-														'kind'=>$this->request->data['kind'], 'legal_certificate'=>$this->request->data['legal_certificate'],
-														'provider'=>$this->request->data['provider'],'attendant'=>$this->request->data['attendant'] ,'detail'=>$this->request->data['detail'],'clarifications'=>$this->request->data['clarifications'],'state'=>0, ])
-											->where(['id'=>$id])
-											->execute();
-	
-								$this->Flash->success(__('Factura modificada correctamente.', ['key'=>'success']));
-	
+
+							$this->request->data['state'] = 0; //Después de una modificación se cambia el estado inmediatamente a pendiente
+
+							$invoice = $this->Invoices->patchEntity($invoice, $this->request->data);
+							if($this->Invoices->save($invoice))
+							{
+								$this->Flash->success(__('Factura modificada correctamente.'));
+								return $this->redirect(['action'=>'modify']);
 							}
+
 							else{
 									$this->Flash->error(__('Error al modificar factura.', ['key'=>'error']));
 							}
@@ -275,24 +268,13 @@ class InvoicesController extends AppController
 				$states['invoices_state'] = $invoices_state;
 
 	          if($this->request->is(array('post','put'))) {
-	            $invoice = $this->Invoices->newEntity($this->request->data);
+				  $invoice = $this->Invoices->patchEntity($invoice, $this->request->data);
+				  if($this->Invoices->save($invoice))
+				  {
+					  $this->Flash->success(__('Factura modificada correctamente.'));
+					  return $this->redirect(['action'=>'adminModify']);
+				  }
 
-	            if(!$invoice->errors()) {
-
-	              $query = $this->Invoices->query();
-	              $query->update()
-	                    ->set(['number'=>$this->request->data['number'], 'amount'=>$this->request->data['amount'],
-	                          'kind'=>$this->request->data['kind'], 'legal_certificate'=>$this->request->data['legal_certificate'],
-	                          'provider'=>$this->request->data['provider'],'attendant'=>$this->request->data['attendant'] ,
-	                          'detail'=>$this->request->data['detail'],'clarifications'=>$this->request->data['clarifications'],'state'=>$this->request->data['state']])
-	                    ->where(['id'=>$id])
-	                    ->execute();
-
-
-	              $this->Flash->success(__('Factura modificada correctamente.'));
-					return $this->redirect(['controller'=>'invoices', 'action'=>'admin-modify']);
-
-	            }
 	            else{
 	                $this->Flash->error(__('Error al modificar factura.'));
 	            }
