@@ -19,10 +19,10 @@
         <?php
 
             echo $this->Form->input('tract_id', ['options' => $tracts, 'class'=> 'form-control','label'=>'Tracto']);
-            
+
 
             if(($this->request->session()->read('Auth.User.role')) == 'admin'){
-                
+
                 echo "<label><strong>Estado</strong></label><br/>";
                 echo $this->Form->radio(
                                         'state',
@@ -30,7 +30,7 @@
                                             ['value' => '1', 'text' => 'Aceptado', 'class'=>'radio-inline'],
                                             ['value' => '2', 'text' => 'Rechazado', 'class'=>'radio-inline']
                                         ]
-                                    
+
                                         );
                 echo $this->Form->input('association_id', ['options' => $associations, 'class'=>'form-control']);
             }
@@ -42,3 +42,17 @@
 <br>
     <?= $this->Form->button(__('Guardar'), ['class'=>'form-control', 'id'=>'asso_id']) ?>
     <?= $this->Form->end() ?>
+
+
+    <br>
+
+    <div class="row text-center">
+      <div class="col-xs-12">
+         <?php
+            echo $this->Html->link(
+            'Atrás',
+            ['controller' => 'Savings', 'action' => 'index'], ['class'=>'btn btn-primary']
+            );
+          ?>
+      </div>
+    </div>

@@ -44,9 +44,22 @@
             <th><?= __('Fecha') ?></th>
             <td><?= h($saving->date) ?></td>
         </tr>
-        
+
         <tr>
             <th><?= __('Carta') ?></th>
             <td><?= $this->Html->link( $saving->letter,['controller'=>'Savings', 'action'=>'download', $saving->letter]);?></td>
         </tr>
     </table>
+
+    <br>
+
+    <div class="row text-center">
+      <div class="col-xs-12">
+         <?php
+            echo $this->Html->link(
+            'Atrás',
+            ['controller' => 'Savings', 'action' => 'index'], ['class'=>'btn btn-primary']
+            );
+          ?>
+      </div>
+    </div>

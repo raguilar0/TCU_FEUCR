@@ -63,18 +63,35 @@ echo "<br>";
 	echo "</div>";
 
   echo $this->Form->end();
-?>
-<br>
-<div class="row text-center">
-  <div class="col-xs-12">
-     <?php
+
+if(($this->request->session()->read('Auth.User.role')) == 'admin'){
+echo "<br>";
+echo "<div class='row text-center'>";
+  echo "<div class='col-xs-12'>";
+
+        echo $this->Html->link(
+        'Atrás',
+        ['controller' => 'Users', 'action' => 'modify', $user->association_id], ['class'=>'btn btn-primary']
+        );
+
+  echo "</div>";
+echo "</div>";
+}
+
+if(($this->request->session()->read('Auth.User.role')) == 'rep'){
+echo "<br>";
+echo "<div class='row text-center'>";
+  echo "<div class='col-xs-12'>";
+
         echo $this->Html->link(
         'Atrás',
         ['controller' => 'Users', 'action' => 'modify'], ['class'=>'btn btn-primary']
         );
-      ?>
-  </div>
-</div>
+
+  echo "</div>";
+echo "</div>";
+}?>
+
 
 <div class="row text-right">
     <div class="col-xs-12">
