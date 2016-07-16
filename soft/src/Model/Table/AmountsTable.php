@@ -72,6 +72,6 @@ class AmountsTable extends Table
     
     public function isOwnedBy($amountId, $association_id)
     {
-        return $this->exists(['id' => $amountId, 'association_id' => $association_id]);
+        return $this->exists(['id' => $amountId, 'association_id' => $association_id, 'type'=>1]);
     }
 }
