@@ -202,21 +202,7 @@ class BoxesController extends AppController
 						->select(['id','type','little_amount','big_amount'])
 						->andwhere(['association_id'=>$id,'tract_id' =>$tract_id]);
 			$boxes = $boxes->toArray();
-			if($this->request->is(array('post','put'))){
-				if($boxes != []){
-					$box = $this->Boxes->newEntity($this->request->data);
-					$query = $this->Boxes->query();
-					$query->update()
-						  ->set(['big_amount'=> $this->request->data['big_amount'], 'little_amount'=>$this->request->data['little_amount']])
-						  ->andwhere(['association_id'=> $id,'tract_id'=> $tract_id])
-						  ->execute();
-					$boxes = $this->Boxes->find()
-						->select(['little_amount','big_amount'])
-						->andwhere(['association_id'=>$id,'tract_id' =>$tract_id]);
-					$boxes = $boxes->toArray();
-					
-				}
-			}
+
 			$this->set('boxes',$boxes);
 		}
 	}
