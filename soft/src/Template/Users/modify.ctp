@@ -56,13 +56,13 @@ echo  "</tbody>";
 echo "</table>";
 echo "</div>";
 
-
+/*
 echo "<div class='row text-center'>";
 echo  "<div class='col-xs-12'>";
 echo $this->Html->link('Atrás', '/users/', ['class'=>'btn btn-primary']);
 echo  "</div>";
 echo  "</div>";
-/*
+
 <div class="table-responsive">
   <table class="table read_association">
   <thead>
