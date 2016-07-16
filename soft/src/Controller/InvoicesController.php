@@ -153,6 +153,7 @@ class InvoicesController extends AppController
 	
 							$invoice = $this->Invoices->newEntity($this->request->data);
 	
+							debug($invoice->errors());
 							if(!$invoice->errors()) {
 	
 								$query = $this->Invoices->query();
