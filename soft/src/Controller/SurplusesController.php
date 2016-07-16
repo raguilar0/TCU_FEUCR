@@ -153,7 +153,7 @@ class SurplusesController extends AppController
               try
               {
                   if ($this->Surpluses->delete($surplus)) {
-                      $this->Flash->success(__('El superávit ha sido guardado.'));
+                      $this->Flash->success(__('El superávit ha sido borrado.'));
                   } else {
                       $this->Flash->error(__('El superávit no ha podido ser borrado. Intentelo de nuevo'));
                   }

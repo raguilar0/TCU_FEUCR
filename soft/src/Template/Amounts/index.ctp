@@ -34,9 +34,17 @@
                     <?php
                         if(($this->request->session()->read('Auth.User.role')) != 'rep'){
                             echo $this->Html->link('', ['action' => 'view', $amount->id],['class'=>'glyphicon glyphicon-eye-open btn btn-info' ]);
+                            
                         }
                     ?>
                     <?= $this->Html->link('', ['action' => 'edit', $amount->id],['class'=>'glyphicon glyphicon-pencil btn btn-primary' ]) ?>
+                    
+                    <?php
+                        if(($this->request->session()->read('Auth.User.role')) == 'rep')
+                        {
+                            echo $this->Form->postLink('', ['action' => 'delete', $amount->id], ['class'=>'glyphicon glyphicon-remove btn btn-danger','confirm' => __('¿Estás seguro de que deseas borrarlo? # {0}?', $amount->id)]);
+                        }
+                    ?>
                 </td>
             </tr>
         <?php endforeach; ?>

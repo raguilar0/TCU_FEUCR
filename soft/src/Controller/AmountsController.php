@@ -31,7 +31,7 @@ class AmountsController extends AppController
 			];
 			
 			$query = $this->Amounts->find()
-						->where(['association_id'=>$association_id]);
+						->andWhere(['association_id'=>$association_id, 'type'=>1]);
 		
 		}
 		elseif(($this->request->session()->read('Auth.User.role')) == 'admin')
@@ -483,14 +483,54 @@ class AmountsController extends AppController
 	}
 
 
+    /**
+     * Delete method
+     *
+     * @param string|null $id Surplus id.
+     * @return \Cake\Network\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function delete($id = null)
+    {
+      if(($this->request->session()->read('Auth.User.role')) == 'rep'){
+          try
+          {
+              $this->viewBuilder()->layout('admin_views');
+              $this->request->allowMethod(['post', 'delete']);
+              $amount = $this->Amounts->get($id);
+              try
+              {
+                  if ($this->Amounts->delete($amount)) {
+                      $this->Flash->success(__('El monto ha sido borrado.'));
+                  } else {
+                      $this->Flash->error(__('El monto no ha podido ser borrado. Intentelo de nuevo'));
+                  }
+                  return $this->redirect(['action' => 'index']);
+              }
+              catch (\PDOException $e)
+              {
+                  $this->Flash->error(__('Error al borrar el monto. Esto puede deberse a que hay información asociada en la base de datos a este monto. Borre cualquier información asociada y luego intente de nuevo.'));
+                  return $this->redirect(['action' => 'index']);
+              }
+          }
+          catch (RecordNotFoundException $record)
+          {
+              $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
+              return $this->redirect(['action' => 'index']);
+          }
 
+      }
+      else{
+        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
+      }
+    }
 
 
 
 	public function isAuthorized($user)
 	{
 		
-		if($this->request->action === 'edit')
+		if(in_array($this->request->action,['edit','delete']))
 		{
 			$amountId = (int)$this->request->params['pass'][0];
 	        if ((($this->request->session()->read('Auth.User.role')) == 'rep') && $this->Amounts->isOwnedBy($amountId, $user['association_id'])) {
