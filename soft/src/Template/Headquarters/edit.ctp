@@ -20,4 +20,16 @@
 <br>
 <br>
 <?= $this->Form->button(__('Guardar'), ['class'=>'form-control', 'id'=>'asso_id']) ?>
+<br>
 <?= $this->Form->end() ?>
+
+<div class="row text-center">
+  <div class="col-xs-12">
+     <?php
+        echo $this->Html->link(
+        'Atrás',
+        ['controller' => 'Headquarters', 'action' => 'index'], ['class'=>'btn btn-primary']
+        );
+      ?>
+  </div>
+</div>

@@ -64,6 +64,17 @@ echo "<br>";
 
   echo $this->Form->end();
 ?>
+<br>
+<div class="row text-center">
+  <div class="col-xs-12">
+     <?php
+        echo $this->Html->link(
+        'Atrás',
+        ['controller' => 'Users', 'action' => 'modify'], ['class'=>'btn btn-primary']
+        );
+      ?>
+  </div>
+</div>
 
 <div class="row text-right">
     <div class="col-xs-12">
@@ -84,11 +95,4 @@ echo "<br>";
 		<h4 id="callback" style="color:#01DF01"></h4>
 	</div>
 
-</div>
-
-
-<div class="row text-center">
-  <div class="col-xs-12">
-     <?php echo $this->Html->link('Atrás', '/users/show_associations/3', ['class'=>'btn btn-primary']);?>
-  </div>
 </div>

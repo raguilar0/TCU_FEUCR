@@ -30,12 +30,24 @@
 
 <br>
 <br>
-<div class="row">
-    <div class="text-center">
-        <?= "<h4>".$this->Form->submit('Cambiar', ['class' => 'form-control btn btn-primary'])."</h4>"; ?>
+<div class="row text-center">
+    <div class="col-xs-12">
+        <?= "<h4>".$this->Form->submit('Cambiar', ['class' => 'btn btn-primary'])."</h4>"; ?>
     </div>
 </div>
 <?= $this->Form->end(); ?>
+
+
+<div class="row text-center">
+  <div class="col-xs-12">
+     <?php
+        echo $this->Html->link(
+        'Atrás',
+        ['controller' => 'Users', 'action' => 'modify_user', $id], ['class'=>'btn btn-primary']
+        );
+      ?>
+  </div>
+</div>
 
 
 
@@ -75,10 +87,4 @@
         <h4 id="callback" style="color:#FF0000">
           <?= $this->Flash->render('error') ?></h4>
     </div>
-</div>
-
-<div class="row text-center">
-  <div class="col-xs-12">
-     <?php echo $this->Html->link('Atrás', '/users/', ['class'=>'btn btn-primary']);?>
-  </div>
 </div>

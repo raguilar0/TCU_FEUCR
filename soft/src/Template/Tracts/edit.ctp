@@ -39,3 +39,14 @@
     <?= $this->Form->button(__('Guardar'), ['id'=>'asso_id', 'class'=>'form-control']) ?>
     <?= $this->Form->end() ?>
 
+    <br>
+		<div class="row text-center">
+			<div class="col-xs-12">
+				 <?php
+						echo $this->Html->link(
+						'Atrás',
+						['controller' => 'Tracts', 'action' => 'index'], ['class'=>'btn btn-primary']
+						);
+					?>
+			</div>
+		</div>

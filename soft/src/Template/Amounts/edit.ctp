@@ -17,7 +17,7 @@
         <span class="input-group-addon">.00</span>
     </div>
     <?php
-    
+
     echo $this->Form->input('detail', ['class'=> 'form-control','label'=>'Detalle']);
 
 
@@ -28,3 +28,14 @@
 <?= $this->Form->button(__('Guardar'), ['class'=>'form-control', 'id'=>'asso_id']) ?>
 <?= $this->Form->end() ?>
 
+<br>
+<div class="row text-center">
+  <div class="col-xs-12">
+     <?php
+        echo $this->Html->link(
+        'Atrás',
+        ['controller' => 'Amounts', 'action' => 'index'], ['class'=>'btn btn-primary']
+        );
+      ?>
+  </div>
+</div>

@@ -37,9 +37,9 @@
                    echo "<td> Ing.Gen. </td>";
                    break;
               default:
-                  echo "<td> Superavit </td>";    
+                  echo "<td> Superavit </td>";
                   break;
-                  
+
               }
               echo "<td>".$key['date']."</td>";
               echo "<td>".$key['provider']."</td>";
@@ -53,9 +53,9 @@
                        echo "<td> Aproobada </td>";
                        break;
                   default:
-                      echo "<td> Rechazada </td>";    
+                      echo "<td> Rechazada </td>";
                       break;
-                      
+
                }
 							echo "<td>".$this->Html->link('','/invoices/modify_invoice/'.$key['id'], ['class'=>'glyphicon glyphicon-pencil btn btn-primary'])."  "
 							.$this->Form->postLink('', ['action' => 'delete', $key->id], ['class'=>'glyphicon glyphicon-remove btn btn-danger' ,'confirm' => __('¿Estás seguro de que deseas borrarlo? # {0}?', $key->id)]);
@@ -63,12 +63,4 @@
       ?>
   </tbody>
 </table>
-</div>
-
-
-
-<div class="row text-center">
-  <div class="col-xs-12">
-     <?php echo $this->Html->link('Atrás', '/associations/index-associations/', ['class'=>'btn btn-primary']);?>
-  </div>
 </div>

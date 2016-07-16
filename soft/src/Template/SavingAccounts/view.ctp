@@ -40,3 +40,16 @@
         </tr>
     </table>
 </div>
+
+
+<br>
+<div class="row text-center">
+  <div class="col-xs-12">
+     <?php
+        echo $this->Html->link(
+        'Atrás',
+        ['controller' => 'SavingAccounts', 'action' => 'index'], ['class'=>'btn btn-primary']
+        );
+      ?>
+  </div>
+</div>

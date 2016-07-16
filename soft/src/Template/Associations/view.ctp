@@ -38,3 +38,17 @@
             <td><?= ($this->Number->format($association->enable) ? 'Habilitada': 'Deshabilitada' ); ?></td>
         </tr>
     </table>
+
+
+    <br>
+
+    <div class="row text-center">
+      <div class="col-xs-12">
+         <?php
+            echo $this->Html->link(
+            'Atrás',
+            ['controller' => 'Associations', 'action' => 'index'], ['class'=>'btn btn-primary']
+            );
+          ?>
+      </div>
+    </div>

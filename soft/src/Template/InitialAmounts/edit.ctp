@@ -28,3 +28,14 @@
 <?= $this->Form->button(__('Guardar'), ['class'=>'form-control', 'id'=>'asso_id']) ?>
     <?= $this->Form->end() ?>
 
+    <br>
+    <div class="row text-center">
+      <div class="col-xs-12">
+         <?php
+            echo $this->Html->link(
+            'Atrás',
+            ['controller' => 'InitialAmounts', 'action' => 'index'], ['class'=>'btn btn-primary']
+            );
+          ?>
+      </div>
+    </div>

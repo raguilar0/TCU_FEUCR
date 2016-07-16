@@ -1,6 +1,6 @@
 <div class = "row text-center">
     <div class="col-xs-12">
-         <h1>Perfil</h1>   
+         <h1>Perfil</h1>
     </div>
 </div>
 
@@ -18,6 +18,7 @@
 
     echo "<h4>".$this->Form->input('association', ['class' => 'form-control','label'=>'Asociación', 'disabled' => 'disabled', 'value'=>$data['association'], 'maxlength'=> '1024'])."</h4>";
 
+      echo "<td>".$this->Html->link('reestablecer contraseña','/users/reset_password/'.$data['id'], ['class'=>'glyphicon glyphicon-success btn btn-primary', 'label'=>'reestablecer contraseña'])."</td>";
 
     echo "  ";
 
@@ -30,12 +31,9 @@
 ?>
 
 
-
-
 <div class="row text-right">
 	<div class="col-xs-12">
-		<h4 id="callback" style="color:#01DF01"></h4>	
+		<h4 id="callback" style="color:#01DF01"></h4>
 	</div>
 
 </div>
-

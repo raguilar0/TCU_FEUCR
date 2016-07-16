@@ -14,7 +14,7 @@
 <div class="form-group">
 
     <?php
-    
+
     echo $this->Form->input('acronym', ['label'=>'Sigla', 'class'=>'form-control']);
     echo $this->Form->input('name', ['label'=>'Nombre de la asociación', 'class'=>'form-control']);
     echo $this->Form->input('location', ['label'=>'Dirección', 'class'=>'form-control']);
@@ -29,3 +29,16 @@
 <br>
 <?= $this->Form->button(__('Guardar'), ['class'=>'form-control', 'id'=>'asso_id']) ?>
 <?= $this->Form->end() ?>
+
+<br>
+
+<div class="row text-center">
+  <div class="col-xs-12">
+     <?php
+        echo $this->Html->link(
+        'Atrás',
+        ['controller' => 'Associations', 'action' => 'index'], ['class'=>'btn btn-primary']
+        );
+      ?>
+  </div>
+</div>

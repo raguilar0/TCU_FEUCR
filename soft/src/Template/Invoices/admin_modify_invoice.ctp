@@ -74,11 +74,11 @@
     echo "<div class = 'row'>";
 
         echo "<div class = 'col-xs-12'>";
-        
+
            echo "<div class = 'col-xs-12 col-md-4'>";
             echo "<h4>".$this->Form->input('state', ['options' => $states['invoices_state'],'class' => 'form-control','label'=>'Estado'])."</h4>";
         echo "</div >";
-        
+
         echo "</div >";
 
     echo "</div >";
@@ -99,6 +99,20 @@
     echo $this->Form->end();
 
 ?>
+
+<br>
+
+<div class="row text-center">
+  <div class="col-xs-12">
+     <?php
+        echo $this->Html->link(
+        'Atrás',
+        ['controller' => 'Invoices', 'action' => 'admin-modify'], ['class'=>'btn btn-primary']
+        );
+      ?>
+  </div>
+</div>
+
 
 <br>
 

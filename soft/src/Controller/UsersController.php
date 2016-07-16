@@ -296,7 +296,7 @@ class UsersController extends AppController
                         $this->Flash->error(__('Error al modificar usuario.'));
                       }
           }
-          
+
           try
           {
              $user = $this->Users->get($id);
@@ -306,7 +306,7 @@ class UsersController extends AppController
               $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
               return $this->redirect(['action' => 'init']);
           }
-         
+
           $this->set('user', $user);
 
       }
@@ -404,7 +404,7 @@ class UsersController extends AppController
                     $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
                   return $this->redirect(['action' => 'init']);
                 }
-                                
+
 
                 $head = $this->Users->Associations->find()
                     ->hydrate(false)
@@ -460,6 +460,7 @@ class UsersController extends AppController
 
           }
 
+          $this->set('id', $id);
           $this->set('user',$user);
 
         }

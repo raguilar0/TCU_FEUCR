@@ -11,7 +11,7 @@
 
 <div class = "row text-center">
 	<div class = "col-xs-12">
-		<?php 
+		<?php
 			echo "<h1 id='association_name'>".$association_name[0]['name']."</h1>";
 		?>
 	</div>
@@ -613,10 +613,10 @@ $(document).ready( function ()
     function getAmounts(amount_type, box_type, invoice_type, object)
     {
         var xhttp = new XMLHttpRequest();
-    
+
         xhttp.onreadystatechange = function()
         {
-    
+
             if(xhttp.readyState == 4 && xhttp.status == 200)
             {
 				reportData = xhttp.responseText;
@@ -634,20 +634,20 @@ $(document).ready( function ()
 
             		case 2:
             			setSurplusValues(obj);
-            		break;            		            		
+            		break;
             	}
-            	
+
             }
             else
             {
                 if( xhttp.status == 404)
                 {
 
-                } 
-    
-                
-            }          
-               
+                }
+
+
+            }
+
         };
 
 
@@ -659,10 +659,10 @@ $(document).ready( function ()
 
         xhttp.open("GET",newPath,true);
         xhttp.send();
-       
+
     }
-    
- 
+
+
 
 
 
@@ -679,7 +679,7 @@ function reloadPage(element)
 }
 
 
-	
+
 
 
 </script>
@@ -692,17 +692,18 @@ function reloadPage(element)
 
 
 
-<div class="row text-center">
-  <div class="col-xs-12">
-     <?php echo $this->Html->link('Atrás', '/associations/show_associations/5', ['class'=>'btn btn-primary']);?>
-  </div>
-</div>
+<?php
+if(($this->request->session()->read('Auth.User.role')) == 'admin'){
+echo "<br>";
+echo "<div class='row text-center'>";
+  echo "<div class='col-xs-12'>";
 
+        echo $this->Html->link(
+        'Atrás',
+        ['controller' => 'Associations', 'action' => 'ShowAssociations',5], ['class'=>'btn btn-primary']
+        );
 
-
-
-
-
-
-
-
+  echo "</div>";
+echo "</div>";
+}
+?>
