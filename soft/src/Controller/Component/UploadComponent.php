@@ -36,11 +36,7 @@ class UploadComponent extends Component
 				{
 					if(is_uploaded_file($file_temp_name))
 					{
-						if(!file_exists ($dir))
-						{
-							mkdir($dir, 0766);
-						}
-
+						
 						$filename = "factura_".$random."_".$id.".".$extention[1];
 						move_uploaded_file($file_temp_name, $dir.DS.$filename);
 
@@ -83,11 +79,6 @@ class UploadComponent extends Component
 					if(is_uploaded_file($file_temp_name))
 					{
 						$filename = "solicitud_de_monto_de_ahorro_".$random."_".$id.".".$extention[1];
-
-						if(!file_exists($dir))
-						{
-							mkdir($dir, 0766);
-						}
 
 						move_uploaded_file($file_temp_name, $dir.DS.$filename);
 
@@ -132,10 +123,6 @@ class UploadComponent extends Component
 					{
 						$filename = "imagen_sede_".$random."_".$id.".".$extention[1];
 
-						if(!file_exists ($dir))
-						{
-							mkdir($dir, 0766);
-						}
 						move_uploaded_file($file_temp_name, $dir.DS.$filename);
 
 						$saved = $filename;

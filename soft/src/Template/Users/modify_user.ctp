@@ -14,16 +14,16 @@ echo "<br>";
 	echo "<div class='form-group'>";
     echo "<div class = 'row'>";
     	echo "<div class = 'col-xs-12 col-md-6'>";
-      //debug($user);
+
     		echo "<h4>".$this->Form->input('username', ['class' => 'form-control','label'=>'Nombre de Usuario', 'value'=>$user['username'], 'maxlength'=> '0'])."</h4>";
 				echo "<h4>".$this->Form->input('name', ['class' => 'form-control', 'label'=>'Nombre', 'value'=>$user['name'], 'maxlength'=> '20'])."</h4>";
 		    echo "<h4>".$this->Form->input('last_name_1', ['class' => 'form-control','label'=>'Primer Apellido','value'=>$user['last_name_1'], 'maxlength'=> '20'])."</h4>";
 				echo "<h4>".$this->Form->input('last_name_2', ['class' => 'form-control','label'=>'Segundo Apellido','value'=>$user['last_name_2'], 'maxlength'=> '20'])."</h4>";
 
-        //debug($this->request->session()->read('Auth.User.role'));
+
         if($this->request->session()->read('Auth.User.role') == 'admin') {
           echo "<label for='sel1' id = 'role_label'><h4>Rol</h4></label>";
-          //debug($user);
+
           if($user->role == 'admin'){
             echo "<select class='form-control' name = 'role'>";
                echo "<option>Administrador</option>";
@@ -38,7 +38,8 @@ echo "<br>";
              echo "</select>";
           }
 
-          echo "<td>".$this->Html->link('reestablecer contraseña','/users/reset_password/'.$user['id'], ['class'=>'glyphicon glyphicon-success btn btn-primary', 'label'=>'reestablecer contraseña'])."</td>";
+            echo "<br>";
+          echo "<td>". $this->Html->link('Cambiar contraseña',['action'=>'reset-password',$user['id']],['class'=>'btn btn-danger'])."</td>";
         }
 		    echo "<h4>".$this->Form->label('Users.blocked','Usuario Bloqueado ');
 
@@ -65,19 +66,7 @@ echo "<br>";
   echo $this->Form->end();
 ?>
 
-<div class="row text-right">
-    <div class="col-xs-12">
-        <h4 id="callback" style="color:#01DF01">
-          <?= $this->Flash->render('success') ?></h4>
-    </div>
-</div>
 
-<div class="row text-right">
-    <div class="col-xs-12">
-        <h4 id="callback" style="color:#FF0000">
-          <?= $this->Flash->render('error') ?></h4>
-    </div>
-</div>
 
 <div class="row text-right">
 	<div class="col-xs-12">

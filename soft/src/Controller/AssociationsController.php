@@ -553,22 +553,12 @@ class AssociationsController extends AppController
 
             $id = $this->request->session()->read('Auth.User.association_id');
             if($id) {
-                $association = $this->Associations->get($id);
 
-                $head = $this->Associations->Headquarters->find()
-                    ->hydrate(false)
-                    ->select(['id','name'])
-                    ->where(['id'=>$association->headquarter_id]);
-
-                $head = $head->toArray();
-
-                $association['headquarter'] = $head[0]['name'];
 
 
 
                 if($this->request->is(array('post','put')))
                 {
-                    $response = '0';
 
                     try
                     {
@@ -579,7 +569,8 @@ class AssociationsController extends AppController
                             ->where(['id'=> $id])
                             ->execute();
 
-                        $response = '1';
+                        $this->Flash->success(__('Se actualizó la asociación exitosamente'));
+
                     }
                     catch(Exception $e)
                     {
@@ -587,13 +578,31 @@ class AssociationsController extends AppController
                         return $this->redirect(['action' => 'init']);
                     }
 
-                    die($response);
 
                 }
-                else
+
+                try
                 {
+                    $association = $this->Associations->get($id);
+
+                    $head = $this->Associations->Headquarters->find()
+                        ->hydrate(false)
+                        ->select(['id','name'])
+                        ->where(['id'=>$association->headquarter_id]);
+
+                    $head = $head->toArray();
+
+                    $association['headquarter'] = $head[0]['name'];
+
                     $this->set('data',$association); // set() Pasa la variable association a la vista.
                 }
+                catch (RecordNotFoundException $e)
+                {
+                    $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
+                    return $this->redirect(['action' => 'init']);
+                }
+
+
             }
             else
             {

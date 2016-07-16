@@ -304,7 +304,7 @@ class UsersController extends AppController
           catch(RecordNotFoundException $e)
           {
               $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
-              return $this->redirect(['action' => 'init']);
+              return $this->redirect(['controller'=>'Associations','action' => 'init']);
           }
          
           $this->set('user', $user);
@@ -413,7 +413,7 @@ class UsersController extends AppController
                 catch(RecordNotFoundException $e)
                 {
                     $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
-                  return $this->redirect(['action' => 'init']);
+                    return $this->redirect(['controller'=>'Associations','action' => 'init']);
                 }
                                 
 
@@ -441,18 +441,25 @@ class UsersController extends AppController
 
         if($id)
         {
+
+            if($id == $this->request->session()->read('Auth.User.id')) //Si el usuario al que estoy tratando de editar, soy yo mismo, use esta otra vista
+            {
+                return $this->redirect(['action' => 'resetPass']);
+            }
+
             try
             {
                 $user = $this->Users->get($id);
+
             }
             catch (RecordNotFoundException $e)
             {
                 $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
-                return $this->redirect(['action' => 'init']);
+                return $this->redirect(['controller'=>'Associations','action' => 'init']);
             }
 
 
-          if($this->request->is("post"))
+          if($this->request->is(array('post','put')))
           {
 
               $user = $this->Users->patchEntity($user, $this->request->data,
@@ -461,7 +468,6 @@ class UsersController extends AppController
 
               if ($this->Users->save($user)) {
                   $this->Flash->success('La contraseña se cambió exitosamente');
-                  return $this->redirect(['controller'=>'users', 'action'=>'showAssociations',3]);
 
               }
               else {
@@ -484,6 +490,7 @@ class UsersController extends AppController
 
       public function resetPass()
       {
+          $this->viewBuilder()->layout('admin_views');
 
         try
         {
@@ -492,7 +499,7 @@ class UsersController extends AppController
         catch (RecordNotFoundException $e)
         {
             $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
-            return $this->redirect(['action' => 'init']);
+            return $this->redirect(['controller'=>'Associations','action' => 'init']);
         }
 
 
@@ -510,10 +517,10 @@ class UsersController extends AppController
                 $this->Flash->success('La contraseña se cambió exitosamente');
 
             } else {
-                $this->Flash->error('No se pudo guardar la contraseña. Probablemente no digitó correctamente la contraseña antigua');
+                $this->Flash->error('No se pudo guardar la contraseña.');
             }
 
-            return $this->redirect(['controller'=>'users', 'action'=>'modify']);
+            //return $this->redirect(['controller'=>'users', 'action'=>'modify']);
         }
         $this->set('user',$user);
 
@@ -524,7 +531,7 @@ class UsersController extends AppController
     public function isAuthorized($user)
     {
 
-        if(in_array($this->request->action,['modify', 'modifyUser', 'resetPassword', 'logout', 'resetPass', 'perfil']))
+        if(in_array($this->request->action,['modify', 'modifyUser', 'logout', 'resetPass', 'perfil']))
         {
           return true;
         }

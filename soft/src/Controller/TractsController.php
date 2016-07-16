@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Core\Exception\Exception;
 use Cake\Datasource\Exception\RecordNotFoundException;
 
 /**
@@ -74,13 +75,24 @@ class TractsController extends AppController
         $this->viewBuilder()->layout('admin_views');
         $tract = $this->Tracts->newEntity();
         if ($this->request->is('post')) {
-            $tract = $this->Tracts->patchEntity($tract, $this->request->data);
-            if ($this->Tracts->save($tract)) {
-                $this->Flash->success(__('El tracto ha sido guardado.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('El tracto no ha podido ser guardado. Intentelo de nuevo'));
+
+            try
+            {
+                $tract = $this->Tracts->patchEntity($tract, $this->request->data);
+                if ($this->Tracts->save($tract)) {
+                    $this->Flash->success(__('El tracto ha sido guardado.'));
+                    return $this->redirect(['action' => 'index']);
+                } else {
+
+                    $this->Flash->error(__('El tracto no ha podido ser guardado. Intentelo de nuevo '));
+                }
             }
+            catch (Exception $e)
+            {
+                $this->Flash->error(__('Ocurrió un error al guardar la fecha del tracto. Esto puede deberse a que el formato es inválido.'));
+                return $this->redirect(['action' => 'index']);
+            }
+
         }
         $this->set(compact('tract'));
         $this->set('_serialize', ['tract']);

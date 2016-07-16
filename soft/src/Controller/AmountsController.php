@@ -84,7 +84,7 @@ class AmountsController extends AppController
 					}
 					else
 					{
-						$this->Flash->error('No se pudo agregar el monto. Póngase en contacto con el administrador para verificar que se haya creado el tracto correspondiente');
+						$this->Flash->error('No se pudo agregar el monto. Esto puede ser porque aún no se han creado las fechas del tracto correspondiente');
 					}
 
 			}

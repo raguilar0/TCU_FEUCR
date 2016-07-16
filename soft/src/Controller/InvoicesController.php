@@ -41,13 +41,22 @@ class InvoicesController extends AppController
 						$invoice['kind'] = $invoices_type[$this->request->data['kind']];
 						$invoice['tract_id'] = $this->getTractId(date("Y-m-d"));
 
-						if($this->Invoices->save($invoice))
+						try
 						{
-							$this->Flash->Success('Factura Agregada');
+							if($this->Invoices->save($invoice))
+							{
+								$this->Flash->Success('Factura Agregada');
+							}
+							else{
+								$this->Flash->error('Error al agregar factura.');
+							}
 						}
-						else{
-							$this->Flash->error('Error al agregar factura.');
+						catch (\PDOException $e)
+						{
+							$this->Flash->error(__("No se puedo guardar la factura. Esto puede deberse a que no se han creado aún fechas de tracto."));
+							return $this->redirect(['controller'=>'Associations','action' => 'init']);
 						}
+
 
 					}
 					else{
@@ -133,7 +142,7 @@ class InvoicesController extends AppController
 						catch (RecordNotFoundException $e)
 						{
 							$this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
-							return $this->redirect(['action' => 'init']);
+							return $this->redirect(['controller'=>'Associations','action' => 'init']);
 						}
 				
 						$invoices_type = array(0 => 'Tracto', 1=>'Ingresos Generados', 2=>'Superávit');
@@ -188,7 +197,7 @@ class InvoicesController extends AppController
 			catch (RecordNotFoundException $record)
 			{
 				$this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
-				return $this->redirect(['action' => 'init']);
+				return $this->redirect(['controller'=>'Associations','action' => 'init']);
 			}
 
 			$deleted = false;
@@ -255,7 +264,7 @@ class InvoicesController extends AppController
 				catch (RecordNotFoundException $e)
 				{
 					$this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
-					return $this->redirect(['action' => 'init']);
+					return $this->redirect(['controller'=>'Associations','action' => 'init']);
 				}
 
 	          $invoices_type = array(0 =>'Tracto',1=>'Ingresos Generados', 2=> 'Superávit');
@@ -311,7 +320,7 @@ class InvoicesController extends AppController
 				catch (RecordNotFoundException $e)
 				{
 					$this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
-					return $this->redirect(['action' => 'init']);
+					return $this->redirect(['controller'=>'Associations','action' => 'init']);
 				}
 
 	    	}
@@ -328,7 +337,7 @@ class InvoicesController extends AppController
 					catch (RecordNotFoundException $e)
 					{
 						$this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
-						return $this->redirect(['action' => 'init']);
+						return $this->redirect(['controller'=>'Associations','action' => 'init']);
 					}
 
 		    	}

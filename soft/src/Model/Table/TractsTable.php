@@ -2,6 +2,7 @@
 namespace App\Model\Table;
 
 use App\Model\Entity\Tract;
+use Cake\Core\Exception\Exception;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -77,22 +78,23 @@ class TractsTable extends Table
         $validator
             ->date('date')
             ->requirePresence('date', 'create')
-            ->notEmpty('date')
-            ->add('date', 'validFormat', [
-                        'rule' => array('custom', '/^[0-9\/]+$/'),
-                        'message' => 'Formato inválido. Solo números.'
-            ]);
+            ->notEmpty('date');
 
         $validator
             ->date('deadline')
             ->requirePresence('deadline', 'create')
             ->notEmpty('deadline');
 
+
         return $validator;
     }
 
+
+
     public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
     {
+
+
         if (isset($data['date'])) {
             $data['date'] = new Time($data['date']);
         }
