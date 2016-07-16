@@ -19,7 +19,6 @@
     echo "<h4>".$this->Form->input('association', ['class' => 'form-control','label'=>'Asociación', 'disabled' => 'disabled', 'value'=>$data['association'], 'maxlength'=> '1024'])."</h4>";
 
      
-
     echo "  ";
 
     echo "</div>";

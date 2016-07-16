@@ -19,49 +19,6 @@ class UsersController extends AppController
         $this->Auth->allow('add', 'logout');
     }
 
-     public function index()
-     {
-       if($this->Auth->user()){
-         $this->viewBuilder()->layout('admin_views');
-         $this->set('users', $this->Users->find('all'));
-       }
-       else{
-         return $this->redirect(['controller'=>'pages', 'action'=>'home']);
-       }
-    }
-
-    /**
-    public function view($id)
-    {
-      if($this->Auth->user()){
-          try
-          {
-              $user = $this->Users->get($id);
-              $this->set(compact('user'));
-          }
-          catch (RecordNotFoundException $e)
-          {
-              $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
-              return $this->redirect(['action' => 'index']);
-          }
-
-      }
-      else{
-        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
-      }
-    }
-**/
-    public function showUsers($id = null)
-    {
-      if($this->Auth->user()){
-        $this->viewBuilder()->layout('admin_views');
-        $this->set('users', $this->Users->find('all'));
-      }
-      else{
-        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
-      }
-    }
-
     public function showAssociations($id = null)
   	{
       if($this->Auth->user()){
