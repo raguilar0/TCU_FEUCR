@@ -18,8 +18,6 @@
 
     echo "<h4>".$this->Form->input('association', ['class' => 'form-control','label'=>'Asociación', 'disabled' => 'disabled', 'value'=>$data['association'], 'maxlength'=> '1024'])."</h4>";
 
-      echo "<td>".$this->Html->link('reestablecer contraseña','/users/reset_password/'.$data['id'], ['class'=>'glyphicon glyphicon-success btn btn-primary', 'label'=>'reestablecer contraseña'])."</td>";
-
     echo "  ";
 
     echo "</div>";
