@@ -131,6 +131,7 @@ class InvoicesController extends AppController
 				$options['invoices_type'] = $invoices_type;
 	
 						if($this->request->is(array('post','put'))) {
+							
 	
 							$invoice = $this->Invoices->newEntity($this->request->data);
 	
