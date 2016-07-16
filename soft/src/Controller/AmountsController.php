@@ -15,12 +15,36 @@ class AmountsController extends AppController
 	 */
 	public function index()
 	{
-
 		$this->viewBuilder()->layout('admin_views');
-		$this->paginate = [
-			'contain' => ['Associations', 'Tracts']
-		];
-		$amounts = $this->paginate($this->Amounts);
+		$query = $this->Amounts;
+		
+		if(($this->request->session()->read('Auth.User.role')) == 'rep'){
+			$actualDate = date("Y-m-d");
+			$tract_id = $this->getTractId($actualDate) ;
+			$association_id = $this->request->session()->read('Auth.User.association_id');
+			
+			$this->paginate = [
+				'contain' => ['Associations',
+							'Tracts' => function ($q) use($tract_id) {
+							 return $q->where(['Tracts.id' => $tract_id]);
+							 }]
+			];
+			
+			$query = $this->Amounts->find()
+						->where(['association_id'=>$association_id]);
+		
+		}
+		elseif(($this->request->session()->read('Auth.User.role')) == 'admin')
+		{
+		
+			$this->paginate = [
+				'contain' => ['Associations', 'Tracts']
+			];			
+		}
+		
+
+
+		$amounts = $this->paginate($query);
 
 		$this->set(compact('amounts'));
 		$this->set('_serialize', ['amounts']);
@@ -465,8 +489,15 @@ class AmountsController extends AppController
 
 	public function isAuthorized($user)
 	{
-
-		if($this->request->action === 'addAmounts')
+		
+		if($this->request->action === 'edit')
+		{
+			$amountId = (int)$this->request->params['pass'][0];
+	        if ((($this->request->session()->read('Auth.User.role')) == 'rep') && $this->Amounts->isOwnedBy($amountId, $user['association_id'])) {
+	            return true;
+	        }
+		}
+		elseif(in_array($this->request->action,['addAmounts','index']))
 		{
 			return true;
 		}

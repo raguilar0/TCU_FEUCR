@@ -31,7 +31,11 @@
                 <td><?= $amount->has('association') ? $this->Html->link($amount->association->name, ['controller' => 'Associations', 'action' => 'view', $amount->association->id]) : '' ?></td>
                 <td><?= $amount->has('tract') ? $this->Html->link($amount->tract->date." - ".$amount->tract->deadline, ['controller' => 'Tracts', 'action' => 'view', $amount->tract->id]) : '' ?></td>
                 <td class="actions">
-                    <?= $this->Html->link('', ['action' => 'view', $amount->id],['class'=>'glyphicon glyphicon-eye-open btn btn-info' ]) ?>
+                    <?php
+                        if(($this->request->session()->read('Auth.User.role')) != 'rep'){
+                            echo $this->Html->link('', ['action' => 'view', $amount->id],['class'=>'glyphicon glyphicon-eye-open btn btn-info' ]);
+                        }
+                    ?>
                     <?= $this->Html->link('', ['action' => 'edit', $amount->id],['class'=>'glyphicon glyphicon-pencil btn btn-primary' ]) ?>
                 </td>
             </tr>

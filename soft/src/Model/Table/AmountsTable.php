@@ -69,4 +69,9 @@ class AmountsTable extends Table
         $connection = ConnectionManager::get('default');
         return $connection;
     }
+    
+    public function isOwnedBy($amountId, $association_id)
+    {
+        return $this->exists(['id' => $amountId, 'association_id' => $association_id]);
+    }
 }

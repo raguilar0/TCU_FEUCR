@@ -46,6 +46,9 @@
 
         ?>
         </div>
+        <br>
+        <br>
+        <br>
     <?= $this->Form->button(__('Guardar'), ['class'=>'form-control', 'id'=>'asso_id']) ?>
     <?php $this->Form->end();
 

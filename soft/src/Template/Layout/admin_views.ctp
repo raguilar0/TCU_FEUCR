@@ -214,7 +214,16 @@
                         </li>
 
                       <li class="active">
-                          <?php echo $this->Html->link('Agregar Ingreso', ['controller'=>'Amounts','action'=>'add_amounts']);?>
+                          <a  data-toggle="collapse" data-target="#generated">Ingresos generados</a>
+                        <div id="generated" class="collapse">
+                            <ul>
+                              <li class="active"><?php echo $this->Html->link('Agregar Ingreso', ['controller'=>'Amounts','action'=>'add_amounts']);?></li><br>
+                              <li class="active"><?php echo $this->Html->link('Administrar Ingresos', ['controller'=>'Amounts', 'action'=>'index'], ['id'=>'active-navbar']);?></li><br>
+                              
+                            </ul>
+                        </div>
+                          
+                          
                       </li>
 
                     <li class="active">

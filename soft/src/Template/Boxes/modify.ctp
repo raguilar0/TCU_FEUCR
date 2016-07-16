@@ -20,8 +20,8 @@
                 }else{
                     echo "<td>Ing. Generados</td>";
                 }?>
-                <td><?= "¢ ".number_format($box->big_amount,2 ,".",",") ?></td>
                 <td><?= "¢ ".number_format($box->little_amount,2,".",",") ?></td>
+                <td><?= "¢ ".number_format($box->big_amount,2 ,".",",") ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__(''), ['action' => 'edit', $box->id], ['class'=>'glyphicon glyphicon-pencil btn btn-primary']) ?>
                 </td>

@@ -44,7 +44,7 @@
               echo "<td>".$key['date']."</td>";
               echo "<td>".$key['provider']."</td>";
               echo "<td>".$key['attendant']."</td>";
-              echo "<td>".$key['amount']."</td>";
+              echo "<td>". "¢ ".h(number_format($key['amount'], 2, ".",","))."</td>";
 							switch ($key->state) {
                   case 0:
                       echo "<td> Pendiente </td>";
