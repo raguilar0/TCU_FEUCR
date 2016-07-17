@@ -6,7 +6,9 @@
 <br>
 <br>
 <br>
-
+<br>
+<br>
+<br>
 
     <ul class="nav nav-tabs" id="public_amounts_nav">
         <li class="active"><a data-toggle="tab" href="#tract" onclick="getAmounts(0,0,0, document.getElementById('tracts_id'));">Montos de Tracto</a></li>
