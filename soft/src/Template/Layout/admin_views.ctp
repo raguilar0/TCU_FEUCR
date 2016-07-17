@@ -214,8 +214,8 @@
                         </li>
 
                       <li class="active">
-                          <a  data-toggle="collapse" data-target="#generated">Ingresos generados</a>
-                        <div id="generated" class="collapse">
+                          <a  data-toggle="collapse" data-target="#generated_information">Ingresos generados</a>
+                        <div id="generated_information" class="collapse">
                             <ul>
                               <li class="active"><?php echo $this->Html->link('Agregar Ingreso', ['controller'=>'Amounts','action'=>'add_amounts']);?></li><br>
                               <li class="active"><?php echo $this->Html->link('Administrar Ingresos', ['controller'=>'Amounts', 'action'=>'index'], ['id'=>'active-navbar']);?></li><br>
