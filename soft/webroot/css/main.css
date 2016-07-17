@@ -659,6 +659,11 @@ a:focus {
   {
     font-size: 12px;
   }
+  
+  #main-slider .carousel-inner .carousel-content h1
+  {
+    font-size: 24px;
+  }
 
 }
 
@@ -688,6 +693,11 @@ a:focus {
   th
   {
     font-size: 12px;
+  }
+  
+    #main-slider .carousel-inner .carousel-content h1
+  {
+    font-size: 20px;
   }
 
 }
