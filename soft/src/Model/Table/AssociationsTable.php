@@ -126,7 +126,7 @@ class AssociationsTable extends Table
             ])
 
             ->integer('enable')
-            ->requirePresence('enable', 'create')
+            ->requirePresence('enable', 'update')
             ->notEmpty('enable')
             ->add('authorized_card', 'validFormat', [
                         'rule' => array('custom', '/^[0-1]$/'),

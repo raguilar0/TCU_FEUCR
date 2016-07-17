@@ -48,8 +48,7 @@ class SurplusesTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmpty('id', 'create')
-            ->requirePresence('tract_id', 'create');
+            ->allowEmpty('id', 'create');
 
         $validator
             ->numeric('amount')

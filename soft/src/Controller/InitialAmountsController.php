@@ -176,9 +176,9 @@ class InitialAmountsController extends AppController
               try
               {
                   if ($this->InitialAmounts->delete($initialAmount)) {
-                      $this->Flash->success(__('El monto inicial no ha sido guardado.'));
+                      $this->Flash->success(__('El monto inicial no ha sido borrado.'));
                   } else {
-                      $this->Flash->error(__('El monto inicial no ha podido ser guardado. Intentelo de nuevo'));
+                      $this->Flash->error(__('El monto inicial no ha podido ser borrado. Intentelo de nuevo'));
                   }
                   return $this->redirect(['action' => 'index']);
               }

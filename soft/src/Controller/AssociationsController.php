@@ -65,7 +65,7 @@ class AssociationsController extends AppController
             {
                 $this->viewBuilder()->layout('admin_views');
                 $association = $this->Associations->get($id, [
-                    'contain' => ['Headquarters', 'Amounts', 'Boxes', 'InitialAmounts', 'Invoices', 'SavingAccounts', 'Savings', 'Surpluses', 'Users', 'Warehouses']
+                    'contain' => ['Headquarters']
                 ]);
 
                 $this->set('association', $association);
