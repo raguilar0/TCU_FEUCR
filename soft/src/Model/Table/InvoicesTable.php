@@ -37,12 +37,12 @@ class InvoicesTable extends Table
                       'message' => 'Formato inválido. Solo números.'
           ])
           ->add('clarifications', 'validFormat', [
-                      'rule' => array('custom', '/^[A-Za-z0-9" "\,\.\-\:áéíóú]+$/'),
+                      'rule' => array('custom', '/^[A-Za-z0-9" "\,\.\-\:áéíóúÁÉÍÓÚñÑ\[\]\(\)\"]+$/'),
                       'message' => 'Formato inválido'
           ])
           ->notEmpty('detail')
           ->add('detail', 'validFormat', [
-                      'rule' => array('custom', '/^[A-Za-záéíóú0-9" "\,\.\-\:]+$/'),
+                      'rule' => array('custom', '/^[A-Za-záéíóúÁÉÍÓÚñÑ0-9" "\,\.\-\:\[\]\(\)\"]+$/'),
                       'message' => 'Formato inválido'
           ])
           ->notEmpty('kind')

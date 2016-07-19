@@ -148,6 +148,7 @@ class SavingsController extends AppController
                     $this->Flash->success(__('El ahorro ha sido guardado'));
                     return $this->redirect(['action' => 'index']);
                 } else {
+                    $this->deleteLetter($letter_name); //En caso de que no se pueda agregar la información a la base de datos del monto de ahorro, se borra el pdf
                     $this->Flash->error(__('El ahorro no pudo ser guardado. Intentelo de nuevo.'));
                 }
             }

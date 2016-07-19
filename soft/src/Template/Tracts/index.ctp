@@ -11,7 +11,6 @@
         <table class="table">
             <thead>
             <tr>
-                <th><?= $this->Paginator->sort('id') ?></th>
                 <th><?= $this->Paginator->sort('number',['Número de tracto']) ?></th>
                 <th><?= $this->Paginator->sort('date',['Fecha de inicio']) ?></th>
                 <th><?= $this->Paginator->sort('deadline',['Fecha de finalización']) ?></th>
@@ -21,7 +20,6 @@
             <tbody>
             <?php foreach ($tracts as $tract): ?>
                 <tr>
-                    <td><?= $this->Number->format($tract->id) ?></td>
                     <td><?= $this->Number->format($tract->number) ?></td>
                     <td><?= h($tract->date) ?></td>
                     <td><?= h($tract->deadline) ?></td>

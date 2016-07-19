@@ -87,11 +87,10 @@
                         <th>#</th>
                         <th>Fecha</th>
                         <th># Factura</th>
-                        <th>Detalle</th>
+                        <th>Descripción</th>
                         <th>Proveedor</th>
                         <th>Monto</th>
                         <th>Encargado</th>
-                        <th>Aclaraciones</th>
                         <th>Ced. Jurídica</th>
                     </tr>
                     </thead>
@@ -293,11 +292,10 @@
                         <th>#</th>
                         <th>Fecha</th>
                         <th>Número de Factura</th>
-                        <th>Detalle</th>
+                        <th>Descripción</th>
                         <th>Proveedor</th>
                         <th>Monto</th>
                         <th>Encargado</th>
-                        <th>Aclaraciones</th>
                         <th>Ced. Jurídica</th>
                     </tr>
                     </thead>
@@ -442,11 +440,10 @@
                         <th>#</th>
                         <th>Fecha</th>
                         <th># Factura</th>
-                        <th>Detalle</th>
+                        <th>Descripción</th>
                         <th>Proveedor</th>
                         <th>Monto</th>
                         <th>Encargado</th>
-                        <th>Aclaraciones</th>
                         <th>Ced. Jurídica</th>
                     </tr>
                     </thead>
@@ -481,7 +478,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>Fecha</th>
-                                <th>Detalle</th>
+                                <th>Descripción</th>
                                 <th>Monto</th>
                             </tr>
                             </thead>
@@ -673,7 +670,7 @@
 
     </script>
 
-    <?=$this->Html->script('detailed_information.js') ?> <!-- Código para los datos de la vista -->
+    <?=$this->Html->script('public_detailed_information.js') ?> <!-- Código para los datos de la vista -->
 
 
 

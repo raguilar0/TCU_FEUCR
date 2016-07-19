@@ -100,8 +100,13 @@ class HeadquartersController extends AppController
                             $this->Flash->success(__('La sede se guardó exitosamente.'));
                             return $this->redirect(['action' => 'index']);
                         } else {
+                            $this->deleteHeadquarterImage($id); //En caso de que no se pueda agregar la información de la sede en la bd, se borra la imagen de la sede
                             $this->Flash->error(__('La sede no pudo ser guardada. Por favor intente de nuevo'));
                         }
+                    }
+                    else
+                    {
+                        $this->Flash->error(__('La sede no pudo ser guardada. Por favor verifique que la imagen esté en formato jpg, png o jpeg'));
                     }
                 }
                 else

@@ -19,102 +19,8 @@ class UsersController extends AppController
         $this->Auth->allow('add', 'logout');
     }
 
-    public function showAssociations($id = null)
-  	{
-      if($this->Auth->user()){
-        $this->loadModel('Associations');
-        $this->loadModel('Headquarters');
-
-        if($id)
-        {
-          $this->viewBuilder()->layout('admin_views');
 
 
-          $query = $this->Associations->Headquarters->find()
-              ->hydrate(false)
-              ->select(['a.name','a.id','name'])
-              ->join([
-                 'table'=>'associations',
-                 'alias'=>'a',
-                 'type' => 'RIGHT',
-                 'conditions'=>'Headquarters.id = a.headquarter_id',
-                ])
-              ->where(['a.enable'=>1]);
-
-          $query = $query->toArray();
-
-          switch ($id) {
-              case 1:
-                  $query['link'] = 'read';
-                break;
-
-              case 3:
-                  $query['link'] = 'modify';
-                break;
-
-              case 4:
-                  $query['link'] = 'delete';
-                break;
-          }
-          $this->set('data',$query);
-
-        }
-      }
-      else{
-        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
-      }
-  	}
-
-    public function read($id = null)
-    {
-      if($this->Auth->user()){
-        $this->viewBuilder()->layout('admin_views');
-
-          if($id){
-
-            if($this->request->session()->read('Auth.User.role') == 'admin')  {
-              $this->loadModel('Associations');
-              $association =
-              $this->Associations->find()
-                                  ->hydrate(false)
-                                  ->select(['name'])
-                                  ->where(['id'=>$id]);
-
-              $association = $association->toArray();
-              //debug($association);
-
-
-              $user = $this->Users->find()
-                                  ->where(['association_id'=>$id]);
-              $user = $user->toArray();
-            }
-
-          }
-
-          if(($this->request->session()->read('Auth.User.role')) == 'rep'){
-
-            $this->loadModel('Associations');
-            $association_id = $this->request->session()->read('Auth.User.association_id');
-            $association =
-            $this->Associations->find()
-                                ->hydrate(false)
-                                ->select(['name'])
-                                ->where(['id'=>$association_id]);
-
-            $association = $association->toArray();
-
-            $user = $this->Users->find()
-                                ->where(['association_id'=>$association_id]);
-            $user = $user->toArray();
-          }
-
-          $this->set('association', $association);
-          $this->set('data',$user);
-      }
-      else{
-        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
-      }
-    }
 
 
     public function add()
@@ -148,7 +54,7 @@ class UsersController extends AppController
 
             if ($this->Users->save($user)) {
                 $this->Flash->success('El usuario ha sido agregado');
-                //return $this->redirect(['action' => 'add']);
+                return $this->redirect(['action' => 'modify']);
             }
             else{
                 $this->Flash->error(__('Error al agregar usuario.'));
@@ -171,101 +77,84 @@ class UsersController extends AppController
       }
     }
 
-    public function modify($id = null)
+    public function modify()
     {
-      if($this->Auth->user()){
-        $this->viewBuilder()->layout('admin_views');
+        if ($this->Auth->user()) {
+            $this->viewBuilder()->layout('admin_views');
 
-          if($id){
 
-            if(($this->request->session()->read('Auth.User.role')) == 'admin'){
 
-              $this->loadModel('Associations');
-              $association =
-              $this->Associations->find()
-                                  ->hydrate(false)
-                                  ->select(['name'])
-                                  ->where(['id'=>$id]);
+                $this->paginate = [
+                    'contain' => ['Associations']
+                ];
 
-              $association = $association->toArray();
 
-              //$user = $this->Users->get($id);
-              $user = $this->Users->find()
-                                  ->where(['association_id'=>$id]);
-              $user= $user->toArray();
+            if(($this->request->session()->read('Auth.User.role')) == 'rep'){
+                $association_id = $this->request->session()->read('Auth.User.association_id');
 
+                $query = $this->Users->find()
+                    ->andWhere(['association_id'=>$association_id]);
+            }
+            elseif (($this->request->session()->read('Auth.User.role')) == 'admin')
+            {
+                $query = $this->Users;
             }
 
-          }
 
-          if(($this->request->session()->read('Auth.User.role')) == 'rep'){
+                $users = $this->paginate($query);
 
-            $this->loadModel('Associations');
-            $association_id = $this->request->session()->read('Auth.User.association_id');
-            $association =
-            $this->Associations->find()
-                                ->hydrate(false)
-                                ->select(['name'])
-                                ->where(['id'=>$association_id]);
+                $this->set(compact('users'));
+                $this->set('_serialize', ['users']);
 
-            $association = $association->toArray();
-
-            $user = $this->Users->find()
-                                ->where(['association_id'=>$association_id]);
-            $user = $user->toArray();
-          }
-
-          $this->set('association',$association);
-          $this->set('data',$user);
-
-      }
-      else{
-        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
-      }
+        }
     }
 
     public function modifyUser($id = null) {
       if($this->Auth->user() && $id){
         $this->viewBuilder()->layout('admin_views');
 
-             if($this->request->is(array('post','put'))) {
-               if($this->request->data['role'] == 'Administrador'){
-                   $this->request->data['role'] = 'admin';
-               }
-               elseif ($this->request->data['role'] == 'Representante'){
-                   $this->request->data['role'] = 'rep';
-               }
-
-               $user = $this->Users->newEntity($this->request->data);
-                    $blocked = (isset($this->request->data['state']) ? 1 : 0); //Verifica si se checó el checkbox de bloqueado
-                    //debug($user->errors());
-                    if(!$user->errors()) {
-                      $query = $this->Users->query();
-                      $query->update()
-                            ->set(['username'=>$this->request->data['username'], 'name'=>$this->request->data['name'],
-                                  'last_name_1'=>$this->request->data['last_name_1'], 'last_name_2'=>$this->request->data['last_name_2'],
-                                  'role'=>$this->request->data['role'], 'state'=>$blocked])
-                            ->where(['id'=>$id])
-                            ->execute();
-                      $this->Flash->success(__('Usuario modificado correctamente.'));
-                    }
-                    else{
-                        $this->Flash->error(__('Error al modificar usuario.'));
-                      }
-          }
-
           try
           {
-             $user = $this->Users->get($id);
+              $user = $this->Users->get($id);
           }
-          catch(RecordNotFoundException $e)
+          catch (RecordNotFoundException $e)
           {
               $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
               return $this->redirect(['controller'=>'Associations','action' => 'init']);
           }
 
-          $this->set('user', $user);
+          if ($this->request->is(['patch', 'post', 'put']))
+          {
+              $data = $this->request->data;
 
+              if(isset($data['role']) && ($data['role'] !== 'rep' && $data['role'] !== 'admin'))
+              {
+                  $this->Flash->error(__('Está tratando de ingresar datos inválidos.'));
+                  return $this->redirect(['controller'=>'Associations','action' => 'init']);
+              }
+
+              $data['state'] = ((isset($data['state']))?1:0);
+
+              $user = $this->Users->patchEntity($user,$data);
+
+              if($this->Users->save($user))
+              {
+                  $this->Flash->success(__('El usuario se guardó exitosamente.'));
+                  return $this->redirect(['action' => 'modify']);
+              }
+              else
+              {
+                  $this->Flash->error(__('El usuario no pudo ser guardado. Por favor intente de nuevo'));
+              }
+          }
+
+
+
+          $role['admin'] = 'Administrador';
+          $role['rep'] = 'Representante';
+          $associations = $this->Users->Associations->find('list');
+
+          $this->set(compact('user', 'associations', 'role'));
       }
       else{
         return $this->redirect(['controller'=>'pages', 'action'=>'home']);
@@ -273,15 +162,40 @@ class UsersController extends AppController
 
     }
 
-    public function delete()
+    public function delete($id = null)
     {
-      if($this->Auth->user()){
 
-      }
-      else{
-        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
-      }
+        try
+        {
+            $this->viewBuilder()->layout('admin_views');
+            $this->request->allowMethod(['post', 'delete']);
+
+            try
+            {
+                $query = $this->Users->query();
+                $query->update()
+                    ->set(['state' => 1])
+                    ->where(['id' => $id])
+                    ->execute();
+                $this->Flash->success(__('El usuario se deshabilitó exitosamente.'));
+            }
+            catch (Exception $e)
+            {
+                $this->Flash->error(__('El usuario no pudo ser deshabilitado. Por favor intente de nuevo.'));
+            }
+
+            return $this->redirect(['action' => 'modify']);
+        }
+        catch (RecordNotFoundException $e)
+        {
+            $this->Flash->error(__('La información que está tratando de recuperar no existe en la base de datos. Verifique e intente de nuevo'));
+            return $this->redirect(['controller'=>'Associations','action' => 'init']);
+        }
+
     }
+
+
+    
 
     public function login()
     {
@@ -489,7 +403,16 @@ class UsersController extends AppController
     public function isAuthorized($user)
     {
 
-        if(in_array($this->request->action,['modify', 'modifyUser', 'logout', 'resetPass', 'perfil']))
+
+        if(in_array($this->request->action,['modifyUser','delete']))
+        {
+            $userId = (int)$this->request->params['pass'][0];
+            if ((($this->request->session()->read('Auth.User.role')) == 'rep') && $this->Users->isOwnedBy($userId, $user['association_id'])) {
+                return true;
+            }
+        }
+
+        if(in_array($this->request->action,['modify', 'logout', 'resetPass', 'perfil']))
         {
           return true;
         }

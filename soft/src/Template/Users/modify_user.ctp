@@ -22,24 +22,10 @@ echo "<br>";
 
 
         if($this->request->session()->read('Auth.User.role') == 'admin') {
-          echo "<label for='sel1' id = 'role_label'><h4>Rol</h4></label>";
 
-          if($user->role == 'admin'){
-            echo "<select class='form-control' name = 'role'>";
-               echo "<option>Administrador</option>";
-               echo "<option>Representante</option>";
-             echo "</select>";
-          }
+            echo $this->Form->input('association_id', ['options' => $associations, 'label'=>'Asociación', 'class'=>'form-control']);
+            echo $this->Form->input('role', ['options' => $role, 'class'=>'form-control', 'label'=>'Rol']);
 
-          if($user->role == 'rep'){
-            echo "<select class='form-control' name = 'role'>";
-               echo "<option>Representante</option>";
-               echo "<option>Administrador</option>";
-             echo "</select>";
-          }
-
-            echo "<br>";
-          echo "<td>". $this->Html->link('Cambiar contraseña',['action'=>'reset-password',$user['id']],['class'=>'btn btn-danger'])."</td>";
         }
 		    echo "<h4>".$this->Form->label('Users.blocked','Usuario Bloqueado ');
 
@@ -47,13 +33,8 @@ echo "<br>";
     echo "</div>";
 
 
+    echo $this->Form->checkbox('state', ['hiddenField' => false, 'class'=>'checkbox-inline'])."</h4>";
 
-    if($user['state'] == false) {
-    	echo $this->Form->checkbox('state', ['hiddenField' => false, 'class'=>'checkbox-inline'])."</h4>";
-    }
-    else {
-    	echo $this->Form->checkbox('state', ['hiddenField' => false, 'class'=>'checkbox-inline', 'checked'])."</h4>";
-    }
 
   echo "</div>";
 
