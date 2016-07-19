@@ -88,19 +88,24 @@ class AmountsController extends AppController
 		else{
 			$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
 
+			$tract = $this->getTractId(date('Y-m-d'));
+			$amount = $this->Amounts->newEntity();
+
 			if($this->request->is('POST'))
 			{
-				$tract = $this->getTractId(date('Y-m-d'));
 				$association_id = $this->request->session()->read('Auth.User.association_id');
 				$type = 1;
 				$data = $this->request->data;
+
 
 				$data['tract_id'] = $tract;
 				$data['association_id'] = $association_id;
 				$data['type'] = $type;
 
+				$entity = $this->Amounts->patchEntity($amount,$data);
 
-					$entity =  $this->Amounts->newEntity($data);
+
+				//	$entity =  $this->Amounts->newEntity($data);
 
 					if($this->Amounts->save($entity))
 					{
@@ -108,10 +113,13 @@ class AmountsController extends AppController
 					}
 					else
 					{
-						$this->Flash->error('No se pudo agregar el monto. Esto puede ser porque aún no se han creado las fechas del tracto correspondiente');
+						$this->Flash->error('No se pudo agregar el monto. Esto puede ser porque aún no se han creado las fechas del tracto correspondiente o a que introdujo datos inválidos.');
 					}
 
 			}
+
+			$this->set('amount',$amount);
+			$this->set('tract',$tract);
 
 		}
 	}
@@ -187,7 +195,7 @@ class AmountsController extends AppController
 				if($this->validateTract($this->Amounts,$association_id, $tracts[$index]['id'], 0))
 				{
 					$values['amount'] = $value;
-					$values['tract_id'] = $tracts[$index]['id'];//$this->getTractId($tracts[$index]['date']); //Pide el id del tracto tomando como fecha la fecha de inicio
+					$values['tract_id'] = $tracts[$index]['id'];
 
 					$entity = $this->Amounts->newEntity($values);
 
@@ -254,7 +262,7 @@ class AmountsController extends AppController
 			{
 				$values['little_amount'] = 0;
 				$values['big_amount'] = 0;
-				$values['tract_id'] = $tracts[$index]['id'];//$this->getTractId($tracts[$index]['date']); //Pide el id del tracto tomando como fecha la fecha de inicio
+				$values['tract_id'] = $tracts[$index]['id'];
 
 				$entity = $this->Boxes->newEntity($values);
 
@@ -330,7 +338,7 @@ class AmountsController extends AppController
 
         $id = $id->toArray();
 
-		return $id[0]['id'];
+		return (isset($id[0])? $id[0]['id']: null);
 	}
 
 	public function getAssociations($headquarter_name)

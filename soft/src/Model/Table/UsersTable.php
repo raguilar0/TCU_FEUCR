@@ -123,5 +123,11 @@ class UsersTable extends Table
         return $validator;
     }
 
+
+    public function isOwnedBy($userId, $association_id)
+    {
+        return $this->exists(['id' => $userId, 'association_id' => $association_id]);
+    }
+
 }
 ?>

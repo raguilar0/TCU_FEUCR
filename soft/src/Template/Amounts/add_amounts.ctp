@@ -1,9 +1,11 @@
+<?php if(!is_null($tract)):?>
+
 <div class="row text-center">
     <div class="col-xs-12">
         <h1 id="association_name"></h1>
 
         <h3><?php
-                echo "<h1>Agregar un nuevo monto</h1>";
+                echo "<h1>¡Agregá un nuevo monto!</h1>";
          ?>
          </h3>
     </div>
@@ -16,7 +18,7 @@
      <?php
 
 
-        echo $this->Form->create(null, ['id'=>'submit6']);
+        echo $this->Form->create($amount);
 
      echo "<div class = 'col-xs-12'>";
 
@@ -67,16 +69,16 @@
 
 ?>
 
-<div class="row text-right">
+<?php endif; if(is_null($tract)){echo "<h2>Aún no se asigna la fecha del tracto actual. Comúniquese con la contraloría para mayor información.</h2>";}?>
+
+<br>
+<div class="row text-center">
     <div class="col-xs-12">
-        <h4 id="callback" style="color:#01DF01"><?= $this->Flash->render('success') ?></h4>
+        <?php
+        echo $this->Html->link(
+            'Atrás',
+            ['controller' => 'Amounts', 'action' => 'index'], ['class'=>'btn btn-primary']
+        );
+        ?>
     </div>
-
-</div>
-
-<div class="row text-right">
-    <div class="col-xs-12">
-        <h4 id="callback" style="color:#01DF01"><?= $this->Flash->render('error') ?></h4>
-    </div>
-
 </div>
