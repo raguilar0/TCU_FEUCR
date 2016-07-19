@@ -43,14 +43,14 @@
                 ?>
                 <td><?= $key->date ?></td>
                 <td><?= $key->has('association') ? $this->Html->link($key->association->name, ['controller' => 'Associations', 'action' => 'view', $key->association->id]) : '' ?></td>
-                <td><?= "¢ ".h(number_format($key->amount, 2, ".",",")) ?></td>
+                <td><?= h($key->amount) ?></td>
                 <?php
                     switch ($key->state) {
                     case 0:
                         echo "<td> Pendiente </td>";
                         break;
                     case 1:
-                         echo "<td> Aprobada </td>";
+                         echo "<td> Aproobada </td>";
                          break;
                     default:
                         echo "<td> Rechazada </td>";    

@@ -23,36 +23,34 @@ class InvoicesController extends AppController
 			$invoice['invoices_type'] = $invoices_type;
 
 
-			if($this->request->is('post'))
-			{
+			if($this->request->is('post')){
 				$this->loadComponent('Upload');
 
 				$file = $invoice['file'];
 				unset($invoice['file']); //Quitamos los datos del archivo
 
-				if(!empty($file))
-				{
+				if(!empty($file)){
 					$id = $this->Upload->save($file);
-					if($id != false)
-					{
+					if($id != false)					{
 						$invoice['image_name'] = $id;
 						$invoice['association_id']= $this->request->session()->read('Auth.User.association_id');
 
 						$invoice['kind'] = $invoices_type[$this->request->data['kind']];
 						$invoice['tract_id'] = $this->getTractId(date("Y-m-d"));
 
-						try
-						{
-							if($this->Invoices->save($invoice))
-							{
+						try	{
+							if($this->Invoices->save($invoice)){
 								$this->Flash->Success('Factura Agregada');
 							}
 							else{
+								$filePath = WWW_ROOT .'/img/invoices';
+						        $dir = new Folder($filePath);
+						        $file = new File($dir->pwd() . DS . $invoice['image_name']);
+						        $file->delete();
 								$this->Flash->error('Error al agregar factura.');
 							}
 						}
-						catch (\PDOException $e)
-						{
+						catch (\PDOException $e){
 							$this->Flash->error(__("No se puedo guardar la factura. Esto puede deberse a que no se han creado aún fechas de tracto."));
 							return $this->redirect(['controller'=>'Associations','action' => 'init']);
 						}
@@ -209,9 +207,9 @@ class InvoicesController extends AppController
 				$response = "0";
 			}else{
 				if(($this->request->session()->read('Auth.User.role')) == 'rep'){
-					return $this->redirect($this->Auth->redirectUrl("/invoices/modify/"));
+					return $this->redirect(['action'=>'modify']);
 				}else{
-					return $this->redirect($this->Auth->redirectUrl("/invoices/admin-invoices/"));
+					return $this->redirect(['action'=>'admin-modify']);
 				}
 
 			}
