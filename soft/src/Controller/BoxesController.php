@@ -72,19 +72,36 @@ class BoxesController extends AppController
      *
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
-   /* public function add(){
+   public function add(){
+       $this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
         $box = $this->Boxes->newEntity();
         if ($this->request->is('post')) {
             $box = $this->Boxes->patchEntity($box, $this->request->data);
             if ($this->Boxes->save($box)) {
-                $this->Flash->success(__('The box has been saved.'));
+                $this->Flash->success(__('Se agregó las cajas correctamente'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The box could not be saved. Please, try again.'));
+                $this->Flash->error(__('Las cajas no pudieron ser agregadas'));
             }
         }
-        $associations = $this->Boxes->Associations->find('list', ['limit' => 200]);
-        $this->set(compact('box', 'associations'));
+
+       $tracts = $this->Boxes->Tracts->find()
+           ->select(['id','date','deadline'])
+           ->where(['YEAR(date)'=>date('Y')])
+           ->orWhere(['YEAR(date)'=>(date('Y') + 1)]);
+       $temp = array();
+
+       foreach ($tracts as $key => $value)
+       {
+           $temp[$value->id] = $value->date." - ".$value->deadline;
+       }
+
+       $tracts = $temp;
+
+        $type[0] = 'Tracto';
+       $type[1] =  'Ingresos generados';
+        $associations = $this->Boxes->Associations->find('list');
+        $this->set(compact('box', 'associations', 'tracts', 'type'));
         $this->set('_serialize', ['box']);
     }
 

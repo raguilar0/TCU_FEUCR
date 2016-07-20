@@ -100,9 +100,16 @@
                         <li class="active">
                           <?php echo $this->Html->link('Administrar Facturas',['controller'=>'Invoices','action'=>'admin_modify']);?>
                         </li>
+                        
 
                         <li class="active">
-                          <?php echo $this->Html->link('Administrar Cajas',['controller'=>'Boxes','action'=>'index']);?>
+                            <a  data-toggle="collapse" data-target="#box_id">Cajas</a>
+                            <div id="box_id" class="collapse">
+                                <ul>
+                                    <li><?php echo $this->Html->link('Agregar cajas',['controller'=>'Boxes','action'=>'add']);?></li>
+                                    <li><?php echo $this->Html->link('Administrar Cajas',['controller'=>'Boxes','action'=>'index']);?></li>
+                                </ul>
+                            </div>
                         </li>
 
                         <li class="active">

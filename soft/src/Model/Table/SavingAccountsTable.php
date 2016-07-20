@@ -66,15 +66,15 @@ class SavingAccountsTable extends Table
             ->requirePresence('bank', 'create')
             ->notEmpty('bank')
             ->add('bank', 'validFormat', [
-                        'rule' => array('custom', '/^[A-Za-záéíóú" "\,\.]+$/'),
-                        'message' => 'Formato inválido. Solo números.'
+                        'rule' => array('custom', '/^[A-Za-z0-9" "\,\.\-\:áéíóúÁÉÍÓÚñÑ\[\]\(\)\"]+$/'),
+                        'message' => 'Formato inválido.'
             ]);
 
         $validator
             ->requirePresence('account_owner', 'create')
             ->notEmpty('account_owner')
             ->add('account_owner', 'validFormat', [
-                        'rule' => array('custom', '/^[A-Za-záéíóú" "\,\.]+$/'),
+                        'rule' => array('custom', '/^[A-Za-z0-9" "\,\.\-\:áéíóúÁÉÍÓÚñÑ\[\]\(\)\"]+$/'),
                         'message' => 'Formato inválido.'
             ]);
 
