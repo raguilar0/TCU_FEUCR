@@ -94,26 +94,26 @@ class AssociationsTable extends Table
             ->requirePresence('acronym', 'create')
             ->notEmpty('acronym')
             ->add('acronym', 'validFormat', [
-                        'rule' => array('custom', '/^[A-Za-z0-9" "\,\.\-\:áéíóú]+$/'),
+                        'rule' => array('custom',  '/^[A-Za-záéíóúÁÉÍÓÚñÑ0-9" "\,\.\-\:\[\]\(\)\"]+$/'),
                         'message' => 'Formato inválido'
             ])
 
             ->requirePresence('name', 'create')
             ->notEmpty('name')
             ->add('name', 'validFormat', [
-                        'rule' => array('custom', '/^[A-Za-z0-9" "\,\.\-\:áéíóú]+$/'),
+                        'rule' => array('custom',  '/^[A-Za-záéíóúÁÉÍÓÚñÑ0-9" "\,\.\-\:\[\]\(\)\"]+$/'),
                         'message' => 'Formato inválido'
             ])
 
             ->allowEmpty('location')
             ->add('location', 'validFormat', [
-                        'rule' => array('custom', '/^[A-Za-z0-9" "\,\.\-\#\:áéíóú]+$/'),
+                        'rule' => array('custom',  '/^[A-Za-záéíóúÁÉÍÓÚñÑ0-9" "\,\.\-\:\[\]\(\)\"]+$/'),
                         'message' => 'Formato inválido'
             ])
 
             ->allowEmpty('schedule')
             ->add('schedule', 'validFormat', [
-                        'rule' => array('custom', '/^[A-Za-z0-9" "\,\.\-\:áéíóú]+$/'),
+                        'rule' => array('custom',  '/^[A-Za-záéíóúÁÉÍÓÚñÑ0-9" "\,\.\-\:\[\]\(\)\"]+$/'),
                         'message' => 'Formato inválido'
             ])
 

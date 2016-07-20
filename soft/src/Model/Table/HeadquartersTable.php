@@ -49,7 +49,7 @@ class HeadquartersTable extends Table
               'provider' => 'table'
           ])
             ->add('name', 'validFormat', [
-                        'rule' => array('custom', '/^[A-Za-záéíóú0-9" "]+$/'),
+                        'rule' => array('custom',  '/^[A-Za-záéíóúÁÉÍÓÚñÑ0-9" "\,\.\-\:\[\]\(\)\"]+$/'),
                         'message' => 'Formato inválido'
             ]);
 

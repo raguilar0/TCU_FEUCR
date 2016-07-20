@@ -64,7 +64,7 @@ class SurplusesTable extends Table
             ->requirePresence('detail', 'create')
             ->notEmpty('detail')
             ->add('detail', 'validFormat', [
-                        'rule' => array('custom', '/^[0-9A-Za-záéíóú" "\,\.\:\-]+$/'),
+                        'rule' => array('custom', '/^[A-Za-z0-9" "\,\.\-\:áéíóúÁÉÍÓÚñÑ\[\]\(\)\"]+$/'),
                         'message' => 'Formato inválido.'
             ]);
 

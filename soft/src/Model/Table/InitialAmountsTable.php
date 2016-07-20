@@ -54,18 +54,26 @@ class InitialAmountsTable extends Table
         $validator
             ->integer('id')
             ->allowEmpty('id', 'create')
-            ->requirePresence('tract_id', 'create');
+            ->requirePresence('tract_id', 'create')
+            ->add('tract_id', 'validFormat', [
+                        'rule' => array('custom', '/^[0-9]+$/'),
+                        'message' => 'Formato inválido. Solo números.'
+            ]);
 
         $validator
             ->numeric('amount')
             ->requirePresence('amount', 'create')
-            ->notEmpty('amount');
+            ->notEmpty('amount')
+            ->add('amount', 'validFormat', [
+                        'rule' => array('custom', '/^[0-9\,\.]+$/'),
+                        'message' => 'Formato inválido. Solo números.'
+            ]);
 
         $validator
             ->integer('type')
             ->requirePresence('type', 'create')
             ->notEmpty('type');
-        
+
 
         return $validator;
     }

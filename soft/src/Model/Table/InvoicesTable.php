@@ -47,23 +47,23 @@ class InvoicesTable extends Table
           ])
           ->notEmpty('kind')
           ->add('kind', 'validFormat', [
-                      'rule' => array('custom', '/^[A-Za-záéíóú0-9" "]+$/'),
+                      'rule' => array('custom', '/^[A-Za-z0-9" "\,\.\-\:áéíóúÁÉÍÓÚñÑ\[\]\(\)\"]+$/'),
                       'message' => 'Formato inválido'
           ])
           ->notEmpty('attendant')
           ->add('attendant', 'validFormat', [
-                      'rule' => array('custom', '/^[A-Za-záéíóú0-9" "]+$/'),
+                      'rule' => array('custom', '/^[A-Za-z0-9" "\,\.\-\:áéíóúÁÉÍÓÚñÑ\[\]\(\)\"]+$/'),
                       'message' => 'Formato inválido'
           ])
           ->notEmpty('provider')
           ->add('provider', 'validFormat', [
-                      'rule' => array('custom', '/^[A-Za-záéíóú0-9" "\,\.\-\:]+$/'),
+                      'rule' => array('custom', '/^[A-Za-z0-9" "\,\.\-\:áéíóúÁÉÍÓÚñÑ\[\]\(\)\"]+$/'),
                       'message' => 'Formato inválido'
           ])
           ->notEmpty('legal_certificate')
           ->add('legal_certificate', 'validFormat', [
                       'rule' => array('custom', '/^[0-9\-]+$/'),
-                      'message' => 'Formato inválido'
+                      'message' => 'Formato inválido.'
           ])
           ;
 
