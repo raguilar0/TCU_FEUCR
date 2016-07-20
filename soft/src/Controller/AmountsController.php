@@ -136,7 +136,7 @@ class AmountsController extends AppController
 			->hydrate(false)
 			->select(['tract.id'])
 			->join([
-				'table'=>'Tracts',
+				'table'=>'tracts',
 				'alias'=>'tract',
 				'type'=>'inner',
 				'conditions'=>'Amounts.tract_id = tract.id'
@@ -146,8 +146,8 @@ class AmountsController extends AppController
 
 		$tracts = $this->Amounts->Tracts->find()
 			->hydrate(false)
-			->select(['Tracts.id','Tracts.date', 'Tracts.deadline', 'Tracts.number'])
-			->where(function ($exp,$q)use($amounts){return $exp->notIn('Tracts.id',$amounts);});
+			->select(['id','date', 'deadline', 'number'])
+			->where(function ($exp,$q)use($amounts){return $exp->notIn('id',$amounts);});
 
 		$tracts = $tracts->toArray();
 
