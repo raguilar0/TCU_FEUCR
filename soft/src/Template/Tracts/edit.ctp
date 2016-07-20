@@ -11,19 +11,20 @@
         <div class="form-group">
 
 
-            <?= $this->Form->input('number', ['class'=>'form-control', 'label'=>'Número de tracto']); ?>
+            <?= $this->Form->input('number', ['class'=>'form-control', 'label'=>'Número de tracto' , 'min'=>'1', 'max'=>'4', 'id'=>'tract_number']); ?>
             <br>
             <br>
             <div class="row">
                 <div class="col-xs-12 col-md-6">
                     <label>Fecha de inicio</label>
 
-                    <input type="date" name="date" class="form-control" id="date" value = "<?php echo $tract->date->format('Y-m-d') ?>">
+                    <label for=".date">Fecha de inicio</label><input type='date' name='date' class='form-control' id='date' onchange='setTractNumber(this)' value = "<?php echo $tract->date->format('Y-m-d') ?>">
 
                 </div>
                 <div class="col-xs-12 col-md-6">
                     <label style="margin-bottom: 15px;">Fecha de finalización</label>
-                    <input type="date" name="deadline" class="form-control" id="deadline" value = "<?php echo $tract->deadline->format('Y-m-d') ?>">
+                    <input type='date' name='deadline' class='form-control' id='deadline'  onchange='setTractNumber(this)' value = "<?php echo $tract->deadline->format('Y-m-d') ?>">
+
                 </div>
             </div>
 
@@ -50,3 +51,5 @@
 					?>
 			</div>
 		</div>
+
+<?= $this->Html->script('tract_add'); ?>
