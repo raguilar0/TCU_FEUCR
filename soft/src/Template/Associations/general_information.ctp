@@ -7,7 +7,7 @@
 
 <?php
 
-	echo $this->Form->create($data, ['id'=>'submit1']);
+	echo $this->Form->create($data);
 	echo "<div class='form-group'>";
 
     echo "<h4>".$this->Form->input('name', ['class' => 'form-control','label'=>'Nombre de la asociación', 'disabled' => 'disabled','value'=>$data['name'], 'maxlength'=> '256'])."</h4>";

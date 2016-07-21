@@ -28,7 +28,7 @@ class InvoicesTable extends Table
           ->requirePresence('tract_id','create')
           ->notEmpty('number')
           ->add('number', 'validFormat', [
-                      'rule' => array('custom', '/[0-9]+$/'),
+                      'rule' => array('custom', '/[0-9a-zA-Z\-]+$/'),
                       'message' => 'Formato inválido. Solo números.'
           ])
           ->notEmpty('amount')

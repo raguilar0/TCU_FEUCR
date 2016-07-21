@@ -553,10 +553,7 @@ class AssociationsController extends AppController
 
             $id = $this->request->session()->read('Auth.User.association_id');
             if($id) {
-
-
-
-
+                
                 if($this->request->is(array('post','put')))
                 {
 
