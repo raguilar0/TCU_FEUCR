@@ -52,7 +52,7 @@ CREATE TABLE amounts
   type INT(2) NOT NULL DEFAULT 0, -- 0:tracto, 1:monto generado, 2:superávit
   association_id INT UNSIGNED NOT NULL,
   tract_id INT UNSIGNED NOT NULL,
-
+  FOREIGN KEY (tract_id) REFERENCES  tracts(id),
   FOREIGN KEY(association_id) REFERENCES associations(id)
 );
 
@@ -68,6 +68,7 @@ CREATE TABLE initial_amounts
   association_id INT UNSIGNED NOT NULL,
   tract_id INT UNSIGNED NOT NULL,
 
+  FOREIGN KEY (tract_id) REFERENCES  tracts(id),
   FOREIGN KEY(association_id) REFERENCES associations(id)
 );
 
@@ -103,6 +104,7 @@ CREATE TABLE invoices
   association_id INT UNSIGNED NOT NULL,
   tract_id INT UNSIGNED NOT NULL,
 
+  FOREIGN KEY (tract_id) REFERENCES  tracts(id),
   FOREIGN KEY(association_id) REFERENCES associations(id),
 
 
@@ -120,7 +122,7 @@ CREATE TABLE boxes
   type INT UNSIGNED NOT NULL DEFAULT 0, -- 0:tracto, 1:monto generado, 2:superávit
   association_id INT UNSIGNED NOT NULL,
   tract_id INT UNSIGNED NOT NULL,
-
+FOREIGN KEY (tract_id) REFERENCES  tracts(id),
   FOREIGN KEY(association_id) REFERENCES associations(id)
 );
 
@@ -133,6 +135,7 @@ CREATE TABLE savings
    letter VARCHAR(256) NOT NULL,
    association_id INT UNSIGNED NOT NULL,
    tract_id INT UNSIGNED NOT NULL,
+   FOREIGN KEY (tract_id) REFERENCES  tracts(id),
    FOREIGN KEY(association_id) REFERENCES associations(id)
 );
 

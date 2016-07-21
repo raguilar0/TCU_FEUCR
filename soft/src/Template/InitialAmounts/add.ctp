@@ -1,201 +1,91 @@
 <div class = "row text-center">
     <div class = "col-xs-12">
-        <h1>Agrega montos iniciales</h1>
+        <h1>¡Agregá montos iniciales!</h1>
     </div>
 </div>
 
-<div class="row text-center">
-    <div class="col-xs-12">
-        <h2 id="association_name"></h2>  
-
-
-        <h3><?php
-                if(empty($data))
-                {
-                    echo "Debe crear un tracto primero antes de poder asignar montos.";
-                }
-         ?>
-         </h3>  
-    </div>
-</div>
-
-
 <br>
 <br>
-
-
-<div class="row text-center">
-    <?php
-        if(!empty($data))
-        {
-            echo "<div class = 'col-xs-12 col-md-5'>";
-        
-            echo "<label><h4><strong>Sedes</strong></h4></label>";
-               echo "<select class='form-control' id= 'headquarter_id' name = 'type' onchange='getAssociations();'>";
-        
-        
-        
-                    foreach ($head as $key => $value) {
-                        echo "<option>".$value['name']."</option>"."<br>";
-                    }
-                    
-                echo "</select>";
-            echo "</div>";
-            
-            
-            
-            echo "<div class = 'col-xs-12 col-md-7'>";
-        
-            echo "<label><h4><strong>Asociaciones</strong></h4></label>";
-               echo "<select class='form-control' name = 'type' id = 'associations' onchange = 'changeAssociation();'>";
-
-                    
-                echo "</select>";
-            echo "</div>"; 
-        }
-            
-        
-    ?>
-    
-    
-    
-</div>
-
-
-<br>
-<br>
-<br>
-<br>
-
 
 
 <?php
 
+if(!empty($from_tracts)):
 
-    if(!empty($data))
+echo $this->Form->create(null);
+
+$val = ((isset($this->request->params['pass'][0]))? $this->request->params['pass'][0] : 0);
+echo $this->Form->input('association_id', ['options' => $associations, 'class'=>'form-control', 'label'=>'Asociación correspondiente','empty'=>'Elegí una asociación','value'=>$val, 'onchange'=>'changeAssociation(this)']);
+?>
+
+
+<?php if(isset($this->request->params['pass'][0])):?>
+
+<?php if(!empty($destination)):?>
+<br />
+<div class="row text-center">
+    <div class="col-xs-12"><h4>Podés escoger qué cajas transferir</h4></div>
+</div>
+<br />
+<div class="row text-center">
+    <div class="col-xs-6"><?= $this->Form->input('tract_box',['type'=> 'checkbox', 'class'=>'checkbox-inline', 'label'=>'Caja de tracto']); ?></div>
+    <div class="col-xs-6"><?= $this->Form->input('generated_box',['type'=> 'checkbox', 'class'=>'checkbox-inline', 'label'=>'Caja de ingresos generados', 'checked']); ?></div>
+</div>
+<hr>
+
+
+<br />
+<div class="row text-center">
+    <div class="col-xs-12"><h4>Escogé las fechas de tracto involucradas en la transferencia</h4></div>
+</div>
+<br />
+<div class="row">
+    <div class="col-xs-6"><?= $this->Form->input('from', ['options' => $from_tracts, 'label'=>'Desde:', 'class'=>'form-control']); ?></div>
+    <div class="col-xs-6"><?= $this->Form->input('to', ['options' => $destination, 'label'=>'Hacia:', 'class'=>'form-control']); ?></div>
+</div>
+
+<br />
+<br />
+<div class='row text-center'>
+    <div class = 'col-xs-12'>
+        <?= "<h4>".$this->Form->submit('Transferir', ['class' => 'form-control btn btn-primary', 'id' => 'asso_id'])."</h4>" ?>
+    </div>
+</div>
+
+
+
+<?= $this->Form->end(); ?>
+
+<?php endif;
+    if(empty($destination))
     {
-        echo $this->Form->create(null, ['id'=>'submit_add_initial_amount']);
-            echo "<div class='form-group'>";
-
-            echo "<br>";
-            echo "<br>";
-
-            echo "<div class = 'row'>";
-                echo "<div class='col-xs-12 col-md-6'>";
-                    echo $this->Form->input('tract_box',['type'=> 'checkbox', 'class'=>'checkbox-inline', 'label'=>'Caja de tracto']);
-                echo "</div>";
-
-                echo "<div class='col-xs-12 col-md-6'>";
-                    echo $this->Form->input('generated_box',['type'=> 'checkbox', 'class'=>'checkbox-inline', 'label'=>'Caja de ingresos generados', 'checked']);
-                echo "</div>";
-
-            echo "</div>";
-
-
-            echo "<br>";
-            echo "<br>";
-
-            echo "<div class='row'>";
-
-                echo "<div class='col-xs-12 col-md-4'>";
-                        echo "<label><h4><strong>Trasferir de: </strong></h4></label>";
-                           echo "<select class='form-control'  name = 'first_tract'>";
-                    
-                                /**
-                                 *  Imprime las fechas del tracto anterior y las actuales 
-                                 **/
-                    
-                                foreach ($data[0] as $key => $value) {
-                                    echo "<option>".$value['date']->format('Y-m-d')."</option>"."<br>";
-                                }
-                                
-                                foreach ($data[1] as $key => $value) {
-                                    echo "<option>".$value['date']->format('Y-m-d')."</option>"."<br>";
-                                }
-                                
-                            echo "</select>";                    
-                echo "</div>";
-                
-                echo "<div class='col-xs-12 col-md-4'>";
-                    
-                echo "</div>";
-                
-                echo "<div class='col-xs-12 col-md-4'>";
-                        echo "<label><h4><strong>Hacia : </strong></h4></label>";
-                           echo "<select class='form-control' name = 'second_tract'>";
-                    
-                                /**
-                                 *  Imprime solo las fechas de los tractos acutales
-                                 **/ 
-                                foreach ($data[1] as $key => $value) {
-                                    echo "<option>".$value['date']->format('Y-m-d')."</option>"."<br>";
-                                }
-                                
-                            echo "</select>";                      
-                echo "</div>";           
-            echo "</div>"; 
-
-
-
-            echo "<br>";
-            echo "<br>";
-            echo "<br>";
-            echo "<br>";
-
-
-            echo "<div class='row text-center'>";
-                echo "<div class = 'col-xs-12'>";               
-                    echo "<h4>".$this->Form->submit('Transferir', ['class' => 'form-control btn btn-primary', 'id' => 'asso_id'])."</h4>";
-                echo "</div>";
-            echo "</div>";
-
-            echo "</div>";
-
-
-
-
-        echo $this->Form->end();        
+        echo "<h3> ¿Por qué no puedo hacer la transferencia con esta asociación? Probablemente ya se le asoció un monto inicial a todas las fechas de tracto existentes, para poder asignarle un monto inicial nuevo deberá crear una nueva ".$this->Html->link('fecha de tracto.',['controller'=>'Tracts','action'=>'add'])."</h3>";
     }
-
-
 
 ?>
 
-<div class="row text-right">
-    <div class="col-xs-12">
-        <h4 id="callback" style="color:#01DF01"><?= $this->Flash->render('addAmounts') ?></h4>   
-    </div>
+<?php endif;?>
 
-</div>
+<?php endif;
+    if(empty($from_tracts))
+    {
+        echo "<h3> Para poder crear los montos iniciales deberá primero asignar las ".$this->Html->link('fechas de tracto.',['controller'=>'Tracts','action'=>'add'])."</h3>";
+    }
+?>
 
-
-<div class="row text-right">
-    <div class="col-xs-12">
-        <h4 id="callback" style="color:#01DF01"></h4>   
-    </div>
-
-</div>
-
-
-
-
+<br />
 <div class="row text-center">
   <div class="col-xs-12">
-     <?php echo $this->Html->link('Atrás', '/associations', ['class'=>'btn btn-primary']);?>
+     <?php echo $this->Html->link('Atrás', ['controller'=>'InitialAmounts', 'action'=>'index'], ['class'=>'btn btn-primary']);?>
   </div>
 </div>
 
-<?=$this->Html->script('amounts_admin') ?>
+
 
 <script>
-
-    //El siguiente script es para cargar las sedes y asociaciones que partenencen en esa sede. Esto en un dropdown
-
-    $(document).ready( function ()
+    function changeAssociation(id)
     {
-        var path = "<?php echo $this->Url->build(["controller" => "Amounts", "action" => "getAssociations"]);?>";
-        getAssociations(path);
-    });
-
-
+        var url = "<?php echo $this->Url->build(["controller" => "InitialAmounts", "action" => "add"]);?>/"+id.value;
+        window.location = url;
+    }
 </script>

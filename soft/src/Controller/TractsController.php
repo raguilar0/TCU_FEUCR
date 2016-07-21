@@ -81,7 +81,6 @@ class TractsController extends AppController
                 $tract = $this->Tracts->patchEntity($tract, $this->request->data);
                 if ($this->Tracts->save($tract)) {
                     $this->Flash->success(__('El tracto ha sido guardado.'));
-                    return $this->redirect(['action' => 'index']);
                 } else {
 
                     $this->Flash->error(__('El tracto no ha podido ser guardado. Intentelo de nuevo '));

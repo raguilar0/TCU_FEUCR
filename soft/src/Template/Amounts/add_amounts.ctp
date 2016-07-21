@@ -69,7 +69,7 @@
 
 ?>
 
-<?php endif; if(is_null($tract)){echo "<h2>Aún no se asigna la fecha del tracto actual. Comúniquese con la contraloría para mayor información.</h2>";}?>
+<?php endif; if(is_null($tract)){echo "<h2>Aún no se asigna la fecha del tracto actual. Comuníquese con la contraloría para mayor información.</h2>";}?>
 
 <br>
 <div class="row text-center">

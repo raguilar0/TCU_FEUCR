@@ -159,7 +159,7 @@ class InvoicesController extends AppController
 							}
 
 							else{
-									$this->Flash->error(__('Error al modificar factura.', ['key'=>'error']));
+									$this->Flash->error(__('Error al modificar factura.'));
 							}
 						}
 	
