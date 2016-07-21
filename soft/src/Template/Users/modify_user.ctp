@@ -35,7 +35,6 @@ echo "<br>";
 
     echo $this->Form->checkbox('state', ['hiddenField' => false, 'class'=>'checkbox-inline'])."</h4>";
 
-
   echo "</div>";
 
 
@@ -46,18 +45,28 @@ echo "<br>";
 
   echo $this->Form->end();
 
+
+
+
 if(($this->request->session()->read('Auth.User.role')) == 'admin'){
-echo "<br>";
-echo "<div class='row text-center'>";
-  echo "<div class='col-xs-12'>";
+    echo "<br>";
+    echo "<br>";
+    echo "<div class = 'row'>";
+    echo $this->Html->link('Cambiar contraseña',['action'=>'reset-password',$this->request->params['pass'][0]],['class'=>'btn btn-danger']);
+    echo "</div>";
+    echo "</div>";
 
-        echo $this->Html->link(
-        'Atrás',
-        ['controller' => 'Users', 'action' => 'modify', $user->association_id], ['class'=>'btn btn-primary']
-        );
+    echo "<br>";
+    echo "<div class='row text-center'>";
+      echo "<div class='col-xs-12'>";
+    
+            echo $this->Html->link(
+            'Atrás',
+            ['controller' => 'Users', 'action' => 'modify', $user->association_id], ['class'=>'btn btn-primary']
+            );
 
-  echo "</div>";
-echo "</div>";
+      echo "</div>";
+    echo "</div>";
 }
 
 if(($this->request->session()->read('Auth.User.role')) == 'rep'){

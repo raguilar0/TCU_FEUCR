@@ -372,6 +372,27 @@ class SavingAccountsController extends AppController
       }
     }
 
+    /**
+     *  Esta funcion devuelve el id del tracto correspondiente a la fecha enviada
+     **/
+    private function getTractId($actualDate)
+    {
+        $this->loadModel('Tracts');
+
+
+        $id = $this->Tracts->find()
+            ->hydrate(false)
+            ->select(['id'])
+            ->where(function ($exp) use($actualDate) {
+                return $exp
+                    ->lte('date',$actualDate) //<= date <= fecha actual
+                    ->gte('deadline',$actualDate); //deadline >= fecha actual
+            });
+
+        $id = $id->toArray();
+
+        return (isset($id[0])? $id[0]['id']: null);
+    }
 
 
     public function isAuthorized($user)
@@ -380,8 +401,9 @@ class SavingAccountsController extends AppController
         // The owner of an article can edit and delete it
         if (in_array($this->request->action, ['edit', 'view'])) {
             $accountId = (int)$this->request->params['pass'][0];
-        
-            if ($this->SavingAccounts->isOwnedBy($accountId, $user['association_id'])) {
+            $actualDate = date("Y-m-d");
+            $tract_id = $this->getTractId($actualDate);
+            if ($this->SavingAccounts->isOwnedBy($accountId, $user['association_id'], $tract_id)) {
                 return true;
             }
         }

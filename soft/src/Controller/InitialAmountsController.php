@@ -212,6 +212,7 @@ class InitialAmountsController extends AppController
                             if($this->transferBox($data,$oldBox,0))
                             {
                                 $this->Flash->success(__('Se transfirió el monto de la caja de tracto correspondiente a la fecha que eligió, con éxito.'));
+                                return $this->redirect(['action' => 'add', $association_id]);
                             }
                             else
                             {
@@ -252,6 +253,7 @@ class InitialAmountsController extends AppController
                             if($this->transferBox($data,$oldBox,1))
                             {
                                 $this->Flash->success(__('Se transfirió el monto de la caja de ingresos generados correspondiente a la fecha que eligió, con éxito.'));
+                                return $this->redirect(['action' => 'add', $association_id]);
                             }
                             else
                             {

@@ -29,7 +29,7 @@ class InvoicesController extends AppController
 				$file = $invoice['file'];
 				unset($invoice['file']); //Quitamos los datos del archivo
 
-				if(!empty($file)){
+				if(!empty($file['name'])){
 					$id = $this->Upload->save($file);
 					if($id != false)					{
 						$invoice['image_name'] = $id;
@@ -62,7 +62,7 @@ class InvoicesController extends AppController
 					}
 				}
 				else{
-					$this->Flash->error('Adjunte archivo.');
+					$this->Flash->error('Adjunte una imagen');
 				}
 
 			}
@@ -341,8 +341,10 @@ class InvoicesController extends AppController
         if(in_array($this->request->action,['modifyInvoice','delete', 'imageView'])){
 
             $invoiceId = (int)$this->request->params['pass'][0];
-
-            if ($this->Invoices->isOwnedBy($invoiceId, $user['association_id'])) {
+			$accountId = (int)$this->request->params['pass'][0];
+			$actualDate = date("Y-m-d");
+			$tract_id = $this->getTractId($actualDate);
+            if ($this->Invoices->isOwnedBy($invoiceId, $user['association_id'], $tract_id)) {
                 return true;
             }
 

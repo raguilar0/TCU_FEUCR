@@ -102,18 +102,18 @@ class AmountsController extends AppController
 				$data['association_id'] = $association_id;
 				$data['type'] = $type;
 
-				$entity = $this->Amounts->patchEntity($amount,$data);
+				$amount = $this->Amounts->patchEntity($amount,$data);
 
 
 				//	$entity =  $this->Amounts->newEntity($data);
 
-					if($this->Amounts->save($entity))
+					if($this->Amounts->save($amount))
 					{
 						$this->Flash->success('Se agregaron los montos exitosamente');
 					}
 					else
 					{
-						$this->Flash->error('No se pudo agregar el monto. Esto puede ser porque aún no se han creado las fechas del tracto correspondiente o a que introdujo datos inválidos.');
+						$this->Flash->error('No se pudo agregar el monto. Probablemente no introdujo datos válidos.');
 					}
 
 			}
@@ -147,7 +147,9 @@ class AmountsController extends AppController
 		$tracts = $this->Amounts->Tracts->find()
 			->hydrate(false)
 			->select(['id','date', 'deadline', 'number'])
-			->where(function ($exp,$q)use($amounts){return $exp->notIn('id',$amounts);});
+			->where(function ($exp,$q)use($amounts){return $exp->notIn('id',$amounts);})
+			->order(['YEAR(date)'])
+			->order(['number = '=>'2 DESC']);
 
 		$tracts = $tracts->toArray();
 
@@ -322,7 +324,7 @@ class AmountsController extends AppController
 
 
 /**
- *  Esta funcion devuelve el id del presente tracto
+ *  Esta funcion devuelve el id del tracto correspondiente a la fecha enviada
  **/
 	private function getTractId($actualDate)
 	{
@@ -543,7 +545,9 @@ class AmountsController extends AppController
 		if(in_array($this->request->action,['edit','delete']))
 		{
 			$amountId = (int)$this->request->params['pass'][0];
-	        if ((($this->request->session()->read('Auth.User.role')) == 'rep') && $this->Amounts->isOwnedBy($amountId, $user['association_id'])) {
+			$actualDate = date("Y-m-d");
+			$tract_id = $this->getTractId($actualDate);
+	        if ((($this->request->session()->read('Auth.User.role')) == 'rep') && $this->Amounts->isOwnedBy($amountId, $user['association_id'], $tract_id)) {
 	            return true;
 	        }
 		}
