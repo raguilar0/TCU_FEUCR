@@ -31,7 +31,7 @@ class AmountsTable extends Table
             ->notEmpty('deadline')
             ->notEmpty('detail', 'Ingrese el detalle del monto')
             ->add('detail', 'validFormat', [
-                                    'rule' => array('custom', '/[a-zA-Z0-9$.%@\-]+$/'),
+                                    'rule' => array('custom',  '/^[A-Za-záéíóúÁÉÍÓÚñÑ0-9" "\,\.\-\:\[\]\(\)\"]+$/'),
                                     'message' => 'Debe contener solamente letras.'
             ])
             ->add('detail', [
@@ -50,7 +50,7 @@ class AmountsTable extends Table
                 'rule' => array('custom', '/^[0-9,.\-]+$/'),
                 'message' => 'Debe ser mayormente para números.'
             ]);
-        
+
         return $validator;
     }
     public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
@@ -69,7 +69,7 @@ class AmountsTable extends Table
         $connection = ConnectionManager::get('default');
         return $connection;
     }
-    
+
     public function isOwnedBy($amountId, $association_id)
     {
         return $this->exists(['id' => $amountId, 'association_id' => $association_id, 'type'=>1]);

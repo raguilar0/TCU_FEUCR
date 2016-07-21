@@ -25,7 +25,7 @@ class UsersTable extends Table
               ->notEmpty('password', 'Contraseña requerida')
               ->add('password', 'validFormat',[
                 'rule'=>array('custom', '/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/'),
-                'message' => 'Password debe tener mínimo 8 caracteres y al menos un número'
+                'message' => 'Password debe tener mínimo 8 letras y al menos un dígito'
               ])
               ->notEmpty('repass', 'Ingrese su contraseña de nuevo.')
               ->add('repass', [
@@ -36,24 +36,24 @@ class UsersTable extends Table
               ])
               ->notEmpty('name', 'Nombre requerido')
               ->add('name', 'validFormat', [
-                          'rule' => array('custom', '/^[A-Za-z]+$/'),
-                          'message' => 'Debe contener únicamente letras.'
+                          'rule' => array('custom', '/^[A-Za-z0-9" "\,\.\-\:áéíóúÁÉÍÓÚñÑ\[\]\(\)\"]+$/'),
+                          'message' => 'Formato inválido.'
               ])
-              
+
               ->notEmpty('last_name_1')
               ->add('last_name_1', 'validFormat', [
-                          'rule' => array('custom', '/^[A-Za-z]+$/'),
-                          'message' => 'Debe contener únicamente letras.'
+                          'rule' => array('custom', '/^[A-Za-z0-9" "\,\.\-\:áéíóúÁÉÍÓÚñÑ\[\]\(\)\"]+$/'),
+                          'message' => 'Formato inválido.'
               ])
               ->notEmpty('last_name_2')
               ->add('last_name_2', 'validFormat', [
-                          'rule' => array('custom', '/^[A-Za-z]+$/'),
-                          'message' => 'Debe contener únicamente letras.'
+                          'rule' => array('custom', '/^[A-Za-z0-9" "\,\.\-\:áéíóúÁÉÍÓÚñÑ\[\]\(\)\"]+$/'),
+                          'message' => 'Formato inválido.'
               ])
               ->notEmpty('role')
               ->notEmpty('username')
               ->add('username', 'validFormat', [
-                          'rule' => array('custom', '/^[a-z0-9\_\-\.]+@ucr.ac.cr$/'),
+                          'rule' => array('custom', '/^[a-z0-9\_\-\.ñ]+@ucr.ac.cr$/'),
                           'message' => 'Debe ser un correo institucional válido.'
 
               ])
