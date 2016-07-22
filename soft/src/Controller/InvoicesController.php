@@ -41,6 +41,7 @@ class InvoicesController extends AppController
 						try	{
 							if($this->Invoices->save($invoice)){
 								$this->Flash->Success('Factura Agregada');
+								return $this->redirect(['action'=>'add']);
 							}
 							else{
 								$filePath = WWW_ROOT .'/img/invoices';
@@ -228,7 +229,11 @@ class InvoicesController extends AppController
 			if($this->Auth->user()){
 				$this->viewBuilder()->layout('admin_views');
 	        	$this->paginate = [
-		            'contain' => ['Associations']
+		            'contain' => ['Associations'=>function($q)
+												{
+													return $q->where(['enable'=>1]);
+												}, 'Tracts'
+					]
 		        ];
 		        $invoices = $this->paginate($this->Invoices);
 	
@@ -341,7 +346,6 @@ class InvoicesController extends AppController
         if(in_array($this->request->action,['modifyInvoice','delete', 'imageView'])){
 
             $invoiceId = (int)$this->request->params['pass'][0];
-			$accountId = (int)$this->request->params['pass'][0];
 			$actualDate = date("Y-m-d");
 			$tract_id = $this->getTractId($actualDate);
             if ($this->Invoices->isOwnedBy($invoiceId, $user['association_id'], $tract_id)) {

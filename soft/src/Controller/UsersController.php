@@ -16,7 +16,7 @@ class UsersController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow('add', 'logout');
+        $this->Auth->allow('logout');
     }
 
 
@@ -25,7 +25,7 @@ class UsersController extends AppController
 
     public function add()
     {
-      //debug($this->Auth->user());
+
       if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views');
         $user = $this->Users->newEntity($this->request->data); //El parámetro es
@@ -61,10 +61,8 @@ class UsersController extends AppController
             }
 
         }
-
-        //debug($association_id);
-        //debug($role);
-        $role = array('Administrador'=> 0, 'Representante' => 1);
+          
+        $role = array('admin'=>'Administrador', 'rep'=>'Representante');
 
         $this->set('role', $role);
         $this->set('association', $this->Users->Associations->find('list'));
@@ -132,8 +130,16 @@ class UsersController extends AppController
                   $this->Flash->error(__('Está tratando de ingresar datos inválidos.'));
                   return $this->redirect(['controller'=>'Associations','action' => 'init']);
               }
+              elseif($data['role'] === 'admin')
+              {
+                  $data['association_id'] = NULL;
+              }
+              elseif (($data['role'] === 'rep') && ($data['association_id'] === ''))
+              {
+                  $this->Flash->error(__('Si va a cambiarle el rol a un usuario, deberá elegir una asociación.'));
+                  return $this->redirect(['action' => 'modify']);
+              }
 
-              $data['state'] = ((isset($data['state']))?1:0);
 
               $user = $this->Users->patchEntity($user,$data);
 
@@ -152,7 +158,8 @@ class UsersController extends AppController
 
           $role['admin'] = 'Administrador';
           $role['rep'] = 'Representante';
-          $associations = $this->Users->Associations->find('list');
+          $associations = $this->Users->Associations->find('list')
+                                            ->where(['enable'=>1]);
 
           $this->set(compact('user', 'associations', 'role'));
       }
@@ -205,7 +212,8 @@ class UsersController extends AppController
 
             $user = $this->Auth->identify();
             if ($user) {
-                if(!$user['state'] && $this->validateAssociation($user['association_id'])){
+
+                if(!$user['state'] && ($this->validateAssociation($user['association_id']) || $user['role'] === 'admin')){
                   $this->Auth->setUser($user);
                   return $this->redirect($this->Auth->redirectUrl());
                 }
@@ -219,9 +227,7 @@ class UsersController extends AppController
             }
         }
       }
-      else{
-        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
-      }
+
 
     }
 

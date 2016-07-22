@@ -16,8 +16,10 @@
             <th><?= $this->Paginator->sort('kind', ['label'=>'Tipo']) ?></th>
             <th><?= $this->Paginator->sort('date', ['label'=>'Fecha']) ?></th>
             <th><?= $this->Paginator->sort('association',['label'=>'Asociación']) ?></th>
-            <th>Monto</th>
-        <th><?= $this->Paginator->sort('state',['label'=>'Estado']) ?></th>
+            <th><?= $this->Paginator->sort('amount',['label'=>'Monto']) ?></th>
+
+            <th><?= $this->Paginator->sort('state',['label'=>'Estado']) ?></th>
+            <th><?= $this->Paginator->sort('tract_id',['label'=>'Tracto']) ?></th>
             <th class="actions"><?= __('Acciones') ?></th>
         </tr>
         </thead>
@@ -59,6 +61,7 @@
                     }
                   
                 ?>
+                <td><?= $key->has('tract') ? $this->Html->link($key->tract->date." - ".$key->tract->deadline, ['controller' => 'Tracts', 'action' => 'view', $key->tract->id]) : '' ?></td>
                 <td class="actions">
                     <?= $this->Html->link('', ['action' => 'admin_modify_invoice', $key->id], ['class'=>'glyphicon glyphicon-pencil btn btn-primary' ]) ?>
                     <?= $this->Form->postLink('', ['action' => 'delete', $key->id], ['class'=>'glyphicon glyphicon-remove btn btn-danger' ,'confirm' => __('¿Estás seguro de que deseas borrarlo? # {0}?', $key->id)]) ?>

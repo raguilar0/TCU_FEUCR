@@ -22,7 +22,9 @@ class InitialAmountsController extends AppController
       if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views');
         $this->paginate = [
-            'contain' => ['Associations', 'Tracts']
+            'contain' => ['Associations'=>function($q){
+                return $q->where(['enable'=>1]);
+            }, 'Tracts']
         ];
         $initialAmounts = $this->paginate($this->InitialAmounts);
 
@@ -212,7 +214,7 @@ class InitialAmountsController extends AppController
                             if($this->transferBox($data,$oldBox,0))
                             {
                                 $this->Flash->success(__('Se transfirió el monto de la caja de tracto correspondiente a la fecha que eligió, con éxito.'));
-                                return $this->redirect(['action' => 'add', $association_id]);
+
                             }
                             else
                             {
@@ -253,7 +255,6 @@ class InitialAmountsController extends AppController
                             if($this->transferBox($data,$oldBox,1))
                             {
                                 $this->Flash->success(__('Se transfirió el monto de la caja de ingresos generados correspondiente a la fecha que eligió, con éxito.'));
-                                return $this->redirect(['action' => 'add', $association_id]);
                             }
                             else
                             {
@@ -276,7 +277,7 @@ class InitialAmountsController extends AppController
             {
                 $this->Flash->error('La fechas de tracto deben ser distintas. Verifique los datos que está ingresando e intente de nuevo.');
             }
-
+            return $this->redirect(['action' => 'add', $association_id]);
         }
 
 
@@ -302,7 +303,8 @@ class InitialAmountsController extends AppController
         $from_tracts = $temp;
 
 
-        $associations = $this->InitialAmounts->Associations->find('list');
+        $associations = $this->InitialAmounts->Associations->find('list')
+                                                ->where(['enable'=>1]);
 
         $this->set(compact('from_tracts','destination', 'associations'));
     }

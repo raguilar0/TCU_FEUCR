@@ -38,7 +38,9 @@ class AmountsController extends AppController
 		{
 		
 			$this->paginate = [
-				'contain' => ['Associations', 'Tracts']
+				'contain' => ['Associations'=>function($q){
+					return $q->where(['enable'=>1]);
+				}, 'Tracts']
 			];			
 		}
 		
@@ -178,14 +180,15 @@ class AmountsController extends AppController
 			}
 			else
 			{
-				$this->Flash->error('Ocurrió un error al tratar de arreglar los montos. Además tampoco se agregaron las cajas correspondientes. Verifique los datos que está ingresando e intente de nuevo.');
+				$this->Flash->error('Ocurrió un error al tratar de agregar los montos. Además tampoco se agregaron las cajas correspondientes. Verifique los datos que está ingresando e intente de nuevo.');
 			}
 
 
 
 		}
 
-		$associations = $this->Amounts->Associations->find('list');
+		$associations = $this->Amounts->Associations->find('list')
+											->where(['enable'=>1]);
 		$this->set(compact('tracts','associations'));
 
 	}
@@ -300,25 +303,6 @@ class AmountsController extends AppController
 		return $query;
 	}
 
-	private function getHeadquarters()
-	{
-		$query = $this->Amounts->Associations->Headquarters->find() //Se trae solo las headquarter que tienen alguna asocicación asociada :p
-		->hydrate(false)
-		->select(['Headquarters.name'])
-		->join([
-			 'table'=>'associations',
-			 'alias'=>'a',
-			 'type' => 'RIGHT',
-			 'conditions'=>'Headquarters.id = a.headquarter_id',
-			])
-		->where(['a.enable'=>1])
-		->group(['Headquarters.name']); //Elimina repetidos
-
-
-		$headquarters = $query->toArray();
-
-		return $headquarters;
-	}
 
 
 
