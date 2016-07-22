@@ -32,25 +32,31 @@ class UsersController extends AppController
 
         if($this->request->is('post'))
         {
+            $data = $this->request->data;
             if(($this->request->session()->read('Auth.User.role')) == 'admin'){
 
-                if($this->request->data['role'] == 'Administrador'){
-                    $this->request->data['role'] = 'admin';
+                if(isset($data['role']) && ($data['role'] !== 'rep' && $data['role'] !== 'admin'))
+                {
+                    $this->Flash->error(__('Está tratando de ingresar datos inválidos.'));
+                    return $this->redirect(['controller'=>'Associations','action' => 'init']);
                 }
-                elseif ($this->request->data['role'] == 'Representante'){
-                    $this->request->data['role'] = 'rep';
+                elseif($data['role'] === 'admin')
+                {
+                    $data['association_id'] = NULL;
                 }
-
-
-                $role = $this->request->data['role'];
+                elseif (($data['role'] === 'rep') && ($data['association_id'] === ''))
+                {
+                    $this->Flash->error(__('Debe elegir una asociación.'));
+                    return $this->redirect(['action' => 'modify']);
+                }
             }
             elseif(($this->request->session()->read('Auth.User.role')) == 'rep')
             {
-                $this->request->data['association_id'] = $this->request->session()->read('Auth.User.association_id');
-                $this->request->data['role'] = 'rep';
+                $data['association_id'] = $this->request->session()->read('Auth.User.association_id');
+                $data['role'] = 'rep';
             }
 
-            $user = $this->Users->newEntity($this->request->data);
+            $user = $this->Users->newEntity($data);
 
             if ($this->Users->save($user)) {
                 $this->Flash->success('El usuario ha sido agregado');
@@ -418,7 +424,7 @@ class UsersController extends AppController
             }
         }
 
-        if(in_array($this->request->action,['modify', 'logout', 'resetPass', 'perfil']))
+        if(in_array($this->request->action,['modify', 'logout', 'resetPass', 'perfil', 'add']))
         {
           return true;
         }
