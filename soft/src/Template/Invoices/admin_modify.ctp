@@ -23,7 +23,7 @@
         </thead>
         <tbody>
         <?php foreach ($invoices as $key): ?>
-        
+
             <tr>
                 <td><?= h($key->number) ?></td>
                  <?php
@@ -35,11 +35,11 @@
                          echo "<td> Ing.Gen. </td>";
                          break;
                     default:
-                        echo "<td> Superavit </td>";    
+                        echo "<td> Superavit </td>";
                         break;
-                        
+
                     }
-                  
+
                 ?>
                 <td><?= $key->date ?></td>
                 <td><?= $key->has('association') ? $this->Html->link($key->association->name, ['controller' => 'Associations', 'action' => 'view', $key->association->id]) : '' ?></td>
@@ -50,14 +50,14 @@
                         echo "<td> Pendiente </td>";
                         break;
                     case 1:
-                         echo "<td> Aproobada </td>";
+                         echo "<td> Aprobada </td>";
                          break;
                     default:
-                        echo "<td> Rechazada </td>";    
+                        echo "<td> Rechazada </td>";
                         break;
-                        
+
                     }
-                  
+
                 ?>
                 <td class="actions">
                     <?= $this->Html->link('', ['action' => 'admin_modify_invoice', $key->id], ['class'=>'glyphicon glyphicon-pencil btn btn-primary' ]) ?>
@@ -78,4 +78,3 @@
         </ul>
         <p><?= $this->Paginator->counter() ?></p>
     </div>
-
