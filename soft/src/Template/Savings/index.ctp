@@ -13,10 +13,10 @@
         <tr>
             <th><?= $this->Paginator->sort('amount',['Monto']) ?></th>
             <th><?= $this->Paginator->sort('date',['Fecha']) ?></th>
-            <th><?= $this->Paginator->sort('state',['Estado']) ?></th>
             <th><?= $this->Paginator->sort('letter',['Carta']) ?></th>
             <th><?= $this->Paginator->sort('association_id',['Asociación']) ?></th>
             <th><?= $this->Paginator->sort('tract',['Tracto']) ?></th>
+            <th><?= $this->Paginator->sort('state',['Estado']) ?></th>
             <th class="actions"><?= __('Acciones') ?></th>
         </tr>
         </thead>
@@ -25,7 +25,11 @@
             <tr>
                 <td><?= "¢ ".number_format($saving->amount,2,".",",") ?></td>
                 <td><?= $saving->date?></td>
-                <td><?php  
+
+                <td><?= $this->Html->link( $saving->letter,['controller'=>'Savings', 'action'=>'download', $saving->letter]);?></td>
+                <td><?= $saving->has('association') ? $this->Html->link($saving->association->name, ['controller' => 'Associations', 'action' => 'view', $saving->association->id]) : '' ?></td>
+                <td><?= $saving->has('tract') ? $this->Html->link($saving->tract->date." - ".$saving->tract->deadline, ['controller' => 'Tracts', 'action' => 'view', $saving->tract->id]) : '' ?></td>
+                <td><?php
                     switch ($this->Number->format($saving->state)) {
                         case 0:
                             echo "Pendiente";
@@ -37,15 +41,12 @@
                             echo "Rechazado";
                             break;
                     }
-                    
-                    
-                
-                
-                ?>
+
+
+
+
+                    ?>
                 </td>
-                <td><?= $this->Html->link( $saving->letter,['controller'=>'Savings', 'action'=>'download', $saving->letter]);?></td>
-                <td><?= $saving->has('association') ? $this->Html->link($saving->association->name, ['controller' => 'Associations', 'action' => 'view', $saving->association->id]) : '' ?></td>
-                <td><?= $saving->has('tract') ? $this->Html->link($saving->tract->date." - ".$saving->tract->deadline, ['controller' => 'Tracts', 'action' => 'view', $saving->tract->id]) : '' ?></td>
                 <td class="actions">
                     <?= $this->Html->link('', ['action' => 'view', $saving->id],['class'=>'glyphicon glyphicon-eye-open btn btn-info' ]) ?>
                     <?php

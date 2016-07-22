@@ -28,7 +28,7 @@ class InvoicesTable extends Table
           ->requirePresence('tract_id','create')
           ->notEmpty('number')
           ->add('number', 'validFormat', [
-                      'rule' => array('custom', '/[0-9]+$/'),
+                      'rule' => array('custom', '/[0-9a-zA-Z\-]+$/'),
                       'message' => 'Formato inválido. Solo números.'
           ])
           ->notEmpty('amount')
@@ -84,10 +84,10 @@ class InvoicesTable extends Table
     }
 
 
-    public function isOwnedBy($accountId, $association_id)
+    public function isOwnedBy($accountId, $association_id, $tract_id)
     {
 
-        return $this->exists(['id' => $accountId, 'association_id' => $association_id]);
+        return $this->exists(['id' => $accountId, 'association_id' => $association_id, 'tract_id'=>$tract_id]);
     }
 
 }

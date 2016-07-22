@@ -133,29 +133,37 @@ class SavingsController extends AppController
             $letter = $this->request->data['letter'];
             unset($this->request->data['letter']); //Quitamos los datos del archivo
 
-            $letter_name = $this->Upload->savePDF($letter);
-
-            if(!empty($letter) && $letter_name)
+            if(!empty($letter['name']))
             {
-                $this->request->data['letter'] = $letter_name;
-                
-                if(($this->request->session()->read('Auth.User.role')) == 'rep'){
-                  $this->request->data['association_id'] = $this->request->session()->read('Auth.User.association_id');
+                $letter_name = $this->Upload->savePDF($letter);
+
+                if(!empty($letter) && $letter_name)
+                {
+                    $this->request->data['letter'] = $letter_name;
+
+                    if(($this->request->session()->read('Auth.User.role')) == 'rep'){
+                        $this->request->data['association_id'] = $this->request->session()->read('Auth.User.association_id');
+                    }
+
+                    $saving = $this->Savings->patchEntity($saving, $this->request->data);
+                    if ($this->Savings->save($saving)) {
+                        $this->Flash->success(__('El ahorro ha sido guardado'));
+                        return $this->redirect(['action' => 'index']);
+                    } else {
+                        $this->deleteLetter($letter_name); //En caso de que no se pueda agregar la información a la base de datos del monto de ahorro, se borra el pdf
+                        $this->Flash->error(__('El ahorro no pudo ser guardado. Intentelo de nuevo.'));
+                    }
                 }
-                  
-                $saving = $this->Savings->patchEntity($saving, $this->request->data);
-                if ($this->Savings->save($saving)) {
-                    $this->Flash->success(__('El ahorro ha sido guardado'));
-                    return $this->redirect(['action' => 'index']);
-                } else {
-                    $this->deleteLetter($letter_name); //En caso de que no se pueda agregar la información a la base de datos del monto de ahorro, se borra el pdf
-                    $this->Flash->error(__('El ahorro no pudo ser guardado. Intentelo de nuevo.'));
+                else
+                {
+                    $this->Flash->error(__('No se pudo guardar el archivo, por favor intente de nuevo más tarde.'));
                 }
             }
             else
             {
-                $this->Flash->error(__('No se pudo guardar el archivo, por favor intente de nuevo más tarde.'));
+                $this->Flash->error(__('Debe adjuntar un archivo PDF'));
             }
+
             
             
             
@@ -350,6 +358,28 @@ class SavingsController extends AppController
             return $this->redirect(['action' => 'index']);
         }
     }
+
+    /**
+     *  Esta funcion devuelve el id del tracto correspondiente a la fecha enviada
+     **/
+    private function getTractId($actualDate)
+    {
+        $this->loadModel('Tracts');
+
+
+        $id = $this->Tracts->find()
+            ->hydrate(false)
+            ->select(['id'])
+            ->where(function ($exp) use($actualDate) {
+                return $exp
+                    ->lte('date',$actualDate) //<= date <= fecha actual
+                    ->gte('deadline',$actualDate); //deadline >= fecha actual
+            });
+
+        $id = $id->toArray();
+
+        return (isset($id[0])? $id[0]['id']: null);
+    }
     
     public function isAuthorized($user)
     {
@@ -362,8 +392,9 @@ class SavingsController extends AppController
         // The owner of an article can edit and delete it
         if (in_array($this->request->action, ['view', 'delete'])) {
             $accountId = (int)$this->request->params['pass'][0];
-        
-            if ($this->Savings->isOwnedBy($accountId, $user['association_id'])) {
+            $actualDate = date("Y-m-d");
+            $tract_id = $this->getTractId($actualDate);
+            if ($this->Savings->isOwnedBy($accountId, $user['association_id'], $tract_id)) {
                 return true;
             }
         }

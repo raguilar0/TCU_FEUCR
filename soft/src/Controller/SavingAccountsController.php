@@ -239,113 +239,123 @@ class SavingAccountsController extends AppController
 
     }
 
-    public function transfer($association_name = null)
+    public function transfer($association_id = null)
     {
-      if($this->Auth->user()){
+
         $this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
 
-
-        $headquarters = $this->getHeadquarters(); //Pide todas las headquarter
-        $tracts[0] = $this->getTracts(date('Y')-1);
-        $tracts[1] = $this->getTracts(date('Y'));
-
-
-
+        $destination = $this->getAvailableTracts($association_id); //Nos devuelve los tractos que todavía no tiene montos iniciales asociados
+        $from_tracts = $this->getTracts($association_id);
 
         if($this->request->is("POST"))
         {
-            if($association_name)
+            $data = $this->request->data;
+            $association_id = $data['association_id'];
+
+            if($data['from'] !== $data['to'])
             {
-                if($this->request->data['first_tract'] !== $this->request->data['second_tract'])
+                $oldAccount = $this->getAccount($data['from'],$association_id);
+
+                $newAccount['amount'] = $oldAccount['amount'];
+                $newAccount['bank'] = $oldAccount['bank'];
+                $newAccount['account_owner'] = $oldAccount['account_owner'];
+                $newAccount['card_number'] = $oldAccount['card_number'];
+                $newAccount['association_id'] = $association_id;
+                $newAccount['tract_id'] = $data['to'];
+
+                $entity = $this->SavingAccounts->newEntity($newAccount);
+
+                if($this->SavingAccounts->save($entity))
                 {
-                    $association_id = $this->getAssociationId($association_name);
-                    $second_tract_id = $this->getTractId($this->request->data['second_tract']);
-
-                    if($this->validateTract($this->SavingAccounts,$association_id,$second_tract_id) && ($this->request->data['first_tract'] != $this->request->data['second_tract']))
-                    {
-
-                        $first_tract_id = $this->getTractId($this->request->data['first_tract']);
-
-                        $oldAccount = $this->getAccount($first_tract_id,$association_id);
-
-                        $newAccount['amount'] = $oldAccount['amount'];
-                        $newAccount['bank'] = $oldAccount['bank'];
-                        $newAccount['account_owner'] = $oldAccount['account_owner'];
-                        $newAccount['card_number'] = $oldAccount['card_number'];
-                        $newAccount['association_id'] = $association_id;
-                        $newAccount['tract_id'] = $second_tract_id;
-
-                        if($this->createSavingAccount($newAccount))
-                        {
-                            die("Se transfirió la cuenta con éxito");
-                        }
-                        else
-                        {
-                            die("No se pudo transferir la cuenta. Intentelo más tarde");
-                        }
-                    }
-                    else
-                    {
-                        die("No se pudo crear la cuenta. Probablemente las fechas son iguales o ya existe una cuenta asociada a esta fecha de tracto.");
-                    }
-
+                    $this->Flash->success(__('Se transfirió la cuenta con éxito'));
+                    return $this->redirect(['action'=>'transfer',$association_id]);
                 }
                 else
                 {
-                    die("Las fechas deben ser distintas");
+                    $this->Flash->error(__('No se pudo crear la nueva cuenta. Verifique los datos e intentelo más tarde.'));
                 }
 
             }
+            else
+            {
+                $this->Flash->error(__('Las fechas deben ser distintas'));
+            }
+
         }
-        else
+
+
+        $temp = array();
+        foreach ($destination as $key => $value)
         {
-            $this->set('head',$headquarters);
-            $this->set('data', $tracts);
+            $temp[$value['id']] = $value['date']->format('d-m-Y')." - ".$value['deadline']->format('d-m-Y');
         }
 
+        $destination = $temp;
 
 
-      }
-      else{
-        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
-      }
+        $temp = array();
+        foreach ($from_tracts as $key => $value)
+        {
+            $temp[$value['tract']['id']] = date_format(date_create($value['tract']['date']),'d-m-Y')." - ".date_format(date_create($value['tract']['deadline']), 'd-m-Y');
+        }
+
+        $from_tracts = $temp;
+
+
+        $associations = $this->SavingAccounts->Associations->find('list');
+
+        $this->set(compact('from_tracts','destination', 'associations'));
+
 
     }
 
-    private function validateTract($entity, $association_id, $tract_id)
+    private function getAvailableTracts($association_id)
     {
-        $emp = true;
-        $query = $entity->find()
+
+
+        $not_available = $this->SavingAccounts->find()
             ->hydrate(false)
-            ->andWhere(['association_id'=>$association_id,'tract_id'=>$tract_id]);
+            ->select(['tract.id'])
+            ->join([
+                'table'=>'tracts',
+                'alias'=>'tract',
+                'type'=>'inner',
+                'conditions'=>'SavingAccounts.tract_id = tract.id'
 
-        $query = $query->toArray();
+            ])
+            ->where(['SavingAccounts.association_id'=>$association_id, 'OR'=>[['YEAR(tract.date)'=>date('Y')],['YEAR(tract.date)'=>(date('Y')+1)]]]);
 
-        if(!empty($query))
-        {
-            $emp = false;
-        }
 
-        return $emp;
+        $tracts = $this->SavingAccounts->Tracts->find()
+            ->hydrate(false)
+            ->select(['id','date', 'deadline', 'number'])
+            ->where(function ($exp,$q)use($not_available){return $exp->notIn('id',$not_available);});
+
+
+
+        return $tracts->toArray();
     }
 
-    private function createSavingAccount($newAccount)
+    private function getTracts($association_id)
     {
-      if($this->Auth->user()){
-        $success = false;
-        $savingAccount = $this->SavingAccounts->newEntity($newAccount);
+        $tracts = $this->SavingAccounts->find()
+            ->hydrate(false)
+            ->select(['tract.id', 'tract.date', 'tract.deadline'])
+            ->join([
+                'table'=>'tracts',
+                'alias'=>'tract',
+                'type'=>'inner',
+                'conditions'=>'SavingAccounts.tract_id = tract.id'
 
-        if ($this->SavingAccounts->save($savingAccount)) {
-            $success = true;
-        }
+            ])
+            ->where(['SavingAccounts.association_id'=>$association_id, 'OR'=>[['YEAR(tract.date)'=>date('Y')],['YEAR(tract.date)'=>(date('Y')+1)]]]);
 
-        return $success;
-      }
-      else{
-        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
-      }
-
+        return $tracts->toArray();
     }
+
+
+
+
 
     private function getAccount($tract_id,$association_id)
     {
@@ -362,92 +372,26 @@ class SavingAccountsController extends AppController
       }
     }
 
-    private function getHeadquarters()
-    {
-      if($this->Auth->user()){
-        $query = $this->SavingAccounts->Associations->Headquarters->find() //Se trae solo las headquarter que tienen alguna asocicación asociada :p
-        ->hydrate(false)
-            ->select(['Headquarters.name'])
-            ->join([
-                'table'=>'associations',
-                'alias'=>'a',
-                'type' => 'RIGHT',
-                'conditions'=>'Headquarters.id = a.headquarter_id',
-            ])
-            ->where(['a.enable'=>1])
-            ->group(['Headquarters.name']); //Elimina repetidos
-
-
-        $headquarters = $query->toArray();
-
-        return $headquarters;
-      }
-      else{
-        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
-      }
-    }
-
-
-    private function getTracts($year)
-    {
-      if($this->Auth->user()){
-        $this->loadModel('Tracts');
-
-        $tracts = $this->Tracts->find()
-            ->hydrate(false)
-            ->where(['YEAR(date)'=>$year]); //Queremos los tractos del año actual
-        $tracts = $tracts->toArray();
-
-        return $tracts;
-      }
-      else{
-        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
-      }
-    }
-
     /**
-     *  Esta funcion devuelve el id del presente tracto
+     *  Esta funcion devuelve el id del tracto correspondiente a la fecha enviada
      **/
     private function getTractId($actualDate)
     {
-      if($this->Auth->user()){
         $this->loadModel('Tracts');
 
-        //$actualDate = date("Y-m-d");
 
         $id = $this->Tracts->find()
             ->hydrate(false)
             ->select(['id'])
             ->where(function ($exp) use($actualDate) {
                 return $exp
-                    ->lte('date',$actualDate)
-                    ->gte('deadline',$actualDate);
+                    ->lte('date',$actualDate) //<= date <= fecha actual
+                    ->gte('deadline',$actualDate); //deadline >= fecha actual
             });
 
         $id = $id->toArray();
 
-        return $id[0]['id'];
-      }
-      else{
-        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
-      }
-    }
-
-    private function getAssociationId($association_name)
-    {
-      if($this->Auth->user()){
-        $association_id = $this->SavingAccounts->Associations->find() //Se busca primero el id de esa sede por medio del nombre
-        ->hydrate(false)
-            ->select(['id'])
-            ->where(['name'=>$association_name]);
-
-        $association_id = $association_id->toArray();
-
-        return $association_id[0]['id'];
-      }
-      else{
-        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
-      }
+        return (isset($id[0])? $id[0]['id']: null);
     }
 
 
@@ -457,8 +401,9 @@ class SavingAccountsController extends AppController
         // The owner of an article can edit and delete it
         if (in_array($this->request->action, ['edit', 'view'])) {
             $accountId = (int)$this->request->params['pass'][0];
-        
-            if ($this->SavingAccounts->isOwnedBy($accountId, $user['association_id'])) {
+            $actualDate = date("Y-m-d");
+            $tract_id = $this->getTractId($actualDate);
+            if ($this->SavingAccounts->isOwnedBy($accountId, $user['association_id'], $tract_id)) {
                 return true;
             }
         }

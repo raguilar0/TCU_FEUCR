@@ -67,31 +67,7 @@ class InitialAmountsController extends AppController
       }
     }
 
-    /**
-     * Add method
-     *
-     * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
-     */
-    /**
-    public function add()
-    {
-        $this->viewBuilder()->layout('admin_views');
-        $initialAmount = $this->InitialAmounts->newEntity();
-        if ($this->request->is('post')) {
-            $initialAmount = $this->InitialAmounts->patchEntity($initialAmount, $this->request->data);
-            if ($this->InitialAmounts->save($initialAmount)) {
-                $this->Flash->success(__('The initial amount has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The initial amount could not be saved. Please, try again.'));
-            }
-        }
-        $associations = $this->InitialAmounts->Associations->find('list', ['limit' => 200]);
-        $tracts = $this->InitialAmounts->Tracts->find('list', ['limit' => 200]);
-        $this->set(compact('initialAmount', 'associations', 'tracts'));
-        $this->set('_serialize', ['initialAmount']);
-    }
-**/
+
     /**
      * Edit method
      *
@@ -201,147 +177,165 @@ class InitialAmountsController extends AppController
       }
     }
 
-    public function add($association_name = null)
+    public function add($association_id = null)
     {
-      if($this->Auth->user()){
+
         $this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
 
-
-        $headquarters = $this->getHeadquarters(); //Pide todas las headquarter
-        $tracts[0] = $this->getTracts(date('Y')-1);
-        $tracts[1] = $this->getTracts(date('Y'));
-
-        $amounts_type = array('Tracto'=> 0, 'Ingresos Generados' => 1);
+        $tracts = $this->getAvailableTracts($association_id); //Nos devuelve los tractos que todavía no tiene montos iniciales asociados
 
         if($this->request->is("POST"))
         {
-            if($association_name)
+            $data = $this->request->data;
+
+            if($data['from'] !== $data['to'])
             {
-                /**
-                 * 1- Cargar los montos de las cajas del tracto del primer select al tracto del segundo select, esto tanto
-                 * para tracto como para ingresos generados. Este monto se carga no solo al monto inicial de la asocia, si no
-                 * tambien en las cajas de dicha asocia en los campos correspondientes, es decir los montos de caja chica van
-                 * para los montos de la caja chica del siguiente tracto, lo mismo con las cajas fuertes.
-                 *
-                 * 2- Crear las cajas. Para poder mover los montos, se deben primero crear las cajas, esto tanto para Ingresos Generados
-                 * como para Tracto.
-                 */
+                $association_id = $data['association_id'];
 
-
-
-
-                if($this->request->data['first_tract'] != $this->request->data['second_tract'])
+                if($data['tract_box'] == '1') //Si el usuario marcó la casilla del checkbox de cajas de tracto
                 {
-                    $message = "";
-                    
-                    $association_id = $this->getAssociationId($association_name);
-                    $first_tract_id = $this->getTractId($this->request->data['first_tract']);
-                    $second_tract_id = $this->getTractId($this->request->data['second_tract']);
+                    $oldBox = $this->getBox($association_id, $data['from'], 0); //Queremos la caja vieja del tracto
 
-
-                    if($this->request->data['tract_box'] == '1') //Si el usuario marcó la casilla del checkbox de cajas de tracto
+                    if(isset($oldBox[0]))
                     {
-                        $oldBoxTract = $this->getBox($association_id, $first_tract_id, 0); //Queremos la caja vieja del tracto
-                        $message = $this->transferBox($oldBoxTract, $association_id, $second_tract_id, 0); //Creamos Tractos
-                        $message .= "<br>".$this->createInitialAmount( $oldBoxTract, $association_id, $second_tract_id, 0); //Creamos los montos iniciales de tracto
+                        $values['amount'] = ($oldBox[0]['big_amount'] + $oldBox[0]['little_amount']);
+                        $values['type'] = 0;
+                        $values['association_id'] = $association_id;
+                        $values['tract_id'] = $data['to'];
 
+                        $initial_amount = $this->InitialAmounts->newEntity($values);
+
+                        if($this->InitialAmounts->save($initial_amount))
+                        {
+                            $this->Flash->success(__('Se creó el monto inicial para los montos de tracto, con éxito.'));
+
+                            if($this->transferBox($data,$oldBox,0))
+                            {
+                                $this->Flash->success(__('Se transfirió el monto de la caja de tracto correspondiente a la fecha que eligió, con éxito.'));
+                                return $this->redirect(['action' => 'add', $association_id]);
+                            }
+                            else
+                            {
+                                $this->Flash->error('No se pudo hacer la transferencia de cajas.Verifique los datos que está ingresando e intente de nuevo.');
+                            }
+
+                        }
+                        else
+                        {
+                            $this->Flash->error('No se pudo crear el monto inicial por lo que tampoco se intentó hacer la transferencia de cajas. Verifique los datos que está ingresando e intente de nuevo.');
+                        }
                     }
-
-                    if($this->request->data['generated_box'] == '1') //Si el usuario marcó la casilla de
+                    else
                     {
-                        $oldBoxGenerated = $this->getBox($association_id, $first_tract_id, 1); //Queremos la caja vieja de ingresos generados
-                        $message .= "<br>".$this->transferBox($oldBoxGenerated,$association_id, $second_tract_id, 1); //Creamos ingresos  generados
-                        $message .= "<br>".$this->createInitialAmount( $oldBoxGenerated, $association_id, $second_tract_id, 1); //Creamos los montos iniciales de Ingresos Generados
-
+                        $this->Flash->error('No existe una caja de tracto que pertenezca a esta asociación de la cuál hacer dicha transferencia. Verifique que hayan cajas de tracto creadas asociadas a dicha fecha e intente de nuevo.');
                     }
-
-
-                    die($message);
 
 
                 }
-                else
-                {
-                    die('Las fechas deben ser distintas');
-                }
 
+                if($data['generated_box'] == '1') //Si el usuario marcó la casilla de
+                {
+                    $oldBox = $this->getBox($association_id, $data['from'], 1); //Queremos la caja vieja del tracto
+
+                    if(isset($oldBox[0]))
+                    {
+                        $values['amount'] = ($oldBox[0]['big_amount'] + $oldBox[0]['little_amount']);
+                        $values['type'] = 1;
+                        $values['association_id'] = $association_id;
+                        $values['tract_id'] = $data['to'];
+
+                        $initial_amount = $this->InitialAmounts->newEntity($values);
+
+                        if($this->InitialAmounts->save($initial_amount))
+                        {
+                            $this->Flash->success(__('Se creó el monto inicial para los montos de ingresos generados, con éxito.'));
+
+                            if($this->transferBox($data,$oldBox,1))
+                            {
+                                $this->Flash->success(__('Se transfirió el monto de la caja de ingresos generados correspondiente a la fecha que eligió, con éxito.'));
+                                return $this->redirect(['action' => 'add', $association_id]);
+                            }
+                            else
+                            {
+                                $this->Flash->error('No se pudo hacer la transferencia de cajas.Verifique los datos que está ingresando e intente de nuevo.');
+                            }
+
+                        }
+                        else
+                        {
+                            $this->Flash->error('No se pudo crear el monto inicial por lo que tampoco se intentó hacer la transferencia de cajas. Verifique los datos que está ingresando e intente de nuevo.');
+                        }
+                    }
+                    else
+                    {
+                        $this->Flash->error('No existe una caja de ingresos generados que pertenezca a esta asociación de la cuál hacer dicha transferencia. Verifique que hayan cajas de ingresos generados asociadas a dicha fecha e intente de nuevo.');
+                    }
+                }
             }
+            else
+            {
+                $this->Flash->error('La fechas de tracto deben ser distintas. Verifique los datos que está ingresando e intente de nuevo.');
+            }
+
         }
 
-        $this->set('head',$headquarters);
-        $this->set('data', $tracts);
-        $this->set('type', $amounts_type);
-      }
-      else{
-        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
-      }
+
+        $temp = array();
+        foreach ($tracts as $key => $value)
+        {
+            $temp[$value['id']] = $value['date']->format('d-m-Y')." - ".$value['deadline']->format('d-m-Y');
+        }
+
+        $destination = $temp;
+
+        $tracts = $this->InitialAmounts->Tracts->find()
+            ->select(['id','date','deadline'])
+            ->where(['YEAR(date)'=>date('Y')])
+            ->orWhere(['YEAR(date)'=>(date('Y') + 1)]);
+        $temp = array();
+
+        foreach ($tracts as $key => $value)
+        {
+            $temp[$value->id] = $value->date->format('d-m-Y')." - ".$value->deadline->format('d-m-Y');
+        }
+
+        $from_tracts = $temp;
+
+
+        $associations = $this->InitialAmounts->Associations->find('list');
+
+        $this->set(compact('from_tracts','destination', 'associations'));
     }
 
-    private function validateTract($entity, $association_id, $tract_id, $type)
+
+    private function getAvailableTracts($association_id)
     {
-        $emp = true;
-        $query = $entity->find()
+        $not_available = $this->InitialAmounts->find()
             ->hydrate(false)
-            ->andWhere(['association_id'=>$association_id,'tract_id'=>$tract_id, 'type'=>$type]);
+            ->select(['tract.id'])
+            ->join([
+                'table'=>'tracts',
+                'alias'=>'tract',
+                'type'=>'inner',
+                'conditions'=>'InitialAmounts.tract_id = tract.id'
 
-        $query = $query->toArray();
+            ])
+            ->where(['InitialAmounts.association_id'=>$association_id, 'OR'=>[['YEAR(tract.date)'=>date('Y')],['YEAR(tract.date)'=>(date('Y')+1)]]]);
 
-        if(!empty($query))
-        {
-            $emp = false;
-        }
+            $tracts = $this->InitialAmounts->Tracts->find()
+            ->hydrate(false)
+            ->select(['id','date', 'deadline', 'number'])
+            ->where(function ($exp,$q)use($not_available){return $exp->notIn('id',$not_available);});
 
-        return $emp;
+        return $tracts;
     }
 
-    private function createInitialAmount( $oldBox, $association_id, $tract_id, $type)
+
+    private function transferBox($data,$oldBox, $type)
     {
-      if($this->Auth->user()){
-        $type_name = ($type == 0 ? "Tracto":"Ingresos Generados");
-
-
-        $array['amount'] = ($oldBox[0]['little_amount'] + $oldBox[0]['big_amount']);
-        $array['type'] = $type;
-        $array['association_id'] = $association_id;
-        $array['tract_id'] = $tract_id;
-
-        $message = "";
-
-        try
-        {
-            if($this->validateTract($this->InitialAmounts, $association_id, $tract_id, $type))
-            {
-                $initial = $this->InitialAmounts->newEntity($array);
-
-                if($this->InitialAmounts->save($initial))
-                {
-                    $message = "Se guardó el monto inicial correspondiente a ".$type_name." con éxito";
-                }
-            }
-
-
-        }
-        catch(Exception $e)
-        {
-            $message = "No se pudo guardar el monto inicial correspondiente a ".$type_name. " esto debido a un error interno";
-        }
-
-
-
-        return $message;
-      }
-      else{
-        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
-      }
-    }
-
-    private function transferBox($oldBox,$association_id, $second_tract_id, $type)
-    {
-
-      if($this->Auth->user()){
-        $type_name = ($type == 0 ? "Tracto":"Ingresos Generados");
-        $message = "Se transfirió la caja de ".$type_name;
-
+        $association_id = $data['association_id'];
+        $second_tract_id = $data['to'];
+        $success = true;
         try
         {
             $this->loadModel('Boxes');
@@ -355,13 +349,10 @@ class InitialAmountsController extends AppController
         }
         catch(Exception $e)
         {
-            $message = 'No se pudo crear la caja '.$type_name .' ya que se dio un error inesperado.';
+            $success = false;
         }
-        return $message;
-      }
-      else{
-        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
-      }
+        return $success;
+
     }
 
     private function getBox($association_id, $tract_id, $type)
@@ -382,92 +373,8 @@ class InitialAmountsController extends AppController
       }
     }
 
-    private function getAssociationId($association_name)
-    {
-      if($this->Auth->user()){
-        $association_id = $this->InitialAmounts->Associations->find() //Se busca primero el id de esa sede por medio del nombre
-        ->hydrate(false)
-            ->select(['id'])
-            ->where(['name'=>$association_name]);
-
-        $association_id = $association_id->toArray();
-
-        return $association_id[0]['id'];
-      }
-      else{
-        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
-      }
-    }
-
-    private function getTracts($year)
-    {
-      if($this->Auth->user()){
-        $this->loadModel('Tracts');
-
-        $tracts = $this->Tracts->find()
-            ->hydrate(false)
-            ->where(['YEAR(date)'=>$year]); //Queremos los tractos del año actual
-        $tracts = $tracts->toArray();
-
-        return $tracts;
-      }
-      else{
-        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
-      }
-    }
-
-    private function getHeadquarters()
-    {
-      if($this->Auth->user()){
-        $query = $this->InitialAmounts->Associations->Headquarters->find() //Se trae solo las headquarter que tienen alguna asocicación asociada :p
-        ->hydrate(false)
-            ->select(['Headquarters.name'])
-            ->join([
-                'table'=>'associations',
-                'alias'=>'a',
-                'type' => 'RIGHT',
-                'conditions'=>'Headquarters.id = a.headquarter_id',
-            ])
-            ->where(['a.enable'=>1])
-            ->group(['Headquarters.name']); //Elimina repetidos
 
 
-        $headquarters = $query->toArray();
-
-        return $headquarters;
-      }
-      else{
-        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
-      }
-    }
-
-    /**
-     *  Esta funcion devuelve el id del presente tracto
-     **/
-    private function getTractId($actualDate)
-    {
-      if($this->Auth->user()){
-        $this->loadModel('Tracts');
-
-        //$actualDate = date("Y-m-d");
-
-        $id = $this->Tracts->find()
-            ->hydrate(false)
-            ->select(['id'])
-            ->where(function ($exp) use($actualDate) {
-                return $exp
-                    ->lte('date',$actualDate)
-                    ->gte('deadline',$actualDate);
-            });
-
-        $id = $id->toArray();
-
-        return $id[0]['id'];
-      }
-      else{
-        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
-      }
-    }
 
 
 }

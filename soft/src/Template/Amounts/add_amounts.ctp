@@ -44,8 +44,8 @@
     echo "<div class='form-group'>";
         echo "<div class='row text-center'>";
             echo "<div class='col-xs-12'>";
-                echo "<label><h4><strong>Detalle</strong></h4></label>";
-                echo "<h4>".$this->Form->textarea('detail', ['class' => 'form-control', 'required'])."</h4>";
+
+                echo "<h4>".$this->Form->input('detail', ['class' => 'form-control', 'required', 'label'=>'Detalle'])."</h4>";
             echo "</div>";
         echo "</div>";
 ?>
@@ -69,7 +69,7 @@
 
 ?>
 
-<?php endif; if(is_null($tract)){echo "<h2>Aún no se asigna la fecha del tracto actual. Comúniquese con la contraloría para mayor información.</h2>";}?>
+<?php endif; if(is_null($tract)){echo "<h2>Aún no se asigna la fecha del tracto actual. Comuníquese con la contraloría para mayor información.</h2>";}?>
 
 <br>
 <div class="row text-center">

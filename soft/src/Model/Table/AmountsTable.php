@@ -27,6 +27,7 @@ class AmountsTable extends Table
                                     'message' => 'Debe ser mayormente para números.'
             ])
             ->requirePresence('tract_id','create')
+            ->requirePresence('detail')
             ->notEmpty('date')
             ->notEmpty('deadline')
             ->notEmpty('detail', 'Ingrese el detalle del monto')
@@ -62,16 +63,10 @@ class AmountsTable extends Table
            $data['deadline'] = new Time($data['deadline']);
        }
     }
-    public function getConnection()
-    {
-       // $dsn = 'mysql://sql3114688:9KUJFT3TWD@sql3.freemysqlhosting.net/sql3114688';
-        //ConnectionManager::config('event', ['url' => $dsn]);
-        $connection = ConnectionManager::get('default');
-        return $connection;
-    }
 
-    public function isOwnedBy($amountId, $association_id)
+
+    public function isOwnedBy($amountId, $association_id, $tract_id)
     {
-        return $this->exists(['id' => $amountId, 'association_id' => $association_id, 'type'=>1]);
+        return $this->exists(['id' => $amountId, 'association_id' => $association_id, 'tract_id'=>$tract_id,'type'=>1]);
     }
 }

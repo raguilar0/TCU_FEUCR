@@ -102,18 +102,18 @@ class AmountsController extends AppController
 				$data['association_id'] = $association_id;
 				$data['type'] = $type;
 
-				$entity = $this->Amounts->patchEntity($amount,$data);
+				$amount = $this->Amounts->patchEntity($amount,$data);
 
 
 				//	$entity =  $this->Amounts->newEntity($data);
 
-					if($this->Amounts->save($entity))
+					if($this->Amounts->save($amount))
 					{
 						$this->Flash->success('Se agregaron los montos exitosamente');
 					}
 					else
 					{
-						$this->Flash->error('No se pudo agregar el monto. Esto puede ser porque aún no se han creado las fechas del tracto correspondiente o a que introdujo datos inválidos.');
+						$this->Flash->error('No se pudo agregar el monto. Probablemente no introdujo datos válidos.');
 					}
 
 			}
@@ -147,7 +147,9 @@ class AmountsController extends AppController
 		$tracts = $this->Amounts->Tracts->find()
 			->hydrate(false)
 			->select(['id','date', 'deadline', 'number'])
-			->where(function ($exp,$q)use($amounts){return $exp->notIn('id',$amounts);});
+			->where(function ($exp,$q)use($amounts){return $exp->notIn('id',$amounts);})
+			->order(['YEAR(date)'])
+			->order(['number = '=>'2 DESC']);
 
 		$tracts = $tracts->toArray();
 
@@ -155,22 +157,31 @@ class AmountsController extends AppController
 		{
 
 			$data = $this->request->data;
-			$successAmountsIndex = $this->saveAmounts($data, $tracts); //Guardamos los montos
+			$association_id = $data['association_id'];
+			unset($data['association_id']);
 
-			if($successAmountsIndex)
+			$result = $this->saveAmounts($data, $tracts, $association_id); //Guardamos los montos
+
+			if($result[1])
 			{
-				$message = 'Se agregaron '.$successAmountsIndex." montos de tracto de ".count($tracts)."<br />";
+				$message = 'Se agregaron '.$result[1]." de ".count($tracts)." montos de tracto<br />";
 
-				$successBoxesTract = $this->saveBoxes($data,0,$tracts); //Guardamos las cajas de tracto
-				$successBoxesGenerated = $this->saveBoxes($data,1,$tracts); //Guardamos las cajas de ingresos generados
+				$resultBoxesTract = $this->saveBoxes($result[0],0,$tracts, $association_id); //Guardamos las cajas de tracto
+				$resultBoxesGenerated = $this->saveBoxes($resultBoxesTract[0],1,$tracts,$association_id); //Guardamos las cajas de ingresos generados
 
-				$message .= 'Se agregaron '.$successBoxesTract." cajas de tracto de ".count($tracts)."<br />";
-				$message .= 'Se agregaron '.$successBoxesGenerated." cajas de ingresos generados de ".count($tracts);
+				$message .= 'Se agregaron '.$resultBoxesTract[1]." de ".count($tracts)." cajas de tracto <br />";
+				$message .= 'Se agregaron '.$resultBoxesGenerated[1]." de ".count($tracts)." cajas de ingresos generados";
 
 				$this->Flash->success($message);
 
 				return $this->redirect(['action'=>'add',$association_id]);
 			}
+			else
+			{
+				$this->Flash->error('Ocurrió un error al tratar de arreglar los montos. Además tampoco se agregaron las cajas correspondientes. Verifique los datos que está ingresando e intente de nuevo.');
+			}
+
+
 
 		}
 
@@ -180,7 +191,7 @@ class AmountsController extends AppController
 	}
 
 
-	private function saveAmounts($data, $tracts)
+	private function saveAmounts($data, $tracts, $association_id)
 	{
 		if(($this->request->session()->read('Auth.User.role')) != 'admin'){
 			return $this->redirect($this->Auth->redirectUrl());
@@ -190,12 +201,9 @@ class AmountsController extends AppController
 
 			$detail = $data['detail'];
 			unset($data['detail']);
-			$association_id = $data['association_id'];
-			unset($data['association_id']);
-
 
 			$index = 0;
-			$successIndex = 0;
+			$result[1] = 0;
 
 			$values['association_id'] = $association_id;
 			$values['detail'] = $detail;
@@ -212,7 +220,11 @@ class AmountsController extends AppController
 					{
 						if($this->Amounts->save($entity))
 						{
-							++$successIndex;
+							++$result[1];
+						}
+						else
+						{
+							unset($data[$key]);
 						}
 					}
 					catch(Exception $e)
@@ -227,24 +239,20 @@ class AmountsController extends AppController
 
 			}
 
-			return $successIndex;
+			$result[0] = $data;
+			return $result;
 		}
 	}
 
 
-	private function saveBoxes($data, $type, $tracts)
+	private function saveBoxes($data, $type, $tracts,$association_id)
 	{
 
 		$this->loadModel('Boxes');
 
-		$values['association_id'] = $data['association_id'];
-		unset($data['association_id']);
-
-		unset($data['detail']);
-
-
+		$values['association_id'] = $association_id;
 		$index = 0;
-		$successIndex = 0;
+		$result[1] = 0;
 
 		$values['type'] = $type;
 
@@ -259,7 +267,11 @@ class AmountsController extends AppController
 
 			try {
 				if ($this->Boxes->save($entity)) {
-					++$successIndex;
+					++$result[1];
+				}
+				else
+				{
+					unset($data[$key]);
 				}
 			} catch (Exception $e) {
 
@@ -269,7 +281,8 @@ class AmountsController extends AppController
 			++$index;
 		}
 
-		return $successIndex;
+		$result[0] = $data;
+		return $result;
 	}
 
 
@@ -311,7 +324,7 @@ class AmountsController extends AppController
 
 
 /**
- *  Esta funcion devuelve el id del presente tracto
+ *  Esta funcion devuelve el id del tracto correspondiente a la fecha enviada
  **/
 	private function getTractId($actualDate)
 	{
@@ -532,7 +545,9 @@ class AmountsController extends AppController
 		if(in_array($this->request->action,['edit','delete']))
 		{
 			$amountId = (int)$this->request->params['pass'][0];
-	        if ((($this->request->session()->read('Auth.User.role')) == 'rep') && $this->Amounts->isOwnedBy($amountId, $user['association_id'])) {
+			$actualDate = date("Y-m-d");
+			$tract_id = $this->getTractId($actualDate);
+	        if ((($this->request->session()->read('Auth.User.role')) == 'rep') && $this->Amounts->isOwnedBy($amountId, $user['association_id'], $tract_id)) {
 	            return true;
 	        }
 		}
