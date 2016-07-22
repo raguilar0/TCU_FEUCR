@@ -655,7 +655,7 @@
         function reloadPage(element)
         {
 
-            var path = "<?= $this->Url->build(["controller" => "Associations", "action" => "detailedInformation"]); ?>"; //Con esto obtenemos la URL a la que necesitamos hacer el get
+            var path = "<?= $this->Url->build(["controller" => "Associations", "action" => "public-detailed-information"]); ?>"; //Con esto obtenemos la URL a la que necesitamos hacer el get
             var association_id = <?=  $association_name[0]['id']; ?>; //Se obtiene el id de la asociación
 
 

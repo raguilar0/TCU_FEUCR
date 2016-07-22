@@ -123,7 +123,7 @@
                         </li>
 
                         <li class="active">
-                            <a  data-toggle="collapse" data-target="#amounts_id">Montos de Tracto</a>
+                            <a  data-toggle="collapse" data-target="#amounts_id">Montos</a>
                             <div id="amounts_id" class="collapse">
                                 <ul>
                                     <li><?php echo $this->Html->link('Nuevo Monto',['controller'=>'Amounts','action'=>'add']);?></li>

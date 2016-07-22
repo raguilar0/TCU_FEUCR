@@ -16,7 +16,7 @@
             <th><?= $this->Paginator->sort('type',['label'=>'Tipo']) ?></th>
             <th><?= $this->Paginator->sort('date',['label'=>'Fecha de asignación']) ?></th>
             <th><?= $this->Paginator->sort('detail',['label'=>'Detalle']) ?></th>
-            <th><?= $this->Paginator->sort('association_id', ['Asoaciación']) ?></th>
+            <th><?= $this->Paginator->sort('association_id', ['Asociación']) ?></th>
             <th><?= $this->Paginator->sort('tract_id', ['label'=>'Tracto']) ?></th>
             <th class="actions"><?= __('Acciones') ?></th>
         </tr>
@@ -39,12 +39,9 @@
                     ?>
                     <?= $this->Html->link('', ['action' => 'edit', $amount->id],['class'=>'glyphicon glyphicon-pencil btn btn-primary' ]) ?>
                     
-                    <?php
-                        if(($this->request->session()->read('Auth.User.role')) == 'rep')
-                        {
-                            echo $this->Form->postLink('', ['action' => 'delete', $amount->id], ['class'=>'glyphicon glyphicon-remove btn btn-danger','confirm' => __('¿Estás seguro de que deseas borrarlo? # {0}?', $amount->id)]);
-                        }
-                    ?>
+
+                    <?= $this->Form->postLink('', ['action' => 'delete', $amount->id], ['class'=>'glyphicon glyphicon-remove btn btn-danger','confirm' => __('¿Estás seguro de que deseas borrarlo? # {0}?', $amount->id)]); ?>
+                    
                 </td>
             </tr>
         <?php endforeach; ?>

@@ -33,7 +33,7 @@
                 <td><?= $box->has('tract') ? $this->Html->link($box->tract->date." - ".$box->tract->deadline, ['controller' => 'Tracts', 'action' => 'view', $box->tract->id]) : '' ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__(''), ['action' => 'edit', $box->id], ['class'=>'glyphicon glyphicon-pencil btn btn-primary']) ?>
-                    <?= $this->Form->postLink(__(''), ['action' => 'delete', $box->id], ['class'=>'glyphicon glyphicon-remove btn btn-danger','confirm' => __('Are you sure you want to delete # {0}?', $box->id)]) ?>
+                    <?= $this->Form->postLink(__(''), ['action' => 'delete', $box->id], ['class'=>'glyphicon glyphicon-remove btn btn-danger','confirm' => __('Seguro que desea borrar esta caja?# {0}?', $box->id)]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>

@@ -17,7 +17,7 @@ class AssociationsController extends AppController
       public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow(['init', 'publicDetailedInformation', 'publicView', 'getAmounts']);
+        $this->Auth->allow(['init', 'sanitize','publicDetailedInformation', 'publicView', 'getAmounts']);
     }
 
     public function init()
@@ -233,6 +233,10 @@ class AssociationsController extends AppController
 
     public function detailedInformation($id = null, $year = null)
     {
+            $values = $this->sanitize([0=>$id,1=>$year]);
+
+            $id = $values[0];
+            $year = $values[1];
 
             $this->viewBuilder()->layout('admin_views');
 
@@ -310,10 +314,28 @@ class AssociationsController extends AppController
     }
 
 
+    public function sanitize($values)
+    {
+        $len = count($values);
+
+        for ($i = 0; $i < $len; ++$i)
+        {
+            $values[$i] = intval($values[$i]);
+        }
+
+        return $values;
+    }
 
     public function getAmounts($association_id = null, $amount_type = null, $box_type = null,$invoice_type = null, $id = null)
     {
 
+        $values = $this->sanitize([0 => $association_id, 1 => $amount_type, 2 => $box_type, 3 => $invoice_type, 4 => $id]);
+
+        $association_id = $values[0];
+        $amount_type = $values[1];
+        $box_type = $values[2];
+        $invoice_type = $values[3];
+        $id = $values[4];
 
         if($amount_type != 2)
         {
@@ -384,7 +406,6 @@ class AssociationsController extends AppController
             $data['invoices'] = $invoices;
             $data = json_encode($data);
 
-           // debug($data);
            die($data);
 
     }
@@ -628,6 +649,11 @@ class AssociationsController extends AppController
 
     public function publicDetailedInformation($id = null, $year = null)
     {
+        $values = $this->sanitize([0=>$id,1=>$year]);
+
+        $id = $values[0];
+        $year = $values[1];
+
 
         if($id)
         {
@@ -693,7 +719,7 @@ class AssociationsController extends AppController
         }
         else
         {
-            $this->redirect(['action'=>'/']);
+           // $this->redirect(['action'=>'/']);
         }
 
     }
@@ -702,7 +728,7 @@ class AssociationsController extends AppController
     public function isAuthorized($user)
     {
 
-        if(in_array($this->request->action,['generalInformation', 'detailedInformation', 'getAmounts']))
+        if(in_array($this->request->action,['generalInformation', 'detailedInformation', 'getAmounts', 'sanitize']))
         {
             return true;
         }
