@@ -123,7 +123,7 @@
                         </li>
 
                         <li class="active">
-                            <a  data-toggle="collapse" data-target="#amounts_id">Montos de Tracto</a>
+                            <a  data-toggle="collapse" data-target="#amounts_id">Montos</a>
                             <div id="amounts_id" class="collapse">
                                 <ul>
                                     <li><?php echo $this->Html->link('Nuevo Monto',['controller'=>'Amounts','action'=>'add']);?></li>
@@ -255,7 +255,7 @@
                         <a  data-toggle="collapse" data-target="#account_id">Cuentas de Ahorro</a>
                         <div id="account_id" class="collapse">
                             <ul>
-                                <li><?php echo $this->Html->link('Administrar Montos',['controller'=>'Saving-accounts','action'=>'index']);?></li>
+                                <li><?php echo $this->Html->link('Administrar Cuentas',['controller'=>'Saving-accounts','action'=>'index']);?></li>
                             </ul>
                         </div>
                     </li>

@@ -13,7 +13,10 @@ class InvoicesTable extends Table
     public function initialize(array $config)
     {
         $this->addBehavior('Timestamp');
-        $this->belongsTo('Associations');
+        $this->belongsTo('Associations', [
+            'foreignKey' => 'association_id',
+            'joinType' => 'INNER'
+        ]);
         $this->belongsTo('Tracts', [
             'foreignKey' => 'tract_id',
             'joinType' => 'INNER'

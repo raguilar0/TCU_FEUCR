@@ -43,7 +43,9 @@ class SavingAccountsController extends AppController
 
         if(($this->request->session()->read('Auth.User.role')) == 'admin'){
           $this->paginate = [
-              'contain' => ['Associations', 'Tracts']
+              'contain' => ['Associations'=>function($q){
+                  return $q->where(['enable'=>1]);
+              }, 'Tracts']
           ];
           $savingAccounts = $this->paginate($this->SavingAccounts);
         }
@@ -109,7 +111,8 @@ class SavingAccountsController extends AppController
             }
             
         }
-        $associations = $this->SavingAccounts->Associations->find('list');
+        $associations = $this->SavingAccounts->Associations->find('list')
+                                                ->where(['enable'=>1]);
 
         $tracts = $this->SavingAccounts->Tracts->find()
             ->select(['id','date','deadline'])
@@ -163,7 +166,8 @@ class SavingAccountsController extends AppController
                       $this->Flash->error(__('La cuenta de ahorros no ha podido ser guardada. Inténtelo de nuevo'));
                   }
               }
-              $associations = $this->SavingAccounts->Associations->find('list');
+              $associations = $this->SavingAccounts->Associations->find('list')
+                                                ->where(['enable'=>1]);
               $tracts = $this->SavingAccounts->Tracts->find()
                   ->select(['id','date','deadline'])
                   ->where(['YEAR(date)'=>date('Y')])
@@ -302,7 +306,8 @@ class SavingAccountsController extends AppController
         $from_tracts = $temp;
 
 
-        $associations = $this->SavingAccounts->Associations->find('list');
+        $associations = $this->SavingAccounts->Associations->find('list')
+                                            ->where(['enable'=>1]);
 
         $this->set(compact('from_tracts','destination', 'associations'));
 

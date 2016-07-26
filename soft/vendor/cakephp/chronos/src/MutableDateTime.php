@@ -12,6 +12,7 @@
  */
 namespace Cake\Chronos;
 
+use Cake\Core\Exception\Exception;
 use DateTime;
 use DateTimeZone;
 use InvalidArgumentException;
@@ -52,12 +53,15 @@ class MutableDateTime extends DateTime implements ChronosInterface
      */
     public function __construct($time = 'now', $tz = null)
     {
+
         if ($tz !== null) {
             $tz = $tz instanceof DateTimeZone ? $tz : new DateTimeZone($tz);
         }
 
         if (static::$testNow === null) {
-            return parent::__construct($time === null ? 'now' : $time, $tz);
+
+                return parent::__construct($time === null ? 'now' : $time, $tz);
+
         }
 
         $relative = static::hasRelativeKeywords($time);

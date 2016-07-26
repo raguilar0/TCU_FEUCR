@@ -38,7 +38,9 @@ class AmountsController extends AppController
 		{
 		
 			$this->paginate = [
-				'contain' => ['Associations', 'Tracts']
+				'contain' => ['Associations'=>function($q){
+					return $q->where(['enable'=>1]);
+				}, 'Tracts']
 			];			
 		}
 		
@@ -105,11 +107,11 @@ class AmountsController extends AppController
 				$amount = $this->Amounts->patchEntity($amount,$data);
 
 
-				//	$entity =  $this->Amounts->newEntity($data);
 
 					if($this->Amounts->save($amount))
 					{
 						$this->Flash->success('Se agregaron los montos exitosamente');
+						return $this->redirect(['action'=>'index']);
 					}
 					else
 					{
@@ -178,14 +180,15 @@ class AmountsController extends AppController
 			}
 			else
 			{
-				$this->Flash->error('Ocurrió un error al tratar de arreglar los montos. Además tampoco se agregaron las cajas correspondientes. Verifique los datos que está ingresando e intente de nuevo.');
+				$this->Flash->error('Ocurrió un error al tratar de agregar los montos. Además tampoco se agregaron las cajas correspondientes. Verifique los datos que está ingresando e intente de nuevo.');
 			}
 
 
 
 		}
 
-		$associations = $this->Amounts->Associations->find('list');
+		$associations = $this->Amounts->Associations->find('list')
+											->where(['enable'=>1]);
 		$this->set(compact('tracts','associations'));
 
 	}
@@ -300,25 +303,6 @@ class AmountsController extends AppController
 		return $query;
 	}
 
-	private function getHeadquarters()
-	{
-		$query = $this->Amounts->Associations->Headquarters->find() //Se trae solo las headquarter que tienen alguna asocicación asociada :p
-		->hydrate(false)
-		->select(['Headquarters.name'])
-		->join([
-			 'table'=>'associations',
-			 'alias'=>'a',
-			 'type' => 'RIGHT',
-			 'conditions'=>'Headquarters.id = a.headquarter_id',
-			])
-		->where(['a.enable'=>1])
-		->group(['Headquarters.name']); //Elimina repetidos
-
-
-		$headquarters = $query->toArray();
-
-		return $headquarters;
-	}
 
 
 
@@ -425,74 +409,6 @@ class AmountsController extends AppController
 
 
 
-	/**
-	public function edit($id)
-	{
-		$this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
-
-
-		$query = $this->getModifyInformation($id, date('Y')); //Pide la información de los montos
-
-		//$entity = $this->Amounts->newEntity($query, ['validate'=>'update']);
-
-		if($id)
-		{
-			if($this->request->is(array('post','put')))
-			{
-				$data = $this->request->data;
-				$message = "Se modificaron los montos de los siguientes tractos: ";
-
-				foreach ($query as $key=>$value)
-				{
-					$name = 'tract_'.$value['tract']['number']; //name de la vista
-
-					$foo['amount'] = $data[$name];
-
-					$entity = $this->Amounts->newEntity($foo, ['validate'=>'update']);
-
-
-					if(!$entity->errors())
-					{
-						$update = $this->Amounts->query();
-						$update->update()
-							->set(['amount'=>$data[$name]])
-							->where(['id'=>$value['id']])
-							->execute();
-						$message .= " ".$value['tract']['number'].",";
-					}
-
-
-
-				}
-				$this->Flash->success($message);
-				$query = $this->getModifyInformation($id, date('Y'));//Pide la información de los montos
-
-			}
-		}
-
-
-		$this->set('data',$query); // set() Pasa la variable id a la vista.
-	}
-**/
-
-	private function getModifyInformation($id, $year)
-	{
-		$this->loadModel('Tracts');
-
-		$query = $this->Amounts->find()
-			->select(['id','amount', 'tract.date', 'tract.deadline', 'tract.number'])
-			->hydrate(false)
-			->join([
-				'table'=>'tracts',
-				'alias'=>'tract',
-				'type'=>'LEFT',
-				'conditions'=>'Amounts.tract_id = tract.id'
-			])
-			->andwhere(['association_id'=>$id, 'YEAR(tract.date)'=>$year]);
-		$query = $query->toArray();
-
-		return $query;
-	}
 
 
     /**
@@ -504,7 +420,7 @@ class AmountsController extends AppController
      */
     public function delete($id = null)
     {
-      if(($this->request->session()->read('Auth.User.role')) == 'rep'){
+
           try
           {
               $this->viewBuilder()->layout('admin_views');
@@ -512,6 +428,11 @@ class AmountsController extends AppController
               $amount = $this->Amounts->get($id);
               try
               {
+				  if(($this->request->session()->read('Auth.User.role')) == 'admin' && ($amount->type === 0 )) {
+					  $this->deleteBoxes($amount->association_id, $amount->tract_id);
+				  }
+
+
                   if ($this->Amounts->delete($amount)) {
                       $this->Flash->success(__('El monto ha sido borrado.'));
                   } else {
@@ -531,13 +452,35 @@ class AmountsController extends AppController
               return $this->redirect(['action' => 'index']);
           }
 
-      }
-      else{
-        return $this->redirect(['controller'=>'pages', 'action'=>'home']);
-      }
+
     }
 
 
+	private function deleteBoxes($association_id, $tract_id)
+	{
+		$this->loadModel('Boxes');
+
+		try
+		{
+			$boxes = $this->Boxes->query();
+			$boxes->delete()
+				->andWhere(['association_id'=>$association_id, 'tract_id'=>$tract_id, 'type'=>0])
+				->execute();
+
+			$boxes = $this->Boxes->query();
+			$boxes->delete()
+				->andWhere(['association_id'=>$association_id, 'tract_id'=>$tract_id, 'type'=>1])
+				->execute();
+			$this->Flash->success(__('Se borraron las cajas asociadas a este monto'));
+		}
+		catch (\PDOException $e)
+		{
+			$this->Flash->error(__('No existen cajas asociadas a este monto. Verifique e intente de nuevo'));
+			return $this->redirect(['action' => 'index']);
+		}
+
+
+	}
 
 	public function isAuthorized($user)
 	{

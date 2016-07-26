@@ -50,7 +50,9 @@ class SavingsController extends AppController
 
         if(($this->request->session()->read('Auth.User.role')) == 'admin'){
           $this->paginate = [
-              'contain' => ['Associations', 'Tracts']
+              'contain' => ['Associations'=>function($q){
+                  return $q->where(['enable'=>1]);
+              }, 'Tracts']
           ];
           $savings = $this->paginate($this->Savings);
         }
@@ -171,7 +173,8 @@ class SavingsController extends AppController
         }
         
 
-        $associations = $this->Savings->Associations->find('list');
+        $associations = $this->Savings->Associations->find('list')
+                                        ->where(['enable'=>1]);
         
 
         $tracts = $this->Savings->Tracts->find()
@@ -234,7 +237,8 @@ class SavingsController extends AppController
             }
 
         }
-        $associations = $this->Savings->Associations->find('list');
+        $associations = $this->Savings->Associations->find('list')
+                                        ->where(['enable'=>1]);
         $tracts = $this->Savings->Tracts->find()
                                         ->select(['id','date','deadline'])
                                         ->where(['YEAR(date)'=>date('Y')])

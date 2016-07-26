@@ -52,6 +52,7 @@ class UsersTable extends Table
               ])
               ->notEmpty('role')
               ->notEmpty('username')
+              ->add('username', 'unique', ['rule' => 'validateUnique', 'provider' => 'table', 'message'=>'Este nombre de usuario ya está siendo usado'])
               ->add('username', 'validFormat', [
                           'rule' => array('custom', '/^[a-z0-9\_\-\.ñ]+@ucr.ac.cr$/'),
                           'message' => 'Debe ser un correo institucional válido.'

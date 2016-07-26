@@ -22,7 +22,9 @@ class SurplusesController extends AppController
       if($this->Auth->user()){
         $this->viewBuilder()->layout('admin_views');
         $this->paginate = [
-            'contain' => ['Associations']
+            'contain' => ['Associations'=>function($q){
+                return $q->where(['enable'=>1]);
+            }]
         ];
         $surpluses = $this->paginate($this->Surpluses);
 
@@ -85,7 +87,8 @@ class SurplusesController extends AppController
                 $this->Flash->error(__('El superávit no ha podido ser guardado. Intentelo de nuevo'));
             }
         }
-        $associations = $this->Surpluses->Associations->find('list');
+        $associations = $this->Surpluses->Associations->find('list')
+                                        ->where(['enable'=>1]);
         $this->set(compact('surplus', 'associations'));
         $this->set('_serialize', ['surplus']);
       }
@@ -119,7 +122,8 @@ class SurplusesController extends AppController
                       $this->Flash->error(__('El superávit no ha podido ser guardado. Intentelo de nuevo'));
                   }
               }
-              $associations = $this->Surpluses->Associations->find('list');
+              $associations = $this->Surpluses->Associations->find('list')
+                                            ->where(['enable'=>1]);
               $this->set(compact('surplus', 'associations'));
               $this->set('_serialize', ['surplus']);
           }

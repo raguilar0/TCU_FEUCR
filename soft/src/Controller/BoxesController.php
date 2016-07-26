@@ -23,17 +23,13 @@ class BoxesController extends AppController
 			return $this->redirect($this->Auth->redirectUrl());
 		}else{
 		    $this->viewBuilder()->layout('admin_views'); //Carga un layout personalizado para esta vista
-		    $tracts = $this->Boxes->Tracts->find()->select(['id','date','deadline']);
-            $temp = array();
-    
-            foreach ($tracts as $key => $value)
-            {
-                $temp[$value->id] = $value->date." - ".$value->deadline;
-            }
-    
-            $tracts = $temp;
+
 		    $this->paginate = [
-            'contain' => ['Associations','Tracts']
+            'contain' => ['Associations'=>function($q)
+                                        {
+                                            return $q->where(['enable'=>1]);
+                                        }
+                ,'Tracts']
             ];
             
             $boxes = $this->paginate($this->Boxes);
@@ -100,7 +96,8 @@ class BoxesController extends AppController
 
         $type[0] = 'Tracto';
        $type[1] =  'Ingresos generados';
-        $associations = $this->Boxes->Associations->find('list');
+        $associations = $this->Boxes->Associations->find('list')
+                                                    ->where(['enable'=>1]);
         $this->set(compact('box', 'associations', 'tracts', 'type'));
         $this->set('_serialize', ['box']);
     }
@@ -236,7 +233,7 @@ class BoxesController extends AppController
                         	->gte('deadline',$actualDate);
                     });
         $id = $id->toArray();
-		return $id[0]['id'];
+		return ((isset($id[0]))? $id[0]['id'] : null );
 	}
 	
 	
