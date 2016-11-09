@@ -157,9 +157,7 @@ CREATE TABLE users (
     name varchar(70) NOT NULL,
     last_name_1 varchar(30) NOT NULL,
     last_name_2 varchar(30),
-    association_id INT UNSIGNED NOT NULL,
     state INT(1) NOT NULL,
-    FOREIGN KEY(association_id) REFERENCES associations(id),
 
     UNIQUE(username)
 );

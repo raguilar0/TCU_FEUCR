@@ -86,8 +86,6 @@ class UsersController extends AppController
         if ($this->Auth->user()) {
             $this->viewBuilder()->layout('admin_views');
 
-
-
                 $this->paginate = [
                     'contain' => ['Associations']
                 ];
